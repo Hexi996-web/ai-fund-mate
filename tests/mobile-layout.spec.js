@@ -32,9 +32,14 @@ const activeFunds = [
   }),
 ]
 
+const openFundLibrary = async (page) => {
+  await page.getByRole('button', { name: '基金产品库', exact: true }).click()
+  await page.locator('.result-count').waitFor({ state: 'visible' })
+}
+
 const clearStorage = async (page) => {
   await page.goto('/')
-  await page.locator('.result-count').waitFor({ state: 'visible' })
+  await openFundLibrary(page)
   await page.evaluate(() => window.localStorage.clear())
 }
 
@@ -63,6 +68,7 @@ test('mobile fund flow stays compact and persists the selected view', async ({ p
   await clearStorage(page)
 
   await page.reload()
+  await openFundLibrary(page)
   await expect(page).toHaveTitle('AI虚拟产品经理')
   await expect(page.locator('.meta-row').first()).toContainText('数据日期：2026-08-10')
   await expect(page.locator('.fund-card')).toHaveCount(activeFunds.length)
@@ -105,6 +111,7 @@ test('mobile fund flow stays compact and persists the selected view', async ({ p
   await page.getByRole('button', { name: '列表', exact: true }).click()
   await expect(page.locator('.fund-table')).toBeVisible()
   await page.reload()
+  await openFundLibrary(page)
   await expect(page.getByRole('button', { name: '列表', exact: true })).toHaveAttribute('aria-pressed', 'true')
   await expect(page.getByRole('button', { name: '股票型', exact: true })).toHaveAttribute('aria-pressed', 'true')
   await expect(page.getByLabel('基金排序方式')).toHaveValue('change-desc')
@@ -116,6 +123,7 @@ test('mobile fund flow stays compact and persists the selected view', async ({ p
 
   await page.getByRole('button', { name: '卡片', exact: true }).click()
   await page.reload()
+  await openFundLibrary(page)
   await expect(page.getByRole('button', { name: '卡片', exact: true })).toHaveAttribute('aria-pressed', 'true')
   await expect(page.locator('.fund-card')).toHaveCount(3)
 
@@ -153,6 +161,7 @@ test('every sort direction orders real fields semantically and keeps null values
   await routeActiveFunds(page)
   await clearStorage(page)
   await page.reload()
+  await openFundLibrary(page)
 
   const renderedCodes = page.locator('.fund-card__heading > span')
   for (const [mode, expectedCodes] of sortCases) {
@@ -174,6 +183,7 @@ test('snapshot data date is truthful and date sorting disappears when all real d
     JSON.stringify('date-desc'),
   ))
   await page.reload()
+  await openFundLibrary(page)
 
   await expect(page.locator('.meta-row').first()).toContainText('数据日期：2026-08-07')
   await expect(page.getByLabel('基金排序方式')).toHaveValue('default')
@@ -216,6 +226,7 @@ test('fallback source warns and renders unavailable real fields explicitly', asy
 
   await clearStorage(page)
   await page.reload()
+  await openFundLibrary(page)
   await expect(page.locator('.meta-row').first()).toContainText('数据日期：2026-08-06')
   await expect(page.locator('.fund-card')).toHaveCount(1)
   await expect(page.locator('.fund-card__heading > span')).toHaveText('123456')

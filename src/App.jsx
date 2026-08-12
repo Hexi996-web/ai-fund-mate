@@ -11,6 +11,7 @@ import {
 } from './data/fundCache.js'
 import { fetchFundPayload, getPayloadDataDate } from './data/fundData.js'
 import { normalizeFunds, selectFunds } from './data/fundModel.js'
+import { selectDisplayFunds } from './data/fundDisplay.js'
 import './App.css'
 
 const MOBILE_VIEW_QUERY = '(max-width: 767px)'
@@ -109,18 +110,26 @@ function EmptyState({ onReset }) {
   )
 }
 
-export default function App() {
+export default function App({ initialQuery = '', onQueryChange }) {
   const [funds, setFunds] = useState([])
   const [status, setStatus] = useState('loading')
   const [error, setError] = useState('')
   const [dataDate, setDataDate] = useState('')
   const [source, setSource] = useState('')
   const [isStaleCache, setIsStaleCache] = useState(false)
-  const [query, setQuery] = useState('')
+  const [query, setQuery] = useState(initialQuery)
   const [debouncedQuery, setDebouncedQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState(getStoredCategory)
   const [sortMode, setSortMode] = useState(getStoredSortMode)
   const [viewMode, setViewMode] = useState(getInitialViewMode)
+
+  useEffect(() => {
+    if (initialQuery) setQuery(initialQuery)
+  }, [initialQuery])
+
+  useEffect(() => {
+    onQueryChange?.(query)
+  }, [onQueryChange, query])
 
   useEffect(() => {
     const timer = window.setTimeout(() => setDebouncedQuery(query.trim()), 300)
@@ -188,6 +197,8 @@ export default function App() {
     category: selectedCategory,
     sortMode: effectiveSortMode,
   }), [debouncedQuery, effectiveSortMode, funds, selectedCategory])
+
+  const displayFunds = useMemo(() => selectDisplayFunds(selectedFunds), [selectedFunds])
 
   const assistantMessage = getAssistantMessage({
     status,
@@ -257,7 +268,7 @@ export default function App() {
             <p className="result-count">
               当前显示 {selectedFunds.length.toLocaleString('zh-CN')} 只基金份额
             </p>
-            {viewMode === 'card' ? <FundCards funds={selectedFunds} /> : <FundTable funds={selectedFunds} />}
+            {viewMode === 'card' ? <FundCards funds={displayFunds.items} /> : <FundTable funds={displayFunds.items} />}
           </>
         ) : null}
 
