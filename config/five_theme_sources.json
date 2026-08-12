@@ -1,0 +1,10 @@
+[
+ {"id":"sge","name":"上海黄金交易所","url":"https://www.sge.com.cn/","authority_level":"official","region":"CN","frequency":"daily","timeout_seconds":15,"max_retries":2,"min_interval_seconds":1,"enabled":true},
+ {"id":"pbc","name":"中国人民银行","url":"https://www.pbc.gov.cn/","authority_level":"official","region":"CN","frequency":"monthly","timeout_seconds":15,"max_retries":2,"min_interval_seconds":1,"enabled":true},
+ {"id":"nbs","name":"国家统计局","url":"https://www.stats.gov.cn/","authority_level":"official","region":"CN","frequency":"monthly","timeout_seconds":15,"max_retries":2,"min_interval_seconds":1,"enabled":true},
+ {"id":"sse","name":"上海证券交易所","url":"https://etf.sse.com.cn/","authority_level":"official","region":"CN","frequency":"daily","timeout_seconds":15,"max_retries":2,"min_interval_seconds":1,"enabled":true},
+ {"id":"chinabond","name":"中国债券信息网","url":"https://yield.chinabond.com.cn/","authority_level":"official","region":"CN","frequency":"daily","timeout_seconds":15,"max_retries":2,"min_interval_seconds":1,"enabled":true},
+ {"id":"csrc","name":"中国证监会","url":"https://www.csrc.gov.cn/","authority_level":"official","region":"CN","frequency":"daily","timeout_seconds":15,"max_retries":2,"min_interval_seconds":1,"enabled":true},
+ {"id":"fred","name":"Federal Reserve Economic Data","url":"https://fred.stlouisfed.org/","authority_level":"public_institution","region":"US","frequency":"daily","timeout_seconds":20,"max_retries":2,"min_interval_seconds":1,"enabled":true},
+ {"id":"akshare","name":"AkShare公开适配层","url":"https://akshare.akfamily.xyz/","authority_level":"auxiliary","region":"CN","frequency":"daily","timeout_seconds":20,"max_retries":2,"min_interval_seconds":1,"enabled":true}
+]

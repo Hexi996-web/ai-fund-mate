@@ -1,9 +1,22 @@
 import { useEffect, useMemo, useState } from 'react'
 import avatarUrl from './assets/fund-mate-avatar.png'
+import { FundControls, FUND_CATEGORIES, SORT_OPTIONS } from './components/FundControls.jsx'
+import { FundCards, FundTable, SkeletonView } from './components/FundViews.jsx'
+import {
+  readFundCache,
+  readPreference,
+  readStaleFundCache,
+  writeFundCache,
+  writePreference,
+} from './data/fundCache.js'
+import { fetchFundPayload, getPayloadDataDate } from './data/fundData.js'
+import { normalizeFunds, selectFunds } from './data/fundModel.js'
 import './App.css'
 
-const API_URL = 'https://LST-Serendipity.github.io/fund-data-api/funds_simple.json'
-const CACHE_KEY = 'ai-fund-mate:funds:v1'
+const MOBILE_VIEW_QUERY = '(max-width: 767px)'
+const AMAC_REFERENCE_URL = 'https://www.amac.org.cn/sjtj/tjbg/gmjj/202606/P020260617606470583907.pdf'
+const SORT_MODES = new Set(SORT_OPTIONS.map((option) => option.value))
+const VIEW_MODES = new Set(['list', 'card'])
 
 const getToday = () => {
   const now = new Date()
@@ -13,143 +26,86 @@ const getToday = () => {
   return `${year}-${month}-${day}`
 }
 
-const firstPresent = (record, keys) => {
-  for (const key of keys) {
-    const value = record?.[key]
-    if (value !== undefined && value !== null && value !== '') return value
+const getStoredCategory = () => {
+  if (typeof window === 'undefined') return '全部'
+  const value = readPreference(window.localStorage, 'category', '全部')
+  return FUND_CATEGORIES.includes(value) ? value : '全部'
+}
+
+const getStoredSortMode = () => {
+  if (typeof window === 'undefined') return 'default'
+  const value = readPreference(window.localStorage, 'sortMode', 'default')
+  return SORT_MODES.has(value) ? value : 'default'
+}
+
+const getInitialViewMode = () => {
+  if (typeof window === 'undefined') return 'list'
+  const stored = readPreference(window.localStorage, 'viewMode', null)
+  if (VIEW_MODES.has(stored)) return stored
+  return window.matchMedia(MOBILE_VIEW_QUERY).matches ? 'card' : 'list'
+}
+
+const getAssistantMessage = ({ status, selectedCount, totalCount, query, category }) => {
+  if (status === 'loading') return '你好，我是你的基金同事，正在整理今日数据...'
+  if (status === 'error') return '今天的数据暂时没有整理好，请稍后再试。'
+  if (selectedCount === 0) return '没有找到符合当前条件的基金份额，试试调整搜索或分类。'
+  if (query && category !== '全部') {
+    return `已在${category}中找到 ${selectedCount.toLocaleString('zh-CN')} 只与“${query}”匹配的基金份额。`
   }
-  return null
+  if (query) return `找到 ${selectedCount.toLocaleString('zh-CN')} 只与“${query}”匹配的基金份额。`
+  if (category !== '全部') return `已筛选出 ${selectedCount.toLocaleString('zh-CN')} 只${category}基金份额。`
+  return `已就绪，共收录 ${totalCount.toLocaleString('zh-CN')} 只基金份额，你可以按名称或代码搜索。`
 }
 
-const toNumber = (value) => {
-  if (typeof value === 'number') return Number.isFinite(value) ? value : null
-  if (typeof value !== 'string') return null
-  const parsed = Number(value.replace(/[%￥,\s]/g, ''))
-  return Number.isFinite(parsed) ? parsed : null
-}
-
-const seededDailyChange = (code, date) => {
-  const seed = `${code}-${date}`.split('').reduce((total, char) => {
-    return (total * 31 + char.charCodeAt(0)) >>> 0
-  }, 2166136261)
-  return Number((-2 + (seed % 5001) / 1000).toFixed(2))
-}
-
-const normalizeFund = (record, today) => {
-  const rawCode = firstPresent(record, [
-    'fundCode', 'code', 'FCODE', 'fund_code', 'symbol', 'jjdm',
-  ])
-  const rawName = firstPresent(record, [
-    'fundName', 'name', 'SHORTNAME', 'fund_name', 'shortName', 'jjjc',
-  ])
-
-  if (rawCode === null || rawName === null) return null
-
-  const code = String(rawCode).trim().padStart(6, '0')
-  const name = String(rawName).trim()
-  if (!code || !name) return null
-
-  const nav = toNumber(firstPresent(record, [
-    'netValue', 'nav', 'unitNetValue', 'estimatedValue', 'estimateValue',
-    'DWJZ', 'dwjz', 'gsz', 'net_value',
-  ]))
-  const realDailyChange = toNumber(firstPresent(record, [
-    'dailyChangePercent', 'dailyChange', 'changeRate', 'growthRate',
-    'JZZZL', 'gszzl', 'dayGrowth', 'change_percent',
-  ]))
-
-  return {
-    code,
-    name,
-    nav,
-    dailyChange: realDailyChange ?? seededDailyChange(code, today),
-    isSimulatedChange: realDailyChange === null,
-  }
-}
-
-const normalizeFunds = (payload, today) => {
-  const records = Array.isArray(payload)
-    ? payload
-    : payload?.data ?? payload?.funds ?? payload?.list ?? []
-
-  if (!Array.isArray(records)) throw new Error('基金数据格式无法识别')
-
-  const seen = new Set()
-  return records.reduce((funds, record) => {
-    const fund = normalizeFund(record, today)
-    if (fund && !seen.has(fund.code)) {
-      seen.add(fund.code)
-      funds.push(fund)
-    }
-    return funds
-  }, [])
-}
-
-const readCache = () => {
-  try {
-    const cached = JSON.parse(localStorage.getItem(CACHE_KEY) ?? 'null')
-    if (!cached || !Array.isArray(cached.funds) || !cached.date) return null
-    return cached
-  } catch {
-    return null
-  }
-}
-
-const writeCache = (date, funds) => {
-  try {
-    localStorage.setItem(CACHE_KEY, JSON.stringify({ date, fetchedAt: Date.now(), funds }))
-  } catch (error) {
-    console.warn('基金数据已加载，但浏览器缓存写入失败。', error)
-  }
-}
-
-function SearchIcon() {
+function AssistantHeader({ status, message }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
-      <circle cx="11" cy="11" r="6.5" />
-      <path d="m16 16 4.2 4.2" />
-    </svg>
+    <header className="assistant-header">
+      <div className="header-inner">
+        <div className="brand">
+          <h1>AI虚拟产品经理</h1>
+          <p>AI Fund Mate</p>
+        </div>
+        <div className="assistant-row">
+          <div className="avatar-wrap" aria-hidden="true">
+            <img src={avatarUrl} alt="" />
+            <span className={status === 'loading' ? 'status-dot status-dot--loading' : 'status-dot'} />
+          </div>
+          <div className="speech-bubble" aria-live="polite">
+            <p>{message}</p>
+            {status === 'loading' ? (
+              <span className="thinking-dots" aria-label="正在加载">
+                <i /><i /><i />
+              </span>
+            ) : null}
+          </div>
+        </div>
+      </div>
+    </header>
   )
 }
 
-function FundCard({ fund }) {
-  const isUp = fund.dailyChange >= 0
+function SourceDisclosure({ source, stale }) {
   return (
-    <article className="fund-card">
-      <div className="fund-card__heading">
-        <h2>{fund.name}</h2>
-        <span>{fund.code}</span>
-      </div>
-      <div className="fund-card__metrics">
-        <div>
-          <span className="metric-label">估算净值</span>
-          <strong>{fund.nav === null ? '--' : fund.nav.toFixed(4)}</strong>
-        </div>
-        <div className="metric-divider" aria-hidden="true" />
-        <div>
-          <span className="metric-label">
-            日涨跌幅{fund.isSimulatedChange ? <sup title="模拟值">*</sup> : null}
-          </span>
-          <strong className={isUp ? 'change change--up' : 'change change--down'}>
-            {isUp ? '+' : ''}{fund.dailyChange.toFixed(2)}%
-          </strong>
-        </div>
-      </div>
-    </article>
+    <aside className="source-disclosure" aria-label="数据口径说明">
+      <p>
+        <a href={AMAC_REFERENCE_URL} target="_blank" rel="noreferrer">
+          官方参考：截至 2026 年 5 月底境内公募基金 14,173 只（不含已报送清盘基金）
+        </a>
+        <span>基金主体数与页面基金份额数口径不同，不可直接比较。</span>
+      </p>
+      {source === 'fallback' ? <p className="cache-warning">当前为降级数据源，可能仅提供代码、名称和类型。</p> : null}
+      {stale ? <p className="cache-warning">今日数据更新失败，当前展示最近一次有效缓存。</p> : null}
+    </aside>
   )
 }
 
-function SkeletonGrid() {
+function EmptyState({ onReset }) {
   return (
-    <div className="fund-grid" aria-label="数据加载中" aria-busy="true">
-      {Array.from({ length: 8 }, (_, index) => (
-        <div className="skeleton-card" key={index}>
-          <span className="skeleton skeleton--title" />
-          <span className="skeleton skeleton--code" />
-          <span className="skeleton skeleton--metric" />
-        </div>
-      ))}
-    </div>
+    <section className="empty-state">
+      <h2>没有匹配结果</h2>
+      <p>换一个基金名称、简称或六位代码，也可以调整基金分类。</p>
+      <button type="button" onClick={onReset}>重置条件</button>
+    </section>
   )
 }
 
@@ -158,8 +114,13 @@ export default function App() {
   const [status, setStatus] = useState('loading')
   const [error, setError] = useState('')
   const [dataDate, setDataDate] = useState('')
+  const [source, setSource] = useState('')
+  const [isStaleCache, setIsStaleCache] = useState(false)
   const [query, setQuery] = useState('')
   const [debouncedQuery, setDebouncedQuery] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState(getStoredCategory)
+  const [sortMode, setSortMode] = useState(getStoredSortMode)
+  const [viewMode, setViewMode] = useState(getInitialViewMode)
 
   useEffect(() => {
     const timer = window.setTimeout(() => setDebouncedQuery(query.trim()), 300)
@@ -169,39 +130,49 @@ export default function App() {
   useEffect(() => {
     const controller = new AbortController()
     const today = getToday()
-    const cached = readCache()
+    const cached = readFundCache(window.localStorage, today)
+    const staleCache = cached === null
+      ? readStaleFundCache(window.localStorage, today)
+      : null
 
-    if (cached?.date === today && cached.funds.length > 0) {
+    if (cached?.funds.length > 0) {
       setFunds(cached.funds)
-      setDataDate(cached.date)
+      setDataDate(cached.dataDate)
+      setSource(cached.source)
       setStatus('ready')
       return () => controller.abort()
     }
 
     const loadFunds = async () => {
-      setStatus('loading')
       try {
-        const response = await fetch(API_URL, { signal: controller.signal })
-        if (!response.ok) throw new Error(`数据请求失败（${response.status}）`)
-        const payload = await response.json()
-        const normalized = normalizeFunds(payload, today)
+        const { payload, source: nextSource } = await fetchFundPayload(fetch, { signal: controller.signal })
+        const normalized = normalizeFunds(payload)
+        const nextDataDate = getPayloadDataDate(payload)
         if (normalized.length === 0) throw new Error('接口未返回有效基金数据')
 
         setFunds(normalized)
-        setDataDate(today)
+        setDataDate(nextDataDate)
+        setSource(nextSource)
         setStatus('ready')
-        writeCache(today, normalized)
+        writeFundCache(window.localStorage, {
+          date: today,
+          dataDate: nextDataDate,
+          fetchedAt: Date.now(),
+          source: nextSource,
+          funds: normalized,
+        })
       } catch (requestError) {
-        if (requestError.name === 'AbortError') return
-        if (cached?.funds?.length) {
-          setFunds(cached.funds)
-          setDataDate(cached.date)
+        if (requestError?.name === 'AbortError') return
+        if (staleCache?.funds.length > 0) {
+          setFunds(staleCache.funds)
+          setDataDate(staleCache.dataDate)
+          setSource(staleCache.source)
+          setIsStaleCache(true)
           setStatus('ready')
-          setError('今日数据更新失败，当前展示最近一次缓存。')
-        } else {
-          setStatus('error')
-          setError(requestError.message || '数据加载失败，请稍后重试。')
+          return
         }
+        setStatus('error')
+        setError(requestError?.message || '数据加载失败，请稍后重试。')
       }
     }
 
@@ -209,102 +180,88 @@ export default function App() {
     return () => controller.abort()
   }, [])
 
-  const filteredFunds = useMemo(() => {
-    if (!debouncedQuery) return funds
-    const keyword = debouncedQuery.toLocaleLowerCase('zh-CN')
-    return funds.filter((fund) => {
-      return fund.code.includes(keyword) || fund.name.toLocaleLowerCase('zh-CN').includes(keyword)
-    })
-  }, [debouncedQuery, funds])
+  const hasDateData = funds.some((fund) => fund.lastNetValueDate !== null)
+  const effectiveSortMode = !hasDateData && sortMode.startsWith('date-') ? 'default' : sortMode
 
-  const assistantMessage = useMemo(() => {
-    if (status === 'loading') return '你好，我是你的基金同事，正在整理今日数据...'
-    if (status === 'error') return '今天的数据暂时没有整理好，请稍后再试。'
-    if (debouncedQuery && filteredFunds.length === 0) {
-      return '抱歉，没找到你持有的基金，试试输入基金代码或简称。'
-    }
-    return `已就绪，共收录 ${funds.length.toLocaleString('zh-CN')} 只基金，你可以按名称或代码搜索。`
-  }, [debouncedQuery, filteredFunds.length, funds.length, status])
+  const selectedFunds = useMemo(() => selectFunds(funds, {
+    query: debouncedQuery,
+    category: selectedCategory,
+    sortMode: effectiveSortMode,
+  }), [debouncedQuery, effectiveSortMode, funds, selectedCategory])
+
+  const assistantMessage = getAssistantMessage({
+    status,
+    selectedCount: selectedFunds.length,
+    totalCount: funds.length,
+    query: debouncedQuery,
+    category: selectedCategory,
+  })
+
+  const handleCategoryChange = (value) => {
+    setSelectedCategory(value)
+    writePreference(window.localStorage, 'category', value)
+  }
+
+  const handleSortModeChange = (value) => {
+    setSortMode(value)
+    writePreference(window.localStorage, 'sortMode', value)
+  }
+
+  const handleViewModeChange = (value) => {
+    setViewMode(value)
+    writePreference(window.localStorage, 'viewMode', value)
+  }
+
+  const resetConditions = () => {
+    setQuery('')
+    handleCategoryChange('全部')
+  }
 
   return (
     <div className="app-shell">
-      <header className="assistant-header">
-        <div className="header-inner">
-          <div className="brand">
-            <h1>AI虚拟产品经理同事</h1>
-            <p>AI Fund Mate</p>
-          </div>
-          <div className="assistant-row">
-            <div className="avatar-wrap" aria-hidden="true">
-              <img src={avatarUrl} alt="" />
-              <span className={status === 'loading' ? 'status-dot status-dot--loading' : 'status-dot'} />
-            </div>
-            <div className="speech-bubble" aria-live="polite">
-              <p>{assistantMessage}</p>
-              {status === 'loading' && (
-                <span className="thinking-dots" aria-label="正在加载">
-                  <i /><i /><i />
-                </span>
-              )}
-            </div>
-          </div>
-        </div>
-      </header>
+      <AssistantHeader status={status} message={assistantMessage} />
 
       <main className="content">
         <div className="meta-row">
-          <p>数据更新时间：<strong>{dataDate || getToday()}</strong></p>
-          {error && status === 'ready' ? <p className="cache-warning">{error}</p> : null}
+          <p>数据日期：<strong>{dataDate || '--'}</strong></p>
+          {status === 'ready' ? <p>当前加载：<strong>{funds.length.toLocaleString('zh-CN')} 只基金份额</strong></p> : null}
         </div>
 
-        <label className="search-box">
-          <span className="sr-only">搜索基金名称或代码</span>
-          <SearchIcon />
-          <input
-            type="search"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="搜索基金名称或代码"
-            disabled={status === 'error'}
-          />
-          {query && (
-            <button type="button" onClick={() => setQuery('')} aria-label="清空搜索">
-              清除
-            </button>
-          )}
-        </label>
+        <FundControls
+          query={query}
+          category={selectedCategory}
+          sortMode={effectiveSortMode}
+          hasDateData={hasDateData}
+          viewMode={viewMode}
+          onQueryChange={setQuery}
+          onCategoryChange={handleCategoryChange}
+          onSortModeChange={handleSortModeChange}
+          onViewModeChange={handleViewModeChange}
+          disabled={status === 'error'}
+        />
 
-        {status === 'loading' && <SkeletonGrid />}
+        {status === 'loading' ? <SkeletonView viewMode={viewMode} /> : null}
 
-        {status === 'error' && (
+        {status === 'error' ? (
           <section className="empty-state" role="alert">
             <h2>数据加载失败</h2>
             <p>{error}</p>
             <button type="button" onClick={() => window.location.reload()}>重新加载</button>
           </section>
-        )}
+        ) : null}
 
-        {status === 'ready' && filteredFunds.length > 0 && (
+        {status === 'ready' ? <SourceDisclosure source={source} stale={isStaleCache} /> : null}
+
+        {status === 'ready' && selectedFunds.length > 0 ? (
           <>
             <p className="result-count">
-              {debouncedQuery ? `找到 ${filteredFunds.length.toLocaleString('zh-CN')} 只基金` : `全部 ${funds.length.toLocaleString('zh-CN')} 只基金`}
+              当前显示 {selectedFunds.length.toLocaleString('zh-CN')} 只基金份额
             </p>
-            <section className="fund-grid" aria-label="基金列表">
-              {filteredFunds.map((fund) => <FundCard key={fund.code} fund={fund} />)}
-            </section>
-            {funds.some((fund) => fund.isSimulatedChange) && (
-              <p className="data-note">* 数据源未提供日涨跌幅的基金使用 -2% 至 +3% 的稳定模拟值，仅供界面演示。</p>
-            )}
+            {viewMode === 'card' ? <FundCards funds={selectedFunds} /> : <FundTable funds={selectedFunds} />}
           </>
-        )}
+        ) : null}
 
-        {status === 'ready' && filteredFunds.length === 0 && (
-          <section className="empty-state">
-            <h2>没有匹配结果</h2>
-            <p>换一个基金名称、简称或六位代码试试。</p>
-            <button type="button" onClick={() => setQuery('')}>清空搜索</button>
-          </section>
-        )}
+        {status === 'ready' && selectedFunds.length === 0 ? <EmptyState onReset={resetConditions} /> : null}
       </main>
     </div>
   )
