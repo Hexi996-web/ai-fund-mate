@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import avatarUrl from './assets/fund-mate-avatar.png'
 import { FundControls, FUND_CATEGORIES, SORT_OPTIONS } from './components/FundControls.jsx'
-import { FundCards, FundTable, SkeletonView } from './components/FundViews.jsx'
+import { SkeletonView } from './components/FundViews.jsx'
+import { FundProductCards, FundProductTable } from './components/FundProductViews.jsx'
 import {
   readFundCache,
   readPreference,
@@ -9,9 +10,8 @@ import {
   writeFundCache,
   writePreference,
 } from './data/fundCache.js'
-import { fetchFundPayload, getPayloadDataDate } from './data/fundData.js'
-import { normalizeFunds, selectFunds } from './data/fundModel.js'
-import { selectDisplayFunds } from './data/fundDisplay.js'
+import { fetchFundProductPayload, getPayloadDataDate } from './data/fundData.js'
+import { fallbackProductsFromShares, normalizeProducts, selectProducts } from './data/fundProductModel.js'
 import './App.css'
 
 const MOBILE_VIEW_QUERY = '(max-width: 767px)'
@@ -94,7 +94,7 @@ function SourceDisclosure({ source, stale }) {
         </a>
         <span>基金主体数与页面基金份额数口径不同，不可直接比较。</span>
       </p>
-      {source === 'fallback' ? <p className="cache-warning">当前为降级数据源，可能仅提供代码、名称和类型。</p> : null}
+      {source === 'fallback' || source === 'active-shares' ? <p className="cache-warning">当前为降级数据源，可能仅提供代码、名称和类型。</p> : null}
       {stale ? <p className="cache-warning">今日数据更新失败，当前展示最近一次有效缓存。</p> : null}
     </aside>
   )
@@ -111,7 +111,9 @@ function EmptyState({ onReset }) {
 }
 
 export default function App({ initialQuery = '', onQueryChange }) {
-  const [funds, setFunds] = useState([])
+  const [products, setProducts] = useState([])
+  const [shareTotal, setShareTotal] = useState(0)
+  const [expandedIds, setExpandedIds] = useState(() => new Set())
   const [status, setStatus] = useState('loading')
   const [error, setError] = useState('')
   const [dataDate, setDataDate] = useState('')
@@ -144,8 +146,9 @@ export default function App({ initialQuery = '', onQueryChange }) {
       ? readStaleFundCache(window.localStorage, today)
       : null
 
-    if (cached?.funds.length > 0) {
-      setFunds(cached.funds)
+    if (cached?.products.length > 0) {
+      setProducts(cached.products)
+      setShareTotal(cached.shareTotal)
       setDataDate(cached.dataDate)
       setSource(cached.source)
       setStatus('ready')
@@ -154,12 +157,14 @@ export default function App({ initialQuery = '', onQueryChange }) {
 
     const loadFunds = async () => {
       try {
-        const { payload, source: nextSource } = await fetchFundPayload(fetch, { signal: controller.signal })
-        const normalized = normalizeFunds(payload)
+        const { payload, source: nextSource } = await fetchFundProductPayload(fetch, { signal: controller.signal })
+        const normalized = nextSource === 'products' ? normalizeProducts(payload) : fallbackProductsFromShares(payload)
         const nextDataDate = getPayloadDataDate(payload)
         if (normalized.length === 0) throw new Error('接口未返回有效基金数据')
 
-        setFunds(normalized)
+        setProducts(normalized)
+        const nextShareTotal = normalized.reduce((sum, product) => sum + product.shareCount, 0)
+        setShareTotal(nextShareTotal)
         setDataDate(nextDataDate)
         setSource(nextSource)
         setStatus('ready')
@@ -168,12 +173,15 @@ export default function App({ initialQuery = '', onQueryChange }) {
           dataDate: nextDataDate,
           fetchedAt: Date.now(),
           source: nextSource,
-          funds: normalized,
+          products: normalized,
+          productTotal: normalized.length,
+          shareTotal: nextShareTotal,
         })
       } catch (requestError) {
         if (requestError?.name === 'AbortError') return
-        if (staleCache?.funds.length > 0) {
-          setFunds(staleCache.funds)
+        if (staleCache?.products.length > 0) {
+          setProducts(staleCache.products)
+          setShareTotal(staleCache.shareTotal)
           setDataDate(staleCache.dataDate)
           setSource(staleCache.source)
           setIsStaleCache(true)
@@ -189,25 +197,38 @@ export default function App({ initialQuery = '', onQueryChange }) {
     return () => controller.abort()
   }, [])
 
-  const hasDateData = funds.some((fund) => fund.lastNetValueDate !== null)
+  const hasDateData = products.some((product) => product.representativeShare?.lastNetValueDate !== null)
   const effectiveSortMode = !hasDateData && sortMode.startsWith('date-') ? 'default' : sortMode
 
-  const selectedFunds = useMemo(() => selectFunds(funds, {
+  const selection = useMemo(() => selectProducts(products, {
     query: debouncedQuery,
     category: selectedCategory,
     sortMode: effectiveSortMode,
-  }), [debouncedQuery, effectiveSortMode, funds, selectedCategory])
+  }), [debouncedQuery, effectiveSortMode, products, selectedCategory])
+  const selectedProducts = selection.products
 
-  const displayFunds = useMemo(() => selectDisplayFunds(selectedFunds), [selectedFunds])
+  useEffect(() => {
+    if (selection.matchedShareCodes.size === 0) return
+    const matchingIds = products
+      .filter((product) => product.shares.some((share) => selection.matchedShareCodes.has(share.code)))
+      .map((product) => product.productId)
+    setExpandedIds((current) => new Set([...current, ...matchingIds]))
+  }, [products, selection.matchedShareCodes])
 
   const assistantMessage = getAssistantMessage({
     status,
-    selectedCount: selectedFunds.length,
-    totalCount: funds.length,
+    selectedCount: selectedProducts.length,
+    totalCount: products.length,
     query: debouncedQuery,
     category: selectedCategory,
   })
 
+  const toggleProduct = (productId) => setExpandedIds((current) => {
+    const next = new Set(current)
+    if (next.has(productId)) next.delete(productId)
+    else next.add(productId)
+    return next
+  })
   const handleCategoryChange = (value) => {
     setSelectedCategory(value)
     writePreference(window.localStorage, 'category', value)
@@ -235,7 +256,7 @@ export default function App({ initialQuery = '', onQueryChange }) {
       <main className="content">
         <div className="meta-row">
           <p>数据日期：<strong>{dataDate || '--'}</strong></p>
-          {status === 'ready' ? <p>当前加载：<strong>{funds.length.toLocaleString('zh-CN')} 只基金份额</strong></p> : null}
+          {status === 'ready' ? <p><strong>基金产品 {products.length.toLocaleString('zh-CN')} 只｜基金份额 {shareTotal.toLocaleString('zh-CN')} 个</strong></p> : null}
         </div>
 
         <FundControls
@@ -263,16 +284,20 @@ export default function App({ initialQuery = '', onQueryChange }) {
 
         {status === 'ready' ? <SourceDisclosure source={source} stale={isStaleCache} /> : null}
 
-        {status === 'ready' && selectedFunds.length > 0 ? (
+        {status === 'ready' && selectedProducts.length > 0 ? (
           <>
             <p className="result-count">
-              当前显示 {selectedFunds.length.toLocaleString('zh-CN')} 只基金份额
+              当前显示 {selectedProducts.length.toLocaleString('zh-CN')} 只基金产品
             </p>
-            {viewMode === 'card' ? <FundCards funds={displayFunds.items} /> : <FundTable funds={displayFunds.items} />}
+            {viewMode === 'card' ? (
+              <FundProductCards products={selectedProducts} expandedIds={expandedIds} matchedShareCodes={selection.matchedShareCodes} onToggle={toggleProduct} />
+            ) : (
+              <FundProductTable products={selectedProducts} expandedIds={expandedIds} matchedShareCodes={selection.matchedShareCodes} onToggle={toggleProduct} />
+            )}
           </>
         ) : null}
 
-        {status === 'ready' && selectedFunds.length === 0 ? <EmptyState onReset={resetConditions} /> : null}
+        {status === 'ready' && selectedProducts.length === 0 ? <EmptyState onReset={resetConditions} /> : null}
       </main>
     </div>
   )

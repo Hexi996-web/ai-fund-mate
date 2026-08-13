@@ -28,20 +28,23 @@ class MemoryStorage {
   }
 }
 
-const CACHE_KEY = 'ai-fund-mate:funds:v3'
+const CACHE_KEY = 'ai-fund-mate:fund-products:v4'
+const OLD_CACHE_KEY = 'ai-fund-mate:funds:v3'
 const today = '2026-08-10'
 const yesterday = '2026-08-09'
 const fetchedAt = 1786320000000
-const cachedFunds = [{ code: '000001', name: 'Example' }]
-const cacheInput = { date: today, dataDate: '2026-08-08', fetchedAt, source: 'active', funds: cachedFunds }
+const cachedProducts = [{ productId: 'p1', shareCount: 1, shares: [{ code: '000001' }] }]
+const cacheInput = { date: today, dataDate: '2026-08-08', fetchedAt, source: 'products', products: cachedProducts, productTotal: 1, shareTotal: 1 }
 
 const storedCache = (overrides = {}) => ({
-  schemaVersion: 3,
+  schemaVersion: 4,
   date: today,
   dataDate: '2026-08-08',
   fetchedAt,
-  source: 'active',
-  funds: cachedFunds,
+  source: 'products',
+  products: cachedProducts,
+  productTotal: 1,
+  shareTotal: 1,
   ...overrides,
 })
 
@@ -55,15 +58,17 @@ test('reuses a complete valid v3 cache written today', () => {
 test('invalidates an old v3 cache that does not contain dataDate', () => {
   const storage = new MemoryStorage()
   storage.setItem(CACHE_KEY, JSON.stringify({
-    schemaVersion: 3,
+    schemaVersion: 4,
     date: today,
     fetchedAt,
-    source: 'active',
-    funds: cachedFunds,
+    source: 'products',
+    products: cachedProducts,
+    productTotal: 1,
+    shareTotal: 1,
   }))
 
   assert.equal(readFundCache(storage, today), null)
-  assert.deepEqual(storage.removed, [CACHE_KEY])
+  assert.ok(storage.removed.includes(CACHE_KEY))
 })
 
 test('rejects a cache with an impossible snapshot data date', () => {
@@ -81,10 +86,12 @@ test('preserves an explicitly unavailable snapshot data date', () => {
 test('rejects incomplete v3 caches without fetchedAt', () => {
   const storage = new MemoryStorage()
   storage.setItem(CACHE_KEY, JSON.stringify({
-    schemaVersion: 3,
+    schemaVersion: 4,
     date: today,
-    source: 'active',
-    funds: cachedFunds,
+    source: 'products',
+    products: cachedProducts,
+    productTotal: 1,
+    shareTotal: 1,
   }))
 
   assert.equal(readFundCache(storage, today), null)
@@ -125,7 +132,7 @@ test('removes malformed cached JSON before returning no cache', () => {
   storage.setItem(CACHE_KEY, '{invalid')
 
   assert.equal(readFundCache(storage, today), null)
-  assert.deepEqual(storage.removed, [CACHE_KEY])
+  assert.ok(storage.removed.includes(CACHE_KEY))
 })
 
 test('does not throw when cache storage is full', () => {
@@ -145,4 +152,15 @@ test('persists preferences independently from the fund cache', () => {
   assert.equal(readPreference(storage, 'sortMode', 'default'), 'change-desc')
   assert.equal(readPreference(storage, 'category', 'all'), 'all')
   assert.notEqual(storage.getItem(CACHE_KEY), null)
+})
+test('invalidates and removes the legacy v3 fund-share cache', () => {
+  const storage = new MemoryStorage()
+  storage.setItem(OLD_CACHE_KEY, JSON.stringify({ schemaVersion: 3, funds: [] }))
+  assert.equal(readFundCache(storage, today), null)
+  assert.ok(storage.removed.includes(OLD_CACHE_KEY))
+})
+
+test('rejects product cache when totals do not match nested shares', () => {
+  const storage = new MemoryStorage()
+  assert.equal(writeFundCache(storage, { ...cacheInput, shareTotal: 2 }), false)
 })

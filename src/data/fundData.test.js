@@ -2,9 +2,11 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import {
   ACTIVE_FUNDS_URL,
+  FUND_PRODUCTS_URL,
   EXCLUDED_FUNDS_URL,
   SOURCE_FUNDS_URL,
   fetchFundPayload,
+  fetchFundProductPayload,
   getPayloadDataDate,
 } from './fundData.js'
 
@@ -149,4 +151,32 @@ test('extracts the truthful snapshot date from either supported update field', (
   assert.equal(getPayloadDataDate({ update_time: '2026-08-09T23:00:00+08:00' }), '2026-08-09')
   assert.equal(getPayloadDataDate({ updateTime: 'not-a-date' }), null)
   assert.equal(getPayloadDataDate({}), null)
+})
+test('prefers the product dataset when it is available', async () => {
+  const calls = []
+  const payload = { productTotal: 1, shareTotal: 1, products: [{ productId: 'p1' }] }
+  const result = await fetchFundProductPayload(async (url) => {
+    calls.push(url)
+    return response(true, payload)
+  })
+  assert.deepEqual(calls, [FUND_PRODUCTS_URL])
+  assert.deepEqual(result, { payload, source: 'products' })
+})
+
+test('falls back to active shares when the product dataset is invalid', async () => {
+  const calls = []
+  const active = { funds: [{ code: '000001', name: '示例基金A' }] }
+  const result = await fetchFundProductPayload(async (url) => {
+    calls.push(url)
+    if (url === FUND_PRODUCTS_URL) return response(true, { products: [] })
+    return response(true, active)
+  })
+  assert.deepEqual(calls, [FUND_PRODUCTS_URL, ACTIVE_FUNDS_URL])
+  assert.deepEqual(result, { payload: active, source: 'active-shares' })
+})
+
+test('preserves AbortError while loading product data', async () => {
+  const abortError = new Error('aborted')
+  abortError.name = 'AbortError'
+  await assert.rejects(() => fetchFundProductPayload(async () => { throw abortError }), abortError)
 })

@@ -1,7 +1,8 @@
 import unittest
 from datetime import date, timedelta
+from pathlib import Path
 
-from update_active_funds import classify_fund, extract_last_net_value_date
+from update_active_funds import build_output_payloads, classify_fund, extract_last_net_value_date
 
 
 class ClassifyFundTests(unittest.TestCase):
@@ -102,6 +103,32 @@ class ExtractLastNetValueDateTests(unittest.TestCase):
             {"申购状态": "开放申购"},
         ))
 
+
+class ProductOutputPayloadTests(unittest.TestCase):
+    def test_builds_compatible_share_product_and_review_payloads(self):
+        active = [
+            {"code": "000001", "name": "示例基金A", "type": "混合型", "netValue": 1.0},
+            {"code": "000002", "name": "示例基金C", "type": "混合型", "netValue": 1.1},
+        ]
+        payloads = build_output_payloads(active, [], "2026-08-13 19:00:00")
+        shares = payloads["funds_active.json"]
+        products = payloads["fund_products.json"]
+        review = payloads["funds_grouping_review.json"]
+        self.assertEqual(shares["total"], 2)
+        self.assertEqual(products["shareTotal"], 2)
+        self.assertEqual(products["productTotal"], 1)
+        self.assertEqual(review["shareTotal"], 2)
+        self.assertEqual(products["products"][0]["shareCount"], 2)
+        for fund in shares["funds"]:
+            for field in ("productId", "productName", "shareClass", "groupingConfidence", "groupingRule"):
+                self.assertIn(field, fund)
+            self.assertIn("netValue", fund)
+
+    def test_workflow_validates_and_commits_product_outputs(self):
+        workflow = (Path(__file__).resolve().parents[1] / ".github/workflows/update-active-funds.yml").read_text(encoding="utf-8")
+        self.assertIn("python -m pytest scripts/test_fund_product_model.py scripts/test_update_active_funds.py -q", workflow)
+        self.assertIn("public/fund_products.json", workflow)
+        self.assertIn("public/funds_grouping_review.json", workflow)
 
 if __name__ == "__main__":
     unittest.main()

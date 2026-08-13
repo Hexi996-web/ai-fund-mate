@@ -1,3 +1,6 @@
+export const FUND_PRODUCTS_URL =
+  '/fund_products.json'
+
 export const ACTIVE_FUNDS_URL =
   '/funds_active.json'
 
@@ -66,4 +69,21 @@ export const fetchFundPayload = async (fetchImpl = fetch, options = {}) => {
     ? payload.funds.filter((fund) => !excludedCodes.has(normalizeCode(fund?.code)))
     : []
   return { payload: { ...payload, funds }, source: 'fallback' }
+}
+export const fetchFundProductPayload = async (fetchImpl = fetch, options = {}) => {
+  try {
+    const payload = await requestJson(fetchImpl, FUND_PRODUCTS_URL, options)
+    if (!Array.isArray(payload?.products) || payload.products.length === 0) {
+      throw new Error('基金产品数据为空')
+    }
+    return { payload, source: 'products' }
+  } catch (error) {
+    if (error?.name === 'AbortError') throw error
+  }
+
+  const payload = await requestJson(fetchImpl, ACTIVE_FUNDS_URL, options)
+  if (!Array.isArray(payload?.funds) || payload.funds.length === 0) {
+    throw new Error('活跃基金份额数据为空')
+  }
+  return { payload, source: 'active-shares' }
 }

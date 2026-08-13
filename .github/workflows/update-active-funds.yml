@@ -24,10 +24,12 @@ jobs:
         run: pip install -r requirements-data.txt
       - name: Build active fund dataset
         run: python scripts/update_active_funds.py
+      - name: Validate fund datasets
+        run: python -m pytest scripts/test_fund_product_model.py scripts/test_update_active_funds.py -q
       - name: Commit updated data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/funds_active.json public/funds_excluded.json
+          git add public/funds_active.json public/funds_excluded.json public/fund_products.json public/funds_grouping_review.json
           git diff --cached --quiet || git commit -m "data: update active funds"
           git push
