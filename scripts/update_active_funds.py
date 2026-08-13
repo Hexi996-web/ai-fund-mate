@@ -6,6 +6,8 @@ from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
+from fund_product_model import build_products
+
 STALE_DAYS = 60
 TERMINATED_WORDS = ("终止", "清算", "已清盘", "终止上市")
 ROOT = Path(__file__).resolve().parents[1]
@@ -105,6 +107,50 @@ def safe_records(fetcher, label: str) -> list[dict[str, Any]]:
         return []
 
 
+def build_output_payloads(active_funds, excluded_funds, update_time):
+    products, audit = build_products(active_funds)
+    enhanced_shares = [share for product in products for share in product["shares"]]
+    enhanced_shares.sort(key=lambda share: share["code"])
+    return {
+        "funds_active.json": {
+            "updateTime": update_time,
+            "staleThresholdDays": STALE_DAYS,
+            "total": len(enhanced_shares),
+            "funds": enhanced_shares,
+        },
+        "funds_excluded.json": {
+            "updateTime": update_time,
+            "total": len(excluded_funds),
+            "funds": excluded_funds,
+        },
+        "fund_products.json": {
+            "updateTime": update_time,
+            "productTotal": len(products),
+            "shareTotal": len(enhanced_shares),
+            "groupingVersion": "v1",
+            "products": products,
+        },
+        "funds_grouping_review.json": {"updateTime": update_time, **audit},
+    }
+
+
+def write_output_payloads(payloads):
+    PUBLIC_DIR.mkdir(parents=True, exist_ok=True)
+    temporary = []
+    try:
+        for filename, payload in payloads.items():
+            target = PUBLIC_DIR / filename
+            temp = target.with_suffix(target.suffix + ".tmp")
+            with temp.open("w", encoding="utf-8") as file:
+                json.dump(payload, file, ensure_ascii=False, separators=(",", ":"))
+            json.loads(temp.read_text(encoding="utf-8"))
+            temporary.append((temp, target))
+        for temp, target in temporary:
+            temp.replace(target)
+    finally:
+        for temp, _ in temporary:
+            if temp.exists():
+                temp.unlink()
 def main() -> None:
     import akshare as ak
 
@@ -182,26 +228,13 @@ def main() -> None:
         })
 
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    PUBLIC_DIR.mkdir(parents=True, exist_ok=True)
-    outputs = (
-        ("funds_active.json", {
-            "updateTime": now,
-            "staleThresholdDays": STALE_DAYS,
-            "total": len(active_funds),
-            "funds": active_funds,
-        }),
-        ("funds_excluded.json", {
-            "updateTime": now,
-            "total": len(excluded_funds),
-            "funds": excluded_funds,
-        }),
+    payloads = build_output_payloads(active_funds, excluded_funds, now)
+    write_output_payloads(payloads)
+    print(
+        f"活跃基金份额：{payloads['fund_products.json']['shareTotal']}；"
+        f"基金产品：{payloads['fund_products.json']['productTotal']}；"
+        f"隔离基金：{len(excluded_funds)}"
     )
-    for filename, payload in outputs:
-        with (PUBLIC_DIR / filename).open("w", encoding="utf-8") as file:
-            json.dump(payload, file, ensure_ascii=False, separators=(",", ":"))
-
-    print(f"活跃基金：{len(active_funds)}；隔离基金：{len(excluded_funds)}")
-
 
 if __name__ == "__main__":
     main()
