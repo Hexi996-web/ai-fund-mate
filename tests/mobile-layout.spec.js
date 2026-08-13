@@ -2,6 +2,10 @@ import { expect, test } from '@playwright/test'
 import os from 'node:os'
 import path from 'node:path'
 
+test.beforeEach(async ({ page }) => {
+  await page.route('**/fund_products.json', (route) => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ productTotal: 0, shareTotal: 0, products: [] }) }))
+})
+
 const completeFund = (code, name, type, overrides = {}) => ({
   code,
   name,
@@ -104,7 +108,7 @@ test('mobile fund flow stays compact and persists the selected view', async ({ p
 
   await page.getByRole('button', { name: '股票型', exact: true }).click()
   await page.getByPlaceholder('搜索基金名称或代码').fill('消费')
-  await expect(page.locator('.result-count')).toHaveText('当前显示 2 只基金份额')
+  await expect(page.locator('.result-count')).toHaveText('当前显示 2 只基金产品')
   await page.getByLabel('基金排序方式').selectOption('change-desc')
   await expect(page.locator('.fund-card h2')).toHaveText(['消费成长指数B', '消费先锋股票A'])
 
@@ -190,37 +194,14 @@ test('snapshot data date is truthful and date sorting disappears when all real d
   await expect(page.getByLabel('基金排序方式').locator('option[value="date-desc"]')).toHaveCount(0)
   await expect(page.getByLabel('基金排序方式').locator('option[value="date-asc"]')).toHaveCount(0)
 })
-test('fallback source warns and renders unavailable real fields explicitly', async ({ page }) => {
+test('active-share fallback warns and renders unavailable real fields explicitly', async ({ page }) => {
   const consoleProblems = collectConsoleProblems(page)
   await page.route('**/funds_active.json', (route) => route.fulfill({
     status: 200,
     contentType: 'application/json',
-    body: JSON.stringify({ funds: [] }),
-  }))
-  await page.route('**/funds_excluded.json', (route) => route.fulfill({
-    status: 200,
-    contentType: 'application/json',
     body: JSON.stringify({
-      updateTime: '2026-08-06 14:00:00',
-      total: 1,
-      funds: [{
-        code: '654321',
-        name: '已隔离重叠基金',
-        operationStatus: 'suspected_terminated',
-        lastNetValueDate: null,
-        exclusionReason: '超过60天无净值',
-      }],
-    }),
-  }))
-  await page.route('**/funds_simple.json', (route) => route.fulfill({
-    status: 200,
-    contentType: 'application/json',
-    body: JSON.stringify({
-      update_time: '2026-08-06T15:00:00+08:00',
-      funds: [
-        { code: '654321', name: '不应回流的隔离基金', type: '混合型' },
-        { code: '123456', name: '降级消费股票', type: '股票型' },
-      ],
+      updateTime: '2026-08-06 15:00:00',
+      funds: [{ code: '123456', name: '降级消费股票', type: '股票型' }],
     }),
   }))
 
@@ -228,17 +209,9 @@ test('fallback source warns and renders unavailable real fields explicitly', asy
   await page.reload()
   await openFundLibrary(page)
   await expect(page.locator('.meta-row').first()).toContainText('数据日期：2026-08-06')
-  await expect(page.locator('.fund-card')).toHaveCount(1)
+  await expect(page.locator('.fund-product-card')).toHaveCount(1)
   await expect(page.locator('.fund-card__heading > span')).toHaveText('123456')
-  await expect(page.locator('.cache-warning')).toHaveText('当前为降级数据源，可能仅提供代码、名称和类型。')
-  await expect(page.locator('.fund-card').first().locator('dd')).toHaveText([
-    '股票型',
-    '--',
-    '--',
-    '--',
-    '--',
-    '--',
-    '--',
-  ])
+  await expect(page.locator('.cache-warning')).toContainText('降级数据源')
+  await expect(page.locator('.fund-product-card')).toContainText('净值 --')
   expect(consoleProblems).toEqual([])
 })

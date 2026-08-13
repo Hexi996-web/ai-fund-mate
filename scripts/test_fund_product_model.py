@@ -108,3 +108,9 @@ def test_duplicate_share_class_splits_group_and_each_code_appears_once():
     assert len(codes) == len(set(codes))
     assert all(product["shareCount"] == len(product["shares"]) for product in products)
     assert len(audit["conflicts"]) == 1
+@pytest.mark.parametrize("name", ["华安黄金ETF", "示例指数LOF", "养老目标FOF", "海外股票QDII"])
+def test_does_not_treat_fund_type_acronyms_as_share_classes(name):
+    identity = parse_share_identity(name)
+    assert identity.product_name == name
+    assert identity.share_class == "DEFAULT"
+    assert identity.rule == "no_share_suffix"

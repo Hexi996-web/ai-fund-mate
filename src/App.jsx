@@ -94,7 +94,7 @@ function SourceDisclosure({ source, stale }) {
         </a>
         <span>基金主体数与页面基金份额数口径不同，不可直接比较。</span>
       </p>
-      {source === 'fallback' ? <p className="cache-warning">当前为降级数据源，可能仅提供代码、名称和类型。</p> : null}
+      {source === 'fallback' || source === 'active-shares' ? <p className="cache-warning">当前为降级数据源，可能仅提供代码、名称和类型。</p> : null}
       {stale ? <p className="cache-warning">今日数据更新失败，当前展示最近一次有效缓存。</p> : null}
     </aside>
   )

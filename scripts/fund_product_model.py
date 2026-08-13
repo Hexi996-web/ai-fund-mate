@@ -36,6 +36,9 @@ def parse_share_identity(name: str) -> ShareIdentity:
                 product_name, share_class, "high", "currency_share_suffix"
             )
 
+    if normalized.upper().endswith(("ETF", "LOF", "FOF", "QDII")):
+        return ShareIdentity(normalized, "DEFAULT", "high", "no_share_suffix")
+
     match = _LETTER_SUFFIX.fullmatch(normalized)
     if match:
         return ShareIdentity(
