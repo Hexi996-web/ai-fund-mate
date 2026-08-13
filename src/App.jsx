@@ -7,7 +7,6 @@ import {
   readFundCache,
   readPreference,
   readStaleFundCache,
-  writeFundCache,
   writePreference,
 } from './data/fundCache.js'
 import { fetchFundProductPayload, getPayloadDataDate } from './data/fundData.js'
@@ -18,6 +17,7 @@ const MOBILE_VIEW_QUERY = '(max-width: 767px)'
 const AMAC_REFERENCE_URL = 'https://www.amac.org.cn/sjtj/tjbg/gmjj/202606/P020260617606470583907.pdf'
 const SORT_MODES = new Set(SORT_OPTIONS.map((option) => option.value))
 const VIEW_MODES = new Set(['list', 'card'])
+const INITIAL_RENDER_LIMIT = 50
 
 const getToday = () => {
   const now = new Date()
@@ -168,15 +168,6 @@ export default function App({ initialQuery = '', onQueryChange }) {
         setDataDate(nextDataDate)
         setSource(nextSource)
         setStatus('ready')
-        writeFundCache(window.localStorage, {
-          date: today,
-          dataDate: nextDataDate,
-          fetchedAt: Date.now(),
-          source: nextSource,
-          products: normalized,
-          productTotal: normalized.length,
-          shareTotal: nextShareTotal,
-        })
       } catch (requestError) {
         if (requestError?.name === 'AbortError') return
         if (staleCache?.products.length > 0) {
@@ -206,6 +197,7 @@ export default function App({ initialQuery = '', onQueryChange }) {
     sortMode: effectiveSortMode,
   }), [debouncedQuery, effectiveSortMode, products, selectedCategory])
   const selectedProducts = selection.products
+  const displayedProducts = selectedProducts.slice(0, INITIAL_RENDER_LIMIT)
 
   useEffect(() => {
     if (selection.matchedShareCodes.size === 0) return
@@ -290,9 +282,9 @@ export default function App({ initialQuery = '', onQueryChange }) {
               当前显示 {selectedProducts.length.toLocaleString('zh-CN')} 只基金产品
             </p>
             {viewMode === 'card' ? (
-              <FundProductCards products={selectedProducts} expandedIds={expandedIds} matchedShareCodes={selection.matchedShareCodes} onToggle={toggleProduct} />
+              <FundProductCards products={displayedProducts} expandedIds={expandedIds} matchedShareCodes={selection.matchedShareCodes} onToggle={toggleProduct} />
             ) : (
-              <FundProductTable products={selectedProducts} expandedIds={expandedIds} matchedShareCodes={selection.matchedShareCodes} onToggle={toggleProduct} />
+              <FundProductTable products={displayedProducts} expandedIds={expandedIds} matchedShareCodes={selection.matchedShareCodes} onToggle={toggleProduct} />
             )}
           </>
         ) : null}
