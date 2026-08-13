@@ -646,3 +646,16 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+.fund-product-card { min-width: 0; }
+.representative-share { margin: 8px 0; color: var(--text-secondary, #667085); font-size: 0.9rem; }
+.fund-product-metrics { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 12px 0; }
+.share-toggle { border: 1px solid #d0d5dd; border-radius: 8px; background: #fff; padding: 8px 12px; cursor: pointer; }
+.fund-share-list { display: grid; gap: 8px; margin-top: 12px; }
+.fund-share-row { display: grid; grid-template-columns: minmax(120px, 1.3fr) minmax(140px, 2fr) repeat(4, minmax(90px, 1fr)); gap: 8px; align-items: center; padding: 10px; border-radius: 8px; background: #f8fafc; font-size: 0.86rem; }
+.fund-share-row[data-search-match='true'] { outline: 2px solid #667eea; background: #f2f4ff; }
+.fund-product-share-detail > td { padding: 8px 16px 16px; }
+@media (max-width: 767px) {
+  .fund-share-row { grid-template-columns: 1fr 1fr; overflow-wrap: anywhere; }
+  .fund-product-metrics { flex-direction: column; gap: 4px; }
+}
