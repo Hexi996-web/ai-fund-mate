@@ -1,5 +1,6 @@
-export const FUND_CACHE_KEY = 'ai-fund-mate:funds:v3'
-export const SCHEMA_VERSION = 3
+export const FUND_CACHE_KEY = 'ai-fund-mate:fund-products:v4'
+export const LEGACY_FUND_CACHE_KEY = 'ai-fund-mate:funds:v3'
+export const SCHEMA_VERSION = 4
 
 const preferenceKey = (key) => `ai-fund-mate:preference:${key}`
 
@@ -9,48 +10,47 @@ const isValidDataDate = (value) => {
   if (!match) return false
   const [year, month, day] = match.slice(1).map(Number)
   const parsed = new Date(Date.UTC(year, month - 1, day))
-  return parsed.getUTCFullYear() === year
-    && parsed.getUTCMonth() === month - 1
-    && parsed.getUTCDate() === day
+  return parsed.getUTCFullYear() === year && parsed.getUTCMonth() === month - 1 && parsed.getUTCDate() === day
+}
+
+const validProductTotals = (value) => {
+  if (!Array.isArray(value?.products) || value.productTotal !== value.products.length) return false
+  const shareTotal = value.products.reduce((sum, product) => (
+    Array.isArray(product?.shares) && product.shareCount === product.shares.length
+      ? sum + product.shares.length
+      : Number.NaN
+  ), 0)
+  return Number.isInteger(value.shareTotal) && shareTotal === value.shareTotal
 }
 
 const isValidCache = (value) => (
   value?.schemaVersion === SCHEMA_VERSION
-  && typeof value.date === 'string'
-  && value.date.length > 0
-  && Object.hasOwn(value, 'dataDate')
-  && isValidDataDate(value.dataDate)
-  && Number.isFinite(value.fetchedAt)
-  && value.fetchedAt > 0
-  && (value.source === 'active' || value.source === 'fallback')
-  && Array.isArray(value.funds)
+  && typeof value.date === 'string' && value.date.length > 0
+  && Object.hasOwn(value, 'dataDate') && isValidDataDate(value.dataDate)
+  && Number.isFinite(value.fetchedAt) && value.fetchedAt > 0
+  && (value.source === 'products' || value.source === 'active-shares')
+  && validProductTotals(value)
 )
 
-const removeFundCache = (storage) => {
-  try {
-    storage.removeItem(FUND_CACHE_KEY)
-  } catch {
-    // Cache cleanup must not disrupt fund loading.
-  }
+const removeCache = (storage, key = FUND_CACHE_KEY) => {
+  try { storage.removeItem(key) } catch { /* cache cleanup is best effort */ }
 }
 
 const readValidFundCache = (storage) => {
+  removeCache(storage, LEGACY_FUND_CACHE_KEY)
   let value
-
   try {
     const cached = storage.getItem(FUND_CACHE_KEY)
     if (cached === null) return null
     value = JSON.parse(cached)
   } catch {
-    removeFundCache(storage)
+    removeCache(storage)
     return null
   }
-
   if (!isValidCache(value)) {
-    removeFundCache(storage)
+    removeCache(storage)
     return null
   }
-
   return value
 }
 
@@ -71,33 +71,18 @@ export const writeFundCache = (storage, value) => {
     dataDate: value.dataDate,
     fetchedAt: value.fetchedAt,
     source: value.source,
-    funds: value.funds,
+    products: value.products,
+    productTotal: value.productTotal,
+    shareTotal: value.shareTotal,
   }
-
   if (!isValidCache(cache)) return false
-
-  try {
-    storage.setItem(FUND_CACHE_KEY, JSON.stringify(cache))
-    return true
-  } catch {
-    return false
-  }
+  try { storage.setItem(FUND_CACHE_KEY, JSON.stringify(cache)); return true } catch { return false }
 }
 
 export const readPreference = (storage, key, fallback) => {
-  try {
-    const value = storage.getItem(preferenceKey(key))
-    return value === null ? fallback : JSON.parse(value)
-  } catch {
-    return fallback
-  }
+  try { const value = storage.getItem(preferenceKey(key)); return value === null ? fallback : JSON.parse(value) } catch { return fallback }
 }
 
 export const writePreference = (storage, key, value) => {
-  try {
-    storage.setItem(preferenceKey(key), JSON.stringify(value))
-    return true
-  } catch {
-    return false
-  }
+  try { storage.setItem(preferenceKey(key), JSON.stringify(value)); return true } catch { return false }
 }
