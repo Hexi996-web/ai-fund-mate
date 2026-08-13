@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { EVIDENCE_NAMES, fetchThemeWorkspace } from '../data/themeData.js'
 import { ThemeFunds } from './ThemeFunds.jsx'
+import { explainGap, localizeEvidence, localizeRule } from '../data/evidenceLocalization.js'
 
 const statusText = { priority_research: '重点研究', active_watch: '积极观察', neutral_tracking: '中性跟踪', cautious: '谨慎', risk_or_unverified: '风险或缺乏验证', insufficient_data: '数据不足' }
 function ScoreBar({ value }) { return <span className="score-bar"><i style={{ width: `${value ?? 0}%` }} /></span> }
@@ -10,15 +11,16 @@ function ThemeDetail({ item, onOpenFundLibrary }) {
       {Object.entries(item.evidence).map(([key, evidence]) => <section key={key} className="evidence-row">
         <div><strong>{EVIDENCE_NAMES[key]}</strong><span>{evidence.score ?? '数据不足'}</span></div>
         <ScoreBar value={evidence.score} />
-        <p>{evidence.rule}</p>
-        {evidence.evidence.length ? <ul>{evidence.evidence.map((text) => <li key={text}>{text}</li>)}</ul> : null}
+        <p>{localizeRule(evidence.rule)}</p>
+        {evidence.evidence.length ? <ul>{evidence.evidence.map((text) => <li key={text}>{localizeEvidence(text)}</li>)}</ul> : null}
       </section>)}
     </div>
-    {item.degradedReasons.length ? <div className="degraded-box"><strong>降级与缺失</strong><ul>{item.degradedReasons.map((text) => <li key={text}>{text}</li>)}</ul></div> : null}
+    {item.degradedReasons.length ? <div className="degraded-box"><strong>数据缺口与可信度说明</strong><ul>{item.degradedReasons.map((text) => { const gap = explainGap(text); return <li key={text}><b>{gap.title}</b>：{gap.reason}<span>影响：{gap.impact}</span></li> })}</ul></div> : null}
     <div className="scenario-box">
       {item.scenarioStatus === 'insufficient_history' ? <><strong>历史数据不足，暂不生成情景概率</strong><p>当前 {item.availablePoints} 个历史点，至少需要 {item.requiredPoints} 个不同日期的快照。</p></> : <p>情景数据状态：{item.scenarioStatus}</p>}
     </div>
-    <ThemeFunds group={item.relatedFunds} onOpenFundLibrary={onOpenFundLibrary} />`n    <p className="research-disclaimer">{item.disclaimer}</p>
+    <ThemeFunds group={item.relatedFunds} onOpenFundLibrary={onOpenFundLibrary} />
+    <p className="research-disclaimer">{item.disclaimer}</p>
   </div>
 }
 export function ThemeWorkspace({ onOpenFundLibrary }) {

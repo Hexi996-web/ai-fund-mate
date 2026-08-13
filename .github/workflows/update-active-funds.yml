@@ -19,8 +19,9 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
+          cache-dependency-path: requirements-data.txt
       - name: Install data dependencies
-        run: pip install akshare pandas
+        run: pip install -r requirements-data.txt
       - name: Build active fund dataset
         run: python scripts/update_active_funds.py
       - name: Commit updated data
