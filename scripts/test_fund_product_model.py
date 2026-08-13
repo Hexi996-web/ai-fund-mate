@@ -2,7 +2,7 @@ import re
 
 import pytest
 
-from fund_product_model import make_product_id, parse_share_identity
+from fund_product_model import build_products, make_product_id, parse_share_identity
 
 
 @pytest.mark.parametrize(
@@ -49,3 +49,62 @@ def test_product_id_is_stable_versioned_and_type_sensitive():
     assert first == second
     assert first != other_type
     assert re.fullmatch(r"prd_[0-9a-f]{16}", first)
+
+def share(code, name, fund_type="混合型"):
+    return {
+        "code": code,
+        "name": name,
+        "type": fund_type,
+        "netValue": 1.0,
+        "dailyChangePercent": 0.1,
+    }
+
+
+def test_groups_a_and_c_shares_and_selects_a_as_representative():
+    products, audit = build_products([
+        share("000002", "示例基金C"),
+        share("000001", "示例基金A"),
+    ])
+
+    assert len(products) == 1
+    assert products[0]["productName"] == "示例基金"
+    assert products[0]["representativeCode"] == "000001"
+    assert products[0]["shareCount"] == 2
+    assert [item["shareClass"] for item in products[0]["shares"]] == ["A", "C"]
+    assert audit["shareTotal"] == 2
+    assert audit["productTotal"] == 1
+
+
+def test_prefers_default_rmb_share_then_c_when_a_is_missing():
+    products, _ = build_products([
+        share("000003", "示例基金C"),
+        share("000002", "示例基金"),
+    ])
+
+    assert products[0]["representativeCode"] == "000002"
+
+
+def test_type_conflict_splits_group_into_low_confidence_products():
+    products, audit = build_products([
+        share("000001", "示例基金A", "混合型"),
+        share("000002", "示例基金C", "债券型"),
+    ])
+
+    assert len(products) == 2
+    assert {product["groupingConfidence"] for product in products} == {"low"}
+    assert len(audit["conflicts"]) == 1
+    assert {item["code"] for item in audit["lowConfidence"]} == {"000001", "000002"}
+
+
+def test_duplicate_share_class_splits_group_and_each_code_appears_once():
+    products, audit = build_products([
+        share("000001", "示例基金A"),
+        share("000002", "示例基金 A"),
+    ])
+
+    codes = [item["code"] for product in products for item in product["shares"]]
+    assert len(products) == 2
+    assert sorted(codes) == ["000001", "000002"]
+    assert len(codes) == len(set(codes))
+    assert all(product["shareCount"] == len(product["shares"]) for product in products)
+    assert len(audit["conflicts"]) == 1
