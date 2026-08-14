@@ -257,6 +257,14 @@ class SignalRepository:
             row = connection.execute("SELECT * FROM pipeline_runs WHERE id=?", (run_id,)).fetchone()
         return self._run(row) if row else None
 
+    def list_runs(self, limit: int = 100) -> list[PipelineRun]:
+        with self._connect() as connection:
+            rows = connection.execute(
+                "SELECT * FROM pipeline_runs ORDER BY COALESCE(finished_at, started_at) DESC, id DESC LIMIT ?",
+                (limit,),
+            ).fetchall()
+        return [self._run(row) for row in rows]
+
     @staticmethod
     def _raw_item(row):
         return RawItem(id=row["id"], source_id=row["source_id"], url=row["url"], title=row["title"],
