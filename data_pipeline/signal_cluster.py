@@ -101,18 +101,18 @@ def _entities(item: RawItem) -> set[str]:
     configured = item.metadata.get("entities")
     if isinstance(configured, (list, tuple)):
         return {_normalize_text(value) for value in configured if isinstance(value, str) and value.strip()}
-    return _extract_entities(_item_text(item))
+    return _extract_entities(_item_text(item), cjk_title=item.title)
 
 
-def _extract_entities(text: str) -> set[str]:
+def _extract_entities(text: str, cjk_title: str = "") -> set[str]:
     entities = {value.casefold() for value in re.findall(r"\b(?:[A-Z]{2,}|[A-Z][a-z]{2,})\b", text)} - _ENTITY_STOPWORDS
-    for run in re.findall(r"[\u4e00-\u9fff]{2,}", text):
-        entities.update(run[index:index + 2] for index in range(len(run) - 1))
+    if re.search(r"[\u4e00-\u9fff]", cjk_title):
+        entities.add(f"cjk-title:{_normalize_text(cjk_title)}")
     return entities
 
 
 def _cluster_entities(cluster: EventCluster) -> set[str]:
-    return set().union(*(_entities(item) for item in cluster.raw_items)) if cluster.raw_items else _extract_entities(_cluster_text(cluster))
+    return set().union(*(_entities(item) for item in cluster.raw_items)) if cluster.raw_items else _extract_entities(_cluster_text(cluster), cjk_title=cluster.title)
 
 
 def _shares_publication_date(item: RawItem, cluster: EventCluster) -> bool:

@@ -120,3 +120,12 @@ def test_normalize_url_preserves_business_ref_and_source_parameters():
     url = "https://example.com/story?source=archive&ref=article-42&utm_source=email&fbclid=tracking"
 
     assert normalize_url(url) == "https://example.com/story?ref=article-42&source=archive"
+
+
+def test_generic_chinese_fund_overlap_does_not_merge_distinct_entities_or_events():
+    first = item("fund_a", "https://example.cn/a", "华夏基金发布科技成长产品", "公募基金市场今日发布新产品，华夏基金科技成长产品面向投资者开放。")
+    second = item("fund_b", "https://example.cn/b", "易方达基金发布消费升级产品", "公募基金市场今日发布新产品，易方达基金消费升级产品面向投资者开放。")
+
+    clusters = cluster_items([first, second], [])
+
+    assert len(clusters) == 2
