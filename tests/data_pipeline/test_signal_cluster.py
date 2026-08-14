@@ -88,3 +88,35 @@ def test_exact_syndication_clusters_when_publication_time_is_missing():
 
     assert len(clusters) == 1
     assert clusters[0].item_count == 2
+
+def test_existing_cluster_order_does_not_change_merge_target_or_output_order():
+    baseline = cluster_items([agency_original()], [])[0]
+    alpha = replace(baseline, id="cluster-a", raw_items=())
+    zeta = replace(baseline, id="cluster-z", raw_items=())
+
+    forward = cluster_items([portal_reprint()], [zeta, alpha])
+    reverse = cluster_items([portal_reprint()], [alpha, zeta])
+
+    assert [cluster.id for cluster in forward] == ["cluster-a", "cluster-z"]
+    assert [cluster.id for cluster in reverse] == ["cluster-a", "cluster-z"]
+    assert next(cluster.id for cluster in forward if cluster.item_count == 2) == "cluster-a"
+
+
+def test_same_day_shared_entity_reposts_cluster_despite_different_headlines():
+    original = item("wire_a", "https://wire.example/sinopec", "Energy company lowers spending", "Sinopec lowers capital spending after weak oil demand in China.", entities=["Sinopec"])
+    reprint = item("wire_b", "https://portal.example/sinopec", "Oil demand pressures producer budget", "Weak oil demand in China leads Sinopec to lower capital spending.", entities=["Sinopec"])
+
+    assert len(cluster_items([original, reprint], [])) == 1
+
+
+def test_same_day_broad_topic_without_shared_entity_does_not_cluster():
+    csrc = item("csrc", "https://example.cn/csrc", "Fund fee reform update", "CSRC fund fee reform policy reduces management fee costs for public funds.")
+    pbc = item("pbc", "https://example.cn/pbc", "Fund fee reform update", "PBOC fund fee reform policy reduces management fee costs for public funds.")
+
+    assert len(cluster_items([csrc, pbc], [])) == 2
+
+
+def test_normalize_url_preserves_business_ref_and_source_parameters():
+    url = "https://example.com/story?source=archive&ref=article-42&utm_source=email&fbclid=tracking"
+
+    assert normalize_url(url) == "https://example.com/story?ref=article-42&source=archive"

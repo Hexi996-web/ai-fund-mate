@@ -31,7 +31,8 @@ def load_signal_rules(path) -> dict:
 
 def classify_cluster(cluster: EventCluster, rules: dict) -> SignalDraft | None:
     text = _cluster_text(cluster).casefold()
-    for rule in rules["rules"]:
+    ordered_rules = sorted(rules["rules"], key=lambda rule: (-rule.get("priority", 0), rule["id"]))
+    for rule in ordered_rules:
         if _matches(rule, text):
             return SignalDraft(category=rule["category"], direction=rule["direction"], horizon=rule["horizon"], assets=list(rule["assets"]), fund_keywords=list(rule["fund_keywords"]), themes=list(rule["themes"]), fact=cluster.title, transmission=rule["transmission"], demand_kind=rule.get("demand_kind", "unknown"))
     return None
@@ -45,4 +46,12 @@ def _matches(rule: dict, text: str) -> bool:
     match_all = [term.casefold() for term in rule.get("match_all", [])]
     match_any = [term.casefold() for term in rule.get("match_any", [])]
     required = [term.casefold() for term in rule.get("requires_any", [])]
-    return all(term in text for term in match_all) and (not match_any or any(term in text for term in match_any)) and (not required or any(term in text for term in required))
+    excluded = [term.casefold() for term in rule.get("exclude_any", [])]
+    required_groups = [[term.casefold() for term in group] for group in rule.get("requires_all_groups", [])]
+    return (
+        all(term in text for term in match_all)
+        and (not match_any or any(term in text for term in match_any))
+        and (not required or any(term in text for term in required))
+        and not any(term in text for term in excluded)
+        and all(any(term in text for term in group) for group in required_groups)
+    )

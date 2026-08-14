@@ -57,3 +57,24 @@ def test_rules_distinguish_real_customer_demand_from_proxy_and_attention():
     assert real.demand_kind == "customer_real"
     assert proxy.demand_kind == "customer_proxy"
     assert attention.demand_kind == "media_attention"
+
+
+def test_china_mention_without_fund_or_capital_market_channel_is_rejected():
+    china_only = cluster("fed_rss", "Federal Reserve raises interest rate", "The decision affects China exports and bilateral diplomacy.", region="US")
+
+    assert classify_cluster(china_only, RULES) is None
+
+
+def test_real_redemptions_have_negative_direction_and_correct_keyword():
+    draft = classify_cluster(cluster("fund_sales", "Fund redemptions increase", "Investor fund redemptions increased.", region="CN"), RULES)
+
+    assert draft.demand_kind == "customer_real"
+    assert draft.direction == "negative"
+    assert draft.fund_keywords == ["redemptions"]
+
+
+def test_media_attention_takes_precedence_over_subscription_mentions():
+    draft = classify_cluster(cluster("media", "Search interest in fund subscriptions rises", "Media coverage of subscriptions increased.", region="CN"), RULES)
+
+    assert draft.demand_kind == "media_attention"
+    assert draft.category == "attention"
