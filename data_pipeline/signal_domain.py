@@ -66,6 +66,7 @@ class EventCluster:
     topic_key: str = ""
     item_count: int = 0
     independent_source_count: int = 0
+    raw_items: tuple[RawItem, ...] = ()
 
 
 @dataclass(frozen=True)
