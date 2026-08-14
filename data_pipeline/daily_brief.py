@@ -1,0 +1,110 @@
+"""Build a deterministic, evidence-linked Beijing-time signal brief."""
+
+from __future__ import annotations
+
+from datetime import datetime, timedelta
+from typing import Iterable
+from zoneinfo import ZoneInfo
+
+from .signal_domain import DailyBrief, DemandKind, SignalRecord, ValidationStatus
+
+
+SHANGHAI = ZoneInfo("Asia/Shanghai")
+EMPTY_TOP_CALL = "过去24小时无重大新增信号"
+
+
+def brief_window(run_at: datetime, timezone: ZoneInfo = SHANGHAI) -> tuple[datetime, datetime]:
+    """Return `[previous 08:00, current 08:00)` in the requested timezone."""
+    if run_at.tzinfo is None:
+        raise ValueError("run_at must be timezone-aware")
+    local_run = run_at.astimezone(timezone)
+    end = local_run.replace(hour=8, minute=0, second=0, microsecond=0)
+    return end - timedelta(days=1), end
+
+
+def build_daily_brief(repo, run_at: datetime) -> DailyBrief:
+    """Produce a stable two-minute payload without treating media attention as fact."""
+    start, end = brief_window(run_at)
+    signals = _window_signals(repo.list_signals(), start, end)
+    catalysts = _window_catalysts(getattr(repo, "list_catalysts", lambda: [])(), end)
+    top_signal = next((item for item in signals if _eligible_for_top_call(item)), None)
+    top_call = _top_call(top_signal)
+    body = _body(top_call, signals, catalysts, repo)
+    return DailyBrief(
+        id=f"daily-brief-{end.date().isoformat()}",
+        window_start=start,
+        window_end=end,
+        generated_at=end,
+        body=body,
+        signal_ids=[item.id for item in signals],
+        top_call=top_call,
+    )
+
+
+def _window_signals(signals: Iterable[SignalRecord], start: datetime, end: datetime) -> list[SignalRecord]:
+    included = []
+    for signal in signals:
+        timestamp = signal.published_at or signal.updated_at
+        if timestamp.tzinfo is None:
+            continue
+        local_timestamp = timestamp.astimezone(SHANGHAI)
+        if start <= local_timestamp < end:
+            included.append(signal)
+    return sorted(included, key=lambda item: (-item.priority, _timestamp(item), item.id))
+
+
+def _window_catalysts(catalysts, end: datetime):
+    preview_end = end + timedelta(days=7)
+    return sorted(
+        (item for item in catalysts if item.scheduled_at.tzinfo is not None and end <= item.scheduled_at.astimezone(SHANGHAI) < preview_end),
+        key=lambda item: (item.scheduled_at, -item.priority, item.id),
+    )
+
+
+def _eligible_for_top_call(signal: SignalRecord) -> bool:
+    return not (
+        signal.validation_status is ValidationStatus.PENDING_OFFICIAL_VALIDATION
+        and signal.demand_kind is DemandKind.MEDIA_ATTENTION
+    )
+
+
+def _top_call(signal: SignalRecord | None) -> str:
+    return EMPTY_TOP_CALL if signal is None else f"关注 {signal.title} [{signal.id}]"
+
+
+def _body(top_call: str, signals: list[SignalRecord], catalysts, repo) -> str:
+    sections = [f"Top Call\n{top_call}"]
+    valid = [item for item in signals if _eligible_for_top_call(item)]
+    pending = [item for item in signals if item not in valid]
+    if valid:
+        sections.append("核心信号\n" + "\n".join(_signal_line(item, repo) for item in valid))
+    if pending:
+        sections.append("待官方验证\n" + "\n".join(_signal_line(item, repo) for item in pending))
+    if catalysts:
+        sections.append("未来7日催化剂\n" + "\n".join(
+            f"- [{item.id}] {item.scheduled_at.astimezone(SHANGHAI).isoformat()} {item.title}" for item in catalysts
+        ))
+    return "\n\n".join(sections)
+
+
+def _signal_line(signal: SignalRecord, repo) -> str:
+    links = _evidence_links(signal.id, repo)
+    link_text = f" ({', '.join(links)})" if links else ""
+    return f"- [{signal.id}] {signal.title}: {signal.summary}{link_text}"
+
+
+def _evidence_links(signal_id: str, repo) -> list[str]:
+    list_evidence = getattr(repo, "list_signal_evidence", None)
+    get_raw_item = getattr(repo, "get_raw_item", None)
+    if not callable(list_evidence) or not callable(get_raw_item):
+        return []
+    links = []
+    for evidence in list_evidence(signal_id):
+        raw_item = get_raw_item(evidence.raw_item_id)
+        if raw_item is not None and raw_item.url and raw_item.url not in links:
+            links.append(raw_item.url)
+    return links
+
+
+def _timestamp(signal: SignalRecord) -> datetime:
+    return signal.published_at or signal.updated_at
