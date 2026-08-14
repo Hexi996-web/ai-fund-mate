@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, timezone
 import pytest
 
 from data_pipeline.signal_cluster import cluster_items
+from data_pipeline.signal_config import configuration_fingerprint
 from data_pipeline.signal_domain import RawItem, SourceRecord, SourceTier
 from data_pipeline.signal_rules import SignalDraft
 from data_pipeline.signal_scoring import default_config, score_signal
@@ -106,3 +107,33 @@ def test_scoring_rejects_nonfinite_source_component_input():
 def test_scoring_rejects_empty_custom_configuration_instead_of_loading_defaults():
     with pytest.raises(ValueError, match="version"):
         score_signal(config={}, **_context())
+
+def test_same_version_scoring_configs_persist_distinct_fingerprints():
+    first_config = default_config()
+    second_config = deepcopy(first_config)
+    second_config["scoring"]["weights"]["source"] = .10
+
+    first = score_signal(config=first_config, **_context())
+    second = score_signal(config=second_config, **_context())
+
+    assert first.config_version == second.config_version == "1.1"
+    assert first.config_fingerprint != second.config_fingerprint
+    assert first.priority != second.priority
+
+
+def test_configuration_fingerprint_is_independent_of_mapping_key_order():
+    config = default_config()
+    reordered = {
+        "anomaly": dict(reversed(list(config["anomaly"].items()))),
+        "scoring": {
+            "category_impact": dict(reversed(list(config["scoring"]["category_impact"].items()))),
+            "default_impact": config["scoring"]["default_impact"],
+            "independent_source_reference": config["scoring"]["independent_source_reference"],
+            "recency_half_life_days": config["scoring"]["recency_half_life_days"],
+            "customer_demand": dict(reversed(list(config["scoring"]["customer_demand"].items()))),
+            "weights": dict(reversed(list(config["scoring"]["weights"].items()))),
+        },
+        "version": config["version"],
+    }
+
+    assert configuration_fingerprint(config) == configuration_fingerprint(reordered)

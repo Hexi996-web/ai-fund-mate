@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 from typing import Any, Mapping, Sequence
 
 from .signal_baseline import robust_baseline
-from .signal_config import component_score, default_config, nonnegative_number, resolve_config
+from .signal_config import component_score, configuration_fingerprint, default_config, nonnegative_number, resolve_config
 
 
 @dataclass(frozen=True)
@@ -23,6 +23,7 @@ class ScoreBreakdown:
     impact_score: float
     priority: float
     config_version: str
+    config_fingerprint: str
 
     @property
     def components(self) -> dict[str, float | None]:
@@ -82,6 +83,7 @@ def score_signal(
         impact_score=impact_score,
         priority=priority,
         config_version=payload["version"],
+        config_fingerprint=configuration_fingerprint(payload),
     )
 
 

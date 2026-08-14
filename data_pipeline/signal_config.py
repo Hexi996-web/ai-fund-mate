@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import math
 from collections.abc import Mapping
@@ -30,6 +31,12 @@ def resolve_config(config: Mapping[str, Any] | None) -> dict[str, Any]:
     _validate_config(payload)
     return payload
 
+
+def configuration_fingerprint(config: Mapping[str, Any]) -> str:
+    """Hash the complete validated configuration in canonical JSON form."""
+    payload = resolve_config(config)
+    canonical = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False)
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
 def nonnegative_number(value: Any, name: str, *, integer: bool = False) -> float:
     if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or value < 0:

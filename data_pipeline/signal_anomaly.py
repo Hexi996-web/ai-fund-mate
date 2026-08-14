@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from typing import Mapping, Sequence
 
 from .signal_baseline import robust_baseline
-from .signal_config import default_config, nonnegative_number, resolve_config
+from .signal_config import configuration_fingerprint, default_config, nonnegative_number, resolve_config
 
 
 @dataclass(frozen=True)
@@ -22,6 +22,7 @@ class AnomalyResult:
     independent_source_count: int
     history_days: int
     config_version: str
+    config_fingerprint: str
     reason: str
 
 
@@ -66,5 +67,6 @@ def detect_anomaly(
         independent_source_count=independent,
         history_days=len(baseline.values),
         config_version=payload["version"],
+        config_fingerprint=configuration_fingerprint(payload),
         reason=reason,
     )

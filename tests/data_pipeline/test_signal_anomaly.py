@@ -72,3 +72,14 @@ def test_anomaly_rejects_incomplete_configuration_and_negative_counts():
 def test_anomaly_rejects_empty_custom_configuration_instead_of_loading_defaults():
     with pytest.raises(ValueError, match="version"):
         detect_anomaly(40, 12, [2] * 30, {})
+
+def test_same_version_anomaly_configs_persist_distinct_fingerprints():
+    first_config = default_config()
+    second_config = deepcopy(first_config)
+    second_config["anomaly"]["robust_z_threshold"] = 4.0
+
+    first = detect_anomaly(40, 12, [2] * 30, first_config)
+    second = detect_anomaly(40, 12, [2] * 30, second_config)
+
+    assert first.config_version == second.config_version == "1.1"
+    assert first.config_fingerprint != second.config_fingerprint
