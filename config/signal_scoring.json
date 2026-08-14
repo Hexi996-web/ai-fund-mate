@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "scoring": {
     "weights": {
       "source": 0.25,
@@ -27,6 +27,7 @@
   },
   "anomaly": {
     "history_days": 30,
+    "minimum_history_days": 30,
     "minimum_independent_sources": 3,
     "robust_z_threshold": 3.5,
     "mad_scale": 1.4826,

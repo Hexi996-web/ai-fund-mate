@@ -1,10 +1,13 @@
+from copy import deepcopy
 from dataclasses import replace
 from datetime import datetime, timedelta, timezone
+
+import pytest
 
 from data_pipeline.signal_cluster import cluster_items
 from data_pipeline.signal_domain import RawItem, SourceRecord, SourceTier
 from data_pipeline.signal_rules import SignalDraft
-from data_pipeline.signal_scoring import score_signal
+from data_pipeline.signal_scoring import default_config, score_signal
 
 
 NOW = datetime(2026, 8, 14, 8, tzinfo=timezone.utc)
@@ -59,3 +62,47 @@ def test_recency_component_decays_by_configured_half_life():
     old = score_signal(cluster=old_cluster, **{key: value for key, value in context.items() if key != "cluster"})
 
     assert fresh.recency_score > old.recency_score
+
+
+def test_scoring_rejects_unversioned_custom_configuration():
+    config = default_config()
+    del config["version"]
+
+    with pytest.raises(ValueError, match="version"):
+        score_signal(config=config, **_context())
+
+
+@pytest.mark.parametrize("path, value", [
+    (("scoring", "recency_half_life_days"), 0),
+    (("scoring", "weights", "source"), float("nan")),
+    (("scoring", "customer_demand", "customer_real"), 1.1),
+])
+def test_scoring_rejects_invalid_numeric_configuration(path, value):
+    config = default_config()
+    target = config
+    for key in path[:-1]:
+        target = target[key]
+    target[path[-1]] = value
+
+    with pytest.raises(ValueError):
+        score_signal(config=config, **_context())
+
+
+def test_scoring_rejects_incomplete_configuration_instead_of_defaulting():
+    config = deepcopy(default_config())
+    del config["scoring"]["weights"]["impact"]
+
+    with pytest.raises(ValueError, match="impact"):
+        score_signal(config=config, **_context())
+
+
+def test_scoring_rejects_nonfinite_source_component_input():
+    context = _context()
+    source = replace(context["source"], base_weight=float("nan"))
+
+    with pytest.raises(ValueError, match="source.base_weight"):
+        score_signal(source=source, **{key: value for key, value in context.items() if key != "source"})
+
+def test_scoring_rejects_empty_custom_configuration_instead_of_loading_defaults():
+    with pytest.raises(ValueError, match="version"):
+        score_signal(config={}, **_context())

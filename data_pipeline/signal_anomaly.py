@@ -2,14 +2,11 @@
 
 from __future__ import annotations
 
-import json
 from dataclasses import dataclass
-from pathlib import Path
-from statistics import median
 from typing import Mapping, Sequence
 
-
-_CONFIG_PATH = Path(__file__).resolve().parents[1] / "config" / "signal_scoring.json"
+from .signal_baseline import robust_baseline
+from .signal_config import default_config, nonnegative_number, resolve_config
 
 
 @dataclass(frozen=True)
@@ -25,11 +22,7 @@ class AnomalyResult:
     independent_source_count: int
     history_days: int
     config_version: str
-
-
-def default_config() -> dict:
-    """Return a fresh copy of the local, versioned scoring configuration."""
-    return json.loads(_CONFIG_PATH.read_text(encoding="utf-8"))
+    reason: str
 
 
 def detect_anomaly(
@@ -38,40 +31,40 @@ def detect_anomaly(
     history: Sequence[int | float],
     config: Mapping | None = None,
 ) -> AnomalyResult:
-    """Detect a cross-source attention spike against a 30-day median/MAD baseline."""
-    payload = dict(config or default_config())
-    settings = _settings(payload)
-    history_days = int(settings["history_days"])
-    values = [float(value) for value in history[-history_days:]]
-    baseline = float(median(values)) if values else 0.0
-    mad = float(median([abs(value - baseline) for value in values])) if values else 0.0
-    scale = max(mad * float(settings["mad_scale"]), float(settings["zero_mad_floor"]))
-    robust_z = max(0.0, (float(current_count) - baseline) / scale)
-    has_independent_confirmation = int(independent_count) >= int(settings["minimum_independent_sources"])
-    triggered = has_independent_confirmation and robust_z >= float(settings["robust_z_threshold"])
-    raw_weight = min(1.0, robust_z / max(float(settings["robust_z_threshold"]), 1.0))
-    ceiling = float(settings["nonofficial_weight_ceiling"])
-    effective_weight = min(raw_weight, ceiling) if triggered else 0.0
+    """Detect only independently corroborated spikes with a sufficient baseline."""
+    payload = resolve_config(config)
+    settings = payload["anomaly"]
+    current = nonnegative_number(current_count, "current_count")
+    independent = int(nonnegative_number(independent_count, "independent_count", integer=True))
+    baseline = robust_baseline(
+        history,
+        history_days=settings["history_days"],
+        mad_scale=settings["mad_scale"],
+        zero_mad_floor=settings["zero_mad_floor"],
+    )
+    enough_history = len(baseline.values) >= int(settings["minimum_history_days"])
+    robust_z = max(0.0, (current - baseline.median) / baseline.scale) if enough_history else 0.0
+    has_independent_confirmation = independent >= int(settings["minimum_independent_sources"])
+    triggered = enough_history and has_independent_confirmation and robust_z >= float(settings["robust_z_threshold"])
+    raw_weight = min(1.0, robust_z / float(settings["robust_z_threshold"]))
+    effective_weight = min(raw_weight, float(settings["nonofficial_weight_ceiling"])) if triggered else 0.0
+    if not enough_history:
+        reason = "insufficient_history"
+    elif not has_independent_confirmation:
+        reason = "insufficient_independent_sources"
+    elif not triggered:
+        reason = "below_anomaly_threshold"
+    else:
+        reason = "triggered"
     return AnomalyResult(
         triggered=triggered,
         validation_status="pending_official_validation",
         effective_weight=effective_weight,
-        baseline_median=baseline,
-        mad=mad,
+        baseline_median=baseline.median,
+        mad=baseline.mad,
         robust_z_score=robust_z,
-        independent_source_count=int(independent_count),
-        history_days=len(values),
-        config_version=str(payload.get("version", "unknown")),
+        independent_source_count=independent,
+        history_days=len(baseline.values),
+        config_version=payload["version"],
+        reason=reason,
     )
-
-
-def _settings(config: Mapping) -> Mapping:
-    nested = config.get("anomaly") if isinstance(config.get("anomaly"), Mapping) else config
-    return {
-        "history_days": nested.get("history_days", 30),
-        "minimum_independent_sources": nested.get("minimum_independent_sources", nested.get("min_independent_sources", 3)),
-        "robust_z_threshold": nested.get("robust_z_threshold", 3.5),
-        "mad_scale": nested.get("mad_scale", 1.4826),
-        "zero_mad_floor": nested.get("zero_mad_floor", 1.0),
-        "nonofficial_weight_ceiling": nested.get("nonofficial_weight_ceiling", nested.get("non_official_ceiling", 0.60)),
-    }
