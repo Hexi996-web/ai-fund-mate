@@ -1,4 +1,5 @@
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
@@ -89,4 +90,59 @@ def test_registry_rejects_duplicate_ids(tmp_path):
     registry.write_text(json.dumps([entry, entry]), encoding="utf-8")
 
     with pytest.raises(ValueError, match="duplicate"):
+        load_source_registry(registry)
+
+
+def test_disabled_source_is_skipped_without_calling_fetch():
+    def fetch(_url):
+        raise AssertionError("disabled source must not be fetched")
+
+    result = collect_source(source("pbc_policy"), fetch)
+
+    assert result.status == "disabled"
+    assert result.items == []
+
+
+def test_ics_collector_resolves_named_timezone_and_folded_summary():
+    result = collect_source(source("bls_ics"), fixture_fetch("bls-tzid.ics"))
+
+    assert result.status == "normal"
+    assert result.items[0].title == "Employment-Situation"
+    assert result.items[0].published_at == datetime(2026, 8, 14, 12, 30, tzinfo=timezone.utc)
+
+
+def test_ics_collector_fails_safely_for_unknown_timezone():
+    result = collect_source(source("bls_ics"), fixture_fetch("bls-unknown-tzid.ics"))
+
+    assert result.status == "failed"
+    assert "Unknown TZID" in result.message
+
+
+def test_html_body_does_not_cross_into_next_list_item():
+    result = collect_source(source("csrc_policy"), fixture_fetch("separate-list-items.html"))
+
+    assert result.status == "normal"
+    assert result.items[0].body is None
+    assert result.items[1].body == "Only the second policy has a summary."
+
+
+@pytest.mark.parametrize(
+    ("change", "match"),
+    [
+        (lambda entry: entry.update(name=""), "name"),
+        (lambda entry: entry.update(official="false"), "official"),
+        (lambda entry: entry.update(enabled="false"), "enabled"),
+        (lambda entry: entry.update(region=""), "region"),
+        (lambda entry: entry.update(access_notes=""), "access_notes"),
+        (lambda entry: entry.update(categories=["policy", 2]), "categories"),
+        (lambda entry: entry.update(official=False), "official tier"),
+    ],
+)
+def test_registry_rejects_invalid_required_metadata(tmp_path, change, match):
+    entry = json.loads(Path("config/signal_sources.json").read_text(encoding="utf-8"))[0]
+    change(entry)
+    registry = tmp_path / "invalid-metadata.json"
+    registry.write_text(json.dumps([entry]), encoding="utf-8")
+
+    with pytest.raises(ValueError, match=match):
         load_source_registry(registry)

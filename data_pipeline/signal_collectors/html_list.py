@@ -12,7 +12,8 @@ def collect_html_list(source, fetch):
         title = anchor.get_text(" ", strip=True)
         if not title:
             continue
-        body_node = anchor.find_next("p")
+        container = anchor.find_parent(["article", "li"])
+        body_node = container.find("p") if container else None
         body = body_node.get_text(" ", strip=True) if body_node else None
         items.append(_raw_item(source, urljoin(source.url, anchor["href"]), title, body, None, "html_list"))
     return items

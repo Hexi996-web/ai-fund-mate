@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+from urllib.parse import urlparse
 
 from .signal_domain import SourceRecord, SourceTier
 
@@ -9,6 +10,7 @@ _REQUIRED_FIELDS = frozenset({
     "id", "name", "tier", "official", "base_weight", "collector", "url",
     "categories", "region", "enabled", "access_notes",
 })
+_STRING_FIELDS = ("id", "name", "collector", "url", "region", "access_notes")
 
 
 def load_source_registry(path) -> list[SourceRecord]:
@@ -22,21 +24,31 @@ def load_source_registry(path) -> list[SourceRecord]:
     for entry in entries:
         if not isinstance(entry, dict) or _REQUIRED_FIELDS - entry.keys():
             raise ValueError("source registry entry is missing required fields")
+        _validate_strings(entry)
         source_id = entry["id"]
-        if not isinstance(source_id, str) or not source_id or source_id in source_ids:
+        if source_id in source_ids:
             raise ValueError("source registry contains duplicate or invalid id")
         if entry["collector"] not in SUPPORTED_COLLECTORS:
             raise ValueError("source registry contains an unknown collector")
-        if not isinstance(entry["url"], str) or not entry["url"].startswith("https://"):
+        parsed_url = urlparse(entry["url"])
+        if parsed_url.scheme != "https" or not parsed_url.netloc:
             raise ValueError("source registry URL must use HTTPS")
         if not isinstance(entry["base_weight"], (int, float)) or isinstance(entry["base_weight"], bool) or not 0 <= entry["base_weight"] <= 1:
             raise ValueError("source registry base_weight must be within [0, 1]")
-        if not isinstance(entry["categories"], list) or not all(isinstance(value, str) for value in entry["categories"]):
-            raise ValueError("source registry categories must be a list of strings")
+        if not isinstance(entry["categories"], list) or not entry["categories"] or any(
+            not isinstance(value, str) or not value.strip() for value in entry["categories"]
+        ):
+            raise ValueError("source registry categories must be a non-empty list of strings")
+        if not isinstance(entry["official"], bool):
+            raise ValueError("source registry official must be a boolean")
+        if not isinstance(entry["enabled"], bool):
+            raise ValueError("source registry enabled must be a boolean")
         try:
             tier = SourceTier(entry["tier"])
-        except ValueError as error:
+        except (TypeError, ValueError) as error:
             raise ValueError("source registry contains an invalid tier") from error
+        if entry["official"] != (tier is SourceTier.OFFICIAL):
+            raise ValueError("source registry official tier invariant failed")
 
         source_ids.add(source_id)
         sources.append(SourceRecord(
@@ -47,3 +59,9 @@ def load_source_registry(path) -> list[SourceRecord]:
             access_notes=entry["access_notes"], description=entry["access_notes"],
         ))
     return sources
+
+
+def _validate_strings(entry):
+    for field in _STRING_FIELDS:
+        if not isinstance(entry[field], str) or not entry[field].strip():
+            raise ValueError(f"source registry {field} must be a non-empty string")

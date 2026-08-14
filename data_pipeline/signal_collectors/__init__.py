@@ -20,7 +20,9 @@ _COLLECTORS = {
 
 
 def collect_source(source, fetch) -> CollectionResult:
-    """Collect one public source, turning fetch/parser errors into a result."""
+    """Collect one enabled public source, isolating fetch and parser errors."""
+    if not source.enabled:
+        return CollectionResult(items=[], status="disabled", message="Source is disabled")
     try:
         collector = _COLLECTORS[source.collector]
         return CollectionResult(items=collector(source, fetch), status="normal")
