@@ -39,9 +39,11 @@ class RawItem:
     source_id: str
     url: str
     title: str
-    content: str
     content_hash: str
     collected_at: datetime
+    body: str = ""
+    content_status: str = "available"
+    content: str = ""
     published_at: datetime | None = None
     metadata: dict[str, Any] = field(default_factory=dict)
     id: int | None = None
@@ -55,6 +57,9 @@ class EventCluster:
     created_at: datetime
     updated_at: datetime
     summary: str = ""
+    topic_key: str = ""
+    item_count: int = 0
+    independent_source_count: int = 0
 
 
 @dataclass(frozen=True)
@@ -103,6 +108,8 @@ class DailyBrief:
     generated_at: datetime
     body: str
     status: str = "published"
+    signal_ids: tuple[str, ...] = ()
+    top_call: str = ""
 
 
 @dataclass(frozen=True)

@@ -1,4 +1,7 @@
-from datetime import datetime, timezone
+import sqlite3
+from datetime import datetime, timedelta, timezone
+
+import pytest
 
 from data_pipeline.signal_domain import (
     CatalystRecord,
@@ -88,3 +91,58 @@ def test_repository_persists_signal_relationships_and_run_artifacts(tmp_path):
     assert repo.list_catalysts()[0].signal_id == "sig-1"
     assert repo.get_brief("brief-1").body == "Daily brief"
     assert repo.get_run("run-1").status == "success"
+
+
+def test_repository_round_trips_downstream_domain_fields_and_signal_updates(tmp_path):
+    repo = initialized_repo(tmp_path)
+    raw_item = repo.save_raw_item(RawItem(
+        source_id="pbc", url="https://www.pbc.gov.cn/news/2", title="Demand update",
+        body="Customer subscription data", content_hash="raw-fields", collected_at=NOW,
+        content_status="complete",
+    ))
+    cluster = EventCluster(
+        id="cluster-1", title="Liquidity", category="policy", summary="Updated",
+        topic_key="liquidity", item_count=4, independent_source_count=2,
+        created_at=NOW, updated_at=NOW,
+    )
+    repo.upsert_cluster(cluster)
+    repo.upsert_signal(sample_signal(priority=3, customer_demand_score=0.5))
+    repo.upsert_signal(sample_signal(priority=5, customer_demand_score=1.0))
+    repo.save_brief(DailyBrief(
+        id="brief-fields", window_start=NOW, window_end=NOW, generated_at=NOW,
+        body="Daily brief", signal_ids=("sig-1",), top_call="Increase attention",
+    ))
+
+    assert raw_item.body == "Customer subscription data"
+    assert raw_item.content_status == "complete"
+    assert repo.get_cluster("cluster-1").topic_key == "liquidity"
+    assert repo.get_cluster("cluster-1").item_count == 4
+    assert repo.get_cluster("cluster-1").independent_source_count == 2
+    assert repo.get_signal("sig-1").priority == 5
+    assert repo.get_brief("brief-fields").signal_ids == ("sig-1",)
+    assert repo.get_brief("brief-fields").top_call == "Increase attention"
+
+
+def test_evidence_requires_existing_signal_and_raw_item(tmp_path):
+    repo = SignalRepository(tmp_path / "signals.db")
+    repo.initialize()
+
+    with pytest.raises(sqlite3.IntegrityError):
+        repo.replace_signal_evidence([
+            SignalEvidence(signal_id="missing", raw_item_id=999, evidence_type="policy", excerpt="x", source_confidence=0.8),
+        ])
+
+
+def test_repository_uses_required_indexes_and_utc_timestamps(tmp_path):
+    repo = SignalRepository(tmp_path / "signals.db")
+    repo.initialize()
+    local_time = datetime(2026, 8, 14, 8, tzinfo=timezone(timedelta(hours=8)))
+    saved = repo.save_raw_item(RawItem(
+        source_id="pbc", url="https://www.pbc.gov.cn/news/3", title="UTC update",
+        body="text", content_hash="raw-utc", collected_at=local_time,
+    ))
+    with sqlite3.connect(repo.db_path) as connection:
+        indexes = {row[1] for row in connection.execute("SELECT type, name FROM sqlite_master WHERE type='index'")}
+
+    assert saved.collected_at == NOW
+    assert {"raw_items_published_at_idx", "signals_category_priority_idx", "signals_cluster_id_idx", "catalysts_scheduled_at_idx"} <= indexes

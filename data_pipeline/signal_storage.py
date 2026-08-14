@@ -53,11 +53,11 @@ class SignalRepository:
                 CREATE TABLE IF NOT EXISTS raw_items (
                     id INTEGER PRIMARY KEY, source_id TEXT NOT NULL, url TEXT NOT NULL,
                     title TEXT NOT NULL, content TEXT NOT NULL, content_hash TEXT NOT NULL UNIQUE,
-                    collected_at TEXT NOT NULL, published_at TEXT, metadata TEXT NOT NULL
+                    collected_at TEXT NOT NULL, published_at TEXT, metadata TEXT NOT NULL, content_status TEXT NOT NULL DEFAULT 'available'
                 );
                 CREATE TABLE IF NOT EXISTS event_clusters (
                     id TEXT PRIMARY KEY, title TEXT NOT NULL, category TEXT NOT NULL,
-                    summary TEXT NOT NULL, created_at TEXT NOT NULL, updated_at TEXT NOT NULL
+                    summary TEXT NOT NULL, created_at TEXT NOT NULL, updated_at TEXT NOT NULL, topic_key TEXT NOT NULL DEFAULT '', item_count INTEGER NOT NULL DEFAULT 0, independent_source_count INTEGER NOT NULL DEFAULT 0
                 );
                 CREATE TABLE IF NOT EXISTS signals (
                     id TEXT PRIMARY KEY, cluster_id TEXT, category TEXT NOT NULL, title TEXT NOT NULL,
@@ -78,7 +78,7 @@ class SignalRepository:
                 );
                 CREATE TABLE IF NOT EXISTS daily_briefs (
                     id TEXT PRIMARY KEY, window_start TEXT NOT NULL, window_end TEXT NOT NULL,
-                    generated_at TEXT NOT NULL, body TEXT NOT NULL, status TEXT NOT NULL
+                    generated_at TEXT NOT NULL, body TEXT NOT NULL, status TEXT NOT NULL, signal_ids TEXT NOT NULL DEFAULT '[]', top_call TEXT NOT NULL DEFAULT ''
                 );
                 CREATE TABLE IF NOT EXISTS pipeline_runs (
                     id TEXT PRIMARY KEY, command TEXT NOT NULL, started_at TEXT NOT NULL,
@@ -90,6 +90,21 @@ class SignalRepository:
                 CREATE INDEX IF NOT EXISTS catalysts_scheduled_at_idx ON catalysts(scheduled_at);
                 """
             )
+            raw_columns = {row["name"] for row in connection.execute("PRAGMA table_info(raw_items)")}
+            if "content_status" not in raw_columns:
+                connection.execute("ALTER TABLE raw_items ADD COLUMN content_status TEXT NOT NULL DEFAULT 'available'")
+            cluster_columns = {row["name"] for row in connection.execute("PRAGMA table_info(event_clusters)")}
+            if "topic_key" not in cluster_columns:
+                connection.execute("ALTER TABLE event_clusters ADD COLUMN topic_key TEXT NOT NULL DEFAULT ''")
+            if "item_count" not in cluster_columns:
+                connection.execute("ALTER TABLE event_clusters ADD COLUMN item_count INTEGER NOT NULL DEFAULT 0")
+            if "independent_source_count" not in cluster_columns:
+                connection.execute("ALTER TABLE event_clusters ADD COLUMN independent_source_count INTEGER NOT NULL DEFAULT 0")
+            brief_columns = {row["name"] for row in connection.execute("PRAGMA table_info(daily_briefs)")}
+            if "signal_ids" not in brief_columns:
+                connection.execute("ALTER TABLE daily_briefs ADD COLUMN signal_ids TEXT NOT NULL DEFAULT '[]'")
+            if "top_call" not in brief_columns:
+                connection.execute("ALTER TABLE daily_briefs ADD COLUMN top_call TEXT NOT NULL DEFAULT ''")
 
     def upsert_source(self, source: SourceRecord) -> SourceRecord:
         with self._connect() as connection:
@@ -104,10 +119,10 @@ class SignalRepository:
     def save_raw_item(self, item: RawItem) -> RawItem:
         with self._connect() as connection:
             connection.execute(
-                """INSERT INTO raw_items(source_id, url, title, content, content_hash, collected_at, published_at, metadata)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(content_hash) DO NOTHING""",
-                (item.source_id, item.url, item.title, item.content, item.content_hash, _utc_iso(item.collected_at),
-                 _utc_iso(item.published_at), json.dumps(item.metadata, ensure_ascii=False, sort_keys=True)),
+                """INSERT INTO raw_items(source_id, url, title, content, content_hash, collected_at, published_at, metadata, content_status)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(content_hash) DO NOTHING""",
+                (item.source_id, item.url, item.title, item.body or item.content, item.content_hash, _utc_iso(item.collected_at),
+                 _utc_iso(item.published_at), json.dumps(item.metadata, ensure_ascii=False, sort_keys=True), item.content_status),
             )
             row = connection.execute("SELECT * FROM raw_items WHERE content_hash=?", (item.content_hash,)).fetchone()
         return self._raw_item(row)
@@ -124,10 +139,12 @@ class SignalRepository:
     def upsert_cluster(self, cluster: EventCluster) -> EventCluster:
         with self._connect() as connection:
             connection.execute(
-                """INSERT INTO event_clusters VALUES (?, ?, ?, ?, ?, ?)
+                """INSERT INTO event_clusters(id, title, category, summary, created_at, updated_at, topic_key, item_count, independent_source_count) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(id) DO UPDATE SET title=excluded.title, category=excluded.category,
-                summary=excluded.summary, updated_at=excluded.updated_at""",
-                (cluster.id, cluster.title, cluster.category, cluster.summary, _utc_iso(cluster.created_at), _utc_iso(cluster.updated_at)),
+                summary=excluded.summary, updated_at=excluded.updated_at, topic_key=excluded.topic_key,
+                item_count=excluded.item_count, independent_source_count=excluded.independent_source_count""",
+                (cluster.id, cluster.title, cluster.category, cluster.summary, _utc_iso(cluster.created_at), _utc_iso(cluster.updated_at),
+                 cluster.topic_key, cluster.item_count, cluster.independent_source_count),
             )
         return cluster
 
@@ -209,10 +226,11 @@ class SignalRepository:
     def save_brief(self, brief: DailyBrief) -> DailyBrief:
         with self._connect() as connection:
             connection.execute(
-                """INSERT INTO daily_briefs VALUES (?, ?, ?, ?, ?, ?)
+                """INSERT INTO daily_briefs(id, window_start, window_end, generated_at, body, status, signal_ids, top_call) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(id) DO UPDATE SET window_start=excluded.window_start, window_end=excluded.window_end,
-                generated_at=excluded.generated_at, body=excluded.body, status=excluded.status""",
-                (brief.id, _utc_iso(brief.window_start), _utc_iso(brief.window_end), _utc_iso(brief.generated_at), brief.body, brief.status),
+                generated_at=excluded.generated_at, body=excluded.body, status=excluded.status, signal_ids=excluded.signal_ids, top_call=excluded.top_call""",
+                (brief.id, _utc_iso(brief.window_start), _utc_iso(brief.window_end), _utc_iso(brief.generated_at), brief.body, brief.status,
+                 json.dumps(brief.signal_ids), brief.top_call),
             )
         return brief
 
@@ -238,13 +256,16 @@ class SignalRepository:
 
     @staticmethod
     def _raw_item(row):
-        return RawItem(id=row["id"], source_id=row["source_id"], url=row["url"], title=row["title"], content=row["content"],
+        return RawItem(id=row["id"], source_id=row["source_id"], url=row["url"], title=row["title"],
+                       body=row["content"], content_status=row["content_status"], content=row["content"],
                        content_hash=row["content_hash"], collected_at=_datetime(row["collected_at"]),
                        published_at=_datetime(row["published_at"]), metadata=json.loads(row["metadata"]))
 
     @staticmethod
     def _cluster(row):
         return EventCluster(id=row["id"], title=row["title"], category=row["category"], summary=row["summary"],
+                            topic_key=row["topic_key"], item_count=row["item_count"],
+                            independent_source_count=row["independent_source_count"],
                             created_at=_datetime(row["created_at"]), updated_at=_datetime(row["updated_at"]))
 
     @staticmethod
@@ -269,7 +290,8 @@ class SignalRepository:
     @staticmethod
     def _brief(row):
         return DailyBrief(id=row["id"], window_start=_datetime(row["window_start"]), window_end=_datetime(row["window_end"]),
-                          generated_at=_datetime(row["generated_at"]), body=row["body"], status=row["status"])
+                          generated_at=_datetime(row["generated_at"]), body=row["body"], status=row["status"],
+                          signal_ids=tuple(json.loads(row["signal_ids"])), top_call=row["top_call"])
 
     @staticmethod
     def _run(row):
