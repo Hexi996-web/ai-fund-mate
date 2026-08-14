@@ -32,6 +32,12 @@ class SourceRecord:
     source_tier: SourceTier
     enabled: bool = True
     description: str = ""
+    official: bool = False
+    base_weight: float = 0.0
+    collector: str = ""
+    categories: tuple[str, ...] = ()
+    region: str = ""
+    access_notes: str = ""
 
 
 @dataclass(frozen=True)
