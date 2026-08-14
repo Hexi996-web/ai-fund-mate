@@ -110,7 +110,7 @@ def test_repository_round_trips_downstream_domain_fields_and_signal_updates(tmp_
     repo.upsert_signal(sample_signal(priority=5, customer_demand_score=1.0))
     repo.save_brief(DailyBrief(
         id="brief-fields", window_start=NOW, window_end=NOW, generated_at=NOW,
-        body="Daily brief", signal_ids=("sig-1",), top_call="Increase attention",
+        body="Daily brief", signal_ids=["sig-1"], top_call="Increase attention",
     ))
 
     assert raw_item.body == "Customer subscription data"
@@ -119,7 +119,7 @@ def test_repository_round_trips_downstream_domain_fields_and_signal_updates(tmp_
     assert repo.get_cluster("cluster-1").item_count == 4
     assert repo.get_cluster("cluster-1").independent_source_count == 2
     assert repo.get_signal("sig-1").priority == 5
-    assert repo.get_brief("brief-fields").signal_ids == ("sig-1",)
+    assert repo.get_brief("brief-fields").signal_ids == ["sig-1"]
     assert repo.get_brief("brief-fields").top_call == "Increase attention"
 
 
@@ -146,3 +146,14 @@ def test_repository_uses_required_indexes_and_utc_timestamps(tmp_path):
 
     assert saved.collected_at == NOW
     assert {"raw_items_published_at_idx", "signals_category_priority_idx", "signals_cluster_id_idx", "catalysts_scheduled_at_idx"} <= indexes
+
+def test_title_only_raw_item_preserves_nullable_body(tmp_path):
+    repo = SignalRepository(tmp_path / "signals.db")
+    repo.initialize()
+    saved = repo.save_raw_item(RawItem(
+        source_id="pbc", url="https://www.pbc.gov.cn/news/title-only", title="Title only",
+        body=None, content_status="title_only", content_hash="raw-title-only", collected_at=NOW,
+    ))
+
+    assert saved.body is None
+    assert repo.get_raw_item(saved.id).body is None

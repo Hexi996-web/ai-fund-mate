@@ -41,7 +41,7 @@ class RawItem:
     title: str
     content_hash: str
     collected_at: datetime
-    body: str = ""
+    body: str | None = None
     content_status: str = "available"
     content: str = ""
     published_at: datetime | None = None
@@ -108,7 +108,7 @@ class DailyBrief:
     generated_at: datetime
     body: str
     status: str = "published"
-    signal_ids: tuple[str, ...] = ()
+    signal_ids: list[str] = field(default_factory=list)
     top_call: str = ""
 
 

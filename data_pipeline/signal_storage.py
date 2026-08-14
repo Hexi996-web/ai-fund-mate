@@ -52,7 +52,7 @@ class SignalRepository:
                 );
                 CREATE TABLE IF NOT EXISTS raw_items (
                     id INTEGER PRIMARY KEY, source_id TEXT NOT NULL, url TEXT NOT NULL,
-                    title TEXT NOT NULL, content TEXT NOT NULL, content_hash TEXT NOT NULL UNIQUE,
+                    title TEXT NOT NULL, content TEXT NOT NULL, body TEXT, content_hash TEXT NOT NULL UNIQUE,
                     collected_at TEXT NOT NULL, published_at TEXT, metadata TEXT NOT NULL, content_status TEXT NOT NULL DEFAULT 'available'
                 );
                 CREATE TABLE IF NOT EXISTS event_clusters (
@@ -93,6 +93,9 @@ class SignalRepository:
             raw_columns = {row["name"] for row in connection.execute("PRAGMA table_info(raw_items)")}
             if "content_status" not in raw_columns:
                 connection.execute("ALTER TABLE raw_items ADD COLUMN content_status TEXT NOT NULL DEFAULT 'available'")
+            if "body" not in raw_columns:
+                connection.execute("ALTER TABLE raw_items ADD COLUMN body TEXT")
+                connection.execute("UPDATE raw_items SET body=content WHERE content_status <> 'title_only'")
             cluster_columns = {row["name"] for row in connection.execute("PRAGMA table_info(event_clusters)")}
             if "topic_key" not in cluster_columns:
                 connection.execute("ALTER TABLE event_clusters ADD COLUMN topic_key TEXT NOT NULL DEFAULT ''")
@@ -119,9 +122,9 @@ class SignalRepository:
     def save_raw_item(self, item: RawItem) -> RawItem:
         with self._connect() as connection:
             connection.execute(
-                """INSERT INTO raw_items(source_id, url, title, content, content_hash, collected_at, published_at, metadata, content_status)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(content_hash) DO NOTHING""",
-                (item.source_id, item.url, item.title, item.body or item.content, item.content_hash, _utc_iso(item.collected_at),
+                """INSERT INTO raw_items(source_id, url, title, content, body, content_hash, collected_at, published_at, metadata, content_status)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(content_hash) DO NOTHING""",
+                (item.source_id, item.url, item.title, item.content, item.body, item.content_hash, _utc_iso(item.collected_at),
                  _utc_iso(item.published_at), json.dumps(item.metadata, ensure_ascii=False, sort_keys=True), item.content_status),
             )
             row = connection.execute("SELECT * FROM raw_items WHERE content_hash=?", (item.content_hash,)).fetchone()
@@ -257,7 +260,7 @@ class SignalRepository:
     @staticmethod
     def _raw_item(row):
         return RawItem(id=row["id"], source_id=row["source_id"], url=row["url"], title=row["title"],
-                       body=row["content"], content_status=row["content_status"], content=row["content"],
+                       body=row["body"], content_status=row["content_status"], content=row["content"],
                        content_hash=row["content_hash"], collected_at=_datetime(row["collected_at"]),
                        published_at=_datetime(row["published_at"]), metadata=json.loads(row["metadata"]))
 
@@ -291,7 +294,7 @@ class SignalRepository:
     def _brief(row):
         return DailyBrief(id=row["id"], window_start=_datetime(row["window_start"]), window_end=_datetime(row["window_end"]),
                           generated_at=_datetime(row["generated_at"]), body=row["body"], status=row["status"],
-                          signal_ids=tuple(json.loads(row["signal_ids"])), top_call=row["top_call"])
+                          signal_ids=list(json.loads(row["signal_ids"])), top_call=row["top_call"])
 
     @staticmethod
     def _run(row):
