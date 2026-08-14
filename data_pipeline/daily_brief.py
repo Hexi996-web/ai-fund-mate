@@ -19,6 +19,8 @@ def brief_window(run_at: datetime, timezone: ZoneInfo = SHANGHAI) -> tuple[datet
         raise ValueError("run_at must be timezone-aware")
     local_run = run_at.astimezone(timezone)
     end = local_run.replace(hour=8, minute=0, second=0, microsecond=0)
+    if local_run < end:
+        end -= timedelta(days=1)
     return end - timedelta(days=1), end
 
 
@@ -62,10 +64,8 @@ def _window_catalysts(catalysts, end: datetime):
 
 
 def _eligible_for_top_call(signal: SignalRecord) -> bool:
-    return not (
-        signal.validation_status is ValidationStatus.PENDING_OFFICIAL_VALIDATION
-        and signal.demand_kind is DemandKind.MEDIA_ATTENTION
-    )
+    """Only confirmed, active records may become the decision headline."""
+    return signal.validation_status == ValidationStatus.CONFIRMED
 
 
 def _top_call(signal: SignalRecord | None) -> str:
@@ -75,13 +75,16 @@ def _top_call(signal: SignalRecord | None) -> str:
 def _body(top_call: str, signals: list[SignalRecord], catalysts, repo) -> str:
     sections = [f"Top Call\n{top_call}"]
     valid = [item for item in signals if _eligible_for_top_call(item)]
-    pending = [item for item in signals if item not in valid]
+    pending = [item for item in signals if item.validation_status == ValidationStatus.PENDING_OFFICIAL_VALIDATION]
+    excluded = [item for item in signals if item not in valid and item not in pending]
     if valid:
-        sections.append("核心信号\n" + "\n".join(_signal_line(item, repo) for item in valid))
+        sections.append("\u6838\u5fc3\u4fe1\u53f7\n" + "\n".join(_signal_line(item, repo) for item in valid))
     if pending:
-        sections.append("待官方验证\n" + "\n".join(_signal_line(item, repo) for item in pending))
+        sections.append("\u5f85\u5b98\u65b9\u9a8c\u8bc1\n" + "\n".join(_signal_line(item, repo) for item in pending))
+    if excluded:
+        sections.append("\u5df2\u62d2\u7edd\u6216\u5931\u6548\n" + "\n".join(_signal_line(item, repo) for item in excluded))
     if catalysts:
-        sections.append("未来7日催化剂\n" + "\n".join(
+        sections.append("\u672a\u6765\u0037\u65e5\u50ac\u5316\u5242\n" + "\n".join(
             f"- [{item.id}] {item.scheduled_at.astimezone(SHANGHAI).isoformat()} {item.title}" for item in catalysts
         ))
     return "\n\n".join(sections)
@@ -103,7 +106,7 @@ def _evidence_links(signal_id: str, repo) -> list[str]:
         raw_item = get_raw_item(evidence.raw_item_id)
         if raw_item is not None and raw_item.url and raw_item.url not in links:
             links.append(raw_item.url)
-    return links
+    return sorted(set(links))
 
 
 def _timestamp(signal: SignalRecord) -> datetime:

@@ -52,4 +52,16 @@ def test_attach_outcome_archives_outcome_text_and_link_without_mutating_catalyst
     assert catalyst.description == "https://example.test/event"
     assert "Outcome: Rate held" in archived.description
     assert "https://example.test/outcome" in archived.description
-    assert archived.validation_status is ValidationStatus.CONFIRMED
+    assert archived.validation_status is ValidationStatus.PENDING_OFFICIAL_VALIDATION
+
+
+def test_attach_outcome_is_idempotent_and_keeps_unclassified_outcomes_pending():
+    catalyst = normalize_catalysts([raw_item("Rate decision", AS_OF + timedelta(hours=1))], AS_OF)[0]
+    outcome = raw_item("Rate decision outcome", AS_OF + timedelta(hours=2), url="https://example.test/outcome", body="Rate held")
+
+    first = attach_outcome(catalyst, outcome)
+    retried = attach_outcome(first, outcome)
+
+    assert retried == first
+    assert retried.validation_status is ValidationStatus.PENDING_OFFICIAL_VALIDATION
+    assert "pending official validation" in retried.description

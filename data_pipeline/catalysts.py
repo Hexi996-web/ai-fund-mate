@@ -43,14 +43,18 @@ def normalize_catalysts(raw_items: Iterable[Any], as_of: datetime) -> list[Catal
 
 
 def attach_outcome(catalyst: CatalystRecord, raw_item: Any) -> CatalystRecord:
-    """Return an archived catalyst with the outcome text and its source link."""
+    """Archive a traceable outcome once, retaining its validation state."""
     outcome = _description(raw_item)
     if not outcome:
         outcome = str(_value(raw_item, "title", "Outcome unavailable"))
-    suffix = f"Outcome: {outcome}"
-    description = "\n".join(part for part in (catalyst.description, suffix) if part)
     metadata = _metadata(raw_item)
-    status = _validation_status(metadata.get("validation_status"), default=ValidationStatus.CONFIRMED)
+    status = _validation_status(metadata.get("validation_status"))
+    suffix = f"Outcome: {outcome}"
+    if status is ValidationStatus.PENDING_OFFICIAL_VALIDATION:
+        suffix = f"{suffix}\nStatus: pending official validation"
+    if suffix in catalyst.description:
+        return catalyst
+    description = "\n".join(part for part in (catalyst.description, suffix) if part)
     return replace(catalyst, description=description, validation_status=status)
 
 

@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 from data_pipeline.daily_brief import brief_window, build_daily_brief
-from data_pipeline.signal_domain import DemandKind, SignalRecord, ValidationStatus
+from data_pipeline.signal_domain import DemandKind, RawItem, SignalEvidence, SignalRecord, ValidationStatus
 
 
 SHANGHAI = ZoneInfo("Asia/Shanghai")
@@ -33,6 +33,20 @@ def signal(signal_id, timestamp, *, priority=1, validation=ValidationStatus.CONF
 
 def test_daily_window_is_previous_0800_to_current_0800_shanghai():
     start, end = brief_window(datetime(2026, 8, 14, 8, 0, tzinfo=SHANGHAI))
+
+    assert start.isoformat() == "2026-08-13T08:00:00+08:00"
+    assert end.isoformat() == "2026-08-14T08:00:00+08:00"
+
+
+def test_daily_window_before_0800_uses_the_last_completed_boundary():
+    start, end = brief_window(datetime(2026, 8, 14, 7, 0, tzinfo=SHANGHAI))
+
+    assert start.isoformat() == "2026-08-12T08:00:00+08:00"
+    assert end.isoformat() == "2026-08-13T08:00:00+08:00"
+
+
+def test_daily_window_uses_shanghai_boundary_for_a_utc_run_time():
+    start, end = brief_window(datetime(2026, 8, 14, 0, 0, tzinfo=ZoneInfo("UTC")))
 
     assert start.isoformat() == "2026-08-13T08:00:00+08:00"
     assert end.isoformat() == "2026-08-14T08:00:00+08:00"
@@ -74,6 +88,24 @@ def test_top_call_uses_highest_valid_priority_and_keeps_unverified_media_as_obse
     assert "待官方验证" in brief.body
 
 
+def test_top_call_excludes_higher_priority_rejected_and_pending_signals():
+    start, _ = brief_window(RUN_AT)
+    repo = Repository([
+        signal("confirmed", start + timedelta(hours=1), priority=4, title="Confirmed policy"),
+        signal("rejected", start + timedelta(hours=2), priority=10, title="Retracted report",
+               validation=ValidationStatus.REJECTED),
+        signal("pending", start + timedelta(hours=3), priority=9, title="Unverified report",
+               validation=ValidationStatus.PENDING_OFFICIAL_VALIDATION),
+    ])
+
+    brief = build_daily_brief(repo, RUN_AT)
+
+    assert "confirmed" in brief.top_call
+    assert "rejected" not in brief.top_call
+    assert "pending" not in brief.top_call
+    assert "\u5df2\u62d2\u7edd\u6216\u5931\u6548" in brief.body
+
+
 def test_daily_brief_is_deterministic_and_includes_evidence_links_when_available():
     start, _ = brief_window(RUN_AT)
     item = signal("signal-1", start + timedelta(hours=1), priority=3)
@@ -84,3 +116,24 @@ def test_daily_brief_is_deterministic_and_includes_evidence_links_when_available
 
     assert first == second
     assert "[signal-1]" in first.body
+
+
+def test_daily_brief_sorts_and_deduplicates_evidence_links_from_any_repository_order():
+    start, _ = brief_window(RUN_AT)
+    item = signal("signal-1", start + timedelta(hours=1), priority=3)
+
+    class EvidenceRepository(Repository):
+        def list_signal_evidence(self, _signal_id):
+            return [
+                SignalEvidence(id=2, signal_id="signal-1", raw_item_id=2, evidence_type="policy", excerpt="", source_confidence=.9),
+                SignalEvidence(id=1, signal_id="signal-1", raw_item_id=1, evidence_type="policy", excerpt="", source_confidence=.9),
+                SignalEvidence(id=3, signal_id="signal-1", raw_item_id=3, evidence_type="policy", excerpt="", source_confidence=.9),
+            ]
+
+        def get_raw_item(self, raw_item_id):
+            url = {1: "https://example.test/a", 2: "https://example.test/z", 3: "https://example.test/a"}[raw_item_id]
+            return RawItem(source_id="official", url=url, title="Evidence", content_hash=str(raw_item_id), collected_at=RUN_AT)
+
+    brief = build_daily_brief(EvidenceRepository([item]), RUN_AT)
+
+    assert "(https://example.test/a, https://example.test/z)" in brief.body
