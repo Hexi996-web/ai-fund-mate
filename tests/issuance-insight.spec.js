@@ -8,6 +8,10 @@ test('shows issuance rankings and current purchase suspensions on the home works
   await expect(page.getByRole('heading', { name: '暂停申购追踪' })).toBeVisible()
   await page.getByRole('tab', { name: '今年以来' }).click()
   await expect(page.locator('tbody tr').first()).toBeVisible()
+  await expect(page.locator('.issuance-panel').first().getByText(/共 1,?\d{3} 条 · 第 1\//)).toBeVisible()
+  await page.getByRole('button', { name: '下一页' }).first().click()
+  await expect(page.locator('.issuance-panel').first().getByText(/第 2\//)).toBeVisible()
+  await expect(page.locator('tbody .rank-number').first()).toHaveText('21')
 })
 
 test('keeps the requested top-level workspace order', async ({ page }) => {

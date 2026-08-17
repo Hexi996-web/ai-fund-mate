@@ -38,6 +38,7 @@ jobs:
           python -m pytest scripts/test_update_issuance_insights.py -q
           python -m pytest scripts/test_validate_published_freshness.py -q
           python scripts/validate_published_freshness.py public/funds_active.json --field updateTime --max-age-hours 30
+          python scripts/validate_published_freshness.py public/issuance_insights.json --field generatedAt --max-age-hours 30
       - name: Commit updated data
         run: |
           git config user.name "github-actions[bot]"

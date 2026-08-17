@@ -16,11 +16,23 @@ def test_builds_product_level_rankings_and_current_suspensions():
         {"code": "000005", "name": "示例限购C", "productId": "p1", "productName": "示例限购", "purchaseStatus": "暂停申购", "type": "混合型"},
     ]}
 
-    payload = build_payload(established, offerings, active, datetime(2026, 8, 17, 8, tzinfo=timezone.utc))
+    scales = [{"基金代码": "1", "最近总份额": 123456000, "单位净值": 1.2, "更新日期": "2026-08-14"}]
+    payload = build_payload(established, offerings, active, datetime(2026, 8, 17, 8, tzinfo=timezone.utc), scales)
 
     assert payload["summary"] == {
         "todayOffering": 1, "todayEstablished": 1, "weekEstablished": 1,
         "quarterEstablished": 2, "ytdEstablished": 2, "currentSuspended": 1,
     }
     assert payload["rankings"]["today"][0]["code"] == "000001"
+    assert payload["rankings"]["today"][0]["latestScaleYi"] == 1.4815
+    assert payload["rankings"]["today"][0]["latestScaleDate"] == "2026-08-14"
     assert payload["suspensions"][0]["representativeCode"] == "000004"
+
+
+def test_keeps_all_ranked_funds_in_snapshot():
+    established = [
+        {"基金代码": str(code), "基金简称": f"基金{code}", "成立日期": "2026-01-02", "募集份额": code}
+        for code in range(1, 76)
+    ]
+    payload = build_payload(established, [], {"funds": []}, datetime(2026, 8, 17, tzinfo=timezone.utc))
+    assert len(payload["rankings"]["ytd"]) == 75

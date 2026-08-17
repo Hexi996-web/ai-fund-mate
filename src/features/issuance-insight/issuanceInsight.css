@@ -1,1 +1,275 @@
-.issuance-shell{width:min(1400px,calc(100% - 48px));margin:auto;padding:38px 0 70px;color:#172036}.issuance-hero{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;padding:30px 34px;border:1px solid #dfe5ef;border-radius:18px;background:linear-gradient(135deg,#f5f7ff 0%,#fff 55%,#effaf6 100%)}.issuance-kicker{color:#5266df;font-size:12px;font-weight:800;letter-spacing:.12em}.issuance-hero h1{margin:8px 0 6px;font-size:34px}.issuance-hero p{margin:0;color:#66758d}.issuance-date{display:flex;flex-direction:column;align-items:flex-end;gap:6px}.issuance-date strong{color:#0a7a50}.issuance-date span{color:#7b879b;font-size:12px}.issuance-metrics{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:18px 0}.issuance-metrics article{padding:18px;border:1px solid #e0e6ef;border-radius:12px;background:#fff}.issuance-metrics span,.issuance-metrics small{display:block;color:#6f7d92}.issuance-metrics strong{display:block;margin:8px 0 5px;font-size:28px}.issuance-metrics small{font-size:11px}.issuance-panel{margin-top:18px;padding:24px;border:1px solid #dfe5ef;border-radius:15px;background:#fff}.issuance-panel__heading{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}.issuance-panel__heading>div>h2{display:inline;margin:0 0 0 10px;font-size:23px}.issuance-panel__heading p{margin:7px 0 0;color:#718097;font-size:13px}.issuance-section-index{color:#5368df;font-weight:900}.issuance-panel__heading input{width:280px;padding:10px 12px;border:1px solid #cfd7e5;border-radius:8px}.issuance-tabs{display:flex;gap:7px;margin:20px 0 14px}.issuance-tabs button{padding:8px 15px;border:1px solid #d8deea;border-radius:999px;background:#fff;color:#65738a;font-weight:700}.issuance-tabs button.active{border-color:#5368df;background:#edf0ff;color:#3145c8}.issuance-table-wrap{overflow:auto}.issuance-table-wrap table{width:100%;border-collapse:collapse;min-width:980px}.issuance-table-wrap th{padding:11px 10px;border-bottom:1px solid #dfe5ef;color:#718097;font-size:12px;text-align:left}.issuance-table-wrap td{padding:14px 10px;border-bottom:1px solid #edf0f5;font-size:13px}.cell-note{display:block;margin-top:4px;color:#8490a2;font-size:11px}.rank-number{display:grid;width:26px;height:26px;place-items:center;border-radius:7px;background:#edf0ff;color:#3d51d2}.positive{color:#c04444}.negative{color:#087a59}.pending-value{color:#9a7535}.issuance-method{margin:14px 0 0;color:#7a6844;font-size:12px}.issuance-two-column{display:grid;grid-template-columns:1fr 1fr;gap:18px}.issuance-list{display:grid;gap:9px;margin-top:18px}.issuance-list article{position:relative;padding:14px 15px;border:1px solid #e5e9f1;border-radius:9px;background:#fafbfe}.issuance-list article>div{display:flex;justify-content:space-between;gap:12px}.issuance-list article span{color:#7b879a;font-size:11px}.issuance-list article p{margin:8px 0 0;color:#68768d;font-size:12px}.suspension-list em{display:inline-block;margin-top:8px;padding:3px 7px;border-radius:999px;background:#fff0e3;color:#a35b18;font-size:11px;font-style:normal;font-weight:700}.issuance-empty,.issuance-loading,.issuance-error{padding:48px;text-align:center;color:#76839a}.issuance-error{margin-top:28px;border:1px solid #efd9d9;border-radius:14px;background:#fff8f8}@media(max-width:1100px){.issuance-metrics{grid-template-columns:repeat(3,1fr)}}@media(max-width:760px){.issuance-shell{width:calc(100% - 28px);padding-top:22px}.issuance-hero,.issuance-panel__heading{align-items:flex-start;flex-direction:column}.issuance-date{align-items:flex-start}.issuance-metrics{grid-template-columns:repeat(2,1fr)}.issuance-two-column{grid-template-columns:1fr}.issuance-panel__heading input{width:100%}}
+.issuance-shell {
+  width: min(1400px, calc(100% - 48px));
+  margin: auto;
+  padding: 38px 0 70px;
+  color: #172036;
+}
+.issuance-hero {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 30px 34px;
+  border: 1px solid #dfe5ef;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #f5f7ff 0%, #fff 55%, #effaf6 100%);
+}
+.issuance-kicker {
+  color: #5266df;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+.issuance-hero h1 {
+  margin: 8px 0 6px;
+  font-size: 34px;
+}
+.issuance-hero p {
+  margin: 0;
+  color: #66758d;
+}
+.issuance-date {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+.issuance-date strong {
+  color: #0a7a50;
+}
+.issuance-date span {
+  color: #7b879b;
+  font-size: 12px;
+}
+.issuance-metrics {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  margin: 18px 0;
+}
+.issuance-metrics article {
+  padding: 18px;
+  border: 1px solid #e0e6ef;
+  border-radius: 12px;
+  background: #fff;
+}
+.issuance-metrics span,
+.issuance-metrics small {
+  display: block;
+  color: #6f7d92;
+}
+.issuance-metrics strong {
+  display: block;
+  margin: 8px 0 5px;
+  font-size: 28px;
+}
+.issuance-metrics small {
+  font-size: 11px;
+}
+.issuance-panel {
+  margin-top: 18px;
+  padding: 24px;
+  border: 1px solid #dfe5ef;
+  border-radius: 15px;
+  background: #fff;
+}
+.issuance-panel__heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+.issuance-panel__heading > div > h2 {
+  display: inline;
+  margin: 0 0 0 10px;
+  font-size: 23px;
+}
+.issuance-panel__heading p {
+  margin: 7px 0 0;
+  color: #718097;
+  font-size: 13px;
+}
+.issuance-section-index {
+  color: #5368df;
+  font-weight: 900;
+}
+.issuance-panel__heading input {
+  width: 280px;
+  padding: 10px 12px;
+  border: 1px solid #cfd7e5;
+  border-radius: 8px;
+}
+.issuance-tabs {
+  display: flex;
+  gap: 7px;
+  margin: 20px 0 14px;
+}
+.issuance-tabs button {
+  padding: 8px 15px;
+  border: 1px solid #d8deea;
+  border-radius: 999px;
+  background: #fff;
+  color: #65738a;
+  font-weight: 700;
+}
+.issuance-tabs button.active {
+  border-color: #5368df;
+  background: #edf0ff;
+  color: #3145c8;
+}
+.issuance-table-wrap {
+  overflow: auto;
+}
+.issuance-table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 980px;
+}
+.issuance-table-wrap th {
+  padding: 11px 10px;
+  border-bottom: 1px solid #dfe5ef;
+  color: #718097;
+  font-size: 12px;
+  text-align: left;
+}
+.issuance-table-wrap td {
+  padding: 14px 10px;
+  border-bottom: 1px solid #edf0f5;
+  font-size: 13px;
+}
+.cell-note {
+  display: block;
+  margin-top: 4px;
+  color: #8490a2;
+  font-size: 11px;
+}
+.rank-number {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border-radius: 7px;
+  background: #edf0ff;
+  color: #3d51d2;
+}
+.positive {
+  color: #c04444;
+}
+.negative {
+  color: #087a59;
+}
+.pending-value {
+  color: #9a7535;
+}
+.issuance-method {
+  margin: 14px 0 0;
+  color: #7a6844;
+  font-size: 12px;
+}
+.issuance-two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.issuance-list {
+  display: grid;
+  gap: 9px;
+  margin-top: 18px;
+}
+.issuance-list article {
+  position: relative;
+  padding: 14px 15px;
+  border: 1px solid #e5e9f1;
+  border-radius: 9px;
+  background: #fafbfe;
+}
+.issuance-list article > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.issuance-list article span {
+  color: #7b879a;
+  font-size: 11px;
+}
+.issuance-list article p {
+  margin: 8px 0 0;
+  color: #68768d;
+  font-size: 12px;
+}
+.issuance-pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 14px;
+  color: #718097;
+  font-size: 12px;
+}
+.issuance-pager > div {
+  display: flex;
+  gap: 8px;
+}
+.issuance-pager button {
+  padding: 7px 12px;
+  border: 1px solid #d5dce8;
+  border-radius: 7px;
+  background: #fff;
+  color: #40516b;
+}
+.issuance-pager button:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+.suspension-list em {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: #fff0e3;
+  color: #a35b18;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 700;
+}
+.issuance-empty,
+.issuance-loading,
+.issuance-error {
+  padding: 48px;
+  text-align: center;
+  color: #76839a;
+}
+.issuance-error {
+  margin-top: 28px;
+  border: 1px solid #efd9d9;
+  border-radius: 14px;
+  background: #fff8f8;
+}
+@media (max-width: 1100px) {
+  .issuance-metrics {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 760px) {
+  .issuance-shell {
+    width: calc(100% - 28px);
+    padding-top: 22px;
+  }
+  .issuance-hero,
+  .issuance-panel__heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .issuance-date {
+    align-items: flex-start;
+  }
+  .issuance-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .issuance-two-column {
+    grid-template-columns: 1fr;
+  }
+  .issuance-panel__heading input {
+    width: 100%;
+  }
+}
