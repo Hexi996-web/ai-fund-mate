@@ -109,13 +109,13 @@ class SupabaseSignalRepository:
                         quote_ident(schemaname) || '.' || quote_ident(tablename),
                         'SELECT, INSERT, UPDATE, DELETE')
             """).fetchone()
-            anon_views = connection.execute("""
-                SELECT array_agg(table_name ORDER BY table_name) AS anon_views
+            protected_views = connection.execute("""
+                SELECT array_agg(table_name ORDER BY table_name) AS protected_views
                 FROM information_schema.views
                 WHERE table_schema = 'public'
-                    AND has_table_privilege('anon',
+                    AND NOT has_table_privilege('anon',
                         quote_ident(table_schema) || '.' || quote_ident(table_name), 'SELECT')
-                    AND has_table_privilege('authenticated',
+                    AND NOT has_table_privilege('authenticated',
                         quote_ident(table_schema) || '.' || quote_ident(table_name), 'SELECT')
             """).fetchone()
 
@@ -126,13 +126,13 @@ class SupabaseSignalRepository:
             (self._REQUIRED_INDEXES, indexes, "indexes"),
             (self._BASE_TABLES, rls_tables, "RLS tables"),
             (self._BASE_TABLES, writer_tables, "writer privileges"),
-            (self._PUBLIC_VIEWS, anon_views, "public view privileges"),
+            (self._PUBLIC_VIEWS, protected_views, "protected view privileges"),
         )
         for expected, row, label in checks:
             actual = set((row or {}).get({
                 "relations": "relations", "columns": "columns", "indexes": "indexes",
                 "RLS tables": "rls_tables", "writer privileges": "writer_tables",
-                "public view privileges": "anon_views",
+                "protected view privileges": "protected_views",
             }[label]) or [])
             absent = sorted(expected - actual)
             if absent:
