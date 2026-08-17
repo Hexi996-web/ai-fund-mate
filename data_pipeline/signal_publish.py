@@ -191,13 +191,32 @@ def _current_brief(repo, generated_at: datetime):
 
 
 def _themes(signals: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    categories: dict[str, list[str]] = {}
-    for signal in signals:
-        categories.setdefault(signal["category"], []).append(signal["id"])
-    return [
-        {"id": category, "title": category, "signalIds": signal_ids}
-        for category, signal_ids in sorted(categories.items())
+    """Select three to five opportunity themes from the current signal mix."""
+    templates = [
+        ("steady-allocation", "稳健多资产配置", ("流动性", "稳健", "低波", "回撤")),
+        ("long-equity", "长钱入市与权益体验", ("长期资金", "长钱", "指数化", "权益")),
+        ("fee-experience", "费率机制与客户体验", ("费率", "透明机制", "持有体验")),
+        ("ai-product", "AI产业链精细化工具", ("AI", "人工智能", "算力", "半导体")),
+        ("bond-duration", "债券久期与现金替代", ("债券", "久期", "利率", "现金替代")),
     ]
+    themes = []
+    used: set[str] = set()
+    for theme_id, title, keywords in templates:
+        matches = [
+            signal["id"] for signal in signals
+            if any(keyword.lower() in f"{signal['title']} {signal['summary']}".lower() for keyword in keywords)
+        ]
+        if matches:
+            themes.append({"id": theme_id, "title": title, "signalIds": matches[:4]})
+            used.update(matches)
+    if len(themes) < 3:
+        for category in ("policy", "macro", "market", "customer"):
+            matches = [signal["id"] for signal in signals if signal["category"] == category and signal["id"] not in used]
+            if matches:
+                themes.append({"id": f"{category}-watch", "title": f"{category}信号观察", "signalIds": matches[:4]})
+            if len(themes) >= 3:
+                break
+    return themes[:5]
 
 
 def _market_environment(signals: list[dict[str, Any]], generated_at: datetime) -> dict[str, Any]:

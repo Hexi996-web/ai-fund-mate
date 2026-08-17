@@ -26,7 +26,13 @@
     { "id": "global-fed", "clusterId": "c14", "category": "macro", "title": "美联储路径影响跨境流动性预期", "summary": "仅在对中国公募跨境和汇率配置存在传导时纳入。", "priority": 60, "sourceConfidence": 0.94, "customerDemandScore": 0.3, "demandKind": "unknown", "validationStatus": "confirmed", "publishedAt": "2026-08-16T09:30:00Z", "updatedAt": "2026-08-16T09:30:00Z", "sources": [{ "url": "https://www.federalreserve.gov/", "excerpt": "美联储官方公开信息", "confidence": 0.94 }] },
     { "id": "global-bis", "clusterId": "c15", "category": "macro", "title": "全球流动性变化需关注中国资产传导", "summary": "国际数据只作为国内资产配置的辅助验证。", "priority": 54, "sourceConfidence": 0.9, "customerDemandScore": 0.2, "demandKind": "unknown", "validationStatus": "confirmed", "publishedAt": "2026-08-16T10:30:00Z", "updatedAt": "2026-08-16T10:30:00Z", "sources": [{ "url": "https://www.bis.org/", "excerpt": "国际清算银行公开数据", "confidence": 0.9 }] }
   ],
-  "themes": [{ "id": "steady-allocation", "title": "稳健多资产配置", "signalIds": ["macro-liquidity", "customer-steady"] }, { "id": "long-equity", "title": "长钱入市与权益体验", "signalIds": ["policy-equity"] }],
+  "themes": [
+    { "id": "steady-allocation", "title": "稳健多资产配置", "signalIds": ["macro-liquidity", "customer-steady", "customer-hold"] },
+    { "id": "long-equity", "title": "长钱入市与权益体验", "signalIds": ["policy-equity", "policy-index", "market-dividend"] },
+    { "id": "fee-experience", "title": "费率机制与客户体验", "signalIds": ["policy-fee", "customer-fee-proxy"] },
+    { "id": "ai-product", "title": "AI产业链精细化工具", "signalIds": ["market-ai"] },
+    { "id": "bond-duration", "title": "债券久期与现金替代", "signalIds": ["market-bond", "macro-inflation"] }
+  ],
   "catalysts": [{ "id": "nbs-release", "signalId": "macro-growth", "title": "国民经济运行数据发布", "scheduledAt": "2026-08-18T02:00:00Z", "priority": 80, "description": "验证增长、需求与价格信号。", "validationStatus": "confirmed" }, { "id": "fed-minutes", "signalId": "global-fed", "title": "美联储会议纪要", "scheduledAt": "2026-08-20T18:00:00Z", "priority": 55, "description": "仅跟踪对中国公募跨境与流动性配置的传导。", "validationStatus": "confirmed" }, { "id": "lpr-release", "signalId": "macro-liquidity", "title": "贷款市场报价利率发布", "scheduledAt": "2026-08-20T01:15:00Z", "priority": 76, "description": "验证国内利率与流动性环境。", "validationStatus": "confirmed" }, { "id": "fund-disclosure", "signalId": "customer-hold", "title": "公募基金份额与净值数据更新", "scheduledAt": "2026-08-19T10:00:00Z", "priority": 62, "description": "更新客户需求代理与持有体验观察。", "validationStatus": "confirmed" }, { "id": "bis-data", "signalId": "global-bis", "title": "国际清算银行统计数据窗口", "scheduledAt": "2026-08-22T08:00:00Z", "priority": 45, "description": "辅助验证全球流动性对中国资产的传导。", "validationStatus": "confirmed" }],
   "dailyBrief": { "id": "daily-brief-2026-08-17", "windowStart": "2026-08-16T00:00:00Z", "windowEnd": "2026-08-17T00:00:00Z", "generatedAt": "2026-08-17T00:07:00Z", "body": "政策与客需信号共同指向稳健持有体验；AI 热度仅作待验证异常。", "status": "published", "signalIds": ["customer-steady", "policy-equity"], "topCall": "优先验证低回撤多资产产品定位" }
 }
