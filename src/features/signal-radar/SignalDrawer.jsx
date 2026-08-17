@@ -43,7 +43,8 @@ export function SignalDrawer({ signal, isWatched, onToggleWatch, onClose, return
           <section><h3>相关基金检索词</h3><p>{signal.relatedFundKeywords.join(' / ')}</p></section>
           <section className="counter-section"><h3>反方证据与失效条件</h3><ul>{[...signal.counterEvidence, ...signal.invalidationConditions].map((item) => <li key={item}>{item}</li>)}</ul></section>
           <section><h3>下一步研究</h3><p>{signal.recommendedAction}</p></section>
-          <section className="source-section"><h3>来源与口径</h3><p>{signal.sourceNote}</p>{signal.sourceUrl ? <a href={signal.sourceUrl} target="_blank" rel="noreferrer">查看{signal.sourceName}原始来源</a> : <span>{signal.sourceName} · 无外部链接</span>}</section>
+          <section className="score-section"><h3>评分与验证状态</h3><p>优先级 {signal.priority} · 来源可信度 {Math.round((signal.sourceConfidence ?? 0) * 100)}% · 客需得分 {Math.round((signal.customerDemandScore ?? 0) * 100)}%</p>{signal.validationStatus === 'pending_official_validation' ? <strong className="validation-warning">非官方异常，待官方验证，不应视为已确认事实。</strong> : null}</section>
+          <section className="source-section"><h3>来源与口径</h3><p>{signal.sourceNote}</p>{signal.sources.map((source, index) => <a key={`${source.url}-${index}`} href={source.url} target="_blank" rel="noreferrer">来源 {index + 1} · 可信度 {Math.round(source.confidence * 100)}%{source.excerpt ? ` · ${source.excerpt}` : ''}</a>)}</section>
         </div>
         <footer><button type="button" className="watch-button" onClick={onToggleWatch}>{isWatched ? '移出机会观察池' : '加入机会观察池'}</button></footer>
       </aside>
