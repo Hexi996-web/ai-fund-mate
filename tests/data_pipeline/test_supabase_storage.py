@@ -56,7 +56,7 @@ def complete_contract_rows():
         {"indexes": EXPECTED_INDEXES},
         {"rls_tables": EXPECTED_BASE_TABLES},
         {"writer_tables": EXPECTED_BASE_TABLES},
-        {"anon_views": EXPECTED_VIEWS},
+        {"protected_views": EXPECTED_VIEWS},
     ]
 
 

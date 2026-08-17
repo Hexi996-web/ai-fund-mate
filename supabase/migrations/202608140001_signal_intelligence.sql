@@ -214,5 +214,7 @@ revoke all on table public.published_signals, public.published_catalysts,
     public.published_daily_briefs from public;
 revoke all on table public.published_signals, public.published_catalysts,
     public.published_daily_briefs from anon, authenticated;
+grant select on table public.published_signals, public.published_catalysts,
+    public.published_daily_briefs to signal_pipeline_writer;
 
 commit;
