@@ -2,16 +2,18 @@ import { useCallback, useState } from 'react'
 import FundApp from './App.jsx'
 import { ThemeWorkspace } from './components/ThemeWorkspace.jsx'
 import { SignalRadar } from './features/signal-radar/SignalRadar.jsx'
+import { IssuanceInsight } from './features/issuance-insight/IssuanceInsight.jsx'
 import './workspace.css'
 
 const WORKSPACES = [
+  { id: 'issuance', label: '发行洞察' },
   { id: 'signals', label: '信号雷达' },
   { id: 'themes', label: '主题研判' },
   { id: 'funds', label: '基金产品库' },
 ]
 
 export default function WorkspaceApp() {
-  const [workspace, setWorkspace] = useState('signals')
+  const [workspace, setWorkspace] = useState('issuance')
   const [fundContext, setFundContext] = useState({ query: '', contextLabel: '' })
   const openFundLibrary = (context = {}) => {
     setFundContext({ query: context.query ?? '', contextLabel: context.contextLabel ?? '' })
@@ -38,6 +40,7 @@ export default function WorkspaceApp() {
         </div>
       </div>
     </nav>
+    {workspace === 'issuance' ? <IssuanceInsight /> : null}
     {workspace === 'signals' ? <SignalRadar /> : null}
     {workspace === 'themes' ? <main className="workspace-main"><ThemeWorkspace onOpenFundLibrary={openFundLibrary} /></main> : null}
     {workspace === 'funds' ? <FundApp initialQuery={fundContext.query} onQueryChange={rememberFundQuery} /> : null}
