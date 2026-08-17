@@ -75,6 +75,29 @@ def normalize_established(rows: Iterable[dict[str, Any]]) -> list[dict[str, Any]
     return funds
 
 
+def normalize_scales(rows: Iterable[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    """Index Sina's free open-fund scale snapshot by share-class code.
+
+    Current scale is estimated as latest total shares times unit NAV.  The
+    upstream total fundraising field is deliberately not used because it is
+    an initial issuance measure rather than current AUM.
+    """
+    scales: dict[str, dict[str, Any]] = {}
+    for row in rows:
+        code = _code(row.get("基金代码"))
+        total_shares = _number(row, "最近总份额")
+        unit_nav = _number(row, "单位净值")
+        scale_date = _date(row, "更新日期")
+        if not code or total_shares is None or unit_nav is None:
+            continue
+        scales[code] = {
+            "latestScaleYi": round(total_shares * unit_nav / 100000000, 4),
+            "latestScaleDate": scale_date.isoformat() if scale_date else None,
+            "latestScaleStatus": "份额×净值估算",
+        }
+    return scales
+
+
 def normalize_offerings(rows: Iterable[dict[str, Any]], today: date) -> list[dict[str, Any]]:
     offerings = []
     seen = set()
@@ -153,9 +176,12 @@ def build_payload(
     offering_rows: Iterable[dict[str, Any]],
     active_payload: dict[str, Any],
     now: datetime,
+    scale_rows: Iterable[dict[str, Any]] = (),
 ) -> dict[str, Any]:
     today = now.date()
     established = normalize_established(established_rows)
+    scale_by_code = normalize_scales(scale_rows)
+    established = [{**item, **scale_by_code.get(item["code"], {})} for item in established]
     offerings = normalize_offerings(offering_rows, today)
     windows = {
         "today": today,
@@ -168,7 +194,7 @@ def build_payload(
     for key, start in windows.items():
         selected = [item for item in established if start <= date.fromisoformat(item["establishedDate"]) <= today]
         window_counts[key] = len(selected)
-        rankings[key] = _rank(selected, short_window=key in ("today", "week"))[:50]
+        rankings[key] = _rank(selected, short_window=key in ("today", "week"))
 
     suspensions = current_suspensions(active_payload)
     ongoing = [item for item in offerings if item["status"] == "认购中"]
@@ -192,7 +218,7 @@ def build_payload(
         "methodology": {
             "shortWindow": "募集规模80%+成立以来收益20%",
             "longWindow": "募集规模55%+成立以来收益45%",
-            "warning": "成立不足一个月的收益仅供观察；最新规模待定期报告或交易所数据补全。",
+            "warning": "成立不足一个月的收益仅供观察；最新规模为免费公开接口的份额级快照，未披露时显示待补全。",
         },
     }
 
@@ -209,7 +235,9 @@ def main() -> None:
     established = _records(ak.fund_new_found_em)
     offering_callable = getattr(ak, "fund_new_found_ths", None)
     offerings = _records(offering_callable, symbol="全部") if offering_callable else []
-    payload = build_payload(established, offerings, active_payload, datetime.now(timezone.utc))
+    scale_callable = getattr(ak, "fund_scale_open_sina", None)
+    scales = _records(scale_callable) if scale_callable else []
+    payload = build_payload(established, offerings, active_payload, datetime.now(timezone.utc), scales)
     if not payload["rankings"]["ytd"] and not payload["offerings"]["ongoing"]:
         raise RuntimeError("新发基金数据为空，停止覆盖现有发行洞察快照")
     temporary = OUTPUT.with_suffix(".json.tmp")

@@ -13,11 +13,25 @@ const number = (value, suffix = '') => value === null || value === undefined
   ? '—'
   : `${Number(value).toLocaleString('zh-CN', { maximumFractionDigits: 2 })}${suffix}`
 
+const PAGE_SIZE = 20
+
+function Pager({ page, total, onChange }) {
+  const pages = Math.max(1, Math.ceil(total / PAGE_SIZE))
+  if (total <= PAGE_SIZE) return total ? <div className="issuance-pager"><span>共 {total} 条</span></div> : null
+  return <div className="issuance-pager">
+    <span>共 {total} 条 · 第 {page}/{pages} 页</span>
+    <div><button type="button" disabled={page === 1} onClick={() => onChange(page - 1)}>上一页</button><button type="button" disabled={page === pages} onClick={() => onChange(page + 1)}>下一页</button></div>
+  </div>
+}
+
 export function IssuanceInsight() {
   const [payload, setPayload] = useState(null)
   const [error, setError] = useState('')
   const [windowKey, setWindowKey] = useState('quarter')
   const [query, setQuery] = useState('')
+  const [rankingPage, setRankingPage] = useState(1)
+  const [offeringPage, setOfferingPage] = useState(1)
+  const [suspensionPage, setSuspensionPage] = useState(1)
 
   useEffect(() => {
     const controller = new AbortController()
@@ -32,6 +46,10 @@ export function IssuanceInsight() {
     return (payload?.rankings?.[windowKey] ?? []).filter((fund) => !value
       || [fund.code, fund.name, fund.manager, fund.type].some((field) => String(field ?? '').toLowerCase().includes(value)))
   }, [payload, query, windowKey])
+
+  useEffect(() => setRankingPage(1), [query, windowKey])
+
+  const page = (items, current) => items.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE)
 
   if (error) return <main className="issuance-shell"><div className="issuance-error"><h2>发行洞察暂不可用</h2><p>{error}</p><p>系统不会用空数据覆盖上一份有效快照。</p></div></main>
   if (!payload) return <main className="issuance-shell"><div className="issuance-loading">正在加载发行市场数据…</div></main>
@@ -69,37 +87,40 @@ export function IssuanceInsight() {
       <div className="issuance-table-wrap">
         <table>
           <thead><tr><th>排名</th><th>基金/代表份额</th><th>类型</th><th>成立日期</th><th>募集份额</th><th>成立以来收益</th><th>最新规模</th><th>综合分</th></tr></thead>
-          <tbody>{ranking.slice(0, 20).map((fund, index) => <tr key={fund.code}>
-            <td><b className="rank-number">{index + 1}</b></td>
+          <tbody>{page(ranking, rankingPage).map((fund, index) => <tr key={fund.code}>
+            <td><b className="rank-number">{(rankingPage - 1) * PAGE_SIZE + index + 1}</b></td>
             <td><strong>{fund.name}</strong><span className="cell-note">{fund.code} · {fund.manager || '管理人待补全'}</span></td>
             <td>{fund.type}</td><td>{fund.establishedDate}</td>
             <td>{number(fund.raisedSharesYi, ' 亿份')}</td>
             <td className={(fund.returnSinceInceptionPercent ?? 0) >= 0 ? 'positive' : 'negative'}>{number(fund.returnSinceInceptionPercent, '%')}</td>
-            <td>{fund.latestScaleYi === null ? <span className="pending-value">待补全</span> : number(fund.latestScaleYi, ' 亿元')}</td>
+            <td>{fund.latestScaleYi === null ? <span className="pending-value">待披露</span> : <>{number(fund.latestScaleYi, ' 亿元')}<span className="cell-note">估算 · {fund.latestScaleDate || '日期待补全'}</span></>}</td>
             <td><strong>{number(fund.successScore)}</strong></td>
           </tr>)}</tbody>
         </table>
         {ranking.length === 0 ? <div className="issuance-empty">该时间窗口暂无可用成立数据</div> : null}
       </div>
+      <Pager page={rankingPage} total={ranking.length} onChange={setRankingPage} />
       <p className="issuance-method">{windowKey === 'today' || windowKey === 'week' ? payload.methodology.shortWindow : payload.methodology.longWindow}。{payload.methodology.warning}</p>
     </section>
 
     <div className="issuance-two-column">
       <section className="issuance-panel">
         <div className="issuance-panel__heading"><div><span className="issuance-section-index">02</span><h2>当前认购中</h2><p>展示募集窗口与基础认购条件。</p></div></div>
-        <div className="issuance-list">{payload.offerings.ongoing.slice(0, 8).map((fund) => <article key={fund.code}>
+        <div className="issuance-list">{page(payload.offerings.ongoing, offeringPage).map((fund) => <article key={fund.code}>
           <div><strong>{fund.name}</strong><span>{fund.code} · {fund.type}</span></div>
           <p>{fund.offeringStartDate} — {fund.offeringEndDate || '待公告'}</p>
         </article>)}{payload.offerings.ongoing.length === 0 ? <div className="issuance-empty">今日暂无认购中数据</div> : null}</div>
+        <Pager page={offeringPage} total={payload.offerings.ongoing.length} onChange={setOfferingPage} />
       </section>
 
       <section className="issuance-panel">
         <div className="issuance-panel__heading"><div><span className="issuance-section-index">03</span><h2>暂停申购追踪</h2><p>当前状态快照；历史变化从本版本开始每日积累。</p></div></div>
-        <div className="issuance-list suspension-list">{payload.suspensions.slice(0, 8).map((fund) => <article key={fund.productId}>
+        <div className="issuance-list suspension-list">{page(payload.suspensions, suspensionPage).map((fund) => <article key={fund.productId}>
           <div><strong>{fund.productName}</strong><span>{fund.representativeCode} · {fund.type}</span></div>
           <em>{fund.purchaseStatus}</em>
           <p>净值日 {fund.lastNetValueDate || '待补全'} · 日涨跌 {number(fund.dailyChangePercent, '%')}</p>
         </article>)}{payload.suspensions.length === 0 ? <div className="issuance-empty">当前未识别到暂停申购产品</div> : null}</div>
+        <Pager page={suspensionPage} total={payload.suspensions.length} onChange={setSuspensionPage} />
       </section>
     </div>
   </main>
