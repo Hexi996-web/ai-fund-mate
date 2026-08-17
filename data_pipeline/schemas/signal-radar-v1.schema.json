@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "signal-radar-v1.schema.json",
+  "title": "Signal Radar Snapshot v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "generatedAt", "health", "regime", "signals", "themes", "catalysts", "dailyBrief"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "generatedAt": {"type": "string", "format": "date-time"},
+    "health": {"$ref": "#/$defs/health"},
+    "regime": {"$ref": "#/$defs/regime"},
+    "signals": {"type": "array", "items": {"$ref": "#/$defs/signal"}},
+    "themes": {"type": "array", "items": {"$ref": "#/$defs/theme"}},
+    "catalysts": {"type": "array", "items": {"$ref": "#/$defs/catalyst"}},
+    "dailyBrief": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/dailyBrief"}]}
+  },
+  "$defs": {
+    "health": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "backend", "lastSuccessfulUpdate", "fresh", "signalCount", "catalystCount", "rawItemCount"],
+      "properties": {
+        "status": {"enum": ["healthy", "degraded"]},
+        "backend": {"enum": ["sqlite", "postgresql"]},
+        "lastSuccessfulUpdate": {"oneOf": [{"type": "null"}, {"type": "string", "format": "date-time"}]},
+        "fresh": {"type": "boolean"},
+        "signalCount": {"type": "integer", "minimum": 0},
+        "catalystCount": {"type": "integer", "minimum": 0},
+        "rawItemCount": {"type": "integer", "minimum": 0}
+      }
+    },
+    "regime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "label", "rationale"],
+      "properties": {
+        "status": {"type": "string", "minLength": 1},
+        "label": {"type": "string", "minLength": 1},
+        "rationale": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "signal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "clusterId", "category", "title", "summary", "priority", "sourceConfidence", "customerDemandScore", "demandKind", "validationStatus", "publishedAt", "updatedAt", "sources"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "clusterId": {"type": ["string", "null"]},
+        "category": {"type": "string", "minLength": 1},
+        "title": {"type": "string", "minLength": 1},
+        "summary": {"type": "string"},
+        "priority": {"type": "integer"},
+        "sourceConfidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "customerDemandScore": {"type": "number", "minimum": 0, "maximum": 1},
+        "demandKind": {"enum": ["direct", "proxy", "media_attention", "unknown"]},
+        "validationStatus": {"enum": ["pending_official_validation", "confirmed", "rejected"]},
+        "publishedAt": {"type": "string", "format": "date-time"},
+        "updatedAt": {"type": "string", "format": "date-time"},
+        "sources": {"type": "array", "items": {"$ref": "#/$defs/source"}}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url", "excerpt", "confidence"],
+      "properties": {
+        "url": {"type": "string", "format": "uri"},
+        "excerpt": {"type": "string"},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "theme": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "signalIds"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "title": {"type": "string", "minLength": 1},
+        "signalIds": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "catalyst": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "signalId", "title", "scheduledAt", "priority", "description", "validationStatus"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "signalId": {"type": ["string", "null"]},
+        "title": {"type": "string", "minLength": 1},
+        "scheduledAt": {"type": "string", "format": "date-time"},
+        "priority": {"type": "integer"},
+        "description": {"type": "string"},
+        "validationStatus": {"enum": ["pending_official_validation", "confirmed", "rejected"]}
+      }
+    },
+    "dailyBrief": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "windowStart", "windowEnd", "generatedAt", "body", "status", "signalIds", "topCall"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "windowStart": {"type": "string", "format": "date-time"},
+        "windowEnd": {"type": "string", "format": "date-time"},
+        "generatedAt": {"type": "string", "format": "date-time"},
+        "body": {"type": "string"},
+        "status": {"const": "published"},
+        "signalIds": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "topCall": {"type": "string"}
+      }
+    }
+  }
+}

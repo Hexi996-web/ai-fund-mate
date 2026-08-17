@@ -56,45 +56,50 @@ def main(argv: list[str] | None = None) -> int:
 def _collect(args) -> int:
     repo = repository_for(args.db, fixtures=args.fixtures)
     repo.initialize()
-    as_of = args.as_of or datetime.now(timezone.utc)
-    sources = load_source_registry(ROOT / "config" / "signal_sources.json")
-    fixtures_dir = ROOT / "tests" / "data_pipeline" / "fixtures" / "signals"
-    collected = []
-    successful_sources = 0
-    failed_sources = 0
-    for source in sources:
-        repo.upsert_source(source)
-        if not source.enabled:
-            continue
-        from .signal_collectors import collect_source
-
-        if args.fixtures:
-            fixture_name = FIXTURE_FILES.get(source.id)
-            if fixture_name is None:
+    as_of = args.as_of or _now()
+    try:
+        sources = load_source_registry(ROOT / "config" / "signal_sources.json")
+        fixtures_dir = ROOT / "tests" / "data_pipeline" / "fixtures" / "signals"
+        collected = []
+        successful_sources = 0
+        failed_sources = 0
+        for source in sources:
+            repo.upsert_source(source)
+            if not source.enabled:
                 continue
-            fetch = lambda _url, name=fixture_name: (fixtures_dir / name).read_text(encoding="utf-8")
-        else:
-            fetch = _live_fetch
-        result = collect_source(source, fetch)
-        if result.status != "normal":
-            failed_sources += 1
-            continue
-        successful_sources += 1
-        for item in result.items:
-            collected.append(repo.save_raw_item(replace(item, collected_at=as_of)))
+            from .signal_collectors import collect_source
 
-    _persist_derived_records(repo, sources, collected, as_of)
-    summary = {
-        "backend": "sqlite" if isinstance(repo, SignalRepository) else "postgresql",
-        "fixtures": args.fixtures,
-        "successfulSources": successful_sources,
-        "failedSources": failed_sources,
-        "rawItems": len(collected),
-    }
-    _record(repo, "collect", as_of, summary)
+            if args.fixtures:
+                fixture_name = FIXTURE_FILES.get(source.id)
+                if fixture_name is None:
+                    continue
+                fetch = lambda _url, name=fixture_name: (fixtures_dir / name).read_text(encoding="utf-8")
+            else:
+                fetch = _live_fetch
+            result = collect_source(source, fetch)
+            if result.status != "normal":
+                failed_sources += 1
+                continue
+            successful_sources += 1
+            for item in result.items:
+                collected.append(repo.save_raw_item(replace(item, collected_at=as_of)))
+
+        _persist_derived_records(repo, sources, collected, as_of)
+        summary = {
+            "backend": "sqlite" if isinstance(repo, SignalRepository) else "postgresql",
+            "fixtures": args.fixtures,
+            "successfulSources": successful_sources,
+            "failedSources": failed_sources,
+            "rawItems": len(collected),
+        }
+    except Exception as error:
+        _record(repo, "collect", as_of, {"errorType": type(error).__name__}, status="failed")
+        raise
+
+    status = "failed" if successful_sources == 0 else "partial" if failed_sources else "success"
+    _record(repo, "collect", as_of, summary, status=status)
     print(json.dumps(summary, sort_keys=True))
-    return 0
-
+    return 1 if status == "failed" else 0
 
 def _live_fetch(url: str) -> bytes:
     """Fetch one registry-approved public URL without bypassing access controls."""
@@ -156,40 +161,55 @@ def _persist_derived_records(repo, sources, raw_items, as_of):
 def _brief(args) -> int:
     repo = repository_for(args.db)
     repo.initialize()
-    brief = build_daily_brief(repo, args.run_at)
-    repo.save_brief(brief)
-    _record(repo, "brief", args.run_at, {"briefId": brief.id, "signals": len(brief.signal_ids)})
-    print(json.dumps({"briefId": brief.id, "signals": len(brief.signal_ids)}, sort_keys=True))
+    try:
+        brief = build_daily_brief(repo, args.run_at)
+        repo.save_brief(brief)
+        summary = {"briefId": brief.id, "signals": len(brief.signal_ids)}
+    except Exception as error:
+        _record(repo, "brief", args.run_at, {"errorType": type(error).__name__}, status="failed")
+        raise
+    _record(repo, "brief", args.run_at, summary)
+    print(json.dumps(summary, sort_keys=True))
     return 0
-
 
 def _publish(args) -> int:
     repo = repository_for(args.db)
     repo.initialize()
-    generated_at = args.generated_at or datetime.now(timezone.utc)
-    payload = publish_snapshot(repo, args.output, generated_at=generated_at)
-    _record(repo, "publish", generated_at, {"output": str(args.output), "signals": len(payload["signals"])})
-    print(json.dumps({"output": str(args.output), "signals": len(payload["signals"])}, sort_keys=True))
+    generated_at = args.generated_at or _now()
+    try:
+        payload = publish_snapshot(repo, args.output, generated_at=generated_at)
+        summary = {"output": str(args.output), "signals": len(payload["signals"])}
+    except Exception as error:
+        _record(repo, "publish", generated_at, {"errorType": type(error).__name__}, status="failed")
+        raise
+    _record(repo, "publish", generated_at, summary)
+    print(json.dumps(summary, sort_keys=True))
     return 0
-
 
 def _health(args) -> int:
     repo = repository_for(args.db)
     repo.initialize()
     backend = "sqlite" if isinstance(repo, SignalRepository) else "postgresql"
-    print(json.dumps(health_payload(repo, backend=backend), sort_keys=True))
+    print(json.dumps(
+        health_payload(repo, generated_at=args.generated_at, backend=backend),
+        sort_keys=True,
+    ))
     return 0
 
-
-def _record(repo, command: str, instant: datetime, summary: dict) -> None:
-    finished = datetime.now(timezone.utc)
+def _record(
+    repo, command: str, instant: datetime, summary: dict, *, status: str = "success",
+) -> None:
+    finished = _now()
     identifier = sha256(f"{command}|{instant.astimezone(timezone.utc).isoformat()}".encode("utf-8")).hexdigest()[:20]
     repo.record_run(PipelineRun(
         id=f"{command}-{identifier}", command=command, started_at=instant,
-        finished_at=finished, status="success",
+        finished_at=finished, status=status,
         summary=json.dumps(summary, ensure_ascii=False, sort_keys=True),
     ))
 
+
+def _now() -> datetime:
+    return datetime.now(timezone.utc)
 
 def _timestamp(value: str) -> datetime:
     try:
@@ -224,6 +244,7 @@ def _parser() -> argparse.ArgumentParser:
 
     health = commands.add_parser("health")
     health.add_argument("--db", type=Path)
+    health.add_argument("--generated-at", type=_timestamp)
     health.set_defaults(handler=_health)
     return parser
 

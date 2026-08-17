@@ -1,6 +1,6 @@
 import importlib
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 import pytest
 
@@ -128,3 +128,70 @@ def test_explicit_db_keeps_every_fixture_command_local_when_supabase_is_set(tmp_
     assert main(["health", "--db", str(database)]) == 0
 
     assert output.exists()
+
+def test_collect_records_all_source_failure_and_returns_nonzero(tmp_path, monkeypatch):
+    monkeypatch.delenv("SUPABASE_DB_URL", raising=False)
+
+    def fail_fetch(_url):
+        raise TimeoutError("offline")
+
+    monkeypatch.setattr("data_pipeline.signal_cli._live_fetch", fail_fetch)
+    database = tmp_path / "failed.db"
+
+    assert main(["collect", "--db", str(database), "--as-of", "2026-08-14T00:00:00+00:00"]) == 1
+
+    run = SignalRepository(database).list_runs()[0]
+    assert run.status == "failed"
+    assert json.loads(run.summary)["failedSources"] == 6
+
+
+def test_collect_records_partial_source_failure(tmp_path, monkeypatch):
+    monkeypatch.delenv("SUPABASE_DB_URL", raising=False)
+
+    def partial_fetch(url):
+        if "csrc.gov.cn" in url:
+            raise TimeoutError("one source failed")
+        if "bls.gov" in url:
+            return "BEGIN:VCALENDAR\nBEGIN:VEVENT\nDTSTART:20260814T123000Z\nSUMMARY:Release\nEND:VEVENT\nEND:VCALENDAR\n"
+        if "feeds" in url or "rss" in url:
+            return "<rss><channel><item><title>Release</title><link>https://example.test/r</link></item></channel></rss>"
+        return '<ul><li><a href="/release">Public release</a></li></ul>'
+
+    monkeypatch.setattr("data_pipeline.signal_cli._live_fetch", partial_fetch)
+    database = tmp_path / "partial.db"
+
+    assert main(["collect", "--db", str(database), "--as-of", "2026-08-14T00:00:00+00:00"]) == 0
+    assert SignalRepository(database).list_runs()[0].status == "partial"
+
+
+def test_publish_filesystem_failure_is_recorded(tmp_path, monkeypatch):
+    monkeypatch.delenv("SUPABASE_DB_URL", raising=False)
+    database = tmp_path / "signals.db"
+    SignalRepository(database).initialize()
+
+    with pytest.raises(OSError):
+        main(["publish", "--db", str(database), "--output", str(tmp_path)])
+
+    run = SignalRepository(database).list_runs()[0]
+    assert run.command == "publish"
+    assert run.status == "failed"
+
+
+def test_health_cli_marks_old_collect_stale(tmp_path, monkeypatch, capsys):
+    monkeypatch.delenv("SUPABASE_DB_URL", raising=False)
+    old = datetime(2026, 8, 14, 0, tzinfo=timezone.utc)
+    monkeypatch.setattr("data_pipeline.signal_cli._now", lambda: old, raising=False)
+    database = tmp_path / "stale.db"
+
+    assert main([
+        "collect", "--db", str(database), "--fixtures",
+        "--as-of", old.isoformat(),
+    ]) == 0
+    assert main([
+        "health", "--db", str(database),
+        "--generated-at", (old + timedelta(hours=3)).isoformat(),
+    ]) == 0
+    health = json.loads(capsys.readouterr().out.strip().splitlines()[-1])
+
+    assert health["status"] == "degraded"
+    assert health["fresh"] is False

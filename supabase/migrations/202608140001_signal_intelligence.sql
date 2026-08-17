@@ -1,5 +1,14 @@
 begin;
 
+create table public.signal_schema_versions (
+    version bigint primary key,
+    applied_at timestamptz not null default now()
+);
+
+insert into public.signal_schema_versions (version)
+values (202608140001)
+on conflict (version) do nothing;
+
 do $$
 begin
     if not exists (select 1 from pg_roles where rolname = 'signal_pipeline_writer') then
@@ -169,15 +178,23 @@ group by s.id;
 create view public.published_catalysts
 with (security_barrier = true)
 as
-select id, signal_id, title, scheduled_at, priority, description, validation_status
-from public.catalysts;
+select c.id, c.signal_id, c.title, c.scheduled_at, c.priority, c.description, c.validation_status
+from public.catalysts c
+left join public.signals s on s.id = c.signal_id
+where c.signal_id is null or s.published_at is not null;
 
 create view public.published_daily_briefs
 with (security_barrier = true)
 as
 select id, window_start, window_end, generated_at, body, status, signal_ids, top_call
-from public.daily_briefs
-where status = 'published';
+from public.daily_briefs b
+where b.status = 'published'
+  and not exists (
+      select 1
+      from jsonb_array_elements_text(b.signal_ids) as brief_signal(id)
+      left join public.signals s on s.id = brief_signal.id
+      where s.id is null or s.published_at is null
+  );
 
 revoke all on table public.published_signals, public.published_catalysts,
     public.published_daily_briefs from public;

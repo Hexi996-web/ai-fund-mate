@@ -29,6 +29,32 @@ from .signal_domain import (
 class SupabaseSignalRepository:
     """DB-API repository backed by a server-only Supabase PostgreSQL URL."""
 
+    _SCHEMA_VERSION = 202608140001
+    _REQUIRED_RELATIONS = frozenset({
+        "signal_schema_versions", "sources", "raw_items", "event_clusters",
+        "signals", "signal_evidence", "catalysts", "daily_briefs",
+        "pipeline_runs", "published_signals", "published_catalysts",
+        "published_daily_briefs",
+    })
+    _REQUIRED_COLUMNS = frozenset({
+        "catalysts.id", "catalysts.scheduled_at", "daily_briefs.id",
+        "daily_briefs.signal_ids", "event_clusters.id", "pipeline_runs.id",
+        "raw_items.id", "raw_items.source_id", "signal_evidence.id",
+        "signal_evidence.signal_id", "signal_schema_versions.version",
+        "signals.id", "signals.published_at", "sources.id",
+    })
+    _REQUIRED_INDEXES = frozenset({
+        "catalysts_scheduled_at_idx", "raw_items_published_at_idx",
+        "signals_category_priority_idx", "signals_cluster_id_idx",
+    })
+    _BASE_TABLES = frozenset({
+        "catalysts", "daily_briefs", "event_clusters", "pipeline_runs",
+        "raw_items", "signal_evidence", "signals", "sources",
+    })
+    _PUBLIC_VIEWS = frozenset({
+        "published_catalysts", "published_daily_briefs", "published_signals",
+    })
+
     def __init__(self, db_url: str | None = None):
         self.db_url = db_url or os.environ.get("SUPABASE_DB_URL")
         if not self.db_url:
@@ -47,9 +73,77 @@ class SupabaseSignalRepository:
 
     def initialize(self):
         with self._connect() as connection:
-            row = connection.execute("SELECT to_regclass('public.sources') AS relation").fetchone()
-        if not row or row["relation"] is None:
-            raise RuntimeError("Supabase signal schema is missing; apply the signal-intelligence migration first")
+            relations = connection.execute("""
+                SELECT array_agg(relation_name ORDER BY relation_name) AS relations
+                FROM (
+                    SELECT c.relname AS relation_name
+                    FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace
+                    WHERE n.nspname = 'public' AND c.relkind IN ('r', 'v')
+                ) relations
+            """).fetchone()
+            version = connection.execute("""
+                SELECT version FROM public.signal_schema_versions
+                WHERE version = %s
+            """, (self._SCHEMA_VERSION,)).fetchone()
+            columns = connection.execute("""
+                SELECT array_agg(table_name || '.' || column_name ORDER BY table_name, column_name) AS columns
+                FROM information_schema.columns
+                WHERE table_schema = 'public'
+            """).fetchone()
+            indexes = connection.execute("""
+                SELECT array_agg(indexname ORDER BY indexname) AS indexes
+                FROM pg_indexes WHERE schemaname = 'public'
+            """).fetchone()
+            rls_tables = connection.execute("""
+                SELECT array_agg(tablename ORDER BY tablename) AS rls_tables
+                FROM pg_tables t JOIN pg_class c ON c.relname = t.tablename
+                    JOIN pg_namespace n ON n.oid = c.relnamespace
+                WHERE t.schemaname = 'public' AND n.nspname = 'public'
+                    AND c.relrowsecurity
+            """).fetchone()
+            writer_tables = connection.execute("""
+                SELECT array_agg(tablename ORDER BY tablename) AS writer_tables
+                FROM pg_tables
+                WHERE schemaname = 'public'
+                    AND has_table_privilege('signal_pipeline_writer',
+                        quote_ident(schemaname) || '.' || quote_ident(tablename),
+                        'SELECT, INSERT, UPDATE, DELETE')
+            """).fetchone()
+            anon_views = connection.execute("""
+                SELECT array_agg(table_name ORDER BY table_name) AS anon_views
+                FROM information_schema.views
+                WHERE table_schema = 'public'
+                    AND has_table_privilege('anon',
+                        quote_ident(table_schema) || '.' || quote_ident(table_name), 'SELECT')
+                    AND has_table_privilege('authenticated',
+                        quote_ident(table_schema) || '.' || quote_ident(table_name), 'SELECT')
+            """).fetchone()
+
+        missing = []
+        checks = (
+            (self._REQUIRED_RELATIONS, relations, "relations"),
+            (self._REQUIRED_COLUMNS, columns, "columns"),
+            (self._REQUIRED_INDEXES, indexes, "indexes"),
+            (self._BASE_TABLES, rls_tables, "RLS tables"),
+            (self._BASE_TABLES, writer_tables, "writer privileges"),
+            (self._PUBLIC_VIEWS, anon_views, "public view privileges"),
+        )
+        for expected, row, label in checks:
+            actual = set((row or {}).get({
+                "relations": "relations", "columns": "columns", "indexes": "indexes",
+                "RLS tables": "rls_tables", "writer privileges": "writer_tables",
+                "public view privileges": "anon_views",
+            }[label]) or [])
+            absent = sorted(expected - actual)
+            if absent:
+                missing.append(f"{label}: {', '.join(absent)}")
+        if not version or version.get("version") != self._SCHEMA_VERSION:
+            missing.append(f"schema version: {self._SCHEMA_VERSION}")
+        if missing:
+            raise RuntimeError(
+                "Supabase signal schema contract is incomplete; apply migration "
+                f"{self._SCHEMA_VERSION}: " + "; ".join(missing)
+            )
 
     def upsert_source(self, source: SourceRecord) -> SourceRecord:
         with self._connect() as connection:

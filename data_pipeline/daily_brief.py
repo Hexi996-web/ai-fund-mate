@@ -46,8 +46,8 @@ def build_daily_brief(repo, run_at: datetime) -> DailyBrief:
 def _window_signals(signals: Iterable[SignalRecord], start: datetime, end: datetime) -> list[SignalRecord]:
     included = []
     for signal in signals:
-        timestamp = signal.published_at or signal.updated_at
-        if timestamp.tzinfo is None:
+        timestamp = signal.published_at
+        if timestamp is None or timestamp.tzinfo is None:
             continue
         local_timestamp = timestamp.astimezone(SHANGHAI)
         if start <= local_timestamp < end:
@@ -110,4 +110,5 @@ def _evidence_links(signal_id: str, repo) -> list[str]:
 
 
 def _timestamp(signal: SignalRecord) -> datetime:
-    return signal.published_at or signal.updated_at
+    assert signal.published_at is not None
+    return signal.published_at

@@ -1,6 +1,10 @@
 import json
 from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 
+import pytest
+
+from data_pipeline.daily_brief import build_daily_brief
 from data_pipeline.signal_domain import (
     CatalystRecord,
     DailyBrief,
@@ -13,6 +17,7 @@ from data_pipeline.signal_domain import (
     SourceTier,
     ValidationStatus,
 )
+import data_pipeline.signal_publish as signal_publish
 from data_pipeline.signal_publish import build_snapshot, publish_snapshot
 from data_pipeline.signal_storage import SignalRepository
 
@@ -126,6 +131,7 @@ def test_health_uses_pipeline_runs_instead_of_query_time(tmp_path):
         "status": "degraded",
         "backend": "sqlite",
         "lastSuccessfulUpdate": None,
+        "fresh": False,
         "signalCount": 0,
         "catalystCount": 0,
         "rawItemCount": 0,
@@ -143,3 +149,56 @@ def test_health_uses_pipeline_runs_instead_of_query_time(tmp_path):
 
     assert health["status"] == "degraded"
     assert health["lastSuccessfulUpdate"] == NOW.isoformat()
+
+def test_publishable_brief_excludes_draft_signal_from_ids_and_body(tmp_path):
+    repo = repo_with_signal(tmp_path)
+    draft_time = NOW - timedelta(hours=1)
+    repo.upsert_signal(SignalRecord(
+        id="draft", cluster_id="cluster-1", category="policy", title="Secret draft title",
+        summary="Secret draft summary", priority=99, source_confidence=.9,
+        customer_demand_score=.5, validation_status=ValidationStatus.CONFIRMED,
+        published_at=None, created_at=draft_time, updated_at=draft_time,
+    ))
+    run_at = datetime(2026, 8, 14, 8, tzinfo=ZoneInfo("Asia/Shanghai"))
+    repo.save_brief(build_daily_brief(repo, run_at))
+
+    payload = build_snapshot(repo, generated_at=NOW)
+
+    assert "draft" not in payload["dailyBrief"]["signalIds"]
+    assert "Secret draft" not in payload["dailyBrief"]["body"]
+
+
+def test_snapshot_ignores_nonpublished_brief(tmp_path):
+    repo = repo_with_signal(tmp_path)
+    repo.save_brief(DailyBrief(
+        id="daily-brief-2026-08-14", window_start=NOW - timedelta(days=1),
+        window_end=NOW, generated_at=NOW, body="Internal draft brief",
+        status="draft", signal_ids=["signal-1"], top_call="Internal",
+    ))
+
+    assert build_snapshot(repo, generated_at=NOW)["dailyBrief"] is None
+
+
+def test_invalid_nested_snapshot_keeps_previous_artifact(tmp_path, monkeypatch):
+    target = tmp_path / "signal-radar.json"
+    target.write_text('{"old": true}', encoding="utf-8")
+    monkeypatch.setattr(signal_publish, "build_snapshot", lambda *_args, **_kwargs: {
+        "schemaVersion": 1,
+        "generatedAt": NOW.isoformat(),
+        "health": {"status": "healthy"},
+        "regime": {}, "signals": [], "themes": [], "catalysts": [], "dailyBrief": None,
+    })
+
+    with pytest.raises(RuntimeError, match="snapshot schema validation failed"):
+        publish_snapshot(repo_with_signal(tmp_path), target, generated_at=NOW)
+
+    assert json.loads(target.read_text(encoding="utf-8")) == {"old": True}
+    assert not list(tmp_path.glob("*.tmp"))
+
+
+def test_snapshot_validation_rejects_missing_cross_reference(tmp_path):
+    payload = build_snapshot(repo_with_signal(tmp_path), generated_at=NOW)
+    payload["themes"][0]["signalIds"] = ["missing-signal"]
+
+    with pytest.raises(RuntimeError, match="unknown signal"):
+        signal_publish.validate_snapshot(payload)
