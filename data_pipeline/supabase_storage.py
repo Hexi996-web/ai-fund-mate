@@ -110,13 +110,13 @@ class SupabaseSignalRepository:
                         'SELECT, INSERT, UPDATE, DELETE')
             """).fetchone()
             protected_views = connection.execute("""
-                SELECT array_agg(table_name ORDER BY table_name) AS protected_views
-                FROM information_schema.views
-                WHERE table_schema = 'public'
+                SELECT array_agg(viewname ORDER BY viewname) AS protected_views
+                FROM pg_catalog.pg_views
+                WHERE schemaname = 'public'
                     AND NOT has_table_privilege('anon',
-                        quote_ident(table_schema) || '.' || quote_ident(table_name), 'SELECT')
+                        quote_ident(schemaname) || '.' || quote_ident(viewname), 'SELECT')
                     AND NOT has_table_privilege('authenticated',
-                        quote_ident(table_schema) || '.' || quote_ident(table_name), 'SELECT')
+                        quote_ident(schemaname) || '.' || quote_ident(viewname), 'SELECT')
             """).fetchone()
 
         missing = []
