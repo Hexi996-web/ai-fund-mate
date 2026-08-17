@@ -37,6 +37,7 @@ class Cursor:
 class Connection:
     def __init__(self, rows):
         self.rows = iter(rows)
+        self.queries = []
 
     def __enter__(self):
         return self
@@ -45,6 +46,7 @@ class Connection:
         return False
 
     def execute(self, _query, _parameters=()):
+        self.queries.append(_query)
         return Cursor(next(self.rows))
 
 
@@ -68,6 +70,16 @@ def repo_with_contract(rows):
 
 def test_initialize_accepts_only_complete_current_schema():
     repo_with_contract(complete_contract_rows()).initialize()
+
+
+def test_initialize_discovers_protected_views_from_pg_catalog():
+    connection = Connection(complete_contract_rows())
+    repo = SupabaseSignalRepository("postgresql://localhost/signals")
+    repo._connect = lambda: connection
+
+    repo.initialize()
+
+    assert any("FROM pg_catalog.pg_views" in query for query in connection.queries)
 
 
 def test_initialize_rejects_missing_relation():
