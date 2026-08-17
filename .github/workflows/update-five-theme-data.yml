@@ -2,6 +2,7 @@ name: Update five-theme data
 on:
   schedule:
     - cron: "30 11 * * *"
+    - cron: "30 12 * * *"
   workflow_dispatch:
 concurrency:
   group: five-theme-data
