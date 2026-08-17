@@ -2,7 +2,8 @@ import { test, expect } from '@playwright/test'
 
 test('renames theme research and preserves the fund query across workspace switches', async ({ page }) => {
   await page.goto('/')
-  await expect(page.getByRole('button', { name: '主题研判', exact: true })).toBeVisible()
+  await expect(page.getByRole('button', { name: '信号雷达', exact: true })).toHaveAttribute('aria-current', 'page')
+  await page.getByRole('button', { name: '主题研判', exact: true }).click()
   await expect(page.getByRole('heading', { name: '主题研判总览' })).toBeVisible()
   await expect(page.getByText('五主题研判', { exact: true })).toHaveCount(0)
 

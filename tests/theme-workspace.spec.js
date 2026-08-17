@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 
 test('theme workspace shows scores, evidence, related funds, and honest history status', async ({ page }) => {
   await page.goto('/')
-  await expect(page.getByRole('button', { name: '主题研判', exact: true })).toBeVisible()
+  await page.getByRole('button', { name: '主题研判', exact: true }).click()
   await expect(page.getByRole('heading', { name: '主题研判总览' })).toBeVisible()
   await expect(page.getByText('黄金', { exact: true })).toBeVisible()
   await expect(page.getByText('红利基金', { exact: true })).toBeVisible()

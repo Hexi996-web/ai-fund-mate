@@ -1,7 +1,5 @@
 name: Collect third theme batch
 on:
-  schedule:
-    - cron: "30 13 * * *"
   workflow_dispatch:
 permissions:
   contents: write
@@ -12,7 +10,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: {python-version: "3.12", cache: pip}
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-data.txt
       - run: pip install -r requirements-data.txt
       - run: python -m pytest tests/data_pipeline -q
       - run: python scripts/collect_third_batch.py

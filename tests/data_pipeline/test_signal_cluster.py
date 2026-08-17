@@ -1,0 +1,131 @@
+from dataclasses import replace
+from datetime import datetime, timezone
+
+from data_pipeline.signal_cluster import cluster_items, content_fingerprint, normalize_url
+from data_pipeline.signal_domain import RawItem
+
+
+NOW = datetime(2026, 8, 14, tzinfo=timezone.utc)
+
+
+def item(source_id, url, title, body, **metadata):
+    return RawItem(
+        source_id=source_id,
+        url=url,
+        title=title,
+        body=body,
+        content=body,
+        content_hash=f"{source_id}-{title}",
+        collected_at=NOW,
+        published_at=NOW,
+        metadata=metadata,
+    )
+
+
+def agency_original():
+    return item(
+        "agency_original", "https://agency.example/policy?id=7&utm_source=wire",
+        "Fund fee reform announced", "The regulator announced fund fee reform today.",
+    )
+
+
+def portal_reprint():
+    return item(
+        "portal_reprint", "https://portal.example/story/7?fbclid=tracking",
+        "Fund fee reform announced", "The regulator announced fund fee reform today.",
+    )
+
+
+def test_normalize_url_removes_tracking_and_fragment_but_preserves_business_query():
+    assert normalize_url("HTTPS://Example.com:443/a/?b=2&utm_source=x&a=1#section") == "https://example.com/a?a=1&b=2"
+
+
+def test_fingerprint_is_stable_for_equivalent_whitespace_and_url_tracking():
+    original = agency_original()
+    equivalent = item(
+        "agency_original", "https://agency.example/policy?id=7&utm_medium=email",
+        " fund   fee reform announced ", "The regulator announced\n fund fee reform today.",
+    )
+
+    assert content_fingerprint(original) == content_fingerprint(equivalent)
+
+
+def test_syndicated_articles_count_as_one_independent_source():
+    unrelated = item(
+        "other_official", "https://example.cn/statistics/1", "Inflation release",
+        "Consumer prices rose in July.",
+    )
+
+    clusters = cluster_items([agency_original(), portal_reprint(), unrelated], [])
+
+    policy = next(cluster for cluster in clusters if cluster.topic_key == "fund_fee_reform")
+    assert policy.item_count == 2
+    assert policy.independent_source_count == 1
+
+
+def test_matching_existing_cluster_keeps_its_identifier():
+    first = cluster_items([agency_original()], [])
+    repeated = cluster_items([portal_reprint()], first)
+
+    assert repeated[0].id == first[0].id
+
+
+
+def test_chinese_syndication_clusters_on_shared_entity_tokens():
+    original = item("wire_a", "https://wire.example/1", "基金费率改革方案发布", "监管机构发布基金费率改革方案。", publisher_group="wire")
+    reprint = item("wire_b", "https://portal.example/1", "基金费率改革方案发布", "监管机构正式发布基金费率改革方案。", publisher_group="wire")
+
+    clusters = cluster_items([original, reprint], [])
+
+    assert len(clusters) == 1
+    assert clusters[0].independent_source_count == 1
+
+def test_exact_syndication_clusters_when_publication_time_is_missing():
+    original = replace(agency_original(), published_at=None)
+    reprint = replace(portal_reprint(), published_at=None)
+
+    clusters = cluster_items([original, reprint], [])
+
+    assert len(clusters) == 1
+    assert clusters[0].item_count == 2
+
+def test_existing_cluster_order_does_not_change_merge_target_or_output_order():
+    baseline = cluster_items([agency_original()], [])[0]
+    alpha = replace(baseline, id="cluster-a", raw_items=())
+    zeta = replace(baseline, id="cluster-z", raw_items=())
+
+    forward = cluster_items([portal_reprint()], [zeta, alpha])
+    reverse = cluster_items([portal_reprint()], [alpha, zeta])
+
+    assert [cluster.id for cluster in forward] == ["cluster-a", "cluster-z"]
+    assert [cluster.id for cluster in reverse] == ["cluster-a", "cluster-z"]
+    assert next(cluster.id for cluster in forward if cluster.item_count == 2) == "cluster-a"
+
+
+def test_same_day_shared_entity_reposts_cluster_despite_different_headlines():
+    original = item("wire_a", "https://wire.example/sinopec", "Energy company lowers spending", "Sinopec lowers capital spending after weak oil demand in China.", entities=["Sinopec"])
+    reprint = item("wire_b", "https://portal.example/sinopec", "Oil demand pressures producer budget", "Weak oil demand in China leads Sinopec to lower capital spending.", entities=["Sinopec"])
+
+    assert len(cluster_items([original, reprint], [])) == 1
+
+
+def test_same_day_broad_topic_without_shared_entity_does_not_cluster():
+    csrc = item("csrc", "https://example.cn/csrc", "Fund fee reform update", "CSRC fund fee reform policy reduces management fee costs for public funds.")
+    pbc = item("pbc", "https://example.cn/pbc", "Fund fee reform update", "PBOC fund fee reform policy reduces management fee costs for public funds.")
+
+    assert len(cluster_items([csrc, pbc], [])) == 2
+
+
+def test_normalize_url_preserves_business_ref_and_source_parameters():
+    url = "https://example.com/story?source=archive&ref=article-42&utm_source=email&fbclid=tracking"
+
+    assert normalize_url(url) == "https://example.com/story?ref=article-42&source=archive"
+
+
+def test_generic_chinese_fund_overlap_does_not_merge_distinct_entities_or_events():
+    first = item("fund_a", "https://example.cn/a", "华夏基金发布科技成长产品", "公募基金市场今日发布新产品，华夏基金科技成长产品面向投资者开放。")
+    second = item("fund_b", "https://example.cn/b", "易方达基金发布消费升级产品", "公募基金市场今日发布新产品，易方达基金消费升级产品面向投资者开放。")
+
+    clusters = cluster_items([first, second], [])
+
+    assert len(clusters) == 2
