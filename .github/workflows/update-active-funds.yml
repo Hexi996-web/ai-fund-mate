@@ -41,5 +41,9 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add public/funds_active.json public/funds_excluded.json public/fund_products.json public/funds_grouping_review.json
           git diff --cached --quiet || git commit -m "data: update active funds"
-          git pull --rebase origin "$GITHUB_REF_NAME"
-          git push
+          for attempt in 1 2 3; do
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            git push && break
+            test "$attempt" -eq 3 && exit 1
+            sleep $((attempt * 5))
+          done
