@@ -38,7 +38,7 @@ def build_snapshot(repo, generated_at: datetime | None = None) -> dict[str, Any]
         "schemaVersion": SCHEMA_VERSION,
         "generatedAt": generated_at.astimezone(timezone.utc).isoformat(),
         "health": health_payload(repo, generated_at),
-        "regime": {"status": "neutral", "label": "neutral", "rationale": []},
+        "regime": _market_environment(signals, generated_at),
         "signals": signals,
         "themes": _themes(signals),
         "catalysts": catalysts,
@@ -198,6 +198,34 @@ def _themes(signals: list[dict[str, Any]]) -> list[dict[str, Any]]:
         {"id": category, "title": category, "signalIds": signal_ids}
         for category, signal_ids in sorted(categories.items())
     ]
+
+
+def _market_environment(signals: list[dict[str, Any]], generated_at: datetime) -> dict[str, Any]:
+    """Publish evidence-dated environment cards instead of frontend hard-coded dates."""
+    by_category: dict[str, list[dict[str, Any]]] = {}
+    for signal in signals:
+        by_category.setdefault(signal["category"], []).append(signal)
+
+    def latest_date(category: str) -> str:
+        candidates = by_category.get(category, [])
+        if not candidates:
+            return generated_at.date().isoformat()
+        return max(item["updatedAt"] for item in candidates)[:10]
+
+    macro_date = latest_date("macro")
+    market_date = latest_date("market")
+    return {
+        "status": "neutral",
+        "label": "结构分化",
+        "rationale": ["市场环境由最新已发布信号生成，专项指标不足时明确标记待验证"],
+        "environment": [
+            {"id": "growth", "label": "增长", "state": "跟踪最新宏观信号", "tone": "neutral", "observedAt": macro_date, "evidenceType": "official"},
+            {"id": "inflation", "label": "通胀", "state": "待最新价格数据验证", "tone": "neutral", "observedAt": macro_date, "evidenceType": "official"},
+            {"id": "liquidity", "label": "流动性", "state": "跟踪最新流动性信号", "tone": "positive", "observedAt": macro_date, "evidenceType": "official"},
+            {"id": "risk", "label": "风险偏好", "state": "结构分化", "tone": "neutral", "observedAt": market_date, "evidenceType": "proxy"},
+            {"id": "valuation", "label": "估值", "state": "待最新估值数据验证", "tone": "neutral", "observedAt": market_date, "evidenceType": "proxy"},
+        ],
+    }
 
 
 def _aware(value: datetime) -> datetime:

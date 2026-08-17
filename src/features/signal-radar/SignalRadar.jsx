@@ -37,7 +37,7 @@ export function SignalRadar() {
     <main className="radar-content">
       <SignalHealth {...result} />
       {result.snapshot ? <>
-        <SignalSummary summary={summary} regime={MARKET_REGIME} />
+        <SignalSummary summary={summary} regime={result.snapshot.regime?.environment ?? MARKET_REGIME} />
         <DailyBrief brief={result.snapshot.dailyBrief} signals={signals} open={briefOpen} onToggle={() => setBriefOpen((value) => !value)} onOpenSignal={openSignal} />
         <SignalFilters filters={filters} onChange={(next) => { setFilters(next); setVisibleCount(PAGE_SIZE) }} />
         <div className="radar-workspace">

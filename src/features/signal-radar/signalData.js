@@ -1,9 +1,9 @@
 export const MARKET_REGIME = [
-  { id: 'growth', label: '增长', state: '稳中偏弱', tone: 'negative', observedAt: '2026-06-30', evidenceType: 'official' },
-  { id: 'inflation', label: '通胀', state: '低位运行', tone: 'neutral', observedAt: '2026-06-30', evidenceType: 'official' },
-  { id: 'liquidity', label: '流动性', state: '合理充裕', tone: 'positive', observedAt: '2026-06-30', evidenceType: 'official' },
-  { id: 'risk', label: '风险偏好', state: '结构分化', tone: 'neutral', observedAt: '2026-08-08', evidenceType: 'proxy' },
-  { id: 'valuation', label: '估值', state: '中位分化', tone: 'neutral', observedAt: '2026-08-08', evidenceType: 'proxy' },
+  { id: 'growth', label: '增长', state: '等待实时数据', tone: 'neutral', observedAt: '--', evidenceType: 'official' },
+  { id: 'inflation', label: '通胀', state: '等待实时数据', tone: 'neutral', observedAt: '--', evidenceType: 'official' },
+  { id: 'liquidity', label: '流动性', state: '等待实时数据', tone: 'neutral', observedAt: '--', evidenceType: 'official' },
+  { id: 'risk', label: '风险偏好', state: '等待实时数据', tone: 'neutral', observedAt: '--', evidenceType: 'proxy' },
+  { id: 'valuation', label: '估值', state: '等待实时数据', tone: 'neutral', observedAt: '--', evidenceType: 'proxy' },
 ]
 
 export const SIGNALS = [

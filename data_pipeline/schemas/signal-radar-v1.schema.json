@@ -33,11 +33,25 @@
     "regime": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["status", "label", "rationale"],
+      "required": ["status", "label", "rationale", "environment"],
       "properties": {
         "status": {"type": "string", "minLength": 1},
         "label": {"type": "string", "minLength": 1},
-        "rationale": {"type": "array", "items": {"type": "string"}}
+        "rationale": {"type": "array", "items": {"type": "string"}},
+        "environment": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "label", "state", "tone", "observedAt", "evidenceType"],
+            "properties": {
+              "id": {"type": "string"}, "label": {"type": "string"}, "state": {"type": "string"},
+              "tone": {"enum": ["positive", "neutral", "negative"]},
+              "observedAt": {"type": "string", "format": "date"},
+              "evidenceType": {"enum": ["official", "public", "proxy", "demo"]}
+            }
+          }
+        }
       }
     },
     "signal": {
