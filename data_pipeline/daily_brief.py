@@ -27,8 +27,14 @@ def brief_window(run_at: datetime, timezone: ZoneInfo = SHANGHAI) -> tuple[datet
 def build_daily_brief(repo, run_at: datetime) -> DailyBrief:
     """Produce a stable two-minute payload without treating media attention as fact."""
     start, end = brief_window(run_at)
-    signals = _window_signals(repo.list_signals(), start, end)
-    catalysts = _window_catalysts(getattr(repo, "list_catalysts", lambda: [])(), end)
+    all_signals = repo.list_signals()
+    signals = _window_signals(all_signals, start, end)
+    published_signal_ids = {
+        signal.id for signal in all_signals if signal.published_at is not None
+    }
+    catalysts = _window_catalysts(
+        getattr(repo, "list_catalysts", lambda: [])(), end, published_signal_ids
+    )
     top_signal = next((item for item in signals if _eligible_for_top_call(item)), None)
     top_call = _top_call(top_signal)
     body = _body(top_call, signals, catalysts, repo)
@@ -55,10 +61,15 @@ def _window_signals(signals: Iterable[SignalRecord], start: datetime, end: datet
     return sorted(included, key=lambda item: (-item.priority, _timestamp(item), item.id))
 
 
-def _window_catalysts(catalysts, end: datetime):
+def _window_catalysts(catalysts, end: datetime, published_signal_ids: set[str]):
     preview_end = end + timedelta(days=7)
     return sorted(
-        (item for item in catalysts if item.scheduled_at.tzinfo is not None and end <= item.scheduled_at.astimezone(SHANGHAI) < preview_end),
+        (
+            item for item in catalysts
+            if item.scheduled_at.tzinfo is not None
+            and end <= item.scheduled_at.astimezone(SHANGHAI) < preview_end
+            and (item.signal_id is None or item.signal_id in published_signal_ids)
+        ),
         key=lambda item: (item.scheduled_at, -item.priority, item.id),
     )
 

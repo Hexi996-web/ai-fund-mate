@@ -8,10 +8,13 @@ It never reads SUPABASE_DB_URL or any production credential.
 from __future__ import annotations
 
 import os
+from contextlib import nullcontext
 from pathlib import Path
 from urllib.parse import urlsplit
 
 import pytest
+
+from data_pipeline.supabase_storage import SupabaseSignalRepository
 
 
 TEST_URL = os.environ.get("SIGNAL_TEST_POSTGRES_URL")
@@ -52,6 +55,9 @@ def test_migration_enforces_writer_anon_and_published_view_contract():
             connection.execute(migration)
 
             connection.execute("SET ROLE signal_pipeline_writer")
+            repository = SupabaseSignalRepository(TEST_URL)
+            repository._connect = lambda: nullcontext(connection)
+            repository.initialize()
             connection.execute(
                 "INSERT INTO sources (id, name, url, source_tier) "
                 "VALUES ('crud', 'CRUD', 'https://example.test/crud', 'official')"
@@ -75,7 +81,12 @@ def test_migration_enforces_writer_anon_and_published_view_contract():
             connection.execute(
                 "INSERT INTO daily_briefs (id, window_start, window_end, generated_at, body, status, signal_ids) VALUES "
                 "('safe', now() - interval '1 day', now(), now(), 'Published only', 'published', '[\"published\"]'), "
-                "('leak', now() - interval '1 day', now(), now(), 'Draft secret', 'published', '[\"draft\"]')"
+                "('leak', now() - interval '1 day', now(), now(), 'Draft secret', 'published', '[\"draft\"]'), "
+                "('catalyst-leak', now() - interval '1 day', now(), now(), '[draft-catalyst] Draft secret', 'published', '[\"published\"]')"
+            )
+            connection.execute(
+                "INSERT INTO catalysts (id, signal_id, title, scheduled_at, priority, description, validation_status) VALUES "
+                "('draft-catalyst', 'draft', 'Draft catalyst', now() + interval '1 day', 5, '', 'confirmed')"
             )
 
             connection.execute("SET ROLE anon")

@@ -159,6 +159,11 @@ def test_publishable_brief_excludes_draft_signal_from_ids_and_body(tmp_path):
         customer_demand_score=.5, validation_status=ValidationStatus.CONFIRMED,
         published_at=None, created_at=draft_time, updated_at=draft_time,
     ))
+    repo.upsert_catalyst(CatalystRecord(
+        id="draft-catalyst", signal_id="draft", title="Secret draft catalyst",
+        scheduled_at=NOW + timedelta(days=1), priority=5,
+        validation_status=ValidationStatus.CONFIRMED,
+    ))
     run_at = datetime(2026, 8, 14, 8, tzinfo=ZoneInfo("Asia/Shanghai"))
     repo.save_brief(build_daily_brief(repo, run_at))
 
@@ -166,6 +171,8 @@ def test_publishable_brief_excludes_draft_signal_from_ids_and_body(tmp_path):
 
     assert "draft" not in payload["dailyBrief"]["signalIds"]
     assert "Secret draft" not in payload["dailyBrief"]["body"]
+    assert "draft-catalyst" not in payload["dailyBrief"]["body"]
+    assert [item["id"] for item in payload["catalysts"]] == ["catalyst-1"]
 
 
 def test_snapshot_ignores_nonpublished_brief(tmp_path):

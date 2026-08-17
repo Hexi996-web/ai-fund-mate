@@ -1,8 +1,16 @@
+from dataclasses import replace
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 from data_pipeline.daily_brief import brief_window, build_daily_brief
-from data_pipeline.signal_domain import DemandKind, RawItem, SignalEvidence, SignalRecord, ValidationStatus
+from data_pipeline.signal_domain import (
+    CatalystRecord,
+    DemandKind,
+    RawItem,
+    SignalEvidence,
+    SignalRecord,
+    ValidationStatus,
+)
 
 
 SHANGHAI = ZoneInfo("Asia/Shanghai")
@@ -116,6 +124,29 @@ def test_daily_brief_is_deterministic_and_includes_evidence_links_when_available
 
     assert first == second
     assert "[signal-1]" in first.body
+
+
+def test_daily_brief_excludes_draft_linked_catalyst_but_keeps_standalone_event():
+    start, end = brief_window(RUN_AT)
+    published = signal("published", start + timedelta(hours=1))
+    draft = signal("draft", start + timedelta(hours=2))
+    draft = replace(draft, published_at=None)
+    catalysts = [
+        CatalystRecord(
+            id="draft-catalyst", signal_id="draft", title="Draft secret",
+            scheduled_at=end + timedelta(days=1), priority=5,
+        ),
+        CatalystRecord(
+            id="standalone", signal_id=None, title="Standalone event",
+            scheduled_at=end + timedelta(days=2), priority=4,
+        ),
+    ]
+
+    brief = build_daily_brief(Repository([published, draft], catalysts), RUN_AT)
+
+    assert "draft-catalyst" not in brief.body
+    assert "Draft secret" not in brief.body
+    assert "[standalone]" in brief.body
 
 
 def test_daily_brief_sorts_and_deduplicates_evidence_links_from_any_repository_order():

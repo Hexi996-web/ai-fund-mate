@@ -120,6 +120,7 @@ create index signals_category_priority_idx on public.signals (category, priority
 create index signals_cluster_id_idx on public.signals (cluster_id);
 create index catalysts_scheduled_at_idx on public.catalysts (scheduled_at);
 
+alter table public.signal_schema_versions enable row level security;
 alter table public.sources enable row level security;
 alter table public.raw_items enable row level security;
 alter table public.event_clusters enable row level security;
@@ -132,19 +133,21 @@ alter table public.pipeline_runs enable row level security;
 -- Base tables contain collection internals. No anon/authenticated policies are
 -- created, so RLS denies every direct read and write. Server-side service-role
 -- and direct PostgreSQL jobs retain their normal privileged access.
-revoke all on table public.sources, public.raw_items, public.event_clusters,
+revoke all on table public.signal_schema_versions, public.sources, public.raw_items, public.event_clusters,
     public.signals, public.signal_evidence, public.catalysts,
     public.daily_briefs, public.pipeline_runs from anon, authenticated;
 revoke all on sequence public.raw_items_id_seq,
     public.signal_evidence_id_seq from anon, authenticated;
 
 grant usage on schema public to signal_pipeline_writer;
+grant select on table public.signal_schema_versions to signal_pipeline_writer;
 grant select, insert, update, delete on table public.sources, public.raw_items,
     public.event_clusters, public.signals, public.signal_evidence, public.catalysts,
     public.daily_briefs, public.pipeline_runs to signal_pipeline_writer;
 grant usage, select on sequence public.raw_items_id_seq,
     public.signal_evidence_id_seq to signal_pipeline_writer;
 
+create policy signal_schema_versions_pipeline_read on public.signal_schema_versions for select to signal_pipeline_writer using (true);
 create policy sources_pipeline_access on public.sources for all to signal_pipeline_writer using (true) with check (true);
 create policy raw_items_pipeline_access on public.raw_items for all to signal_pipeline_writer using (true) with check (true);
 create policy event_clusters_pipeline_access on public.event_clusters for all to signal_pipeline_writer using (true) with check (true);
@@ -194,6 +197,14 @@ where b.status = 'published'
       from jsonb_array_elements_text(b.signal_ids) as brief_signal(id)
       left join public.signals s on s.id = brief_signal.id
       where s.id is null or s.published_at is null
+  )
+  and not exists (
+      select 1
+      from public.catalysts c
+      left join public.signals s on s.id = c.signal_id
+      where c.signal_id is not null
+        and (s.id is null or s.published_at is null)
+        and strpos(b.body, '[' || c.id || ']') > 0
   );
 
 revoke all on table public.published_signals, public.published_catalysts,
