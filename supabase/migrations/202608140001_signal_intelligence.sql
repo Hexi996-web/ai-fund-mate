@@ -116,9 +116,12 @@ create table public.pipeline_runs (
 );
 
 create index raw_items_published_at_idx on public.raw_items (published_at);
+create index raw_items_source_id_idx on public.raw_items (source_id);
 create index signals_category_priority_idx on public.signals (category, priority desc);
 create index signals_cluster_id_idx on public.signals (cluster_id);
 create index catalysts_scheduled_at_idx on public.catalysts (scheduled_at);
+create index catalysts_signal_id_idx on public.catalysts (signal_id);
+create index signal_evidence_raw_item_id_idx on public.signal_evidence (raw_item_id);
 
 alter table public.signal_schema_versions enable row level security;
 alter table public.sources enable row level security;
@@ -161,7 +164,7 @@ create policy pipeline_runs_pipeline_access on public.pipeline_runs for all to s
 -- Their predicates exclude unpublished drafts, while base-table grants remain
 -- revoked. No view exposes database URLs, credentials, raw bodies, or run logs.
 create view public.published_signals
-with (security_barrier = true)
+with (security_barrier = true, security_invoker = true)
 as
 select
     s.id, s.cluster_id, s.category, s.title, s.summary, s.priority,
@@ -179,7 +182,7 @@ where s.published_at is not null
 group by s.id;
 
 create view public.published_catalysts
-with (security_barrier = true)
+with (security_barrier = true, security_invoker = true)
 as
 select c.id, c.signal_id, c.title, c.scheduled_at, c.priority, c.description, c.validation_status
 from public.catalysts c
@@ -187,7 +190,7 @@ left join public.signals s on s.id = c.signal_id
 where c.signal_id is null or s.published_at is not null;
 
 create view public.published_daily_briefs
-with (security_barrier = true)
+with (security_barrier = true, security_invoker = true)
 as
 select id, window_start, window_end, generated_at, body, status, signal_ids, top_call
 from public.daily_briefs b
@@ -209,7 +212,7 @@ where b.status = 'published'
 
 revoke all on table public.published_signals, public.published_catalysts,
     public.published_daily_briefs from public;
-grant select on table public.published_signals, public.published_catalysts,
-    public.published_daily_briefs to anon, authenticated;
+revoke all on table public.published_signals, public.published_catalysts,
+    public.published_daily_briefs from anon, authenticated;
 
 commit;
