@@ -78,6 +78,9 @@ def test_groups_share_classes_and_calculates_scale_growth_patterns():
     assert product["latestScaleYi"] == 12
     assert product["scaleGrowthYi"] == 2
     assert product["scaleGrowthPercent"] == 20
+    assert product["scaleHistory"] == [
+        {"date": "2026-01-02", "scaleYi": 10, "shareCoverage": 2, "complete": True, "kind": "launch"}
+    ]
     assert payload["scaleGrowth"]["increasedCount"] == 1
     assert payload["scaleGrowth"]["patterns"][0]["sampleCount"] == 1
 
@@ -94,3 +97,27 @@ def test_excludes_old_and_tiny_baseline_products_from_growth_rate_analysis():
     assert products[0]["scaleGrowthStatus"] == "基数过小"
     assert products[0]["scaleGrowthPercent"] is None
     assert payload["scaleGrowth"]["comparableCount"] == 0
+
+
+def test_aggregates_reported_history_and_selects_nearby_milestones():
+    established = [
+        {"基金代码": "1", "基金简称": "示例A", "成立日期": "2026-01-01", "募集份额": 10},
+        {"基金代码": "2", "基金简称": "示例C", "成立日期": "2026-01-01", "募集份额": 10},
+    ]
+    active = {"funds": [
+        {"code": "000001", "productId": "p1", "productName": "示例基金"},
+        {"code": "000002", "productId": "p1", "productName": "示例基金"},
+    ]}
+    reported = {
+        "000001": {"latestScaleYi": 8, "latestScaleDate": "2026-03-31", "scaleHistory": [{"date": "2026-03-31", "scaleYi": 8}]},
+        "000002": {"latestScaleYi": 4, "latestScaleDate": "2026-03-31", "scaleHistory": [{"date": "2026-03-31", "scaleYi": 4}]},
+    }
+    payload = build_payload(established, [], active, datetime(2026, 8, 17, tzinfo=timezone.utc), reported_scales=reported)
+    product = payload["scaleGrowth"]["products"][0]
+    assert product["scaleHistory"][-1]["scaleYi"] == 12
+    assert product["scaleHistory"][-1]["shareCoverage"] == 2
+    assert product["d90"]["status"] == "observed"
+    assert product["d90"]["observationAgeDays"] == 89
+    assert product["d90"]["growthPercent"] == 20
+    assert product["d30"]["status"] == "observed"
+    assert product["d30"]["offsetDays"] == 59

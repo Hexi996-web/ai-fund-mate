@@ -30,6 +30,18 @@ def issuance_baseline_rows(payload):
     ) for fund in payload.get("scaleGrowth", {}).get("products", [])]
 
 
+def product_scale_history_rows(payload):
+    rows = []
+    for fund in payload.get("scaleGrowth", {}).get("products", []):
+        for point in fund.get("scaleHistory", []):
+            rows.append((
+                fund["productId"], point["date"], point["scaleYi"],
+                point.get("shareCoverage", 1), point.get("kind", "reported"),
+                "募集公告" if point.get("kind") == "launch" else "东方财富/天天基金网公开页面",
+            ))
+    return rows
+
+
 def main():
     database_url = os.environ.get("SUPABASE_DB_URL")
     if not database_url:
@@ -42,6 +54,7 @@ def main():
     issuance_payload = json.loads((ROOT / "public" / "issuance_insights.json").read_text(encoding="utf-8"))
     rows = snapshot_rows(payload)
     baselines = issuance_baseline_rows(issuance_payload)
+    product_history = product_scale_history_rows(issuance_payload)
     if not rows:
         print("没有可写入的规模估算快照")
         return
@@ -80,7 +93,17 @@ def main():
                   source = excluded.source,
                   updated_at = now()
             """, baselines)
-    print(f"已写入 {len(rows)} 条规模估算快照、{len(baselines)} 条发行基准")
+            cursor.executemany("""
+                insert into public.fund_product_scale_history (
+                  product_id, report_date, scale_yi, share_coverage, point_kind, source
+                ) values (%s, %s, %s, %s, %s, %s)
+                on conflict (product_id, report_date, point_kind) do update set
+                  scale_yi = excluded.scale_yi,
+                  share_coverage = excluded.share_coverage,
+                  source = excluded.source,
+                  collected_at = now()
+            """, product_history)
+    print(f"已写入 {len(rows)} 条规模估算快照、{len(baselines)} 条发行基准、{len(product_history)} 个产品规模历史点")
 
 
 if __name__ == "__main__":

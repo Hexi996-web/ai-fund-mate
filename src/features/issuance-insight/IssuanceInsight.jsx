@@ -15,6 +15,12 @@ const number = (value, suffix = '') => value === null || value === undefined
 
 const PAGE_SIZE = 20
 
+const milestoneValue = (milestone) => {
+  if (!milestone || milestone.status === 'pending') return <span className="pending-value">待历史披露</span>
+  if (milestone.status === 'upcoming') return <>还需 {milestone.daysRemaining} 日</>
+  return <>{number(milestone.scaleYi, ' 亿元')}<span className="cell-note">观察于D+{milestone.observationAgeDays} · {number(milestone.growthPercent, '%')}</span></>
+}
+
 const METRIC_DESTINATIONS = {
   offering: { hash: 'ongoing-offerings', sectionId: 'ongoing-offerings' },
   today: { hash: 'established-today', sectionId: 'issuance-ranking', windowKey: 'today' },
@@ -49,6 +55,7 @@ export function IssuanceInsight() {
   const [growthPage, setGrowthPage] = useState(1)
   const [growthCohort, setGrowthCohort] = useState('all')
   const [growthSort, setGrowthSort] = useState('scaleGrowthPercent')
+  const [expandedGrowthIds, setExpandedGrowthIds] = useState(() => new Set())
 
   const navigateToMetric = (metricKey, { updateHistory = true } = {}) => {
     const destination = METRIC_DESTINATIONS[metricKey]
@@ -101,6 +108,12 @@ export function IssuanceInsight() {
   useEffect(() => setGrowthPage(1), [growthCohort, growthSort])
 
   const page = (items, current) => items.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE)
+  const toggleGrowth = (productId) => setExpandedGrowthIds((current) => {
+    const next = new Set(current)
+    if (next.has(productId)) next.delete(productId)
+    else next.add(productId)
+    return next
+  })
 
   if (error) return <main className="issuance-shell"><div className="issuance-error"><h2>发行洞察暂不可用</h2><p>{error}</p><p>系统不会用空数据覆盖上一份有效快照。</p></div></main>
   if (!payload) return <main className="issuance-shell"><div className="issuance-loading">正在加载发行市场数据…</div></main>
@@ -176,17 +189,21 @@ export function IssuanceInsight() {
       <div className="issuance-table-wrap scale-growth-table">
         <table>
           <thead><tr><th>排名</th><th>基金产品</th><th>成立日期/天数</th><th>成立规模</th><th>当前规模</th><th>增加额</th><th>增加率</th><th>D+30</th><th>D+90</th></tr></thead>
-          <tbody>{page(growthProducts, growthPage).map((fund, index) => <tr key={fund.productId}>
-            <td><b className="rank-number">{(growthPage - 1) * PAGE_SIZE + index + 1}</b></td>
-            <td><strong>{fund.name}</strong><span className="cell-note">{fund.code} · {fund.shareCount}个份额</span></td>
-            <td>{fund.establishedDate}<span className="cell-note">成立 {fund.ageDays} 日</span></td>
-            <td>{number(fund.initialScaleYi, ' 亿元')}<span className="cell-note">募集份额×面值近似</span></td>
-            <td>{number(fund.latestScaleYi, ' 亿元')}<span className="cell-note">{fund.latestScaleDate || '日期待补全'}</span></td>
-            <td className={(fund.scaleGrowthYi ?? 0) >= 0 ? 'positive' : 'negative'}>{number(fund.scaleGrowthYi, ' 亿元')}</td>
-            <td className={(fund.scaleGrowthPercent ?? 0) >= 0 ? 'positive' : 'negative'}><strong>{number(fund.scaleGrowthPercent, '%')}</strong></td>
-            <td>{fund.milestone30}<span className="cell-note">定点值待历史回补</span></td>
-            <td>{fund.milestone90}<span className="cell-note">定点值待历史回补</span></td>
-          </tr>)}</tbody>
+          <tbody>{page(growthProducts, growthPage).flatMap((fund, index) => {
+            const expanded = expandedGrowthIds.has(fund.productId)
+            const maxScale = Math.max(...(fund.scaleHistory ?? []).map((point) => point.scaleYi), 1)
+            return [<tr key={fund.productId}>
+              <td><b className="rank-number">{(growthPage - 1) * PAGE_SIZE + index + 1}</b></td>
+              <td><strong>{fund.name}</strong><span className="cell-note">{fund.code} · {fund.shareCount}个份额</span><button className="trajectory-toggle" type="button" aria-expanded={expanded} aria-controls={`trajectory-${fund.productId}`} onClick={() => toggleGrowth(fund.productId)}>{expanded ? '收起轨迹' : '查看规模轨迹'}</button></td>
+              <td>{fund.establishedDate}<span className="cell-note">成立 {fund.ageDays} 日</span></td>
+              <td>{number(fund.initialScaleYi, ' 亿元')}<span className="cell-note">募集份额×面值近似</span></td>
+              <td>{number(fund.latestScaleYi, ' 亿元')}<span className="cell-note">{fund.latestScaleDate || '日期待补全'}</span></td>
+              <td className={(fund.scaleGrowthYi ?? 0) >= 0 ? 'positive' : 'negative'}>{number(fund.scaleGrowthYi, ' 亿元')}</td>
+              <td className={(fund.scaleGrowthPercent ?? 0) >= 0 ? 'positive' : 'negative'}><strong>{number(fund.scaleGrowthPercent, '%')}</strong></td>
+              <td>{milestoneValue(fund.d30)}</td>
+              <td>{milestoneValue(fund.d90)}</td>
+            </tr>, expanded ? <tr className="trajectory-row" key={`${fund.productId}-trajectory`}><td colSpan="9"><div id={`trajectory-${fund.productId}`} className="scale-trajectory"><div className="trajectory-heading"><strong>正式披露规模轨迹</strong><span>成立基准 + 季度披露点；仅合并份额覆盖完整的日期</span></div><div className="trajectory-points">{(fund.scaleHistory ?? []).map((point) => <article key={point.date}><span>{point.date}</span><div><i style={{ width: `${Math.max(4, point.scaleYi / maxScale * 100)}%` }} /></div><strong>{number(point.scaleYi, '亿元')}</strong></article>)}</div></div></td></tr> : null]
+          })}</tbody>
         </table>
       </div>
       <Pager page={growthPage} total={growthProducts.length} onChange={setGrowthPage} />
@@ -198,7 +215,7 @@ export function IssuanceInsight() {
           <small>领先产品：{pattern.topFunds.join('、') || '暂无'}</small>
         </article>)}
       </div>
-      <p className="issuance-method">当前范围：{payload.scaleGrowth?.scope || '今年以来成立'}。当前增长率用于发现线索，不代表资金净流入；市场涨跌也会改变基金规模。D+30/D+90定点规模将在历史快照与季度报告回补后开放。</p>
+      <p className="issuance-method">当前范围：{payload.scaleGrowth?.scope || '今年以来成立'}。D+30/D+90取目标日附近60天内最近的正式披露点，并明确实际观察日；当前增长率用于发现线索，不代表资金净流入。</p>
     </section>
 
     <div className="issuance-two-column">

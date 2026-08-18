@@ -143,6 +143,38 @@ def build_scale_growth_products(items: list[dict[str, Any]], active_payload: dic
         age_days = (today - established).days
         latest_dates = [item.get("latestScaleDate") for item in shares if item.get("latestScaleDate")]
         active = representative["_active"]
+        history_by_date: dict[str, list[float]] = {}
+        history_share_count = sum(bool(item.get("scaleHistory")) for item in shares)
+        for item in shares:
+            for point in item.get("scaleHistory", []):
+                history_by_date.setdefault(point["date"], []).append(point["scaleYi"])
+        scale_history = [{
+            "date": report_date,
+            "scaleYi": round(sum(values), 4),
+            "shareCoverage": len(values),
+            "complete": len(values) == history_share_count,
+        } for report_date, values in sorted(history_by_date.items()) if history_share_count and len(values) == history_share_count]
+        if initial_scale is not None and not any(point["date"] == representative["establishedDate"] for point in scale_history):
+            scale_history.insert(0, {"date": representative["establishedDate"], "scaleYi": initial_scale, "shareCoverage": len(shares), "complete": True, "kind": "launch"})
+
+        def milestone(days: int) -> dict[str, Any]:
+            target = established + timedelta(days=days)
+            if today < target:
+                return {"status": "upcoming", "targetDate": target.isoformat(), "daysRemaining": (target - today).days}
+            candidates = [(abs((date.fromisoformat(point["date"]) - target).days), point) for point in scale_history if point.get("kind") != "launch"]
+            if not candidates:
+                return {"status": "pending", "targetDate": target.isoformat()}
+            offset, point = min(candidates, key=lambda value: value[0])
+            if offset > 60:
+                return {"status": "pending", "targetDate": target.isoformat()}
+            observed_date = date.fromisoformat(point["date"])
+            value = point["scaleYi"]
+            return {
+                "status": "observed", "targetDate": target.isoformat(), "observationDate": point["date"],
+                "observationAgeDays": (observed_date - established).days, "offsetDays": (observed_date - target).days,
+                "scaleYi": value, "growthPercent": round((value - initial_scale) / initial_scale * 100, 2) if initial_scale and initial_scale >= 0.5 else None,
+            }
+
         products.append({
             **{key: value for key, value in representative.items() if key != "_active"},
             "productId": product_id,
@@ -158,6 +190,9 @@ def build_scale_growth_products(items: list[dict[str, Any]], active_payload: dic
             "ageDays": age_days,
             "milestone30": "已满30日" if age_days >= 30 else f"还需{30 - age_days}日",
             "milestone90": "已满90日" if age_days >= 90 else f"还需{90 - age_days}日",
+            "d30": milestone(30),
+            "d90": milestone(90),
+            "scaleHistory": scale_history,
         })
     return sorted(products, key=lambda item: (item["establishedDate"], item["code"]), reverse=True)
 
@@ -181,7 +216,7 @@ def summarize_growth_patterns(products: list[dict[str, Any]]) -> list[dict[str, 
 
 
 def fetch_eastmoney_reported_scales(codes: Iterable[str], workers: int = 12) -> dict[str, dict[str, Any]]:
-    """Fetch the latest directly reported scale from Tiantian Fund public pages."""
+    """Fetch the reported scale history from Tiantian Fund public pages."""
     pattern = re.compile(r"Data_fluctuationScale\s*=\s*(\{.*?\});")
 
     def fetch(code: str) -> tuple[str, dict[str, Any] | None]:
@@ -199,14 +234,19 @@ def fetch_eastmoney_reported_scales(codes: Iterable[str], workers: int = 12) -> 
             categories, series = payload.get("categories", []), payload.get("series", [])
             if not categories or not series:
                 return code, None
-            value = series[-1].get("y") if isinstance(series[-1], dict) else None
-            if value is None:
+            history = []
+            for report_date, point in zip(categories, series):
+                value = point.get("y") if isinstance(point, dict) else None
+                if value is not None:
+                    history.append({"date": str(report_date), "scaleYi": float(value)})
+            if not history:
                 return code, None
             return code, {
-                "latestScaleYi": float(value),
-                "latestScaleDate": str(categories[-1]),
+                "latestScaleYi": history[-1]["scaleYi"],
+                "latestScaleDate": history[-1]["date"],
                 "latestScaleStatus": "天天基金最近一期披露",
                 "latestScaleSource": "东方财富/天天基金网公开页面",
+                "scaleHistory": history,
             }
         except (OSError, ValueError, json.JSONDecodeError):
             return code, None

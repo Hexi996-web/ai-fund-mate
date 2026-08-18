@@ -3,7 +3,7 @@ from datetime import date, timedelta
 from pathlib import Path
 
 from update_active_funds import build_output_payloads, classify_fund, enrich_daily_scale, extract_last_net_value_date
-from store_fund_scale_snapshots import issuance_baseline_rows, snapshot_rows
+from store_fund_scale_snapshots import issuance_baseline_rows, product_scale_history_rows, snapshot_rows
 
 
 class DailyScaleTests(unittest.TestCase):
@@ -36,6 +36,16 @@ class DailyScaleTests(unittest.TestCase):
             "establishedDate": "2026-01-01", "initialScaleYi": 10,
         }]}})
         self.assertEqual(rows[0][0:5], ("p1", "000001", "示例产品", "2026-01-01", 10))
+
+    def test_builds_product_scale_history_rows(self):
+        rows = product_scale_history_rows({"scaleGrowth": {"products": [{
+            "productId": "p1", "scaleHistory": [
+                {"date": "2026-01-01", "scaleYi": 10, "kind": "launch", "shareCoverage": 2},
+                {"date": "2026-03-31", "scaleYi": 12, "shareCoverage": 2},
+            ],
+        }]}})
+        self.assertEqual(len(rows), 2)
+        self.assertEqual(rows[1][0:5], ("p1", "2026-03-31", 12, 2, "reported"))
 
 
 class ClassifyFundTests(unittest.TestCase):
