@@ -46,6 +46,9 @@ export function IssuanceInsight() {
   const [rankingPage, setRankingPage] = useState(1)
   const [offeringPage, setOfferingPage] = useState(1)
   const [suspensionPage, setSuspensionPage] = useState(1)
+  const [growthPage, setGrowthPage] = useState(1)
+  const [growthCohort, setGrowthCohort] = useState('all')
+  const [growthSort, setGrowthSort] = useState('scaleGrowthPercent')
 
   const navigateToMetric = (metricKey, { updateHistory = true } = {}) => {
     const destination = METRIC_DESTINATIONS[metricKey]
@@ -86,7 +89,16 @@ export function IssuanceInsight() {
         : (right[sortKey] ?? -Infinity) - (left[sortKey] ?? -Infinity) || left.code.localeCompare(right.code))
   }, [payload, query, sortKey, windowKey])
 
+  const growthProducts = useMemo(() => {
+    const products = payload?.scaleGrowth?.products ?? []
+    return products.filter((fund) => growthCohort === 'all'
+      || (growthCohort === 'd30' && fund.ageDays >= 30)
+      || (growthCohort === 'd90' && fund.ageDays >= 90))
+      .sort((left, right) => (right[growthSort] ?? -Infinity) - (left[growthSort] ?? -Infinity) || left.code.localeCompare(right.code))
+  }, [growthCohort, growthSort, payload])
+
   useEffect(() => setRankingPage(1), [query, sortKey, windowKey])
+  useEffect(() => setGrowthPage(1), [growthCohort, growthSort])
 
   const page = (items, current) => items.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE)
 
@@ -148,9 +160,50 @@ export function IssuanceInsight() {
       <p className="issuance-method">{windowKey === 'today' || windowKey === 'week' ? payload.methodology.shortWindow : payload.methodology.longWindow}。{payload.methodology.warning}</p>
     </section>
 
+    <section className="issuance-panel issuance-anchor" id="post-launch-scale">
+      <div className="issuance-panel__heading">
+        <div><span className="issuance-section-index">02</span><h2>发行后规模追踪</h2><p>按产品合并 A/C 等份额，识别成立以来规模增加的基金；成立规模以募集份额按面值 1 元近似。</p></div>
+        <div className="issuance-controls">
+          <select aria-label="规模观察期" value={growthCohort} onChange={(event) => setGrowthCohort(event.target.value)}><option value="all">全部成立产品</option><option value="d30">成立满30日</option><option value="d90">成立满90日</option></select>
+          <select aria-label="规模增长排序" value={growthSort} onChange={(event) => setGrowthSort(event.target.value)}><option value="scaleGrowthPercent">按增长率</option><option value="scaleGrowthYi">按增长额</option><option value="latestScaleYi">按当前规模</option></select>
+        </div>
+      </div>
+      <div className="scale-growth-summary">
+        <article><span>可比较产品</span><strong>{number(payload.scaleGrowth?.comparableCount)}</strong></article>
+        <article><span>规模增加</span><strong>{number(payload.scaleGrowth?.increasedCount)}</strong></article>
+        <article><span>日频历史起点</span><strong>{payload.scaleGrowth?.historyStartDate || '待积累'}</strong></article>
+      </div>
+      <div className="issuance-table-wrap scale-growth-table">
+        <table>
+          <thead><tr><th>排名</th><th>基金产品</th><th>成立日期/天数</th><th>成立规模</th><th>当前规模</th><th>增加额</th><th>增加率</th><th>D+30</th><th>D+90</th></tr></thead>
+          <tbody>{page(growthProducts, growthPage).map((fund, index) => <tr key={fund.productId}>
+            <td><b className="rank-number">{(growthPage - 1) * PAGE_SIZE + index + 1}</b></td>
+            <td><strong>{fund.name}</strong><span className="cell-note">{fund.code} · {fund.shareCount}个份额</span></td>
+            <td>{fund.establishedDate}<span className="cell-note">成立 {fund.ageDays} 日</span></td>
+            <td>{number(fund.initialScaleYi, ' 亿元')}<span className="cell-note">募集份额×面值近似</span></td>
+            <td>{number(fund.latestScaleYi, ' 亿元')}<span className="cell-note">{fund.latestScaleDate || '日期待补全'}</span></td>
+            <td className={(fund.scaleGrowthYi ?? 0) >= 0 ? 'positive' : 'negative'}>{number(fund.scaleGrowthYi, ' 亿元')}</td>
+            <td className={(fund.scaleGrowthPercent ?? 0) >= 0 ? 'positive' : 'negative'}><strong>{number(fund.scaleGrowthPercent, '%')}</strong></td>
+            <td>{fund.milestone30}<span className="cell-note">定点值待历史回补</span></td>
+            <td>{fund.milestone90}<span className="cell-note">定点值待历史回补</span></td>
+          </tr>)}</tbody>
+        </table>
+      </div>
+      <Pager page={growthPage} total={growthProducts.length} onChange={setGrowthPage} />
+      <div className="growth-patterns">
+        {(payload.scaleGrowth?.patterns ?? []).slice(0, 6).map((pattern) => <article key={pattern.dimension}>
+          <span>{pattern.dimension} · {pattern.sampleCount}个样本</span>
+          <strong>增长中位数 {number(pattern.medianGrowthPercent, '%')}</strong>
+          <p>规模正增长比例 {number(pattern.positiveSharePercent, '%')}</p>
+          <small>领先产品：{pattern.topFunds.join('、') || '暂无'}</small>
+        </article>)}
+      </div>
+      <p className="issuance-method">当前增长率用于发现线索，不代表资金净流入；市场涨跌也会改变基金规模。D+30/D+90定点规模将在历史快照与季度报告回补后开放。</p>
+    </section>
+
     <div className="issuance-two-column">
       <section className="issuance-panel issuance-anchor" id="ongoing-offerings">
-        <div className="issuance-panel__heading"><div><span className="issuance-section-index">02</span><h2>当前认购中</h2><p>展示募集窗口与基础认购条件。</p></div></div>
+        <div className="issuance-panel__heading"><div><span className="issuance-section-index">03</span><h2>当前认购中</h2><p>展示募集窗口与基础认购条件。</p></div></div>
         <div className="issuance-list">{page(payload.offerings.ongoing, offeringPage).map((fund) => <article key={fund.code}>
           <div><strong>{fund.name}</strong><span>{fund.code} · {fund.type}</span></div>
           <p>{fund.offeringStartDate} — {fund.offeringEndDate || '待公告'}</p>
@@ -159,7 +212,7 @@ export function IssuanceInsight() {
       </section>
 
       <section className="issuance-panel issuance-anchor" id="purchase-suspensions">
-        <div className="issuance-panel__heading"><div><span className="issuance-section-index">03</span><h2>暂停申购追踪</h2><p>当前状态快照；历史变化从本版本开始每日积累。</p></div></div>
+        <div className="issuance-panel__heading"><div><span className="issuance-section-index">04</span><h2>暂停申购追踪</h2><p>当前状态快照；历史变化从本版本开始每日积累。</p></div></div>
         <div className="issuance-list suspension-list">{page(payload.suspensions, suspensionPage).map((fund) => <article key={fund.productId}>
           <div><strong>{fund.productName}</strong><span>{fund.representativeCode} · {fund.type}</span></div>
           <em>{fund.purchaseStatus}</em>

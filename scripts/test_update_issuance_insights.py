@@ -56,3 +56,27 @@ def test_adds_tiantian_market_metrics():
     assert fund["unitNav"] == 1.2345
     assert fund["weekReturnPercent"] == 1.2
     assert fund["ytdReturnPercent"] == 8.9
+
+
+def test_groups_share_classes_and_calculates_scale_growth_patterns():
+    established = [
+        {"基金代码": "1", "基金简称": "示例A", "基金类型": "混合型", "成立日期": "2026-01-02", "募集份额": 10},
+        {"基金代码": "2", "基金简称": "示例C", "基金类型": "混合型", "成立日期": "2026-01-02", "募集份额": 10},
+    ]
+    active = {"funds": [
+        {"code": "000001", "productId": "p1", "productName": "示例基金"},
+        {"code": "000002", "productId": "p1", "productName": "示例基金"},
+    ]}
+    reported = {
+        "000001": {"latestScaleYi": 8, "latestScaleDate": "2026-06-30"},
+        "000002": {"latestScaleYi": 4, "latestScaleDate": "2026-06-30"},
+    }
+    payload = build_payload(established, [], active, datetime(2026, 8, 17, tzinfo=timezone.utc), reported_scales=reported)
+    product = payload["scaleGrowth"]["products"][0]
+    assert product["shareCount"] == 2
+    assert product["initialScaleYi"] == 10
+    assert product["latestScaleYi"] == 12
+    assert product["scaleGrowthYi"] == 2
+    assert product["scaleGrowthPercent"] == 20
+    assert payload["scaleGrowth"]["increasedCount"] == 1
+    assert payload["scaleGrowth"]["patterns"][0]["sampleCount"] == 1

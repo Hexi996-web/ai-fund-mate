@@ -23,6 +23,13 @@ def snapshot_rows(payload):
     return rows
 
 
+def issuance_baseline_rows(payload):
+    return [(
+        fund["productId"], fund["code"], fund["name"], fund["establishedDate"],
+        fund.get("initialScaleYi"), "AKShare/东方财富公开数据",
+    ) for fund in payload.get("scaleGrowth", {}).get("products", [])]
+
+
 def main():
     database_url = os.environ.get("SUPABASE_DB_URL")
     if not database_url:
@@ -32,7 +39,9 @@ def main():
     import psycopg
 
     payload = json.loads((ROOT / "public" / "funds_active.json").read_text(encoding="utf-8"))
+    issuance_payload = json.loads((ROOT / "public" / "issuance_insights.json").read_text(encoding="utf-8"))
     rows = snapshot_rows(payload)
+    baselines = issuance_baseline_rows(issuance_payload)
     if not rows:
         print("没有可写入的规模估算快照")
         return
@@ -58,7 +67,20 @@ def main():
     with psycopg.connect(database_url) as connection:
         with connection.cursor() as cursor:
             cursor.executemany(sql, rows)
-    print(f"已写入 {len(rows)} 条规模估算快照")
+            cursor.executemany("""
+                insert into public.fund_issuance_baselines (
+                  product_id, representative_code, product_name, established_date,
+                  initial_raised_shares_yi, source
+                ) values (%s, %s, %s, %s, %s, %s)
+                on conflict (product_id) do update set
+                  representative_code = excluded.representative_code,
+                  product_name = excluded.product_name,
+                  established_date = excluded.established_date,
+                  initial_raised_shares_yi = coalesce(public.fund_issuance_baselines.initial_raised_shares_yi, excluded.initial_raised_shares_yi),
+                  source = excluded.source,
+                  updated_at = now()
+            """, baselines)
+    print(f"已写入 {len(rows)} 条规模估算快照、{len(baselines)} 条发行基准")
 
 
 if __name__ == "__main__":

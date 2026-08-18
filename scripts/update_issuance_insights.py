@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import re
+from statistics import median
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -117,6 +118,66 @@ def normalize_market_metrics(rows: Iterable[dict[str, Any]]) -> dict[str, dict[s
             "ytdReturnPercent": _number(row, "今年来"),
         }
     return metrics
+
+
+def build_scale_growth_products(items: list[dict[str, Any]], active_payload: dict[str, Any], today: date) -> list[dict[str, Any]]:
+    """Collapse share classes and compare the current product AUM with its launch baseline."""
+    active_by_code = {str(fund.get("code")): fund for fund in active_payload.get("funds", [])}
+    groups: dict[str, list[dict[str, Any]]] = {}
+    for item in items:
+        active = active_by_code.get(item["code"], {})
+        product_id = str(active.get("productId") or item["code"])
+        groups.setdefault(product_id, []).append({**item, "_active": active})
+
+    products = []
+    for product_id, shares in groups.items():
+        shares.sort(key=lambda item: item["code"])
+        representative = shares[0]
+        initial_values = [item["raisedSharesYi"] for item in shares if item.get("raisedSharesYi") is not None]
+        current_values = [item["latestScaleYi"] for item in shares if item.get("latestScaleYi") is not None]
+        initial_scale = max(initial_values) if initial_values else None
+        current_scale = round(sum(current_values), 4) if current_values else None
+        growth_amount = round(current_scale - initial_scale, 4) if initial_scale is not None and current_scale is not None else None
+        growth_rate = round(growth_amount / initial_scale * 100, 2) if growth_amount is not None and initial_scale else None
+        established = date.fromisoformat(representative["establishedDate"])
+        age_days = (today - established).days
+        latest_dates = [item.get("latestScaleDate") for item in shares if item.get("latestScaleDate")]
+        active = representative["_active"]
+        products.append({
+            **{key: value for key, value in representative.items() if key != "_active"},
+            "productId": product_id,
+            "name": active.get("productName") or representative["name"],
+            "shareCodes": [item["code"] for item in shares],
+            "shareCount": len(shares),
+            "initialScaleYi": initial_scale,
+            "latestScaleYi": current_scale,
+            "latestScaleDate": max(latest_dates) if latest_dates else None,
+            "scaleGrowthYi": growth_amount,
+            "scaleGrowthPercent": growth_rate,
+            "scaleGrowthStatus": "增加" if growth_amount is not None and growth_amount > 0 else "减少" if growth_amount is not None and growth_amount < 0 else "持平" if growth_amount == 0 else "待补全",
+            "ageDays": age_days,
+            "milestone30": "已满30日" if age_days >= 30 else f"还需{30 - age_days}日",
+            "milestone90": "已满90日" if age_days >= 90 else f"还需{90 - age_days}日",
+        })
+    return sorted(products, key=lambda item: (item["establishedDate"], item["code"]), reverse=True)
+
+
+def summarize_growth_patterns(products: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    groups: dict[str, list[dict[str, Any]]] = {}
+    for product in products:
+        if product.get("scaleGrowthPercent") is not None:
+            groups.setdefault(product.get("type") or "未知", []).append(product)
+    patterns = []
+    for fund_type, samples in groups.items():
+        rates = [item["scaleGrowthPercent"] for item in samples]
+        patterns.append({
+            "dimension": fund_type,
+            "sampleCount": len(samples),
+            "medianGrowthPercent": round(median(rates), 2),
+            "positiveSharePercent": round(sum(rate > 0 for rate in rates) / len(rates) * 100, 1),
+            "topFunds": [item["name"] for item in sorted(samples, key=lambda item: item["scaleGrowthPercent"], reverse=True)[:3]],
+        })
+    return sorted(patterns, key=lambda item: (item["sampleCount"], item["medianGrowthPercent"]), reverse=True)
 
 
 def fetch_eastmoney_reported_scales(codes: Iterable[str], workers: int = 12) -> dict[str, dict[str, Any]]:
@@ -249,6 +310,7 @@ def build_payload(
     reported_scales = reported_scales or {}
     market_by_code = normalize_market_metrics(market_rows)
     established = [{**item, **market_by_code.get(item["code"], {}), **scale_by_code.get(item["code"], {}), **reported_scales.get(item["code"], {})} for item in established]
+    growth_products = build_scale_growth_products(established, active_payload, today)
     offerings = normalize_offerings(offering_rows, today)
     windows = {
         "today": today,
@@ -282,6 +344,13 @@ def build_payload(
         "offerings": {"ongoing": ongoing, "upcoming": upcoming},
         "rankings": rankings,
         "suspensions": suspensions,
+        "scaleGrowth": {
+            "products": growth_products,
+            "increasedCount": sum(item["scaleGrowthStatus"] == "增加" for item in growth_products),
+            "comparableCount": sum(item["scaleGrowthPercent"] is not None for item in growth_products),
+            "patterns": summarize_growth_patterns(growth_products),
+            "historyStartDate": "2026-08-18",
+        },
         "methodology": {
             "shortWindow": "募集规模80%+成立以来收益20%",
             "longWindow": "募集规模55%+成立以来收益45%",
