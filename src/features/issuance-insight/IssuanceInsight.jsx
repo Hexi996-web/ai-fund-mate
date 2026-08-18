@@ -29,6 +29,7 @@ export function IssuanceInsight() {
   const [error, setError] = useState('')
   const [windowKey, setWindowKey] = useState('quarter')
   const [query, setQuery] = useState('')
+  const [sortKey, setSortKey] = useState('establishedDate')
   const [rankingPage, setRankingPage] = useState(1)
   const [offeringPage, setOfferingPage] = useState(1)
   const [suspensionPage, setSuspensionPage] = useState(1)
@@ -45,9 +46,12 @@ export function IssuanceInsight() {
     const value = query.trim().toLowerCase()
     return (payload?.rankings?.[windowKey] ?? []).filter((fund) => !value
       || [fund.code, fund.name, fund.manager, fund.type].some((field) => String(field ?? '').toLowerCase().includes(value)))
-  }, [payload, query, windowKey])
+      .sort((left, right) => sortKey === 'establishedDate'
+        ? String(right.establishedDate).localeCompare(String(left.establishedDate)) || left.code.localeCompare(right.code)
+        : (right[sortKey] ?? -Infinity) - (left[sortKey] ?? -Infinity) || left.code.localeCompare(right.code))
+  }, [payload, query, sortKey, windowKey])
 
-  useEffect(() => setRankingPage(1), [query, windowKey])
+  useEffect(() => setRankingPage(1), [query, sortKey, windowKey])
 
   const page = (items, current) => items.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE)
 
@@ -79,22 +83,23 @@ export function IssuanceInsight() {
     <section className="issuance-panel">
       <div className="issuance-panel__heading">
         <div><span className="issuance-section-index">01</span><h2>发行成功榜</h2><p>短周期偏重募集规模，近三个月及年内兼顾成立以来收益。</p></div>
-        <input aria-label="搜索发行基金" placeholder="基金名称、代码、管理人" value={query} onChange={(event) => setQuery(event.target.value)} />
+        <div className="issuance-controls"><select aria-label="排序指标" value={sortKey} onChange={(event) => setSortKey(event.target.value)}><option value="establishedDate">按成立日期（最新）</option><option value="raisedSharesYi">按募集份额</option><option value="latestScaleYi">按最新规模</option><option value="dailyReturnPercent">按日涨跌幅</option><option value="weekReturnPercent">按近一周收益</option><option value="monthReturnPercent">按近一月收益</option><option value="quarterReturnPercent">按近三月收益</option><option value="ytdReturnPercent">按今年以来收益</option><option value="returnSinceInceptionPercent">按成立以来收益</option></select><input aria-label="搜索发行基金" placeholder="基金名称、代码、管理人" value={query} onChange={(event) => setQuery(event.target.value)} /></div>
       </div>
       <div className="issuance-tabs" role="tablist">
         {WINDOWS.map(([key, label]) => <button key={key} type="button" role="tab" aria-selected={windowKey === key} className={windowKey === key ? 'active' : ''} onClick={() => setWindowKey(key)}>{label}</button>)}
       </div>
       <div className="issuance-table-wrap">
         <table>
-          <thead><tr><th>排名</th><th>基金/代表份额</th><th>类型</th><th>成立日期</th><th>募集份额</th><th>成立以来收益</th><th>最新规模</th><th>综合分</th></tr></thead>
+          <thead><tr><th>排名</th><th>基金/代表份额</th><th>成立日期</th><th>单位净值</th><th>日涨跌</th><th>近一周</th><th>近一月</th><th>近三月</th><th>今年来</th><th>成立来</th><th>募集份额</th><th>最新规模</th></tr></thead>
           <tbody>{page(ranking, rankingPage).map((fund, index) => <tr key={fund.code}>
             <td><b className="rank-number">{(rankingPage - 1) * PAGE_SIZE + index + 1}</b></td>
             <td><strong>{fund.name}</strong><span className="cell-note">{fund.code} · {fund.manager || '管理人待补全'}</span></td>
-            <td>{fund.type}</td><td>{fund.establishedDate}</td>
-            <td>{number(fund.raisedSharesYi, ' 亿份')}</td>
+            <td>{fund.establishedDate}</td>
+            <td>{number(fund.unitNav)}<span className="cell-note">{fund.navDate || '待更新'}</span></td>
+            {[fund.dailyReturnPercent, fund.weekReturnPercent, fund.monthReturnPercent, fund.quarterReturnPercent, fund.ytdReturnPercent].map((value, metricIndex) => <td key={metricIndex} className={(value ?? 0) >= 0 ? 'positive' : 'negative'}>{number(value, '%')}</td>)}
             <td className={(fund.returnSinceInceptionPercent ?? 0) >= 0 ? 'positive' : 'negative'}>{number(fund.returnSinceInceptionPercent, '%')}</td>
-            <td>{fund.latestScaleYi === null ? <span className="pending-value">待披露</span> : <>{number(fund.latestScaleYi, ' 亿元')}<span className="cell-note">估算 · {fund.latestScaleDate || '日期待补全'}</span></>}</td>
-            <td><strong>{number(fund.successScore)}</strong></td>
+            <td>{number(fund.raisedSharesYi, ' 亿份')}</td>
+            <td>{fund.latestScaleYi === null ? <span className="pending-value">待披露</span> : <>{number(fund.latestScaleYi, ' 亿元')}<span className="cell-note">{fund.latestScaleStatus || '估算'} · {fund.latestScaleDate || '日期待补全'}</span></>}</td>
           </tr>)}</tbody>
         </table>
         {ranking.length === 0 ? <div className="issuance-empty">该时间窗口暂无可用成立数据</div> : null}
