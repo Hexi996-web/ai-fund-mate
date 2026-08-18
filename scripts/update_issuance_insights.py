@@ -161,7 +161,7 @@ def build_scale_growth_products(items: list[dict[str, Any]], active_payload: dic
             target = established + timedelta(days=days)
             if today < target:
                 return {"status": "upcoming", "targetDate": target.isoformat(), "daysRemaining": (target - today).days}
-            candidates = [(abs((date.fromisoformat(point["date"]) - target).days), point) for point in scale_history if point.get("kind") != "launch"]
+            candidates = [((date.fromisoformat(point["date"]) - target).days, point) for point in scale_history if point.get("kind") != "launch" and date.fromisoformat(point["date"]) >= target]
             if not candidates:
                 return {"status": "pending", "targetDate": target.isoformat()}
             offset, point = min(candidates, key=lambda value: value[0])

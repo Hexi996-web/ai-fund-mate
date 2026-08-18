@@ -109,15 +109,15 @@ def test_aggregates_reported_history_and_selects_nearby_milestones():
         {"code": "000002", "productId": "p1", "productName": "示例基金"},
     ]}
     reported = {
-        "000001": {"latestScaleYi": 8, "latestScaleDate": "2026-03-31", "scaleHistory": [{"date": "2026-03-31", "scaleYi": 8}]},
-        "000002": {"latestScaleYi": 4, "latestScaleDate": "2026-03-31", "scaleHistory": [{"date": "2026-03-31", "scaleYi": 4}]},
+        "000001": {"latestScaleYi": 9, "latestScaleDate": "2026-04-30", "scaleHistory": [{"date": "2026-02-28", "scaleYi": 8}, {"date": "2026-04-30", "scaleYi": 9}]},
+        "000002": {"latestScaleYi": 5, "latestScaleDate": "2026-04-30", "scaleHistory": [{"date": "2026-02-28", "scaleYi": 4}, {"date": "2026-04-30", "scaleYi": 5}]},
     }
     payload = build_payload(established, [], active, datetime(2026, 8, 17, tzinfo=timezone.utc), reported_scales=reported)
     product = payload["scaleGrowth"]["products"][0]
-    assert product["scaleHistory"][-1]["scaleYi"] == 12
+    assert product["scaleHistory"][-1]["scaleYi"] == 14
     assert product["scaleHistory"][-1]["shareCoverage"] == 2
     assert product["d90"]["status"] == "observed"
-    assert product["d90"]["observationAgeDays"] == 89
-    assert product["d90"]["growthPercent"] == 20
+    assert product["d90"]["observationAgeDays"] == 119
+    assert product["d90"]["growthPercent"] == 40
     assert product["d30"]["status"] == "observed"
-    assert product["d30"]["offsetDays"] == 59
+    assert product["d30"]["offsetDays"] == 28
