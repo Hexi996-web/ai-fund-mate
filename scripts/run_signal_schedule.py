@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import argparse
-import os
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -13,6 +12,7 @@ from pathlib import Path
 UTC = timezone.utc
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SNAPSHOT = ROOT / "public" / "data" / "signal-radar.json"
+SCHEDULE_DB = ROOT / ".tmp" / "signal-schedule.db"
 
 
 def select_jobs(now_utc: datetime) -> list[str]:
@@ -31,13 +31,13 @@ def select_jobs(now_utc: datetime) -> list[str]:
 
 def run_schedule(now_utc: datetime, output: Path = DEFAULT_SNAPSHOT) -> None:
     """Run selected CLI jobs in order, stopping immediately on failure."""
-    if not os.environ.get("SUPABASE_DB_URL"):
-        raise RuntimeError("SUPABASE_DB_URL is required for scheduled production runs")
-
     instant = now_utc.astimezone(UTC)
     iso_utc = instant.isoformat()
     for job in select_jobs(instant):
-        command = [sys.executable, "-m", "data_pipeline.signal_cli", job]
+        command = [
+            sys.executable, "-m", "data_pipeline.signal_cli", job,
+            "--db", str(SCHEDULE_DB),
+        ]
         if job == "collect":
             command += ["--as-of", iso_utc]
         elif job == "brief":
