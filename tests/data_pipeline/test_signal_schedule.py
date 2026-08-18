@@ -8,14 +8,14 @@ from scripts.run_signal_schedule import run_schedule, select_jobs
 UTC = timezone.utc
 
 
-def test_midnight_utc_runs_collect_brief_and_publish():
-    assert select_jobs(datetime(2026, 8, 14, 0, 0, tzinfo=UTC)) == [
+def test_2300_utc_runs_collect_brief_and_publish():
+    assert select_jobs(datetime(2026, 8, 14, 23, 0, tzinfo=UTC)) == [
         "collect", "brief", "publish"
     ]
 
 
-def test_delayed_midnight_hour_run_still_generates_idempotent_brief():
-    assert select_jobs(datetime(2026, 8, 14, 0, 7, tzinfo=UTC)) == [
+def test_delayed_2300_hour_run_still_generates_idempotent_brief():
+    assert select_jobs(datetime(2026, 8, 14, 23, 7, tzinfo=UTC)) == [
         "collect", "brief", "publish"
     ]
 
@@ -40,13 +40,13 @@ def test_run_schedule_invokes_cli_in_order(tmp_path, monkeypatch):
     )
 
     output = tmp_path / "signal-radar.json"
-    run_schedule(datetime(2026, 8, 14, 0, 7, tzinfo=UTC), output)
+    run_schedule(datetime(2026, 8, 14, 23, 7, tzinfo=UTC), output)
 
     assert [call[0][3] for call in calls] == ["collect", "brief", "publish"]
-    assert calls[0][0][-2:] == ["--as-of", "2026-08-14T00:07:00+00:00"]
-    assert calls[1][0][-2:] == ["--run-at", "2026-08-14T00:07:00+00:00"]
+    assert calls[0][0][-2:] == ["--as-of", "2026-08-14T23:07:00+00:00"]
+    assert calls[1][0][-2:] == ["--run-at", "2026-08-14T23:07:00+00:00"]
     assert calls[2][0][-4:] == [
-        "--output", str(output), "--generated-at", "2026-08-14T00:07:00+00:00"
+        "--output", str(output), "--generated-at", "2026-08-14T23:07:00+00:00"
     ]
     assert all(options["check"] is True for _, options in calls)
 

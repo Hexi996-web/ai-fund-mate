@@ -1,9 +1,9 @@
 name: Update five-theme data
 on:
   schedule:
-    # 北京时间每天 08:30，09:30 补跑
-    - cron: "30 0 * * *"
-    - cron: "30 1 * * *"
+    # 北京时间每天 06:15 主更新，07:15 补跑
+    - cron: "15 22 * * *"
+    - cron: "15 23 * * *"
   workflow_dispatch:
 concurrency:
   group: five-theme-data
