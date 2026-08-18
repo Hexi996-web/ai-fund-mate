@@ -15,6 +15,19 @@ const number = (value, suffix = '') => value === null || value === undefined
 
 const PAGE_SIZE = 20
 
+const METRIC_DESTINATIONS = {
+  offering: { hash: 'ongoing-offerings', sectionId: 'ongoing-offerings' },
+  today: { hash: 'established-today', sectionId: 'issuance-ranking', windowKey: 'today' },
+  week: { hash: 'established-week', sectionId: 'issuance-ranking', windowKey: 'week' },
+  quarter: { hash: 'established-quarter', sectionId: 'issuance-ranking', windowKey: 'quarter' },
+  ytd: { hash: 'established-ytd', sectionId: 'issuance-ranking', windowKey: 'ytd' },
+  suspended: { hash: 'purchase-suspensions', sectionId: 'purchase-suspensions' },
+}
+
+const HASH_DESTINATIONS = Object.fromEntries(
+  Object.entries(METRIC_DESTINATIONS).map(([key, destination]) => [destination.hash, { key, ...destination }]),
+)
+
 function Pager({ page, total, onChange }) {
   const pages = Math.max(1, Math.ceil(total / PAGE_SIZE))
   if (total <= PAGE_SIZE) return total ? <div className="issuance-pager"><span>共 {total} 条</span></div> : null
@@ -33,6 +46,28 @@ export function IssuanceInsight() {
   const [rankingPage, setRankingPage] = useState(1)
   const [offeringPage, setOfferingPage] = useState(1)
   const [suspensionPage, setSuspensionPage] = useState(1)
+
+  const navigateToMetric = (metricKey, { updateHistory = true } = {}) => {
+    const destination = METRIC_DESTINATIONS[metricKey]
+    if (!destination) return
+    if (destination.windowKey) setWindowKey(destination.windowKey)
+    if (updateHistory && window.location.hash !== `#${destination.hash}`) {
+      window.history.pushState(null, '', `#${destination.hash}`)
+    }
+    window.requestAnimationFrame(() => {
+      document.getElementById(destination.sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
+  }
+
+  useEffect(() => {
+    const applyHash = () => {
+      const destination = HASH_DESTINATIONS[window.location.hash.slice(1)]
+      if (destination) navigateToMetric(destination.key, { updateHistory: false })
+    }
+    applyHash()
+    window.addEventListener('hashchange', applyHash)
+    return () => window.removeEventListener('hashchange', applyHash)
+  }, [])
 
   useEffect(() => {
     const controller = new AbortController()
@@ -71,16 +106,21 @@ export function IssuanceInsight() {
 
     <section className="issuance-metrics" aria-label="发行市场概览">
       {[
-        ['认购中', summary.todayOffering, '当前募集窗口'],
-        ['今日成立', summary.todayEstablished, '产品数'],
-        ['近一周成立', summary.weekEstablished, '产品数'],
-        ['近三个月成立', summary.quarterEstablished, '产品数'],
-        ['今年以来成立', summary.ytdEstablished, '产品数'],
-        ['当前暂停申购', summary.currentSuspended, '按产品去重'],
-      ].map(([label, value, hint]) => <article key={label}><span>{label}</span><strong>{number(value)}</strong><small>{hint}</small></article>)}
+        ['offering', '认购中', summary.todayOffering, '当前募集窗口'],
+        ['today', '今日成立', summary.todayEstablished, '产品数'],
+        ['week', '近一周成立', summary.weekEstablished, '产品数'],
+        ['quarter', '近三个月成立', summary.quarterEstablished, '产品数'],
+        ['ytd', '今年以来成立', summary.ytdEstablished, '产品数'],
+        ['suspended', '当前暂停申购', summary.currentSuspended, '按产品去重'],
+      ].map(([key, label, value, hint]) => <button
+        key={key}
+        type="button"
+        aria-label={`查看${label}明细`}
+        onClick={() => navigateToMetric(key)}
+      ><span>{label}</span><strong>{number(value)}</strong><small>{hint}</small><i aria-hidden="true">查看明细 →</i></button>)}
     </section>
 
-    <section className="issuance-panel">
+    <section className="issuance-panel issuance-anchor" id="issuance-ranking">
       <div className="issuance-panel__heading">
         <div><span className="issuance-section-index">01</span><h2>发行成功榜</h2><p>短周期偏重募集规模，近三个月及年内兼顾成立以来收益。</p></div>
         <div className="issuance-controls"><select aria-label="排序指标" value={sortKey} onChange={(event) => setSortKey(event.target.value)}><option value="establishedDate">按成立日期（最新）</option><option value="raisedSharesYi">按募集份额</option><option value="latestScaleYi">按最新规模</option><option value="dailyReturnPercent">按日涨跌幅</option><option value="weekReturnPercent">按近一周收益</option><option value="monthReturnPercent">按近一月收益</option><option value="quarterReturnPercent">按近三月收益</option><option value="ytdReturnPercent">按今年以来收益</option><option value="returnSinceInceptionPercent">按成立以来收益</option></select><input aria-label="搜索发行基金" placeholder="基金名称、代码、管理人" value={query} onChange={(event) => setQuery(event.target.value)} /></div>
@@ -109,7 +149,7 @@ export function IssuanceInsight() {
     </section>
 
     <div className="issuance-two-column">
-      <section className="issuance-panel">
+      <section className="issuance-panel issuance-anchor" id="ongoing-offerings">
         <div className="issuance-panel__heading"><div><span className="issuance-section-index">02</span><h2>当前认购中</h2><p>展示募集窗口与基础认购条件。</p></div></div>
         <div className="issuance-list">{page(payload.offerings.ongoing, offeringPage).map((fund) => <article key={fund.code}>
           <div><strong>{fund.name}</strong><span>{fund.code} · {fund.type}</span></div>
@@ -118,7 +158,7 @@ export function IssuanceInsight() {
         <Pager page={offeringPage} total={payload.offerings.ongoing.length} onChange={setOfferingPage} />
       </section>
 
-      <section className="issuance-panel">
+      <section className="issuance-panel issuance-anchor" id="purchase-suspensions">
         <div className="issuance-panel__heading"><div><span className="issuance-section-index">03</span><h2>暂停申购追踪</h2><p>当前状态快照；历史变化从本版本开始每日积累。</p></div></div>
         <div className="issuance-list suspension-list">{page(payload.suspensions, suspensionPage).map((fund) => <article key={fund.productId}>
           <div><strong>{fund.productName}</strong><span>{fund.representativeCode} · {fund.type}</span></div>

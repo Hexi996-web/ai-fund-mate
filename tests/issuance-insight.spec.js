@@ -23,3 +23,19 @@ test('keeps the requested top-level workspace order', async ({ page }) => {
     '发行洞察', '信号雷达', '主题研判', '基金产品库',
   ])
 })
+
+test('summary cards navigate to the matching issuance details', async ({ page }) => {
+  await page.goto('/')
+
+  await page.getByRole('button', { name: '查看近一周成立明细' }).click()
+  await expect(page).toHaveURL(/#established-week$/)
+  await expect(page.getByRole('tab', { name: '近一周' })).toHaveAttribute('aria-selected', 'true')
+
+  await page.getByRole('button', { name: '查看认购中明细' }).click()
+  await expect(page).toHaveURL(/#ongoing-offerings$/)
+  await expect(page.getByRole('heading', { name: '当前认购中' })).toBeInViewport()
+
+  await page.getByRole('button', { name: '查看当前暂停申购明细' }).click()
+  await expect(page).toHaveURL(/#purchase-suspensions$/)
+  await expect(page.getByRole('heading', { name: '暂停申购追踪' })).toBeInViewport()
+})

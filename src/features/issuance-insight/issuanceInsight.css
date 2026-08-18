@@ -47,11 +47,26 @@
   gap: 12px;
   margin: 18px 0;
 }
-.issuance-metrics article {
+.issuance-metrics button {
+  width: 100%;
   padding: 18px;
   border: 1px solid #e0e6ef;
   border-radius: 12px;
   background: #fff;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+.issuance-metrics button:hover {
+  border-color: #aeb9ee;
+  box-shadow: 0 10px 24px rgba(58, 76, 172, 0.11);
+  transform: translateY(-2px);
+}
+.issuance-metrics button:focus-visible {
+  outline: 3px solid rgba(83, 104, 223, 0.24);
+  outline-offset: 2px;
 }
 .issuance-metrics span,
 .issuance-metrics small {
@@ -65,6 +80,17 @@
 }
 .issuance-metrics small {
   font-size: 11px;
+}
+.issuance-metrics i {
+  display: block;
+  margin-top: 12px;
+  color: #5368df;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 750;
+}
+.issuance-anchor {
+  scroll-margin-top: 96px;
 }
 .issuance-panel {
   margin-top: 18px;
