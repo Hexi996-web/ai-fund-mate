@@ -4,9 +4,28 @@ from datetime import datetime, timedelta, timezone
 
 import pytest
 
-from data_pipeline.signal_cli import main, repository_for
+from data_pipeline.signal_cli import _unclassified_draft, main, repository_for
+from data_pipeline.signal_domain import EventCluster, RawItem
 from data_pipeline.signal_storage import SignalRepository
 from data_pipeline.supabase_storage import SupabaseSignalRepository
+
+
+def test_unmatched_cluster_remains_publishable_as_unclassified():
+    instant = datetime(2026, 8, 18, tzinfo=timezone.utc)
+    item = RawItem(
+        source_id="official", url="https://example.com/item", title="公开信息标题",
+        body="公开信息正文", content_hash="fallback", collected_at=instant,
+        published_at=instant,
+    )
+    cluster = EventCluster(
+        id="cluster-fallback", title=item.title, category="", created_at=instant,
+        updated_at=instant, raw_items=(item,), item_count=1,
+    )
+
+    draft = _unclassified_draft(cluster)
+
+    assert draft.category == "unclassified"
+    assert draft.transmission == "公开信息正文"
 
 
 def test_collect_without_supabase_uses_local_sqlite(tmp_path, monkeypatch):

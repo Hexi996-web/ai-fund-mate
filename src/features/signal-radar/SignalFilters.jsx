@@ -1,4 +1,4 @@
-const CATEGORIES = [['all', '全部'], ['policy', '政策'], ['macro', '宏观'], ['market', '市场'], ['customer', '客户代理']]
+const CATEGORIES = [['all', '全部'], ['policy', '政策'], ['macro', '宏观'], ['market', '市场'], ['customer', '客户代理'], ['unclassified', '待研判']]
 
 export function SignalFilters({ filters, onChange }) {
   return (
