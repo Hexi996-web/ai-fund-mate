@@ -138,7 +138,7 @@ def build_scale_growth_products(items: list[dict[str, Any]], active_payload: dic
         initial_scale = max(initial_values) if initial_values else None
         current_scale = round(sum(current_values), 4) if current_values else None
         growth_amount = round(current_scale - initial_scale, 4) if initial_scale is not None and current_scale is not None else None
-        growth_rate = round(growth_amount / initial_scale * 100, 2) if growth_amount is not None and initial_scale else None
+        growth_rate = round(growth_amount / initial_scale * 100, 2) if growth_amount is not None and initial_scale is not None and initial_scale >= 0.5 else None
         established = date.fromisoformat(representative["establishedDate"])
         age_days = (today - established).days
         latest_dates = [item.get("latestScaleDate") for item in shares if item.get("latestScaleDate")]
@@ -154,7 +154,7 @@ def build_scale_growth_products(items: list[dict[str, Any]], active_payload: dic
             "latestScaleDate": max(latest_dates) if latest_dates else None,
             "scaleGrowthYi": growth_amount,
             "scaleGrowthPercent": growth_rate,
-            "scaleGrowthStatus": "增加" if growth_amount is not None and growth_amount > 0 else "减少" if growth_amount is not None and growth_amount < 0 else "持平" if growth_amount == 0 else "待补全",
+            "scaleGrowthStatus": "基数过小" if initial_scale is not None and initial_scale < 0.5 else "增加" if growth_amount is not None and growth_amount > 0 else "减少" if growth_amount is not None and growth_amount < 0 else "持平" if growth_amount == 0 else "待补全",
             "ageDays": age_days,
             "milestone30": "已满30日" if age_days >= 30 else f"还需{30 - age_days}日",
             "milestone90": "已满90日" if age_days >= 90 else f"还需{90 - age_days}日",
@@ -310,7 +310,8 @@ def build_payload(
     reported_scales = reported_scales or {}
     market_by_code = normalize_market_metrics(market_rows)
     established = [{**item, **market_by_code.get(item["code"], {}), **scale_by_code.get(item["code"], {}), **reported_scales.get(item["code"], {})} for item in established]
-    growth_products = build_scale_growth_products(established, active_payload, today)
+    recent_established = [item for item in established if date.fromisoformat(item["establishedDate"]) >= date(today.year, 1, 1)]
+    growth_products = build_scale_growth_products(recent_established, active_payload, today)
     offerings = normalize_offerings(offering_rows, today)
     windows = {
         "today": today,
@@ -350,6 +351,7 @@ def build_payload(
             "comparableCount": sum(item["scaleGrowthPercent"] is not None for item in growth_products),
             "patterns": summarize_growth_patterns(growth_products),
             "historyStartDate": "2026-08-18",
+            "scope": "今年以来成立，成立规模低于0.5亿元不参与增长率比较",
         },
         "methodology": {
             "shortWindow": "募集规模80%+成立以来收益20%",

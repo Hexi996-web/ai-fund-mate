@@ -162,7 +162,7 @@ export function IssuanceInsight() {
 
     <section className="issuance-panel issuance-anchor" id="post-launch-scale">
       <div className="issuance-panel__heading">
-        <div><span className="issuance-section-index">02</span><h2>发行后规模追踪</h2><p>按产品合并 A/C 等份额，识别成立以来规模增加的基金；成立规模以募集份额按面值 1 元近似。</p></div>
+        <div><span className="issuance-section-index">02</span><h2>发行后规模追踪</h2><p>按产品合并 A/C 等份额，识别今年以来成立且规模增加的基金；成立规模以募集份额按面值 1 元近似。</p></div>
         <div className="issuance-controls">
           <select aria-label="规模观察期" value={growthCohort} onChange={(event) => setGrowthCohort(event.target.value)}><option value="all">全部成立产品</option><option value="d30">成立满30日</option><option value="d90">成立满90日</option></select>
           <select aria-label="规模增长排序" value={growthSort} onChange={(event) => setGrowthSort(event.target.value)}><option value="scaleGrowthPercent">按增长率</option><option value="scaleGrowthYi">按增长额</option><option value="latestScaleYi">按当前规模</option></select>
@@ -198,7 +198,7 @@ export function IssuanceInsight() {
           <small>领先产品：{pattern.topFunds.join('、') || '暂无'}</small>
         </article>)}
       </div>
-      <p className="issuance-method">当前增长率用于发现线索，不代表资金净流入；市场涨跌也会改变基金规模。D+30/D+90定点规模将在历史快照与季度报告回补后开放。</p>
+      <p className="issuance-method">当前范围：{payload.scaleGrowth?.scope || '今年以来成立'}。当前增长率用于发现线索，不代表资金净流入；市场涨跌也会改变基金规模。D+30/D+90定点规模将在历史快照与季度报告回补后开放。</p>
     </section>
 
     <div className="issuance-two-column">

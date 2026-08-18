@@ -80,3 +80,17 @@ def test_groups_share_classes_and_calculates_scale_growth_patterns():
     assert product["scaleGrowthPercent"] == 20
     assert payload["scaleGrowth"]["increasedCount"] == 1
     assert payload["scaleGrowth"]["patterns"][0]["sampleCount"] == 1
+
+
+def test_excludes_old_and_tiny_baseline_products_from_growth_rate_analysis():
+    established = [
+        {"基金代码": "1", "基金简称": "旧基金", "基金类型": "混合型", "成立日期": "2025-01-02", "募集份额": 10},
+        {"基金代码": "2", "基金简称": "微型基金", "基金类型": "混合型", "成立日期": "2026-01-02", "募集份额": 0.1},
+    ]
+    reported = {"000002": {"latestScaleYi": 10, "latestScaleDate": "2026-06-30"}}
+    payload = build_payload(established, [], {"funds": []}, datetime(2026, 8, 17, tzinfo=timezone.utc), reported_scales=reported)
+    products = payload["scaleGrowth"]["products"]
+    assert len(products) == 1
+    assert products[0]["scaleGrowthStatus"] == "基数过小"
+    assert products[0]["scaleGrowthPercent"] is None
+    assert payload["scaleGrowth"]["comparableCount"] == 0
