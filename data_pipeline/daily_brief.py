@@ -14,11 +14,11 @@ EMPTY_TOP_CALL = "过去24小时无重大新增信号"
 
 
 def brief_window(run_at: datetime, timezone: ZoneInfo = SHANGHAI) -> tuple[datetime, datetime]:
-    """Return `[previous 08:00, current 08:00)` in the requested timezone."""
+    """Return `[previous 07:00, current 07:00)` in the requested timezone."""
     if run_at.tzinfo is None:
         raise ValueError("run_at must be timezone-aware")
     local_run = run_at.astimezone(timezone)
-    end = local_run.replace(hour=8, minute=0, second=0, microsecond=0)
+    end = local_run.replace(hour=7, minute=0, second=0, microsecond=0)
     if local_run < end:
         end -= timedelta(days=1)
     return end - timedelta(days=1), end

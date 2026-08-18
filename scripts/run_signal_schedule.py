@@ -1,4 +1,4 @@
-"""Run the hourly signal pipeline and the Beijing 08:00 daily brief."""
+"""Run the hourly signal pipeline and the Beijing 07:00 daily brief."""
 
 from __future__ import annotations
 
@@ -19,12 +19,12 @@ def select_jobs(now_utc: datetime) -> list[str]:
     """Return deterministic jobs for the hourly run containing ``now_utc``.
 
     GitHub schedules are not guaranteed to start at the exact requested minute,
-    so every run during UTC hour 00 includes the idempotent Beijing-date brief.
+    so every run during UTC hour 23 includes the idempotent Beijing-date brief.
     """
     if now_utc.tzinfo is None:
         raise ValueError("now_utc must be timezone-aware")
     instant = now_utc.astimezone(UTC)
-    if instant.hour == 0:
+    if instant.hour == 23:
         return ["collect", "brief", "publish"]
     return ["collect", "publish"]
 

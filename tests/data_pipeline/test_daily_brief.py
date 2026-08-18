@@ -14,7 +14,7 @@ from data_pipeline.signal_domain import (
 
 
 SHANGHAI = ZoneInfo("Asia/Shanghai")
-RUN_AT = datetime(2026, 8, 14, 8, tzinfo=SHANGHAI)
+RUN_AT = datetime(2026, 8, 14, 7, tzinfo=SHANGHAI)
 
 
 class Repository:
@@ -39,25 +39,25 @@ def signal(signal_id, timestamp, *, priority=1, validation=ValidationStatus.CONF
     )
 
 
-def test_daily_window_is_previous_0800_to_current_0800_shanghai():
-    start, end = brief_window(datetime(2026, 8, 14, 8, 0, tzinfo=SHANGHAI))
-
-    assert start.isoformat() == "2026-08-13T08:00:00+08:00"
-    assert end.isoformat() == "2026-08-14T08:00:00+08:00"
-
-
-def test_daily_window_before_0800_uses_the_last_completed_boundary():
+def test_daily_window_is_previous_0700_to_current_0700_shanghai():
     start, end = brief_window(datetime(2026, 8, 14, 7, 0, tzinfo=SHANGHAI))
 
-    assert start.isoformat() == "2026-08-12T08:00:00+08:00"
-    assert end.isoformat() == "2026-08-13T08:00:00+08:00"
+    assert start.isoformat() == "2026-08-13T07:00:00+08:00"
+    assert end.isoformat() == "2026-08-14T07:00:00+08:00"
+
+
+def test_daily_window_before_0700_uses_the_last_completed_boundary():
+    start, end = brief_window(datetime(2026, 8, 14, 6, 0, tzinfo=SHANGHAI))
+
+    assert start.isoformat() == "2026-08-12T07:00:00+08:00"
+    assert end.isoformat() == "2026-08-13T07:00:00+08:00"
 
 
 def test_daily_window_uses_shanghai_boundary_for_a_utc_run_time():
-    start, end = brief_window(datetime(2026, 8, 14, 0, 0, tzinfo=ZoneInfo("UTC")))
+    start, end = brief_window(datetime(2026, 8, 13, 23, 0, tzinfo=ZoneInfo("UTC")))
 
-    assert start.isoformat() == "2026-08-13T08:00:00+08:00"
-    assert end.isoformat() == "2026-08-14T08:00:00+08:00"
+    assert start.isoformat() == "2026-08-13T07:00:00+08:00"
+    assert end.isoformat() == "2026-08-14T07:00:00+08:00"
 
 
 def test_signal_at_exact_end_is_excluded():

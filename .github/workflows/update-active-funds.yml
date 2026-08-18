@@ -2,10 +2,10 @@ name: Update active fund data
 
 on:
   schedule:
-    # 北京时间每天 08:00（UTC 00:00）
-    - cron: "0 0 * * *"
-    # 北京时间每天 09:00 自动补跑，降低免费上游短暂失败的影响
-    - cron: "0 1 * * *"
+    # 北京时间每天 06:00 主更新，为 08:00 页面可见预留部署时间
+    - cron: "0 22 * * *"
+    # 北京时间每天 07:00 自动补跑
+    - cron: "0 23 * * *"
   workflow_dispatch:
 
 concurrency:
