@@ -88,6 +88,23 @@ def test_snapshot_has_complete_contract_and_source_traceability(tmp_path):
         "confidence": .95,
     }]
     assert payload["dailyBrief"]["signalIds"] == ["signal-1"]
+
+
+def test_snapshot_publishes_at_most_ten_highest_priority_signals(tmp_path):
+    repo = repo_with_signal(tmp_path)
+    for index in range(2, 13):
+        repo.upsert_signal(SignalRecord(
+            id=f"signal-{index}", cluster_id="cluster-1", category="unclassified",
+            title=f"Signal {index}", summary="Awaiting review", priority=index,
+            source_confidence=.9, customer_demand_score=0,
+            validation_status=ValidationStatus.CONFIRMED,
+            published_at=NOW, created_at=NOW, updated_at=NOW,
+        ))
+
+    payload = build_snapshot(repo, generated_at=NOW)
+
+    assert len(payload["signals"]) == 10
+    assert [item["id"] for item in payload["signals"][:2]] == ["signal-1", "signal-12"]
     assert payload["catalysts"][0]["validationStatus"] == "confirmed"
 
 

@@ -125,7 +125,9 @@ def _persist_derived_records(repo, sources, raw_items, as_of):
             continue
         draft = classify_cluster(cluster, rules)
         if draft is None:
-            if unclassified_count >= 100:
+            # Persist a modest candidate pool; publication selects the top 10
+            # across classified and unclassified signals by transparent score.
+            if unclassified_count >= 25:
                 continue
             draft = _unclassified_draft(cluster)
             unclassified_count += 1
