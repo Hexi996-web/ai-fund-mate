@@ -117,11 +117,18 @@ def _live_fetch(url: str) -> bytes:
 def _persist_derived_records(repo, sources, raw_items, as_of):
     source_by_id = {source.id: source for source in sources}
     rules = load_signal_rules(ROOT / "config" / "signal_rules.json")
-    for cluster in cluster_items(raw_items, []):
+    unclassified_count = 0
+    clusters = sorted(cluster_items(raw_items, []), key=lambda item: item.updated_at, reverse=True)
+    for cluster in clusters:
         repo.upsert_cluster(cluster)
         if not cluster.raw_items:
             continue
-        draft = classify_cluster(cluster, rules) or _unclassified_draft(cluster)
+        draft = classify_cluster(cluster, rules)
+        if draft is None:
+            if unclassified_count >= 100:
+                continue
+            draft = _unclassified_draft(cluster)
+            unclassified_count += 1
         source = source_by_id[cluster.raw_items[0].source_id]
         score = score_signal(source, cluster, draft, [], as_of)
         signal = SignalRecord(
