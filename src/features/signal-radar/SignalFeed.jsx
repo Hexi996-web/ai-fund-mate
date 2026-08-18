@@ -1,7 +1,7 @@
 import { SignalBadges } from './SignalBadges.jsx'
 
 const LABELS = {
-  category: { policy: '政策', macro: '宏观', market: '市场', customer: '客户' },
+  category: { policy: '政策', macro: '宏观', market: '市场', customer: '客户', unclassified: '待研判' },
   evidence: { official: '官方', public: '公开数据', proxy: '需求代理', demo: '演示' },
   importance: { high: '高', medium: '中', low: '低' },
   direction: { positive: '利好', neutral: '中性', negative: '利空' },

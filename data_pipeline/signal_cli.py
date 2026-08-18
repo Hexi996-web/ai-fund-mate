@@ -15,7 +15,7 @@ from .daily_brief import build_daily_brief
 from .signal_cluster import cluster_items
 from .signal_domain import DemandKind, PipelineRun, SignalEvidence, SignalRecord, ValidationStatus
 from .signal_publish import health_payload, publish_snapshot
-from .signal_rules import classify_cluster, load_signal_rules
+from .signal_rules import SignalDraft, classify_cluster, load_signal_rules
 from .signal_scoring import score_signal
 from .signal_storage import SignalRepository
 from .source_registry import load_source_registry
@@ -119,9 +119,9 @@ def _persist_derived_records(repo, sources, raw_items, as_of):
     rules = load_signal_rules(ROOT / "config" / "signal_rules.json")
     for cluster in cluster_items(raw_items, []):
         repo.upsert_cluster(cluster)
-        draft = classify_cluster(cluster, rules)
-        if draft is None or not cluster.raw_items:
+        if not cluster.raw_items:
             continue
+        draft = classify_cluster(cluster, rules) or _unclassified_draft(cluster)
         source = source_by_id[cluster.raw_items[0].source_id]
         score = score_signal(source, cluster, draft, [], as_of)
         signal = SignalRecord(
@@ -156,6 +156,23 @@ def _persist_derived_records(repo, sources, raw_items, as_of):
         ])
     for catalyst in normalize_catalysts(raw_items, as_of):
         repo.upsert_catalyst(catalyst)
+
+
+def _unclassified_draft(cluster):
+    """Keep traceable collected evidence publishable when enrichment has no match."""
+    first = cluster.raw_items[0]
+    excerpt = (first.body or first.content or first.title).strip()
+    return SignalDraft(
+        category="unclassified",
+        direction="neutral",
+        horizon="unknown",
+        assets=[],
+        fund_keywords=[],
+        themes=[],
+        fact=cluster.title,
+        transmission=excerpt[:500] or "已抓取，等待规则或人工研判。",
+        demand_kind="unknown",
+    )
 
 
 def _brief(args) -> int:
