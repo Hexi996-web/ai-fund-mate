@@ -14,6 +14,8 @@ export const SORT_OPTIONS = [
   { value: 'change-asc', label: '日涨跌幅：从低到高' },
   { value: 'nav-desc', label: '单位净值：从高到低' },
   { value: 'nav-asc', label: '单位净值：从低到高' },
+  { value: 'scale-desc', label: '估算规模：从大到小' },
+  { value: 'scale-asc', label: '估算规模：从小到大' },
   { value: 'date-desc', label: '净值日期：从新到旧' },
   { value: 'date-asc', label: '净值日期：从旧到新' },
   { value: 'code-asc', label: '基金代码：升序' },

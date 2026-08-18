@@ -2,7 +2,33 @@ import unittest
 from datetime import date, timedelta
 from pathlib import Path
 
-from update_active_funds import build_output_payloads, classify_fund, extract_last_net_value_date
+from update_active_funds import build_output_payloads, classify_fund, enrich_daily_scale, extract_last_net_value_date
+from store_fund_scale_snapshots import snapshot_rows
+
+
+class DailyScaleTests(unittest.TestCase):
+    def test_estimates_scale_from_current_nav_and_latest_public_shares(self):
+        funds = [{"code": "000001", "netValue": 1.25, "lastNetValueDate": "2026-08-18"}]
+        rows = [{"基金代码": "000001", "最近总份额": 800_000_000, "单位净值": 0.9, "更新日期": "2026-08-01"}]
+        result = enrich_daily_scale(funds, rows, date(2026, 8, 18))[0]
+        self.assertEqual(result["scaleYi"], 10)
+        self.assertEqual(result["totalSharesYi"], 8)
+        self.assertEqual(result["scaleDate"], "2026-08-18")
+        self.assertEqual(result["sharesDate"], "2026-08-01")
+        self.assertEqual(result["scaleQuality"], "B")
+
+    def test_marks_missing_nav_or_shares_as_unknown(self):
+        result = enrich_daily_scale([{"code": "000002", "netValue": None}], [], date(2026, 8, 18))[0]
+        self.assertIsNone(result["scaleYi"])
+        self.assertEqual(result["scaleQuality"], "U")
+
+    def test_builds_only_complete_database_snapshot_rows(self):
+        rows = snapshot_rows({"funds": [
+            {"code": "000001", "scaleDate": "2026-08-18", "scaleYi": 10, "scaleQuality": "B"},
+            {"code": "000002", "scaleDate": None, "scaleYi": None},
+        ]})
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0][0:2], ("000001", "2026-08-18"))
 
 
 class ClassifyFundTests(unittest.TestCase):

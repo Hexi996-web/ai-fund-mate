@@ -15,6 +15,7 @@ test('normalizes real fields and excludes terminated records', () => {
         purchaseStatus: '\u5f00\u653e\u7533\u8d2d',
         redemptionStatus: '\u5f00\u653e\u8d4e\u56de',
         operationStatus: 'active',
+        scaleYi: '12.5', scaleDate: '2026-08-08', sharesDate: '2026-07-31', scaleQuality: 'B',
       },
       { code: '2', name: '\u5df2\u6e05\u76d8\u57fa\u91d1', operationStatus: 'terminated' },
     ],
@@ -23,7 +24,9 @@ test('normalizes real fields and excludes terminated records', () => {
   assert.deepEqual(funds, [{
     code: '000001', name: '\u793a\u4f8b\u6df7\u5408', type: '\u6df7\u5408\u578b', netValue: 1.25,
     dailyChangePercent: 0.4, lastNetValueDate: '2026-08-08', purchaseStatus: '\u5f00\u653e\u7533\u8d2d',
-    redemptionStatus: '\u5f00\u653e\u8d4e\u56de', operationStatus: 'active',
+    redemptionStatus: '\u5f00\u653e\u8d4e\u56de', operationStatus: 'active', scaleYi: 12.5,
+    totalSharesYi: null, scaleDate: '2026-08-08', sharesDate: '2026-07-31', scaleStatus: null,
+    scaleQuality: 'B', scaleStalenessDays: null, scaleSource: null,
   }])
 })
 
@@ -70,6 +73,8 @@ test('normalizes aliases, missing values, duplicate codes, and invalid dates wit
   assert.deepEqual(funds, [{
     code: '000003', name: 'Alias', type: 'Bond', netValue: null, dailyChangePercent: -1.5,
     lastNetValueDate: null, purchaseStatus: null, redemptionStatus: null, operationStatus: null,
+    scaleYi: null, totalSharesYi: null, scaleDate: null, sharesDate: null, scaleStatus: null,
+    scaleQuality: null, scaleStalenessDays: null, scaleSource: null,
   }])
 })
 

@@ -54,6 +54,14 @@ export const normalizeFunds = (payload) => {
       purchaseStatus: normalizeText(firstPresent(record, ['purchaseStatus', 'purchase_status'])),
       redemptionStatus: normalizeText(firstPresent(record, ['redemptionStatus', 'redemption_status'])),
       operationStatus: normalizeText(firstPresent(record, ['operationStatus', 'operation_status'])),
+      scaleYi: normalizeNumber(firstPresent(record, ['scaleYi', 'latestScaleYi', 'scale'])),
+      totalSharesYi: normalizeNumber(firstPresent(record, ['totalSharesYi'])),
+      scaleDate: normalizeDate(firstPresent(record, ['scaleDate', 'latestScaleDate'])),
+      sharesDate: normalizeDate(firstPresent(record, ['sharesDate'])),
+      scaleStatus: normalizeText(firstPresent(record, ['scaleStatus', 'latestScaleStatus'])),
+      scaleQuality: normalizeText(firstPresent(record, ['scaleQuality'])),
+      scaleStalenessDays: normalizeNumber(firstPresent(record, ['scaleStalenessDays'])),
+      scaleSource: normalizeText(firstPresent(record, ['scaleSource', 'latestScaleSource'])),
     }
 
     if (fund.code === null || fund.name === null || isInactive(fund) || seenCodes.has(fund.code)) return funds

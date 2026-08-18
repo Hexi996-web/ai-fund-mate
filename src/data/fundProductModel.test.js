@@ -59,3 +59,20 @@ test('sorts products using representative share and keeps missing values last', 
   })
   assert.deepEqual(selectProducts(products, { sortMode: 'change-desc' }).products.map((item) => item.productId), ['p2', 'p1'])
 })
+
+test('aggregates share-class scale, uses the weakest quality, and sorts by scale', () => {
+  const products = normalizeProducts({
+    productTotal: 2, shareTotal: 3, products: [
+      { ...payload.products[0], productId: 'p1', shares: [
+        share('000001', '甲A', 'A', { scaleYi: 8, scaleQuality: 'A', scaleDate: '2026-08-18' }),
+        share('000002', '甲C', 'C', { scaleYi: 2, scaleQuality: 'C', scaleDate: '2026-08-18' }),
+      ] },
+      { ...payload.products[0], productId: 'p2', productName: '乙', representativeCode: '000003', shareCount: 1, shares: [
+        share('000003', '乙A', 'A', { scaleYi: 20, scaleQuality: 'B', scaleDate: '2026-08-18' }),
+      ] },
+    ],
+  })
+  assert.equal(products[0].scaleYi, 10)
+  assert.equal(products[0].scaleQuality, 'C')
+  assert.deepEqual(selectProducts(products, { sortMode: 'scale-desc' }).products.map((item) => item.productId), ['p2', 'p1'])
+})

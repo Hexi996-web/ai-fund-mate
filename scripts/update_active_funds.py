@@ -107,6 +107,45 @@ def safe_records(fetcher, label: str) -> list[dict[str, Any]]:
         return []
 
 
+def enrich_daily_scale(funds, scale_rows, snapshot_date=None):
+    """Attach a dated share-class estimate: latest public shares x unit NAV."""
+    snapshot_date = snapshot_date or date.today()
+    shares_by_code = {}
+    for row in scale_rows:
+        code = normalize_code(row.get("基金代码"))
+        total_shares = safe_float(row.get("最近总份额"))
+        shares_date = parse_date(row.get("更新日期"))
+        if not code or total_shares is None:
+            continue
+        shares_by_code[code] = (total_shares, shares_date)
+
+    enriched = []
+    for fund in funds:
+        total_shares, shares_date = shares_by_code.get(fund["code"], (None, None))
+        unit_nav = safe_float(fund.get("netValue"))
+        nav_date = parse_date(fund.get("lastNetValueDate")) or snapshot_date
+        if total_shares is None or unit_nav is None:
+            enriched.append({**fund, **missing_scale_fields()})
+            continue
+        staleness = max(0, (nav_date - shares_date).days) if shares_date else None
+        grade = "A" if staleness == 0 else "B" if staleness is not None and staleness <= 31 else "C" if staleness is not None else "U"
+        enriched.append({**fund, **{
+            "scaleYi": round(total_shares * unit_nav / 100_000_000, 4),
+            "totalSharesYi": round(total_shares / 100_000_000, 4),
+            "scaleDate": nav_date.isoformat(),
+            "sharesDate": shares_date.isoformat() if shares_date else None,
+            "scaleStatus": "份额×净值估算",
+            "scaleQuality": grade,
+            "scaleStalenessDays": staleness,
+            "scaleSource": "AKShare/新浪公开基金规模快照",
+        }})
+    return enriched
+
+
+def missing_scale_fields():
+    return {"scaleYi": None, "totalSharesYi": None, "scaleDate": None, "sharesDate": None, "scaleStatus": "待披露", "scaleQuality": "U", "scaleStalenessDays": None, "scaleSource": None}
+
+
 def build_output_payloads(active_funds, excluded_funds, update_time):
     products, audit = build_products(active_funds)
     enhanced_shares = [share for product in products for share in product["shares"]]
@@ -158,6 +197,11 @@ def main() -> None:
     purchase = safe_records(ak.fund_purchase_em, "申购状态")
     open_daily = safe_records(ak.fund_open_fund_daily_em, "开放式基金快照")
     money_daily = safe_records(ak.fund_money_fund_daily_em, "货币基金快照")
+    scale_callable = getattr(ak, "fund_scale_open_sina", None)
+    scale_rows = []
+    if scale_callable:
+        for category in ("股票型基金", "混合型基金", "债券型基金", "货币型基金", "QDII基金"):
+            scale_rows.extend(safe_records(lambda category=category: scale_callable(symbol=category), f"{category}规模快照"))
 
     if not base:
         raise RuntimeError("基金全集为空，停止覆盖现有文件")
@@ -227,6 +271,7 @@ def main() -> None:
             "operationStatus": operation_status,
         })
 
+    active_funds = enrich_daily_scale(active_funds, scale_rows)
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     payloads = build_output_payloads(active_funds, excluded_funds, now)
     write_output_payloads(payloads)

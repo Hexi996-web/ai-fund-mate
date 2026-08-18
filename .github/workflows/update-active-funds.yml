@@ -39,6 +39,10 @@ jobs:
           python -m pytest scripts/test_validate_published_freshness.py -q
           python scripts/validate_published_freshness.py public/funds_active.json --field updateTime --max-age-hours 30
           python scripts/validate_published_freshness.py public/issuance_insights.json --field generatedAt --max-age-hours 30
+      - name: Store daily fund scale history
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: python scripts/store_fund_scale_snapshots.py
       - name: Commit updated data
         run: |
           git config user.name "github-actions[bot]"
