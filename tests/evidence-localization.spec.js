@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 
 test('renders evidence rules and data gaps in readable Chinese', async ({ page }) => {
   await page.goto('/')
-  await page.getByRole('button', { name: '主题研判', exact: true }).click()
+  await page.getByRole('button', { name: '板块机会', exact: true }).click()
   await page.getByRole('button', { name: /查看黄金证据/ }).click()
   await expect(page.getByText('数据缺口与可信度说明', { exact: true })).toBeVisible()
   await expect(page.getByText(/美国10年期实际利率/)).toBeVisible()

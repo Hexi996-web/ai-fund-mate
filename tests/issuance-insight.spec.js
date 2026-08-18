@@ -20,7 +20,7 @@ test('shows issuance rankings and current purchase suspensions on the home works
 test('keeps the requested top-level workspace order', async ({ page }) => {
   await page.goto('/')
   await expect(page.locator('.workspace-nav button').allTextContents()).resolves.toEqual([
-    '发行洞察', '信号雷达', '主题研判', '基金产品库',
+    '发行洞察', '板块机会', '基金产品库',
   ])
 })
 
