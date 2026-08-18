@@ -36,3 +36,23 @@ def test_keeps_all_ranked_funds_in_snapshot():
     ]
     payload = build_payload(established, [], {"funds": []}, datetime(2026, 8, 17, tzinfo=timezone.utc))
     assert len(payload["rankings"]["ytd"]) == 75
+
+
+def test_reported_scale_takes_priority_over_estimate():
+    established = [{"基金代码": "1", "基金简称": "基金1", "成立日期": "2026-01-02"}]
+    estimates = [{"基金代码": "1", "最近总份额": 100000000, "单位净值": 1, "更新日期": "2026-08-14"}]
+    reported = {"000001": {"latestScaleYi": 8.8, "latestScaleDate": "2026-06-30", "latestScaleStatus": "天天基金最近一期披露"}}
+    payload = build_payload(established, [], {"funds": []}, datetime(2026, 8, 17, tzinfo=timezone.utc), estimates, reported)
+    fund = payload["rankings"]["ytd"][0]
+    assert fund["latestScaleYi"] == 8.8
+    assert fund["latestScaleStatus"] == "天天基金最近一期披露"
+
+
+def test_adds_tiantian_market_metrics():
+    established = [{"基金代码": "1", "基金简称": "基金1", "成立日期": "2026-01-02"}]
+    market = [{"基金代码": "1", "日期": "2026-08-17", "单位净值": 1.2345, "日增长率": 0.5, "近1周": 1.2, "近1月": 2.3, "近3月": 4.5, "今年来": 8.9}]
+    payload = build_payload(established, [], {"funds": []}, datetime(2026, 8, 17, tzinfo=timezone.utc), market_rows=market)
+    fund = payload["rankings"]["ytd"][0]
+    assert fund["unitNav"] == 1.2345
+    assert fund["weekReturnPercent"] == 1.2
+    assert fund["ytdReturnPercent"] == 8.9

@@ -3,9 +3,12 @@
 from __future__ import annotations
 
 import json
+import re
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Iterable
+from urllib.request import Request, urlopen
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -98,6 +101,66 @@ def normalize_scales(rows: Iterable[dict[str, Any]]) -> dict[str, dict[str, Any]
     return scales
 
 
+def normalize_market_metrics(rows: Iterable[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    metrics = {}
+    for row in rows:
+        code = _code(row.get("基金代码"))
+        if not code:
+            continue
+        metrics[code] = {
+            "navDate": _text(row, "日期"),
+            "unitNav": _number(row, "单位净值"),
+            "dailyReturnPercent": _number(row, "日增长率"),
+            "weekReturnPercent": _number(row, "近1周"),
+            "monthReturnPercent": _number(row, "近1月"),
+            "quarterReturnPercent": _number(row, "近3月"),
+            "ytdReturnPercent": _number(row, "今年来"),
+        }
+    return metrics
+
+
+def fetch_eastmoney_reported_scales(codes: Iterable[str], workers: int = 12) -> dict[str, dict[str, Any]]:
+    """Fetch the latest directly reported scale from Tiantian Fund public pages."""
+    pattern = re.compile(r"Data_fluctuationScale\s*=\s*(\{.*?\});")
+
+    def fetch(code: str) -> tuple[str, dict[str, Any] | None]:
+        request = Request(
+            f"https://fund.eastmoney.com/pingzhongdata/{code}.js",
+            headers={"User-Agent": "Mozilla/5.0 (compatible; AIFundMate/1.0)"},
+        )
+        try:
+            with urlopen(request, timeout=12) as response:
+                content = response.read().decode("utf-8", errors="ignore")
+            match = pattern.search(content)
+            if not match:
+                return code, None
+            payload = json.loads(match.group(1))
+            categories, series = payload.get("categories", []), payload.get("series", [])
+            if not categories or not series:
+                return code, None
+            value = series[-1].get("y") if isinstance(series[-1], dict) else None
+            if value is None:
+                return code, None
+            return code, {
+                "latestScaleYi": float(value),
+                "latestScaleDate": str(categories[-1]),
+                "latestScaleStatus": "天天基金最近一期披露",
+                "latestScaleSource": "东方财富/天天基金网公开页面",
+            }
+        except (OSError, ValueError, json.JSONDecodeError):
+            return code, None
+
+    unique_codes = sorted(set(codes))
+    results = {}
+    with ThreadPoolExecutor(max_workers=workers) as executor:
+        futures = [executor.submit(fetch, code) for code in unique_codes]
+        for future in as_completed(futures):
+            code, scale = future.result()
+            if scale:
+                results[code] = scale
+    return results
+
+
 def normalize_offerings(rows: Iterable[dict[str, Any]], today: date) -> list[dict[str, Any]]:
     offerings = []
     seen = set()
@@ -177,11 +240,15 @@ def build_payload(
     active_payload: dict[str, Any],
     now: datetime,
     scale_rows: Iterable[dict[str, Any]] = (),
+    reported_scales: dict[str, dict[str, Any]] | None = None,
+    market_rows: Iterable[dict[str, Any]] = (),
 ) -> dict[str, Any]:
     today = now.date()
     established = normalize_established(established_rows)
     scale_by_code = normalize_scales(scale_rows)
-    established = [{**item, **scale_by_code.get(item["code"], {})} for item in established]
+    reported_scales = reported_scales or {}
+    market_by_code = normalize_market_metrics(market_rows)
+    established = [{**item, **market_by_code.get(item["code"], {}), **scale_by_code.get(item["code"], {}), **reported_scales.get(item["code"], {})} for item in established]
     offerings = normalize_offerings(offering_rows, today)
     windows = {
         "today": today,
@@ -237,7 +304,11 @@ def main() -> None:
     offerings = _records(offering_callable, symbol="全部") if offering_callable else []
     scale_callable = getattr(ak, "fund_scale_open_sina", None)
     scales = _records(scale_callable) if scale_callable else []
-    payload = build_payload(established, offerings, active_payload, datetime.now(timezone.utc), scales)
+    current_year = str(datetime.now(timezone.utc).year)
+    scale_codes = [_code(row.get("基金代码")) for row in established if str(row.get("成立日期", "")).startswith(current_year)]
+    reported_scales = fetch_eastmoney_reported_scales(code for code in scale_codes if code)
+    market_rows = _records(ak.fund_open_fund_rank_em, symbol="全部")
+    payload = build_payload(established, offerings, active_payload, datetime.now(timezone.utc), scales, reported_scales, market_rows)
     if not payload["rankings"]["ytd"] and not payload["offerings"]["ongoing"]:
         raise RuntimeError("新发基金数据为空，停止覆盖现有发行洞察快照")
     temporary = OUTPUT.with_suffix(".json.tmp")

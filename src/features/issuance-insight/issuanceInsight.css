@@ -99,6 +99,17 @@
   border: 1px solid #cfd7e5;
   border-radius: 8px;
 }
+.issuance-controls {
+  display: flex;
+  gap: 9px;
+}
+.issuance-controls select {
+  padding: 10px 12px;
+  border: 1px solid #cfd7e5;
+  border-radius: 8px;
+  background: #fff;
+  color: #40516b;
+}
 .issuance-tabs {
   display: flex;
   gap: 7px;
@@ -123,7 +134,7 @@
 .issuance-table-wrap table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 980px;
+  min-width: 1380px;
 }
 .issuance-table-wrap th {
   padding: 11px 10px;
@@ -271,5 +282,9 @@
   }
   .issuance-panel__heading input {
     width: 100%;
+  }
+  .issuance-controls {
+    width: 100%;
+    flex-direction: column;
   }
 }
