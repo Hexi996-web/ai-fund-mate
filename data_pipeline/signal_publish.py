@@ -22,10 +22,20 @@ HEALTH_STALE_AFTER = timedelta(hours=2)
 def build_snapshot(repo, generated_at: datetime | None = None) -> dict[str, Any]:
     """Return the storage-neutral, browser-safe snapshot contract."""
     generated_at = _aware(generated_at or datetime.now(timezone.utc))
+    signal_records = sorted(
+        (signal for signal in repo.list_signals() if signal.published_at is not None),
+        key=lambda signal: (
+            signal.priority,
+            signal.source_confidence,
+            signal.customer_demand_score,
+            signal.updated_at,
+            signal.id,
+        ),
+        reverse=True,
+    )[:10]
     signals = [
         _signal_payload(repo, signal)
-        for signal in repo.list_signals()
-        if signal.published_at is not None
+        for signal in signal_records
     ]
     published_signal_ids = {signal["id"] for signal in signals}
     catalysts = [
