@@ -4,7 +4,7 @@ test('merges signals and themes and preserves the fund query across workspace sw
   await page.goto('/')
   await expect(page.getByRole('button', { name: '发行洞察', exact: true })).toHaveAttribute('aria-current', 'page')
   await page.getByRole('button', { name: '板块机会', exact: true }).click()
-  await expect(page.getByRole('heading', { name: '板块热度与发行机会矩阵' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: '板块热度与发行机会' })).toBeVisible()
   await expect(page.getByText('五主题研判', { exact: true })).toHaveCount(0)
 
   await page.getByRole('button', { name: '基金产品库', exact: true }).click()

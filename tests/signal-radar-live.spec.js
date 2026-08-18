@@ -19,11 +19,9 @@ const snapshot = {
   dailyBrief: { id: 'brief-1', windowStart: '2026-08-13T00:00:00Z', windowEnd: '2026-08-14T00:00:00Z', generatedAt: '2026-08-14T00:01:00Z', body: '重点跟踪政策与客需共振。', status: 'published', signalIds: ['live-1'], topCall: '优先验证真实客户需求' },
 }
 
-test('summarizes live signals without exposing the raw feed', async ({ page }) => {
+test('does not expose the raw signal feed', async ({ page }) => {
   await page.route('**/data/signal-radar.json', (route) => route.fulfill({ json: snapshot }))
   await page.goto('/')
   await page.getByRole('button', { name: '板块机会' }).click()
-  await expect(page.getByText('9', { exact: true })).toBeVisible()
-  await expect(page.getByText('26 条杂讯已降噪')).toBeVisible()
   await expect(page.locator('[data-signal-id]')).toHaveCount(0)
 })

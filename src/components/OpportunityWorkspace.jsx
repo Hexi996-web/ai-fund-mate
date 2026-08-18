@@ -1,43 +1,29 @@
 import { useEffect, useMemo, useState } from 'react'
-import { fetchThemeWorkspace } from '../data/themeData.js'
-import { fetchSignalSnapshot } from '../features/signal-radar/signalApi.js'
-import { ThemeWorkspace } from './ThemeWorkspace.jsx'
+import { buildHotSectors } from '../data/marketSectors.js'
 
-const heatLabel = (score) => score >= 65 ? '高热' : score >= 55 ? '升温' : score >= 45 ? '中性' : '偏冷'
-const actionLabel = (item) => {
-  const supply = item.relatedFunds?.all?.length ?? 0
-  if (item.score >= 60 && item.confidence.score >= 65 && supply < 200) return '进入立项验证'
-  if (item.score >= 55 && supply >= 200) return '寻找细分差异化'
-  if (item.confidence.score < 60) return '补证据，不建议启动'
-  return '保持观察'
-}
+const pct = (value) => `${value >= 0 ? '+' : ''}${value.toFixed(2)}%`
 
 export function OpportunityWorkspace({ onOpenFundLibrary }) {
-  const [themes, setThemes] = useState([])
-  const [signals, setSignals] = useState([])
-  const [selectedTheme, setSelectedTheme] = useState(null)
+  const [sectors, setSectors] = useState([])
+  const [selected, setSelected] = useState(null)
   useEffect(() => {
     const controller = new AbortController()
-    Promise.allSettled([
-      fetchThemeWorkspace((url) => fetch(url, { signal: controller.signal })),
-      fetchSignalSnapshot((url, options) => fetch(url, { ...options, signal: controller.signal })),
-    ]).then(([themeResult, signalResult]) => {
-      if (themeResult.status === 'fulfilled') setThemes(themeResult.value)
-      if (signalResult.status === 'fulfilled') setSignals(signalResult.value.snapshot?.signals ?? [])
-    })
+    fetch('/fund_products.json', { signal: controller.signal }).then((response) => response.json()).then((data) => setSectors(buildHotSectors(data))).catch(() => {})
     return () => controller.abort()
   }, [])
-  const decisionSignals = useMemo(() => signals.filter((signal) => signal.category === 'customer' && signal.customerDemandScore >= 0.8), [signals])
+  const sector = useMemo(() => sectors.find((item) => item.name === selected) ?? sectors[0], [sectors, selected])
 
   return <main className="workspace-main opportunity-workspace">
-    <header className="opportunity-heading"><div><span>从市场信号到产品动作</span><h1>板块热度与发行机会矩阵</h1><p>原始资讯只作为证据，机会由热度、置信度、产品供给与客户需求共同决定。</p></div><div className="decision-signal-state"><strong>{decisionSignals.length}</strong><span>条决策级信号</span><small>{signals.length - decisionSignals.length} 条杂讯已降噪</small></div></header>
-    <section className="opportunity-matrix" aria-label="发行机会矩阵">
-      <div className="opportunity-matrix__head"><span>板块</span><span>热度</span><span>置信度</span><span>产品供给</span><span>建议动作</span></div>
-      {themes.map((item) => <button type="button" key={item.theme} onClick={() => setSelectedTheme(item.theme)}>
-        <strong>{item.name}</strong><span><i style={{ width: `${item.score}%` }} />{heatLabel(item.score)} {item.score}</span><span>{item.confidence.score}</span><span>{(item.relatedFunds?.all?.length ?? 0).toLocaleString('zh-CN')} 只</span><em>{actionLabel(item)}</em>
+    <header className="opportunity-heading"><div><span>全市场产品净值扫描</span><h1>板块热度与发行机会</h1><p>每日从候选板块池自动选出热度前 8，板块会随市场表现进出，不再固定为五个主题。</p></div></header>
+    <section className="heat-method"><strong>热度如何计算</strong><span>热度 = 50 + 板块基金当日平均涨跌幅 × 12 +（上涨基金占比 - 50%）× 0.45，结果限定在 0–100。至少 5 只有效样本才入榜；按产品去重，不重复计算 A/C 份额。</span></section>
+    <section className="opportunity-matrix" aria-label="动态板块热度榜">
+      <div className="opportunity-matrix__head"><span>板块</span><span>热度</span><span>当日平均涨跌</span><span>上涨宽度</span><span>产品供给</span></div>
+      {sectors.map((item) => <button className={sector?.name === item.name ? 'selected' : ''} type="button" key={item.name} onClick={() => setSelected(item.name)}>
+        <strong>{item.name}</strong><span><i style={{ width: `${item.heat}%` }} />{item.heat.toFixed(1)}</span><span className={item.avgReturn >= 0 ? 'positive' : 'negative'}>{pct(item.avgReturn)}</span><span>{item.upBreadth.toFixed(1)}%</span><span>{item.funds.length.toLocaleString('zh-CN')} 只 <u>查看明细</u></span>
       </button>)}
     </section>
-    <div className="opportunity-rule"><strong>决策规则</strong><span>热度高但供给拥挤：寻找细分空白；热度高且供给低：优先立项；置信度低：先补数据，不把新闻当结论。</span></div>
-    <ThemeWorkspace onOpenFundLibrary={onOpenFundLibrary} selectedTheme={selectedTheme} compactHeading />
+    {sector ? <section className="sector-funds"><div className="workspace-heading"><div><h2>{sector.name}·全部构成基金</h2><p>共 {sector.funds.length} 只产品，当日有效净值样本 {sector.observed} 只。</p></div><button type="button" onClick={() => onOpenFundLibrary({ query: sector.name, contextLabel: sector.name })}>进入产品库</button></div>
+      <div className="sector-fund-table"><div className="sector-fund-table__head"><span>基金产品</span><span>代表代码</span><span>类型</span><span>当日涨跌</span><span>申购状态</span></div>{sector.funds.map((fund) => <div key={fund.productId}><strong>{fund.productName}</strong><span>{fund.representativeCode}</span><span>{fund.type}</span><span className={(fund.dailyChangePercent ?? 0) >= 0 ? 'positive' : 'negative'}>{Number.isFinite(fund.dailyChangePercent) ? pct(fund.dailyChangePercent) : '—'}</span><span>{fund.purchaseStatus}</span></div>)}</div>
+    </section> : null}
   </main>
 }
