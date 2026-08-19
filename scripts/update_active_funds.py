@@ -194,6 +194,9 @@ def main() -> None:
     import akshare as ak
 
     base = safe_records(ak.fund_name_em, "基金全集")
+    previous_excluded_path = PUBLIC_DIR / "funds_excluded.json"
+    previous_excluded = json.loads(previous_excluded_path.read_text(encoding="utf-8")) if previous_excluded_path.exists() else {"funds": []}
+    previous_excluded_by_code = {fund["code"]: fund for fund in previous_excluded.get("funds", [])}
     purchase = safe_records(ak.fund_purchase_em, "申购状态")
     open_daily = safe_records(ak.fund_open_fund_daily_em, "开放式基金快照")
     money_daily = safe_records(ak.fund_money_fund_daily_em, "货币基金快照")
@@ -245,12 +248,17 @@ def main() -> None:
         )
 
         if operation_status in ("terminated", "suspected_terminated"):
+            previous = previous_excluded_by_code.get(code)
+            first_observed_at = previous.get("firstObservedAt") if previous else date.today().isoformat()
+            if previous and previous.get("operationStatus") != operation_status:
+                first_observed_at = date.today().isoformat()
             excluded_funds.append({
                 "code": code,
                 "name": name,
                 "operationStatus": operation_status,
                 "lastNetValueDate": last_date.isoformat() if last_date else None,
                 "exclusionReason": reason,
+                "firstObservedAt": first_observed_at,
             })
             continue
 

@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PUBLIC_DIR = ROOT / "public"
 OUTPUT = PUBLIC_DIR / "issuance_insights.json"
 ACTIVE_FUNDS = PUBLIC_DIR / "funds_active.json"
+EXCLUDED_FUNDS = PUBLIC_DIR / "funds_excluded.json"
 
 
 def _text(row: dict[str, Any], *keys: str) -> str | None:
@@ -136,12 +137,15 @@ def build_scale_growth_products(items: list[dict[str, Any]], active_payload: dic
         initial_values = [item["raisedSharesYi"] for item in shares if item.get("raisedSharesYi") is not None]
         current_values = [item["latestScaleYi"] for item in shares if item.get("latestScaleYi") is not None]
         initial_scale = max(initial_values) if initial_values else None
-        current_scale = round(sum(current_values), 4) if current_values else None
-        growth_amount = round(current_scale - initial_scale, 4) if initial_scale is not None and current_scale is not None else None
-        growth_rate = round(growth_amount / initial_scale * 100, 2) if growth_amount is not None and initial_scale is not None and initial_scale >= 0.5 else None
+        latest_dates = [item.get("latestScaleDate") for item in shares if item.get("latestScaleDate")]
+        current_coverage_complete = len(current_values) == len(shares)
+        current_date_consistent = len(latest_dates) == len(shares) and len(set(latest_dates)) == 1
+        current_scale = round(sum(current_values), 4) if current_coverage_complete and current_date_consistent else None
+        effective_comparable = initial_scale is not None and initial_scale >= 0.5 and current_scale is not None
+        growth_amount = round(current_scale - initial_scale, 4) if effective_comparable else None
+        growth_rate = round(growth_amount / initial_scale * 100, 2) if effective_comparable else None
         established = date.fromisoformat(representative["establishedDate"])
         age_days = (today - established).days
-        latest_dates = [item.get("latestScaleDate") for item in shares if item.get("latestScaleDate")]
         active = representative["_active"]
         history_by_date: dict[str, list[float]] = {}
         history_share_count = sum(bool(item.get("scaleHistory")) for item in shares)
@@ -156,6 +160,7 @@ def build_scale_growth_products(items: list[dict[str, Any]], active_payload: dic
         } for report_date, values in sorted(history_by_date.items()) if history_share_count and len(values) == history_share_count]
         if initial_scale is not None and not any(point["date"] == representative["establishedDate"] for point in scale_history):
             scale_history.insert(0, {"date": representative["establishedDate"], "scaleYi": initial_scale, "shareCoverage": len(shares), "complete": True, "kind": "launch"})
+        history_covered = any(point.get("kind") != "launch" and point["date"] > representative["establishedDate"] for point in scale_history)
 
         def milestone(days: int) -> dict[str, Any]:
             target = established + timedelta(days=days)
@@ -183,10 +188,13 @@ def build_scale_growth_products(items: list[dict[str, Any]], active_payload: dic
             "shareCount": len(shares),
             "initialScaleYi": initial_scale,
             "latestScaleYi": current_scale,
-            "latestScaleDate": max(latest_dates) if latest_dates else None,
+            "latestScaleDate": latest_dates[0] if current_date_consistent else None,
             "scaleGrowthYi": growth_amount,
             "scaleGrowthPercent": growth_rate,
-            "scaleGrowthStatus": "基数过小" if initial_scale is not None and initial_scale < 0.5 else "增加" if growth_amount is not None and growth_amount > 0 else "减少" if growth_amount is not None and growth_amount < 0 else "持平" if growth_amount == 0 else "待补全",
+            "scaleGrowthStatus": "基数过小" if initial_scale is not None and initial_scale < 0.5 else "口径不完整" if not current_coverage_complete or not current_date_consistent else "增加" if growth_amount is not None and growth_amount > 0 else "减少" if growth_amount is not None and growth_amount < 0 else "持平" if growth_amount == 0 else "待补全",
+            "historyCovered": history_covered,
+            "effectiveComparable": effective_comparable,
+            "coverageQuadrant": ("有历史" if history_covered else "无历史") + "×" + ("有效可比" if effective_comparable else "不可比"),
             "ageDays": age_days,
             "milestone30": "已满30日" if age_days >= 30 else f"还需{30 - age_days}日",
             "milestone90": "已满90日" if age_days >= 90 else f"还需{90 - age_days}日",
@@ -213,6 +221,87 @@ def summarize_growth_patterns(products: list[dict[str, Any]]) -> list[dict[str, 
             "topFunds": [item["name"] for item in sorted(samples, key=lambda item: item["scaleGrowthPercent"], reverse=True)[:3]],
         })
     return sorted(patterns, key=lambda item: (item["sampleCount"], item["medianGrowthPercent"]), reverse=True)
+
+
+def _sector(product: dict[str, Any]) -> str:
+    fund_type = product.get("type") or "未知"
+    for keyword, label in (("QDII", "海外"), ("FOF", "FOF"), ("指数", "指数"), ("股票", "主动权益"), ("混合", "混合"), ("债券", "固收")):
+        if keyword in fund_type:
+            return label
+    return "其他"
+
+
+def _product_form(product: dict[str, Any]) -> str:
+    text = f'{product.get("name") or ""} {product.get("type") or ""}'.upper()
+    if "ETF联接" in text or "ETF 联接" in text:
+        return "ETF联接"
+    if "FOF" in text:
+        return "FOF"
+    if "ETF" in text:
+        return "ETF"
+    if "持有" in text or "滚动" in text:
+        return "持有期/滚动持有"
+    if "发起" in text:
+        return "发起式"
+    return "普通开放式"
+
+
+def _initial_scale_band(product: dict[str, Any]) -> str:
+    value = product.get("initialScaleYi")
+    if value is None:
+        return "未知"
+    if value < 0.5:
+        return "<0.5亿元"
+    if value < 2:
+        return "0.5–2亿元"
+    if value < 10:
+        return "2–10亿元"
+    return "≥10亿元"
+
+
+def summarize_growth_dimensions(products: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Use the same effectively comparable product universe for every cut."""
+    dimensions = [
+        ("板块", _sector),
+        ("基金公司", lambda item: item.get("manager") or "未知"),
+        ("产品形态", _product_form),
+        ("首发规模区间", _initial_scale_band),
+        ("发行月份", lambda item: str(item.get("establishedDate") or "")[:7] or "未知"),
+    ]
+    result = []
+    comparable = [item for item in products if item.get("effectiveComparable")]
+    for dimension, classifier in dimensions:
+        groups: dict[str, list[dict[str, Any]]] = {}
+        for product in comparable:
+            groups.setdefault(classifier(product), []).append(product)
+        rows = []
+        for label, samples in groups.items():
+            ordered = sorted(samples, key=lambda item: (item["scaleGrowthPercent"], item["productId"]))
+            rates = [item["scaleGrowthPercent"] for item in ordered]
+            middle = len(ordered) // 2
+            median_samples = ordered[middle - 1:middle + 1] if len(ordered) % 2 == 0 else ordered[middle:middle + 1]
+            rows.append({
+                "label": label,
+                "sampleCount": len(samples),
+                "medianGrowthPercent": round(median(rates), 2),
+                "positiveSharePercent": round(sum(rate > 0 for rate in rates) / len(rates) * 100, 1),
+                "topFunds": [item["name"] for item in reversed(ordered[-3:])],
+                "productIds": [item["productId"] for item in ordered],
+                "medianProductIds": [item["productId"] for item in median_samples],
+            })
+        sorted_rows = sorted(rows, key=lambda row: (row["sampleCount"], row["medianGrowthPercent"]), reverse=True)
+        meaningful = [row for row in rows if row["sampleCount"] >= 3] or rows
+        median_leader = max(meaningful, key=lambda row: row["medianGrowthPercent"], default=None)
+        breadth_leader = max(meaningful, key=lambda row: row["positiveSharePercent"], default=None)
+        largest = max(rows, key=lambda row: row["sampleCount"], default=None)
+        summary = "暂无有效可比样本。" if not rows else (
+            f"共覆盖{len(comparable)}个有效可比产品、{len(rows)}个分组。"
+            f"{median_leader['label']}的增长中位数最高（{median_leader['medianGrowthPercent']}%）；"
+            f"{breadth_leader['label']}的正增长比例最高（{breadth_leader['positiveSharePercent']}%）；"
+            f"样本最多的是{largest['label']}（{largest['sampleCount']}个）。"
+        )
+        result.append({"dimension": dimension, "summary": summary, "groups": sorted_rows})
+    return result
 
 
 def fetch_eastmoney_reported_scales(codes: Iterable[str], workers: int = 12) -> dict[str, dict[str, Any]]:
@@ -289,28 +378,170 @@ def normalize_offerings(rows: Iterable[dict[str, Any]], today: date) -> list[dic
     return offerings
 
 
+def _offering_product_name(name: str) -> str:
+    return re.sub(r"(?:[\s_-]*(?:A|B|C|D|E|I|R|Y|人民币|美元)(?:类|份额)?)$", "", name, flags=re.IGNORECASE).strip()
+
+
+def build_future_issuance(ongoing: list[dict[str, Any]], upcoming: list[dict[str, Any]]) -> dict[str, Any]:
+    """Collapse share classes and describe the visible forward issuance pipeline."""
+    groups: dict[tuple[str, str, str], list[dict[str, Any]]] = {}
+    for item in ongoing + upcoming:
+        key = (item.get("manager") or "未知", _offering_product_name(item["name"]), item["offeringStartDate"])
+        groups.setdefault(key, []).append(item)
+    products = []
+    for (_, product_name, _), shares in groups.items():
+        shares.sort(key=lambda item: item["code"])
+        representative = shares[0]
+        status = "认购中" if any(item["status"] == "认购中" for item in shares) else "待发行"
+        products.append({
+            **representative,
+            "productId": f"offering:{representative['code']}",
+            "name": product_name,
+            "status": status,
+            "shareCodes": [item["code"] for item in shares],
+            "shareCount": len(shares),
+            "offeringEndDate": max((item.get("offeringEndDate") or "" for item in shares), default="") or None,
+        })
+    products.sort(key=lambda item: (item["offeringStartDate"], item["code"]))
+    dimensions = [
+        ("板块", _sector),
+        ("基金公司", lambda item: item.get("manager") or "未知"),
+        ("产品形态", _product_form),
+        ("发行月份", lambda item: item["offeringStartDate"][:7]),
+    ]
+    analyses = []
+    for dimension, classifier in dimensions:
+        grouped: dict[str, list[dict[str, Any]]] = {}
+        for product in products:
+            grouped.setdefault(classifier(product), []).append(product)
+        rows = [{
+            "label": label,
+            "productCount": len(samples),
+            "ongoingCount": sum(item["status"] == "认购中" for item in samples),
+            "upcomingCount": sum(item["status"] == "待发行" for item in samples),
+            "pipelineSharePercent": round(len(samples) / len(products) * 100, 1) if products else 0,
+            "topProducts": [item["name"] for item in samples[:3]],
+        } for label, samples in grouped.items()]
+        rows.sort(key=lambda row: (row["productCount"], row["label"]), reverse=True)
+        leader = rows[0] if rows else None
+        summary = "暂无未来发行样本。" if not leader else f"{dimension}共{len(rows)}组；{leader['label']}以{leader['productCount']}只产品居首，占未来发行管线{leader['pipelineSharePercent']}%。"
+        analyses.append({"dimension": dimension, "summary": summary, "groups": rows})
+    ongoing_count = sum(item["status"] == "认购中" for item in products)
+    upcoming_count = sum(item["status"] == "待发行" for item in products)
+    return {
+        "products": products,
+        "ongoingCount": ongoing_count,
+        "upcomingCount": upcoming_count,
+        "totalCount": len(products),
+        "shareClassCount": len(ongoing) + len(upcoming),
+        "summary": f"未来发行管线共{len(products)}只产品：{ongoing_count}只认购中、{upcoming_count}只待发行；原始披露包含{len(ongoing) + len(upcoming)}个份额。",
+        "dimensionAnalysis": analyses,
+    }
+
+
+def summarize_exclusion_risk(risk_payload: dict[str, Any], today: date) -> dict[str, Any]:
+    """Keep the legacy quarantine baseline separate from observed YTD events."""
+    funds = risk_payload.get("funds", [])
+    groups: dict[tuple[str, str], list[dict[str, Any]]] = {}
+    for fund in funds:
+        groups.setdefault((_offering_product_name(str(fund.get("name") or fund.get("code"))), str(fund.get("operationStatus") or "suspected_terminated")), []).append(fund)
+    ytd_start = date(today.year, 1, 1)
+    observed = []
+    baseline = []
+    for samples in groups.values():
+        first_observed = _date(samples[0], "firstObservedAt")
+        (observed if first_observed and ytd_start <= first_observed <= today else baseline).append(samples)
+    return {
+        "trackingStartDate": "2026-08-18",
+        "ytdConfirmedTerminated": sum(samples[0].get("operationStatus") == "terminated" for samples in observed),
+        "ytdSuspectedTerminated": sum(samples[0].get("operationStatus") == "suspected_terminated" for samples in observed),
+        "ytdAbnormalProducts": len(observed),
+        "baselineProducts": len(baseline),
+        "baselineShareClasses": sum(len(samples) for samples in baseline),
+        "scope": "仅统计今年以来首次进入异常隔离名单的产品；跟踪前存量只作为基线，不计作今年清盘。确认终止与疑似长期停更分列。",
+    }
+
+
 def current_suspensions(active_payload: dict[str, Any]) -> list[dict[str, Any]]:
-    products: dict[str, dict[str, Any]] = {}
+    shares_by_product: dict[str, list[dict[str, Any]]] = {}
     for fund in active_payload.get("funds", []):
-        status = str(fund.get("purchaseStatus") or "")
-        if "暂停" not in status:
-            continue
         product_id = str(fund.get("productId") or fund.get("code"))
+        shares_by_product.setdefault(product_id, []).append(fund)
+    products: dict[str, dict[str, Any]] = {}
+    for product_id, shares in shares_by_product.items():
+        paused = [fund for fund in shares if "暂停" in str(fund.get("purchaseStatus") or "")]
+        if not paused:
+            continue
+        paused.sort(key=lambda fund: _code(fund.get("code")) or "")
+        fund = paused[0]
+        status = str(fund.get("purchaseStatus") or "")
+        scale_values = [share.get("scaleYi") for share in shares if share.get("scaleYi") is not None]
+        complete_scale = len(scale_values) == len(shares)
+        nav_dates = [share.get("lastNetValueDate") for share in shares if share.get("lastNetValueDate")]
         candidate = {
             "productId": product_id,
             "productName": fund.get("productName") or fund.get("name"),
             "representativeCode": _code(fund.get("code")),
             "type": fund.get("type") or "未知",
             "purchaseStatus": status,
-            "lastNetValueDate": fund.get("lastNetValueDate"),
             "netValue": fund.get("netValue"),
             "dailyChangePercent": fund.get("dailyChangePercent"),
+            "shareCount": len(shares),
+            "scaleYi": round(sum(scale_values), 4) if complete_scale else None,
+            "scaleCoverageComplete": complete_scale,
+            "lastNetValueDate": max(nav_dates) if nav_dates else None,
             "dataSource": "AKShare/东方财富申购状态",
         }
-        existing = products.get(product_id)
-        if existing is None or candidate["representativeCode"] < existing["representativeCode"]:
-            products[product_id] = candidate
+        products[product_id] = candidate
     return sorted(products.values(), key=lambda item: (item["type"], item["representativeCode"] or ""))
+
+
+def summarize_suspensions(products: list[dict[str, Any]], today: date) -> dict[str, Any]:
+    def scale_band(item: dict[str, Any]) -> str:
+        value = item.get("scaleYi")
+        if value is None:
+            return "规模待补全"
+        if value < 1:
+            return "<1亿元"
+        if value < 10:
+            return "1–10亿元"
+        if value < 50:
+            return "10–50亿元"
+        return "≥50亿元"
+
+    def nav_freshness(item: dict[str, Any]) -> str:
+        nav_date = _date(item, "lastNetValueDate")
+        if not nav_date:
+            return "净值日期待补全"
+        age = (today - nav_date).days
+        return "7日内" if age <= 7 else "8–30日" if age <= 30 else ">30日"
+
+    dimensions = [
+        ("板块", _sector),
+        ("产品形态", _product_form),
+        ("规模区间", scale_band),
+        ("净值新鲜度", nav_freshness),
+    ]
+    analyses = []
+    for dimension, classifier in dimensions:
+        grouped: dict[str, list[dict[str, Any]]] = {}
+        for product in products:
+            grouped.setdefault(classifier(product), []).append(product)
+        rows = [{
+            "label": label,
+            "productCount": len(samples),
+            "sharePercent": round(len(samples) / len(products) * 100, 1) if products else 0,
+            "examples": [item["productName"] for item in samples[:3]],
+        } for label, samples in grouped.items()]
+        rows.sort(key=lambda row: (row["productCount"], row["label"]), reverse=True)
+        leader = rows[0] if rows else None
+        summary = "暂无暂停申购产品。" if not leader else f"{dimension}共{len(rows)}组；{leader['label']}有{leader['productCount']}只，占暂停申购产品{leader['sharePercent']}%。"
+        analyses.append({"dimension": dimension, "summary": summary, "groups": rows})
+    return {
+        "totalCount": len(products),
+        "dimensionAnalysis": analyses,
+        "scope": "当前公开快照仅提供暂停申购状态，未提供公告原因；以下为产品结构分析，不将板块或规模特征解释为暂停原因。",
+    }
 
 
 def _rank(items: list[dict[str, Any]], short_window: bool) -> list[dict[str, Any]]:
@@ -343,6 +574,7 @@ def build_payload(
     scale_rows: Iterable[dict[str, Any]] = (),
     reported_scales: dict[str, dict[str, Any]] | None = None,
     market_rows: Iterable[dict[str, Any]] = (),
+    risk_payload: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     today = now.date()
     established = normalize_established(established_rows)
@@ -369,6 +601,7 @@ def build_payload(
     suspensions = current_suspensions(active_payload)
     ongoing = [item for item in offerings if item["status"] == "认购中"]
     upcoming = [item for item in offerings if item["status"] == "将发行"]
+    future_issuance = build_future_issuance(ongoing, upcoming)
     return {
         "schemaVersion": 1,
         "generatedAt": now.astimezone(timezone.utc).isoformat(),
@@ -376,6 +609,7 @@ def build_payload(
         "sourceStatus": "ready",
         "summary": {
             "todayOffering": len(ongoing),
+            "upcomingOffering": len(upcoming),
             "todayEstablished": window_counts["today"],
             "weekEstablished": window_counts["week"],
             "quarterEstablished": window_counts["quarter"],
@@ -383,15 +617,23 @@ def build_payload(
             "currentSuspended": len(suspensions),
         },
         "offerings": {"ongoing": ongoing, "upcoming": upcoming},
+        "futureIssuance": future_issuance,
+        "exitRisk": summarize_exclusion_risk(risk_payload or {}, today),
         "rankings": rankings,
         "suspensions": suspensions,
+        "suspensionAnalysis": summarize_suspensions(suspensions, today),
         "scaleGrowth": {
             "products": growth_products,
             "increasedCount": sum(item["scaleGrowthStatus"] == "增加" for item in growth_products),
-            "comparableCount": sum(item["scaleGrowthPercent"] is not None for item in growth_products),
+            "comparableCount": sum(item["effectiveComparable"] for item in growth_products),
+            "quadrants": [{
+                "key": key,
+                "count": sum(item["coverageQuadrant"] == key for item in growth_products),
+            } for key in ("有历史×有效可比", "有历史×不可比", "无历史×有效可比", "无历史×不可比")],
             "patterns": summarize_growth_patterns(growth_products),
+            "dimensionAnalysis": summarize_growth_dimensions(growth_products),
             "historyStartDate": "2026-08-18",
-            "scope": "今年以来成立，成立规模低于0.5亿元不参与增长率比较",
+            "scope": "今年以来成立；A/C等份额合并为产品；仅份额覆盖完整、同一披露日且首发规模不低于0.5亿元的产品参与比较",
         },
         "methodology": {
             "shortWindow": "募集规模80%+成立以来收益20%",
@@ -410,6 +652,7 @@ def main() -> None:
     import akshare as ak
 
     active_payload = json.loads(ACTIVE_FUNDS.read_text(encoding="utf-8"))
+    risk_payload = json.loads(EXCLUDED_FUNDS.read_text(encoding="utf-8")) if EXCLUDED_FUNDS.exists() else {}
     established = _records(ak.fund_new_found_em)
     offering_callable = getattr(ak, "fund_new_found_ths", None)
     offerings = _records(offering_callable, symbol="全部") if offering_callable else []
@@ -419,7 +662,7 @@ def main() -> None:
     scale_codes = [_code(row.get("基金代码")) for row in established if str(row.get("成立日期", "")).startswith(current_year)]
     reported_scales = fetch_eastmoney_reported_scales(code for code in scale_codes if code)
     market_rows = _records(ak.fund_open_fund_rank_em, symbol="全部")
-    payload = build_payload(established, offerings, active_payload, datetime.now(timezone.utc), scales, reported_scales, market_rows)
+    payload = build_payload(established, offerings, active_payload, datetime.now(timezone.utc), scales, reported_scales, market_rows, risk_payload)
     if not payload["rankings"]["ytd"] and not payload["offerings"]["ongoing"]:
         raise RuntimeError("新发基金数据为空，停止覆盖现有发行洞察快照")
     temporary = OUTPUT.with_suffix(".json.tmp")
