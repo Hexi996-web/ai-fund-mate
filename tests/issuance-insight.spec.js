@@ -35,18 +35,18 @@ test('shows issuance rankings and current purchase suspensions on the home works
   await expect(page.locator('tbody .rank-number').first()).toHaveText('21')
 })
 
-test('sorts growth groups by sample count and exposes truthful future scale coverage', async ({ page }) => {
+test('sorts growth groups by sample count and sample products by growth descending', async ({ page }) => {
   await page.goto('/#future-issuance')
   const counts = await page.locator('#post-launch-scale .growth-patterns article > span').allTextContents()
   const samples = counts.map((text) => Number(text.match(/(\d+)个样本/)?.[1] ?? 0))
   expect(samples).toEqual([...samples].sort((left, right) => right - left))
 
-  const future = page.locator('#future-issuance')
-  await expect(future).toContainText('规模已披露')
-  await expect(future).toContainText('不能用最低认购额替代')
-  await future.locator('#ongoing-offerings').click()
-  await expect(future.getByLabel('当前认购排序')).toHaveValue('scaleDesc')
-  await expect(future.locator('.future-offering-lists details').first()).toContainText('规模待披露')
+  await page.locator('#post-launch-scale .growth-patterns article').first().getByRole('button', { name: /查看全部\d+个样本/ }).click()
+  await expect(page.locator('.growth-sample-detail')).toContainText('按增长率从高到低排列')
+  const rates = await page.locator('.growth-sample-detail tbody tr td:nth-child(7)').allTextContents()
+  const values = rates.map((text) => Number(text.replace('%', '')))
+  expect(values).toEqual([...values].sort((left, right) => right - left))
+  await expect(page.locator('#future-issuance')).not.toContainText('发行规模')
 })
 
 test('keeps the requested top-level workspace order', async ({ page }) => {

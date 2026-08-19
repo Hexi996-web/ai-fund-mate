@@ -286,7 +286,7 @@ def summarize_growth_dimensions(products: list[dict[str, Any]]) -> list[dict[str
                 "medianGrowthPercent": round(median(rates), 2),
                 "positiveSharePercent": round(sum(rate > 0 for rate in rates) / len(rates) * 100, 1),
                 "topFunds": [item["name"] for item in reversed(ordered[-3:])],
-                "productIds": [item["productId"] for item in ordered],
+                "productIds": [item["productId"] for item in reversed(ordered)],
                 "medianProductIds": [item["productId"] for item in median_samples],
             })
         sorted_rows = sorted(rows, key=lambda row: (row["sampleCount"], row["medianGrowthPercent"]), reverse=True)
@@ -373,7 +373,6 @@ def normalize_offerings(rows: Iterable[dict[str, Any]], today: date) -> list[dic
             "status": status,
             "subscriptionFeePercent": _number(row, "认购费率"),
             "minimumSubscription": _number(row, "最低认购"),
-            "plannedScaleYi": _number(row, "募集规模", "募集上限", "目标募集规模", "计划募集规模"),
             "dataSource": "AKShare/同花顺公开数据",
         })
     return offerings
@@ -401,7 +400,6 @@ def build_future_issuance(ongoing: list[dict[str, Any]], upcoming: list[dict[str
             "status": status,
             "shareCodes": [item["code"] for item in shares],
             "shareCount": len(shares),
-            "plannedScaleYi": next((item.get("plannedScaleYi") for item in shares if item.get("plannedScaleYi") is not None), None),
             "offeringEndDate": max((item.get("offeringEndDate") or "" for item in shares), default="") or None,
         })
     products.sort(key=lambda item: (item["offeringStartDate"], item["code"]))
@@ -430,25 +428,12 @@ def build_future_issuance(ongoing: list[dict[str, Any]], upcoming: list[dict[str
         analyses.append({"dimension": dimension, "summary": summary, "groups": rows})
     ongoing_count = sum(item["status"] == "认购中" for item in products)
     upcoming_count = sum(item["status"] == "待发行" for item in products)
-    disclosed = [item for item in products if item.get("plannedScaleYi") is not None]
-    scale_bands = [("10亿元以上", 10, None), ("5–10亿元", 5, 10), ("2–5亿元", 2, 5), ("2亿元以下", 0, 2)]
-    scale_structure = []
-    disclosed_total = sum(item["plannedScaleYi"] for item in disclosed)
-    for label, lower, upper in scale_bands:
-        samples = [item for item in disclosed if item["plannedScaleYi"] >= lower and (upper is None or item["plannedScaleYi"] < upper)]
-        scale_sum = sum(item["plannedScaleYi"] for item in samples)
-        scale_structure.append({"label": label, "productCount": len(samples), "scaleYi": round(scale_sum, 2), "scaleSharePercent": round(scale_sum / disclosed_total * 100, 1) if disclosed_total else 0})
     return {
         "products": products,
         "ongoingCount": ongoing_count,
         "upcomingCount": upcoming_count,
         "totalCount": len(products),
         "shareClassCount": len(ongoing) + len(upcoming),
-        "scaleDisclosureCount": len(disclosed),
-        "scaleDisclosureRatePercent": round(len(disclosed) / len(products) * 100, 1) if products else 0,
-        "disclosedPlannedScaleYi": round(disclosed_total, 2),
-        "scaleStructure": scale_structure,
-        "scaleScope": "发行规模采用公开披露的募集目标或上限，不代表最终实际募集额；未披露产品不参与规模占比。",
         "summary": f"未来发行管线共{len(products)}只产品：{ongoing_count}只认购中、{upcoming_count}只待发行；原始披露包含{len(ongoing) + len(upcoming)}个份额。",
         "dimensionAnalysis": analyses,
     }
