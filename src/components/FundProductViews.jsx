@@ -8,6 +8,7 @@ import {
 } from './FundViews.jsx'
 
 const shareLabel = (value) => value === 'DEFAULT' ? '默认' : value === 'RMB' ? '人民币' : value
+const formatScale = (value) => value === null || value === undefined ? '待披露' : `${Number(value).toLocaleString('zh-CN', { maximumFractionDigits: 2 })} 亿元`
 
 function ShareRows({ product, matchedShareCodes }) {
   return (
@@ -22,6 +23,7 @@ function ShareRows({ product, matchedShareCodes }) {
           </span>
           <span>{formatValue(share.purchaseStatus)} / {formatValue(share.redemptionStatus)}</span>
           <span>{formatValue(share.lastNetValueDate)}</span>
+          <span title={`净值日 ${share.scaleDate || '--'}；份额日 ${share.sharesDate || '--'}`}>估算规模 {formatScale(share.scaleYi)} · {share.scaleQuality ?? 'U'}级</span>
         </div>
       ))}
     </div>
@@ -46,6 +48,7 @@ function ProductSummary({ product }) {
           {formatDailyChange(share.dailyChangePercent)}
         </span>
         <span>{formatValue(share.lastNetValueDate)}</span>
+        <span title="各份额最新公开份额×单位净值">估算规模 {formatScale(product.scaleYi)} · {product.scaleQuality}级</span>
       </div>
     </>
   )
@@ -85,7 +88,7 @@ export const FundProductTable = memo(function FundProductTable({
     <div className="fund-table-wrap">
       <table className="fund-table fund-product-table">
         <caption className="sr-only">基金产品列表</caption>
-        <thead><tr><th>基金产品</th><th>代表份额</th><th>类型</th><th>净值</th><th>日涨跌幅</th><th>份额</th></tr></thead>
+        <thead><tr><th>基金产品</th><th>代表份额</th><th>类型</th><th>净值</th><th>日涨跌幅</th><th>估算规模</th><th>份额</th></tr></thead>
         <tbody>
           {products.map((product) => {
             const share = product.representativeShare
@@ -97,9 +100,10 @@ export const FundProductTable = memo(function FundProductTable({
                 <td>{formatValue(product.type)}</td>
                 <td>{formatNetValue(share.netValue)}</td>
                 <td>{formatDailyChange(share.dailyChangePercent)}</td>
+                <td>{formatScale(product.scaleYi)}<span className="cell-note">{product.scaleQuality}级 · 净值日 {product.scaleDate || '待补全'}</span></td>
                 <td><button className="share-toggle" type="button" aria-expanded={expanded} aria-controls={`shares-${product.productId}`} onClick={() => onToggle(product.productId)}>{expanded ? '收起份额' : `查看${product.shareCount}个份额`}</button></td>
               </tr>,
-              expanded ? <tr className="fund-product-share-detail" key={`${product.productId}-shares`}><td colSpan="6"><ShareRows product={product} matchedShareCodes={matchedShareCodes} /></td></tr> : null,
+              expanded ? <tr className="fund-product-share-detail" key={`${product.productId}-shares`}><td colSpan="7"><ShareRows product={product} matchedShareCodes={matchedShareCodes} /></td></tr> : null,
             ]
           })}
         </tbody>

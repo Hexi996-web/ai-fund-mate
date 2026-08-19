@@ -96,6 +96,10 @@ function SourceDisclosure({ source, stale }) {
       </p>
       {source === 'fallback' || source === 'active-shares' ? <p className="cache-warning">当前为降级数据源，可能仅提供代码、名称和类型。</p> : null}
       {stale ? <p className="cache-warning">今日数据更新失败，当前展示最近一次有效缓存。</p> : null}
+      <p>
+        <strong>规模口径：</strong>
+        <span>估算规模 = 最近公开总份额 × 最新单位净值，并非基金公司每日披露的正式规模。A：同日份额；B：份额日期相差不超过 31 天；C：超过 31 天；U：数据不足。</span>
+      </p>
     </aside>
   )
 }

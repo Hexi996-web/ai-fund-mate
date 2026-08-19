@@ -1,14 +1,13 @@
 import { useCallback, useState } from 'react'
 import FundApp from './App.jsx'
-import { ThemeWorkspace } from './components/ThemeWorkspace.jsx'
-import { SignalRadar } from './features/signal-radar/SignalRadar.jsx'
+import { OpportunityWorkspace } from './components/OpportunityWorkspace.jsx'
+import { MarketDecisionBar } from './components/MarketDecisionBar.jsx'
 import { IssuanceInsight } from './features/issuance-insight/IssuanceInsight.jsx'
 import './workspace.css'
 
 const WORKSPACES = [
   { id: 'issuance', label: '发行洞察' },
-  { id: 'signals', label: '信号雷达' },
-  { id: 'themes', label: '主题研判' },
+  { id: 'opportunities', label: '板块机会' },
   { id: 'funds', label: '基金产品库' },
 ]
 
@@ -40,9 +39,9 @@ export default function WorkspaceApp() {
         </div>
       </div>
     </nav>
+    <MarketDecisionBar onOpenIssuance={() => setWorkspace('issuance')} />
     {workspace === 'issuance' ? <IssuanceInsight /> : null}
-    {workspace === 'signals' ? <SignalRadar /> : null}
-    {workspace === 'themes' ? <main className="workspace-main"><ThemeWorkspace onOpenFundLibrary={openFundLibrary} /></main> : null}
+    {workspace === 'opportunities' ? <OpportunityWorkspace onOpenFundLibrary={openFundLibrary} /> : null}
     {workspace === 'funds' ? <FundApp initialQuery={fundContext.query} onQueryChange={rememberFundQuery} /> : null}
   </>
 }

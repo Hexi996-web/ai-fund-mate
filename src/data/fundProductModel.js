@@ -40,6 +40,10 @@ export const normalizeProducts = (payload) => {
       shareCount: shares.length,
       groupingConfidence: product.groupingConfidence ?? 'low',
       shares,
+      scaleYi: shares.some((share) => share.scaleYi !== null) ? shares.reduce((sum, share) => sum + (share.scaleYi ?? 0), 0) : null,
+      scaleDate: shares.map((share) => share.scaleDate).filter(Boolean).sort().at(-1) ?? null,
+      scaleStatus: shares.some((share) => share.scaleYi !== null) ? '各份额估算规模合计' : '待披露',
+      scaleQuality: shares.some((share) => share.scaleQuality === 'U') ? 'U' : shares.some((share) => share.scaleQuality === 'C') ? 'C' : shares.some((share) => share.scaleQuality === 'B') ? 'B' : shares.some((share) => share.scaleQuality === 'A') ? 'A' : 'U',
     }
   }).filter(Boolean)
 }
@@ -60,6 +64,8 @@ const SORT_FIELDS = {
   'change-asc': ['dailyChangePercent', 1],
   'nav-desc': ['netValue', -1],
   'nav-asc': ['netValue', 1],
+  'scale-desc': ['scaleYi', -1],
+  'scale-asc': ['scaleYi', 1],
   'date-desc': ['lastNetValueDate', -1],
   'date-asc': ['lastNetValueDate', 1],
   'code-asc': ['code', 1],
@@ -93,8 +99,8 @@ export const selectProducts = (products, options = {}) => {
   const sort = SORT_FIELDS[options.sortMode]
   const sorted = !sort ? [...selected] : [...selected].sort((a, b) => {
     const [field, direction] = sort
-    const left = field === 'code' ? a.representativeCode : a.representativeShare?.[field]
-    const right = field === 'code' ? b.representativeCode : b.representativeShare?.[field]
+    const left = field === 'code' ? a.representativeCode : field === 'scaleYi' ? a.scaleYi : a.representativeShare?.[field]
+    const right = field === 'code' ? b.representativeCode : field === 'scaleYi' ? b.scaleYi : b.representativeShare?.[field]
     return compare(left, right, direction)
   })
   return { products: sorted, matchedShareCodes }

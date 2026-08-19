@@ -23,13 +23,14 @@ function ThemeDetail({ item, onOpenFundLibrary }) {
     <p className="research-disclaimer">{item.disclaimer}</p>
   </div>
 }
-export function ThemeWorkspace({ onOpenFundLibrary }) {
+export function ThemeWorkspace({ onOpenFundLibrary, selectedTheme = null, compactHeading = false }) {
   const [items, setItems] = useState([]); const [state, setState] = useState('loading'); const [open, setOpen] = useState(null)
   useEffect(() => { const controller = new AbortController(); fetchThemeWorkspace((url) => fetch(url, { signal: controller.signal })).then((data) => { setItems(data); setState('ready') }).catch((error) => { if (error.name !== 'AbortError') setState('error') }); return () => controller.abort() }, [])
+  useEffect(() => { if (selectedTheme) { setOpen(selectedTheme); window.requestAnimationFrame(() => document.getElementById(`theme-${selectedTheme}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })) } }, [selectedTheme])
   return <section className="theme-workspace">
-    <div className="workspace-heading"><div><h2>主题研判总览</h2><p>当前聚焦五个首批主题；机会评分与置信度独立展示，单期数据不推断趋势。</p></div><span className={`data-state data-state--${state}`}>{state === 'ready' ? '数据已加载' : state === 'loading' ? '加载中' : '数据不可用'}</span></div>
+    <div className="workspace-heading"><div><h2>{compactHeading ? '板块证据与基金全景' : '主题研判总览'}</h2><p>点击矩阵板块可定位到完整证据、供给结构与全部关联基金。</p></div><span className={`data-state data-state--${state}`}>{state === 'ready' ? '数据已加载' : state === 'loading' ? '加载中' : '数据不可用'}</span></div>
     {state === 'error' ? <div className="workspace-empty">主题研究数据暂时不可用，请稍后重试。</div> : null}
-    <div className="theme-grid">{items.map((item) => <article className={`theme-panel ${open === item.theme ? 'theme-panel--open' : ''}`} key={item.theme}>
+    <div className="theme-grid">{items.map((item) => <article id={`theme-${item.theme}`} className={`theme-panel ${open === item.theme ? 'theme-panel--open' : ''}`} key={item.theme}>
       <button className="theme-summary" type="button" aria-expanded={open === item.theme} aria-label={`查看${item.name}证据`} onClick={() => setOpen(open === item.theme ? null : item.theme)}>
         <div className="theme-name"><h3>{item.name}</h3><span>{statusText[item.status] ?? item.status}</span></div>
         <div className="theme-score"><strong>{item.score ?? '--'}</strong><span>机会试算</span></div>
