@@ -286,7 +286,7 @@ def summarize_growth_dimensions(products: list[dict[str, Any]]) -> list[dict[str
                 "medianGrowthPercent": round(median(rates), 2),
                 "positiveSharePercent": round(sum(rate > 0 for rate in rates) / len(rates) * 100, 1),
                 "topFunds": [item["name"] for item in reversed(ordered[-3:])],
-                "productIds": [item["productId"] for item in ordered],
+                "productIds": [item["productId"] for item in reversed(ordered)],
                 "medianProductIds": [item["productId"] for item in median_samples],
             })
         sorted_rows = sorted(rows, key=lambda row: (row["sampleCount"], row["medianGrowthPercent"]), reverse=True)

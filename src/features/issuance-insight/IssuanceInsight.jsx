@@ -116,6 +116,8 @@ export function IssuanceInsight() {
     (payload?.scaleGrowth?.products ?? []).map((product) => [product.productId, product]),
   ), [payload])
   const activeGrowthAnalysis = (payload?.scaleGrowth?.dimensionAnalysis ?? []).find((analysis) => analysis.dimension === growthDimension)
+  const activeGrowthGroups = useMemo(() => [...(activeGrowthAnalysis?.groups ?? [])]
+    .sort((left, right) => right.sampleCount - left.sampleCount || right.medianGrowthPercent - left.medianGrowthPercent || left.label.localeCompare(right.label, 'zh-CN')), [activeGrowthAnalysis])
   const activeGrowthGroup = activeGrowthAnalysis?.groups.find((group) => group.label === selectedGrowthGroup)
   const activeFutureAnalysis = (payload?.futureIssuance?.dimensionAnalysis ?? []).find((analysis) => analysis.dimension === futureDimension)
   const activeSuspensionAnalysis = (payload?.suspensionAnalysis?.dimensionAnalysis ?? []).find((analysis) => analysis.dimension === suspensionDimension)
@@ -236,7 +238,7 @@ export function IssuanceInsight() {
       </div></div>
       <p className="growth-dimension-summary">{activeGrowthAnalysis?.summary || '该维度暂无有效可比样本。'}</p>
       <div className="growth-patterns">
-        {(activeGrowthAnalysis?.groups ?? []).slice(0, showAllGrowthGroups ? undefined : 8).map((pattern) => <article key={pattern.label}>
+        {activeGrowthGroups.slice(0, showAllGrowthGroups ? undefined : 8).map((pattern) => <article key={pattern.label}>
           <span>{pattern.label} · {pattern.sampleCount}个样本</span>
           <strong>增长中位数 {number(pattern.medianGrowthPercent, '%')}</strong>
           <p>规模正增长比例 {number(pattern.positiveSharePercent, '%')}</p>
@@ -246,7 +248,7 @@ export function IssuanceInsight() {
       </div>
       {(activeGrowthAnalysis?.groups.length ?? 0) > 8 ? <button className="growth-groups-toggle" type="button" onClick={() => setShowAllGrowthGroups((current) => !current)}>{showAllGrowthGroups ? '收起分组' : `展开全部${activeGrowthAnalysis.groups.length}组`}</button> : null}
       {activeGrowthGroup ? <div className="growth-sample-detail">
-        <div className="trajectory-heading"><strong>{growthDimension} · {activeGrowthGroup.label}：完整样本</strong><span>按增长率从低到高排列；{activeGrowthGroup.medianProductIds.length === 2 ? '两条浅黄色记录的平均值' : '浅黄色记录'}为中位数</span></div>
+        <div className="trajectory-heading"><strong>{growthDimension} · {activeGrowthGroup.label}：完整样本</strong><span>按增长率从高到低排列；{activeGrowthGroup.medianProductIds.length === 2 ? '两条浅黄色记录的平均值' : '浅黄色记录'}为中位数</span></div>
         <div className="issuance-table-wrap"><table><thead><tr><th>序位</th><th>基金产品</th><th>成立日期</th><th>首发规模</th><th>当前规模</th><th>增长额</th><th>增长率</th><th>中位数位置</th></tr></thead><tbody>
           {activeGrowthGroup.productIds.map((productId, index) => {
             const fund = growthProductById.get(productId)

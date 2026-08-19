@@ -20,7 +20,7 @@ test('shows issuance rankings and current purchase suspensions on the home works
   await expect(page.getByLabel('规模增长排序')).toHaveValue('scaleGrowthPercent')
   await expect(page.getByRole('heading', { name: '暂停申购结构分析' })).toBeVisible()
   await expect(page.getByRole('heading', { name: '未来发行趋势' })).toBeVisible()
-  await expect(page.getByRole('heading', { name: '今年异常退出跟踪' })).toHaveCount(0)
+  await expect(page.getByRole('heading', { name: '今年异常退出跟踪' })).toBeVisible()
   await expect(page.locator('#purchase-suspensions').getByText(/当前公开快照仅提供暂停申购状态/)).toBeVisible()
   await expect(page.locator('#purchase-suspensions').getByRole('tab', { name: '规模区间' })).toBeVisible()
   await page.getByRole('tab', { name: '今年以来' }).click()
@@ -33,6 +33,20 @@ test('shows issuance rankings and current purchase suspensions on the home works
   await page.getByRole('button', { name: '下一页' }).first().click()
   await expect(page.locator('.issuance-panel').first().getByText(/第 2\//)).toBeVisible()
   await expect(page.locator('tbody .rank-number').first()).toHaveText('21')
+})
+
+test('sorts growth groups by sample count and sample products by growth descending', async ({ page }) => {
+  await page.goto('/#future-issuance')
+  const counts = await page.locator('#post-launch-scale .growth-patterns article > span').allTextContents()
+  const samples = counts.map((text) => Number(text.match(/(\d+)个样本/)?.[1] ?? 0))
+  expect(samples).toEqual([...samples].sort((left, right) => right - left))
+
+  await page.locator('#post-launch-scale .growth-patterns article').first().getByRole('button', { name: /查看全部\d+个样本/ }).click()
+  await expect(page.locator('.growth-sample-detail')).toContainText('按增长率从高到低排列')
+  const rates = await page.locator('.growth-sample-detail tbody tr td:nth-child(7)').allTextContents()
+  const values = rates.map((text) => Number(text.replace('%', '')))
+  expect(values).toEqual([...values].sort((left, right) => right - left))
+  await expect(page.locator('#future-issuance')).not.toContainText('发行规模')
 })
 
 test('keeps the requested top-level workspace order', async ({ page }) => {
