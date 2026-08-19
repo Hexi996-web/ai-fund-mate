@@ -162,7 +162,7 @@ def test_requires_complete_same_date_share_coverage_for_comparison():
 
 def test_builds_product_level_future_pipeline_and_separates_legacy_exit_baseline():
     offerings = [
-        {"基金代码": "1", "基金名称": "未来基金A", "基金类型": "混合型", "管理人": "示例基金", "募集起始日": "2026-08-20", "募集终止日": "2026-08-30"},
+        {"基金代码": "1", "基金名称": "未来基金A", "基金类型": "混合型", "管理人": "示例基金", "募集起始日": "2026-08-20", "募集终止日": "2026-08-30", "募集上限": 8},
         {"基金代码": "2", "基金名称": "未来基金C", "基金类型": "混合型", "管理人": "示例基金", "募集起始日": "2026-08-20", "募集终止日": "2026-08-30"},
         {"基金代码": "3", "基金名称": "在售基金", "基金类型": "债券型", "管理人": "示例基金", "募集起始日": "2026-08-10", "募集终止日": "2026-08-25"},
     ]
@@ -177,5 +177,8 @@ def test_builds_product_level_future_pipeline_and_separates_legacy_exit_baseline
     assert payload["futureIssuance"]["upcomingCount"] == 1
     assert payload["futureIssuance"]["shareClassCount"] == 3
     assert payload["futureIssuance"]["products"][1]["shareCount"] == 2
+    assert payload["futureIssuance"]["scaleDisclosureCount"] == 1
+    assert payload["futureIssuance"]["disclosedPlannedScaleYi"] == 8
+    assert payload["futureIssuance"]["scaleStructure"][1]["scaleSharePercent"] == 100
     assert payload["exitRisk"]["ytdConfirmedTerminated"] == 1
     assert payload["exitRisk"]["baselineProducts"] == 1

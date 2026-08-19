@@ -61,6 +61,8 @@ export function IssuanceInsight() {
   const [selectedGrowthGroup, setSelectedGrowthGroup] = useState(null)
   const [showAllGrowthGroups, setShowAllGrowthGroups] = useState(false)
   const [futureDimension, setFutureDimension] = useState('板块')
+  const [ongoingSort, setOngoingSort] = useState('scaleDesc')
+  const [upcomingSort, setUpcomingSort] = useState('scaleDesc')
   const [suspensionDimension, setSuspensionDimension] = useState('板块')
   const [expandedGrowthIds, setExpandedGrowthIds] = useState(() => new Set())
 
@@ -116,14 +118,21 @@ export function IssuanceInsight() {
     (payload?.scaleGrowth?.products ?? []).map((product) => [product.productId, product]),
   ), [payload])
   const activeGrowthAnalysis = (payload?.scaleGrowth?.dimensionAnalysis ?? []).find((analysis) => analysis.dimension === growthDimension)
+  const activeGrowthGroups = useMemo(() => [...(activeGrowthAnalysis?.groups ?? [])]
+    .sort((left, right) => right.sampleCount - left.sampleCount || right.medianGrowthPercent - left.medianGrowthPercent || left.label.localeCompare(right.label, 'zh-CN')), [activeGrowthAnalysis])
   const activeGrowthGroup = activeGrowthAnalysis?.groups.find((group) => group.label === selectedGrowthGroup)
   const activeFutureAnalysis = (payload?.futureIssuance?.dimensionAnalysis ?? []).find((analysis) => analysis.dimension === futureDimension)
   const activeSuspensionAnalysis = (payload?.suspensionAnalysis?.dimensionAnalysis ?? []).find((analysis) => analysis.dimension === suspensionDimension)
-  const futureOngoing = (payload?.futureIssuance?.products ?? []).filter((product) => product.status === '认购中')
-  const futureUpcoming = (payload?.futureIssuance?.products ?? []).filter((product) => product.status === '待发行')
+  const sortFutureProducts = (products, sort) => [...products].sort((left, right) => sort === 'dateAsc'
+    ? String(left.offeringStartDate).localeCompare(String(right.offeringStartDate))
+    : (right.plannedScaleYi ?? -Infinity) - (left.plannedScaleYi ?? -Infinity) || String(left.offeringStartDate).localeCompare(String(right.offeringStartDate)))
+  const futureOngoing = sortFutureProducts((payload?.futureIssuance?.products ?? []).filter((product) => product.status === '认购中'), ongoingSort)
+  const futureUpcoming = sortFutureProducts((payload?.futureIssuance?.products ?? []).filter((product) => product.status === '待发行'), upcomingSort)
 
   useEffect(() => setRankingPage(1), [query, sortKey, windowKey])
   useEffect(() => setGrowthPage(1), [growthCohort, growthSort])
+  useEffect(() => setOfferingPage(1), [ongoingSort])
+  useEffect(() => setUpcomingPage(1), [upcomingSort])
 
   const page = (items, current) => items.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE)
   const toggleGrowth = (productId) => setExpandedGrowthIds((current) => {
@@ -236,7 +245,7 @@ export function IssuanceInsight() {
       </div></div>
       <p className="growth-dimension-summary">{activeGrowthAnalysis?.summary || '该维度暂无有效可比样本。'}</p>
       <div className="growth-patterns">
-        {(activeGrowthAnalysis?.groups ?? []).slice(0, showAllGrowthGroups ? undefined : 8).map((pattern) => <article key={pattern.label}>
+        {activeGrowthGroups.slice(0, showAllGrowthGroups ? undefined : 8).map((pattern) => <article key={pattern.label}>
           <span>{pattern.label} · {pattern.sampleCount}个样本</span>
           <strong>增长中位数 {number(pattern.medianGrowthPercent, '%')}</strong>
           <p>规模正增长比例 {number(pattern.positiveSharePercent, '%')}</p>
@@ -268,6 +277,14 @@ export function IssuanceInsight() {
         <article><span>原始披露份额</span><strong>{number(payload.futureIssuance?.shareClassCount)}</strong></article>
       </div>
       <p className="growth-dimension-summary">{payload.futureIssuance?.summary}</p>
+      <div className="future-scale-overview">
+        <article><span>规模已披露</span><strong>{number(payload.futureIssuance?.scaleDisclosureCount)}只</strong><small>覆盖 {number(payload.futureIssuance?.scaleDisclosureRatePercent, '%')}</small></article>
+        <article><span>披露目标/上限合计</span><strong>{number(payload.futureIssuance?.disclosedPlannedScaleYi, '亿元')}</strong><small>不等于最终募集额</small></article>
+        {payload.futureIssuance?.scaleDisclosureCount > 0
+          ? (payload.futureIssuance?.scaleStructure ?? []).map((band) => <article key={band.label}><span>{band.label}</span><strong>{band.productCount}只 · {number(band.scaleYi, '亿元')}</strong><small>占已披露规模 {number(band.scaleSharePercent, '%')}</small></article>)
+          : <article className="scale-disclosure-empty"><span>当前结构判断</span><strong>暂无可计算占比</strong><small>{number(payload.futureIssuance?.totalCount)}只产品均未披露统一口径的募集目标或上限，不能用最低认购额替代</small></article>}
+      </div>
+      <p className="issuance-method">{payload.futureIssuance?.scaleScope}</p>
       <div className="growth-analysis-heading"><div><strong>未来供给结构</strong><span>认购中与待发行使用统一产品级管线</span></div><div className="issuance-tabs" role="tablist">
         {(payload.futureIssuance?.dimensionAnalysis ?? []).map((analysis) => <button key={analysis.dimension} type="button" role="tab" aria-selected={futureDimension === analysis.dimension} className={futureDimension === analysis.dimension ? 'active' : ''} onClick={() => setFutureDimension(analysis.dimension)}>{analysis.dimension}</button>)}
       </div></div>
@@ -276,8 +293,8 @@ export function IssuanceInsight() {
         <span>{group.label}</span><strong>{group.productCount}只产品 · {number(group.pipelineSharePercent, '%')}</strong><p>认购中 {group.ongoingCount} · 待发行 {group.upcomingCount}</p><small>{group.topProducts.join('、')}</small>
       </article>)}</div>
       <div className="issuance-two-column future-offering-lists">
-        <details className="data-disclosure"><summary id="ongoing-offerings">当前认购中 · {futureOngoing.length}只产品</summary><div className="issuance-list">{page(futureOngoing, offeringPage).map((fund) => <article key={fund.productId}><div><strong>{fund.name}</strong><span>{fund.code} · {fund.shareCount}个份额</span></div><p>{fund.offeringStartDate} — {fund.offeringEndDate || '待公告'} · {fund.manager || '管理人待补全'}</p></article>)}</div><Pager page={offeringPage} total={futureOngoing.length} onChange={setOfferingPage} /></details>
-        <details className="data-disclosure"><summary id="upcoming-offerings">待发行预告 · {futureUpcoming.length}只产品</summary><div className="issuance-list">{page(futureUpcoming, upcomingPage).map((fund) => <article key={fund.productId}><div><strong>{fund.name}</strong><span>{fund.code} · {fund.shareCount}个份额</span></div><p>{fund.offeringStartDate} 起 · {fund.manager || '管理人待补全'}</p></article>)}</div><Pager page={upcomingPage} total={futureUpcoming.length} onChange={setUpcomingPage} /></details>
+        <details className="data-disclosure"><summary id="ongoing-offerings">当前认购中 · {futureOngoing.length}只产品</summary><div className="future-list-controls"><select aria-label="当前认购排序" value={ongoingSort} onChange={(event) => setOngoingSort(event.target.value)}><option value="scaleDesc">发行规模：大到小</option><option value="dateAsc">发行日期：近到远</option></select></div><div className="issuance-list">{page(futureOngoing, offeringPage).map((fund) => <article key={fund.productId}><div><strong>{fund.name}</strong><span>{fund.code} · {fund.shareCount}个份额</span></div><em>{fund.plannedScaleYi === null ? '规模待披露' : `目标/上限 ${number(fund.plannedScaleYi, '亿元')}`}</em><p>{fund.offeringStartDate} — {fund.offeringEndDate || '待公告'} · {fund.manager || '管理人待补全'}</p></article>)}</div><Pager page={offeringPage} total={futureOngoing.length} onChange={setOfferingPage} /></details>
+        <details className="data-disclosure"><summary id="upcoming-offerings">待发行预告 · {futureUpcoming.length}只产品</summary><div className="future-list-controls"><select aria-label="待发行排序" value={upcomingSort} onChange={(event) => setUpcomingSort(event.target.value)}><option value="scaleDesc">发行规模：大到小</option><option value="dateAsc">发行日期：近到远</option></select></div><div className="issuance-list">{page(futureUpcoming, upcomingPage).map((fund) => <article key={fund.productId}><div><strong>{fund.name}</strong><span>{fund.code} · {fund.shareCount}个份额</span></div><em>{fund.plannedScaleYi === null ? '规模待披露' : `目标/上限 ${number(fund.plannedScaleYi, '亿元')}`}</em><p>{fund.offeringStartDate} 起 · {fund.manager || '管理人待补全'}</p></article>)}</div><Pager page={upcomingPage} total={futureUpcoming.length} onChange={setUpcomingPage} /></details>
       </div>
     </section>
 
