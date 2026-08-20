@@ -15,6 +15,12 @@ def test_accepts_recent_snapshot_and_rejects_stale_snapshot(tmp_path):
         validate(path, "generatedAt", 1, now)
 
 
+def test_treats_naive_fund_update_time_as_beijing_time(tmp_path):
+    path = tmp_path / "funds.json"
+    path.write_text(json.dumps({"updateTime": "2026-08-20 16:26:07"}), encoding="utf-8")
+    validate(path, "updateTime", 1, datetime(2026, 8, 20, 8, 28, tzinfo=timezone.utc))
+
+
 def test_rejects_snapshot_below_publication_minimums(tmp_path):
     path = tmp_path / "snapshot.json"
     path.write_text(json.dumps({

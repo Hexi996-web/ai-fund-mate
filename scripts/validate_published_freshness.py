@@ -6,6 +6,10 @@ import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
+
+
+SHANGHAI = ZoneInfo("Asia/Shanghai")
 
 
 def _timestamp(payload: dict, field: str) -> datetime:
@@ -14,7 +18,8 @@ def _timestamp(payload: dict, field: str) -> datetime:
         raise ValueError(f"missing {field}")
     parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
     if parsed.tzinfo is None:
-        parsed = parsed.replace(tzinfo=timezone.utc)
+        # Fund snapshots intentionally publish a Beijing wall-clock updateTime.
+        parsed = parsed.replace(tzinfo=SHANGHAI)
     return parsed.astimezone(timezone.utc)
 
 
