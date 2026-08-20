@@ -126,10 +126,10 @@ export function DailyProductSummary({ products, dataDate, onSelectCategory, onSe
 
     <div className="summary-section summary-analysis">
       <h3>市场分析：</h3>
-      <p><strong>资金与供给：</strong>{fundLink(analysis.netLeader)}净增{yi(analysis.netLeader?.scaleNetIncreaseYi)}；{flowConcentrated ? '当前应优先围绕已有头部产品完善工具链，谨慎新增同质化产品。' : '资金并非只集中于少数头部，可继续观察细分赛道的新产品窗口。'}</p>
-      <p><strong>规模增长质量：</strong>{fundLink(analysis.growthLeader)}增长率{percent(analysis.growthLeader?.scaleGrowthPercent)}、净增额{yi(analysis.growthLeader?.scaleNetIncreaseYi)}、当前规模{yi(analysis.growthLeader?.currentScaleYi)}。增长率必须与绝对增量和存量规模联读，避免小基数放大。</p>
-      <p><strong>收益扩散：</strong>{analysis.navSampleCount.toLocaleString('zh-CN')}只有效样本的净值增长中位数为{percent(analysis.navMedian)}，正收益产品占{percent(analysis.navBreadth)}；{returnBroad ? '收益已从少数冠军向更广产品扩散。' : '赚钱效应仍偏结构性，冠军产品不代表多数持有人体验。'}领先产品为{fundLink(analysis.navLeader)}。</p>
-      <p><strong>风险收益：</strong>最大回撤中位数为{percent(analysis.drawdownMedian)}，尾部压力较深的是{fundLink(analysis.deepestDrawdown)}、回撤{percent(analysis.deepestDrawdown?.maxDrawdownPercent)}。{Math.abs(analysis.drawdownMedian ?? 0) > Math.max(analysis.navMedian ?? 0, 0) * 1.5 ? '当前回撤代价高于收益中枢，产品表达应降低短期收益外推。' : '整体风险收益尚可匹配，但仍需关注尾部主题产品。'}</p>
+      <p><strong>规模净增额：</strong>{fundLink(analysis.netLeader)}净增{yi(analysis.netLeader?.scaleNetIncreaseYi)}；{flowConcentrated ? '当前应优先围绕已有头部产品完善工具链，谨慎新增同质化产品。' : '资金并非只集中于少数头部，可继续观察细分赛道的新产品窗口。'}</p>
+      <p><strong>规模增长率：</strong>{fundLink(analysis.growthLeader)}增长率{percent(analysis.growthLeader?.scaleGrowthPercent)}、净增额{yi(analysis.growthLeader?.scaleNetIncreaseYi)}、当前规模{yi(analysis.growthLeader?.currentScaleYi)}。增长率必须与绝对增量和存量规模联读，避免小基数放大。</p>
+      <p><strong>净值增长：</strong>{analysis.navSampleCount.toLocaleString('zh-CN')}只有效样本的净值增长中位数为{percent(analysis.navMedian)}，正收益产品占{percent(analysis.navBreadth)}；{returnBroad ? '收益已从少数冠军向更广产品扩散。' : '赚钱效应仍偏结构性，冠军产品不代表多数持有人体验。'}领先产品为{fundLink(analysis.navLeader)}。</p>
+      <p><strong>最大回撤：</strong>最大回撤中位数为{percent(analysis.drawdownMedian)}，尾部压力较深的是{fundLink(analysis.deepestDrawdown)}、回撤{percent(analysis.deepestDrawdown?.maxDrawdownPercent)}。{Math.abs(analysis.drawdownMedian ?? 0) > Math.max(analysis.navMedian ?? 0, 0) * 1.5 ? '当前回撤代价高于收益中枢，产品表达应降低短期收益外推。' : '整体风险收益尚可匹配，但仍需关注尾部主题产品。'}</p>
     </div>
 
     {expanded ? <div className="summary-section category-analysis">
