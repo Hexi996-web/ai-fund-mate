@@ -10,14 +10,14 @@ const productPayload = {
   productTotal: 1,
   shareTotal: 2,
   groupingVersion: 'v1',
-  products: [{ productId: 'prd_1234567890abcdef', productName: '示例成长基金', type: '股票型', representativeCode: '000001', shareCount: 2, groupingConfidence: 'high', shares }],
+  products: [{ productId: 'prd_1234567890abcdef', productName: '示例成长基金', type: '股票型', representativeCode: '000001', shareCount: 2, groupingConfidence: 'high', shares, establishedDate: '2025-01-01', currentScaleYi: 12, baselineScaleYi: 10, baselineScaleType: '去年年末规模', scaleNetIncreaseYi: 2, scaleGrowthPercent: 20, navGrowthPercent: 15, maxDrawdownPercent: -8, metricsCoverage: '全年' }],
 }
 
 const openLibrary = async (page) => {
   await page.goto('/')
   await page.evaluate(() => window.localStorage.clear())
   await page.reload()
-  await page.getByRole('button', { name: '基金产品库', exact: true }).click()
+  await page.getByRole('button', { name: '市场分析', exact: true }).click()
   await page.locator('.result-count').waitFor()
 }
 
@@ -29,9 +29,9 @@ test('defaults to products and expands all share classes accessibly', async ({ p
   await openLibrary(page)
   await expect(page.locator('.meta-row')).toContainText('基金产品 1 只')
   await expect(page.locator('.meta-row')).toContainText('基金份额 2 个')
-  await expect(page.locator('.fund-product-card')).toHaveCount(1)
-  await expect(page.locator('.fund-product-card')).toContainText('代表份额：A类（000001）')
-  const toggle = page.locator('.fund-product-card .share-toggle')
+  await expect(page.locator('.daily-product-summary')).toContainText('市场现状：')
+  await expect(page.locator('.fund-product-table tbody > tr').first()).toContainText('示例成长基金')
+  const toggle = page.locator('.fund-product-table .share-toggle')
   await expect(toggle).toHaveAttribute('aria-expanded', 'false')
   await toggle.click()
   await expect(toggle).toHaveAttribute('aria-expanded', 'true')
@@ -42,10 +42,28 @@ test('searching a C share code opens its product and highlights that share', asy
   await openLibrary(page)
   await page.getByPlaceholder(/搜索基金/).fill('000002')
   await expect(page.locator('.fund-share-row[data-search-match="true"]')).toContainText('000002')
-  await expect(page.locator('.fund-product-card')).toHaveCount(1)
+  await expect(page.locator('.fund-product-table')).toContainText('示例成长基金')
 })
 
-test('product cards remain within the mobile viewport', async ({ page }) => {
+test('summary category links filter the top-30 database', async ({ page }) => {
+  await openLibrary(page)
+  await page.locator('.daily-product-summary').getByRole('button', { name: /股票型基金1只/ }).first().click()
+  await expect(page.getByRole('button', { name: '股票型', exact: true })).toHaveAttribute('aria-pressed', 'true')
+  await expect(page.locator('.result-count')).toContainText('仅展示前30支产品')
+})
+
+test('the all-funds view clears every active search and category filter', async ({ page }) => {
+  await openLibrary(page)
+  await page.getByRole('button', { name: '股票型', exact: true }).click()
+  await page.getByPlaceholder(/搜索基金/).fill('000002')
+  await expect(page.locator('.active-scope')).toContainText('分类：股票型')
+  await expect(page.locator('.active-scope')).toContainText('搜索：000002')
+  await page.getByRole('button', { name: '全部', exact: true }).click()
+  await expect(page.getByPlaceholder(/搜索基金/)).toHaveValue('')
+  await expect(page.locator('.active-scope')).toHaveText('当前范围：全部公募基金')
+})
+
+test('the product list remains within the mobile viewport', async ({ page }) => {
   await openLibrary(page)
   const widths = await page.evaluate(() => ({ viewport: innerWidth, document: document.documentElement.scrollWidth }))
   expect(widths.document).toBeLessThanOrEqual(widths.viewport)

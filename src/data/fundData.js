@@ -25,7 +25,7 @@ export const getPayloadDataDate = (payload) => {
 }
 
 const requestJson = async (fetchImpl, url, options) => {
-  const response = await fetchImpl(url, options)
+  const response = await fetchImpl(url, { cache: 'no-store', ...options })
   if (!response.ok) throw new Error(`数据请求失败（${response.status}）`)
   return response.json()
 }

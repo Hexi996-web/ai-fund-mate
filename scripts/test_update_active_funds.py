@@ -2,7 +2,7 @@ import unittest
 from datetime import date, timedelta
 from pathlib import Path
 
-from update_active_funds import build_output_payloads, classify_fund, enrich_daily_scale, extract_last_net_value_date
+from update_active_funds import build_output_payloads, classify_fund, enrich_daily_scale, enrich_product_metrics, extract_last_net_value_date
 from store_fund_scale_snapshots import issuance_baseline_rows, product_scale_history_rows, snapshot_rows
 
 
@@ -21,6 +21,25 @@ class DailyScaleTests(unittest.TestCase):
         result = enrich_daily_scale([{"code": "000002", "netValue": None}], [], date(2026, 8, 18))[0]
         self.assertIsNone(result["scaleYi"])
         self.assertEqual(result["scaleQuality"], "U")
+
+    def test_uses_etf_total_market_value_without_requiring_open_fund_shares(self):
+        funds = [{"code": "518880", "netValue": 9.1, "lastNetValueDate": "2026-08-20"}]
+        rows = [{
+            "基金代码": "518880", "最近总份额": 10_296_640_847,
+            "更新日期": "2026-08-20", "直接估算规模亿元": 937.0,
+            "规模估算口径": "ETF总市值估算",
+        }]
+        result = enrich_daily_scale(funds, rows, date(2026, 8, 20))[0]
+        self.assertEqual(result["scaleYi"], 937.0)
+        self.assertEqual(result["scaleStatus"], "ETF总市值估算")
+        self.assertEqual(result["scaleQuality"], "A")
+
+    def test_etf_snapshot_is_treated_as_active(self):
+        status, _ = classify_fund(
+            name="黄金ETF华安", purchase_status="场内交易", redemption_status=None,
+            last_net_value_date=None, appears_active=True,
+        )
+        self.assertEqual(status, "active_snapshot")
 
     def test_builds_only_complete_database_snapshot_rows(self):
         rows = snapshot_rows({"funds": [
@@ -148,6 +167,37 @@ class ExtractLastNetValueDateTests(unittest.TestCase):
 
 
 class ProductOutputPayloadTests(unittest.TestCase):
+    def test_carries_daily_metrics_and_uses_launch_scale_for_a_new_fund(self):
+        product = {
+            "productId": "p1", "representativeCode": "000001",
+            "shares": [{
+                "code": "000001", "netValue": 1.2, "lastNetValueDate": "2026-08-20",
+                "scaleYi": 12, "establishedDate": "2026-02-01", "initialScaleYi": 10,
+            }],
+        }
+        result = enrich_product_metrics([product], [], date(2026, 8, 20))[0]
+        self.assertEqual(result["baselineScaleType"], "成立规模")
+        self.assertEqual(result["scaleNetIncreaseYi"], 2)
+        self.assertEqual(result["scaleGrowthPercent"], 20)
+        self.assertEqual(result["navGrowthPercent"], 0)
+
+    def test_updates_drawdown_and_preserves_year_baseline(self):
+        current = {
+            "productId": "p1", "representativeCode": "000001",
+            "shares": [{"code": "000001", "netValue": 0.9, "lastNetValueDate": "2026-08-20", "scaleYi": 13}],
+        }
+        previous = [{
+            "productId": "p1", "metricsAsOf": "2026-08-19", "metricsCoverageStart": "2026-01-02",
+            "representativeNav": 1.1, "ytdStartNav": 1, "ytdPeakNav": 1.2,
+            "maxDrawdownPercent": -8.3333, "drawdownStartDate": "2026-06-01", "drawdownEndDate": "2026-07-01",
+            "baselineScaleYi": 10, "baselineScaleDate": "2025-12-31", "baselineScaleType": "去年年末规模",
+        }]
+        result = enrich_product_metrics([current], previous, date(2026, 8, 20))[0]
+        self.assertEqual(result["scaleNetIncreaseYi"], 3)
+        self.assertEqual(result["navGrowthPercent"], -10)
+        self.assertEqual(result["maxDrawdownPercent"], -25)
+        self.assertEqual(result["metricsCoverage"], "全年")
+
     def test_builds_compatible_share_product_and_review_payloads(self):
         active = [
             {"code": "000001", "name": "示例基金A", "type": "混合型", "netValue": 1.0},
@@ -172,6 +222,7 @@ class ProductOutputPayloadTests(unittest.TestCase):
         self.assertIn("python -m pytest scripts/test_fund_product_model.py scripts/test_update_active_funds.py -q", workflow)
         self.assertIn("public/fund_products.json", workflow)
         self.assertIn("public/funds_grouping_review.json", workflow)
+        self.assertIn("validate_published_freshness.py public/fund_products.json", workflow)
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,6 +1,16 @@
 from datetime import datetime, timezone
 
-from update_issuance_insights import build_payload
+from update_issuance_insights import _optional_records, build_payload
+
+
+def test_optional_sina_scale_failure_degrades_without_aborting(capsys):
+    def returns_html_parser_error():
+        raise ValueError("Can not decode value starting with character '<'")
+
+    assert _optional_records(returns_html_parser_error, "新浪基金规模") == []
+    output = capsys.readouterr().out
+    assert "新浪基金规模: 获取失败，已降级跳过" in output
+    assert "ValueError" in output
 
 
 def test_builds_product_level_rankings_and_current_suspensions():

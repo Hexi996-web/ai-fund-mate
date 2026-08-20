@@ -64,6 +64,11 @@ export const normalizeFunds = (payload) => {
       scaleSource: normalizeText(firstPresent(record, ['scaleSource', 'latestScaleSource'])),
     }
 
+    const establishedDate = normalizeDate(firstPresent(record, ['establishedDate', 'launchDate']))
+    const initialScaleYi = normalizeNumber(firstPresent(record, ['initialScaleYi', 'raisedScaleYi']))
+    if (establishedDate !== null) fund.establishedDate = establishedDate
+    if (initialScaleYi !== null) fund.initialScaleYi = initialScaleYi
+
     if (fund.code === null || fund.name === null || isInactive(fund) || seenCodes.has(fund.code)) return funds
     seenCodes.add(fund.code)
     funds.push(fund)
@@ -79,6 +84,23 @@ const classifyText = (value) => {
   if (/\u6df7\u5408|mixed/.test(text)) return '\u6df7\u5408\u578b'
   if (/\u503a\u5238|bond/.test(text)) return '\u503a\u5238\u578b'
   return null
+}
+
+export const getFundCategories = (fund) => {
+  const type = String(fund?.type ?? '').toLowerCase()
+  const name = String(fund?.name ?? '').toLowerCase()
+  const text = `${type} ${name}`
+  const categories = new Set()
+  if (/^qdii|海外|全球|纳斯达克|标普|恒生/.test(text)) categories.add('QDII')
+  if (/^fof|qdii-fof|基金中基金/.test(text)) categories.add('FOF')
+  if (/reits?|不动产投资信托|基础设施/.test(text)) categories.add('REITs')
+  if (/^商品|qdii-商品|黄金|白银|原油|豆粕|有色金属|能源化工/.test(text)) categories.add('商品')
+  if (/^指数型|etf|联接|index/.test(text)) categories.add('指数型')
+  if (/^货币型/.test(type)) categories.add('货币型')
+  if (/^股票型/.test(type)) categories.add('股票型')
+  if (/^混合型/.test(type)) categories.add('混合型')
+  if (/^债券型/.test(type)) categories.add('债券型')
+  return [...categories]
 }
 
 export const classifyFund = (fund) => (

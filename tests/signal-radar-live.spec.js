@@ -22,6 +22,6 @@ const snapshot = {
 test('does not expose the raw signal feed', async ({ page }) => {
   await page.route('**/data/signal-radar.json', (route) => route.fulfill({ json: snapshot }))
   await page.goto('/')
-  await page.getByRole('button', { name: '板块机会' }).click()
+  await page.getByRole('button', { name: '行情预测' }).click()
   await expect(page.locator('[data-signal-id]')).toHaveCount(0)
 })

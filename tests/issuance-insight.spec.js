@@ -1,77 +1,61 @@
 import { expect, test } from '@playwright/test'
 
-test('shows issuance rankings and current purchase suspensions on the home workspace', async ({ page }) => {
-  await page.goto('/')
-  await expect(page.getByRole('button', { name: '发行洞察', exact: true })).toHaveAttribute('aria-current', 'page')
-  await expect(page.getByRole('heading', { name: '基金发行市场洞察' })).toBeVisible()
-  await expect(page.getByRole('heading', { name: '发行成功榜' })).toBeVisible()
-  await expect(page.getByRole('heading', { name: '发行后规模追踪' })).toBeVisible()
-  await expect(page.getByLabel('历史覆盖与有效可比四象限')).toContainText('有历史×有效可比')
-  await expect(page.getByText('增长规律分析')).toBeVisible()
-  const growthSection = page.locator('#post-launch-scale')
-  await expect(growthSection.getByRole('tab', { name: '基金公司' })).toBeVisible()
-  await growthSection.getByRole('tab', { name: '基金公司' }).click()
-  await expect(growthSection.locator('.growth-dimension-summary')).toContainText('有效可比产品')
-  const firstCompanyCard = growthSection.locator('.growth-patterns article').first()
-  await firstCompanyCard.getByRole('button', { name: /查看全部\d+个样本/ }).click()
-  await expect(page.locator('.growth-sample-detail')).toBeVisible()
-  await expect(page.locator('.growth-sample-detail tbody tr')).not.toHaveCount(0)
-  await expect(page.locator('.growth-sample-detail .median-sample')).not.toHaveCount(0)
-  await expect(page.getByLabel('规模增长排序')).toHaveValue('scaleGrowthPercent')
-  await expect(page.getByRole('heading', { name: '暂停申购结构分析' })).toBeVisible()
-  await expect(page.getByRole('heading', { name: '未来发行趋势' })).toBeVisible()
-  await expect(page.getByRole('heading', { name: '今年异常退出跟踪' })).toBeVisible()
-  await expect(page.locator('#purchase-suspensions').getByText(/当前公开快照仅提供暂停申购状态/)).toBeVisible()
-  await expect(page.locator('#purchase-suspensions').getByRole('tab', { name: '规模区间' })).toBeVisible()
-  await page.getByRole('tab', { name: '今年以来' }).click()
-  await page.getByText(/展开当前窗口明细/).click()
-  await expect(page.locator('tbody tr').first()).toBeVisible()
-  await expect(page.getByLabel('排序指标')).toHaveValue('establishedDate')
-  await page.getByLabel('排序指标').selectOption('latestScaleYi')
-  await expect(page.locator('tbody tr').first()).not.toContainText('待披露')
-  await expect(page.locator('.issuance-panel').first().getByText(/共 1,?\d{3} 条 · 第 1\//)).toBeVisible()
-  await page.getByRole('button', { name: '下一页' }).first().click()
-  await expect(page.locator('.issuance-panel').first().getByText(/第 2\//)).toBeVisible()
-  await expect(page.locator('tbody .rank-number').first()).toHaveText('21')
+const makeProduct = (code, name, type, establishedDate, scale) => ({
+  productId: `prd_${code}`, productName: name, type, representativeCode: code,
+  shareCount: 1, groupingConfidence: 'high', establishedDate,
+  currentScaleYi: scale, scaleNetIncreaseYi: scale - 1, scaleGrowthPercent: scale * 2,
+  navGrowthPercent: scale / 2, maxDrawdownPercent: -scale / 3,
+  shares: [{ code, name, type, netValue: 1, dailyChangePercent: 0, lastNetValueDate: '2026-08-20', purchaseStatus: '开放申购', redemptionStatus: '开放赎回', operationStatus: 'active', establishedDate, shareClass: 'DEFAULT' }],
 })
 
-test('sorts growth groups by sample count and sample products by growth descending', async ({ page }) => {
-  await page.goto('/#future-issuance')
-  const counts = await page.locator('#post-launch-scale .growth-patterns article > span').allTextContents()
-  const samples = counts.map((text) => Number(text.match(/(\d+)个样本/)?.[1] ?? 0))
-  expect(samples).toEqual([...samples].sort((left, right) => right - left))
+const products = [
+  makeProduct('000001', '八月成立股票', '股票型', '2026-08-01', 10),
+  makeProduct('000002', '六月成立债券', '债券型-长债', '2026-06-01', 30),
+  makeProduct('000003', '二月成立混合', '混合型-偏股', '2026-02-01', 20),
+  makeProduct('000004', '上年成立指数', '指数型-股票', '2025-12-31', 40),
+]
 
-  await page.locator('#post-launch-scale .growth-patterns article').first().getByRole('button', { name: /查看全部\d+个样本/ }).click()
-  await expect(page.locator('.growth-sample-detail')).toContainText('按增长率从高到低排列')
-  const rates = await page.locator('.growth-sample-detail tbody tr td:nth-child(7)').allTextContents()
-  const values = rates.map((text) => Number(text.replace('%', '')))
-  expect(values).toEqual([...values].sort((left, right) => right - left))
-  await expect(page.locator('#future-issuance')).not.toContainText('发行规模')
+test.beforeEach(async ({ page }) => {
+  await page.route('**/fund_products.json', (route) => route.fulfill({ json: {
+    updateTime: '2026-08-20 06:00:00', dataDate: '2026-08-20',
+    productTotal: products.length, shareTotal: products.length, products,
+  } }))
+})
+
+test('shows only newly established funds in quarter and year-to-date databases', async ({ page }) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: '发行洞察', exact: true }).click()
+  await expect(page.getByRole('button', { name: '发行洞察', exact: true })).toHaveAttribute('aria-current', 'page')
+  await expect(page.getByRole('heading', { name: '发行洞察' })).toBeVisible()
+  await expect(page.getByRole('tab', { name: /近三个月/ })).toHaveAttribute('aria-selected', 'true')
+  await expect(page.locator('.meta-row')).toContainText('基金产品 2 只')
+  await expect(page.locator('.active-scope')).toContainText('2026-05-20—2026-08-20')
+  await expect(page.locator('.fund-product-table tbody > tr:not(.fund-product-share-detail)')).toHaveCount(2)
+  await expect(page.locator('body')).not.toContainText('上年成立指数')
+
+  await page.getByRole('tab', { name: /本年至今/ }).click()
+  await expect(page.locator('.meta-row')).toContainText('基金产品 3 只')
+  await expect(page.locator('.active-scope')).toContainText('2026-01-01—2026-08-20')
+  await expect(page.locator('body')).toContainText('二月成立混合')
+  await expect(page.locator('body')).not.toContainText('上年成立指数')
+})
+
+test('reuses market-analysis categories, five sorts, and current-scale default', async ({ page }) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: '发行洞察', exact: true }).click()
+  const sort = page.getByLabel('基金排序方式')
+  await expect(sort).toHaveValue('scale-desc')
+  expect(await sort.locator('option').evaluateAll((options) => options.map((option) => option.value))).toEqual([
+    'scale-desc', 'scale-net-desc', 'scale-growth-desc', 'nav-growth-desc', 'drawdown-desc',
+  ])
+  await expect(page.locator('.fund-product-table tbody > tr').first()).toContainText('六月成立债券')
+  await page.getByRole('button', { name: '股票型', exact: true }).click()
+  await expect(page.locator('.result-count')).toContainText('当前匹配 1 只基金产品')
 })
 
 test('keeps the requested top-level workspace order', async ({ page }) => {
   await page.goto('/')
   await expect(page.locator('.workspace-nav button').allTextContents()).resolves.toEqual([
-    '发行洞察', '板块机会', '基金产品库',
+    '市场分析', '行情预测', '发行洞察',
   ])
-})
-
-test('summary cards navigate to the matching issuance details', async ({ page }) => {
-  await page.goto('/')
-
-  await page.getByRole('button', { name: '查看近一周成立明细' }).click()
-  await expect(page).toHaveURL(/#established-week$/)
-  await expect(page.getByRole('tab', { name: '近一周' })).toHaveAttribute('aria-selected', 'true')
-
-  await page.getByRole('button', { name: '查看认购中明细' }).click()
-  await expect(page).toHaveURL(/#ongoing-offerings$/)
-  await expect(page.locator('#ongoing-offerings')).toBeInViewport()
-
-  await page.getByRole('button', { name: '查看待发行预告明细' }).click()
-  await expect(page).toHaveURL(/#upcoming-offerings$/)
-  await expect(page.getByText(/待发行预告 · \d+只产品/)).toBeInViewport()
-
-  await page.getByRole('button', { name: '查看当前暂停申购明细' }).click()
-  await expect(page).toHaveURL(/#purchase-suspensions$/)
-  await expect(page.getByRole('heading', { name: '暂停申购结构分析' })).toBeInViewport()
 })

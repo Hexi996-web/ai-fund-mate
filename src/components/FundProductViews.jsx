@@ -9,6 +9,8 @@ import {
 
 const shareLabel = (value) => value === 'DEFAULT' ? '默认' : value === 'RMB' ? '人民币' : value
 const formatScale = (value) => value === null || value === undefined ? '待披露' : `${Number(value).toLocaleString('zh-CN', { maximumFractionDigits: 2 })} 亿元`
+const formatPercent = (value, missing = '待积累') => value === null || value === undefined ? missing : `${Number(value).toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%`
+const metricClass = (value) => value === null || value === undefined ? '' : value > 0 ? 'change--up' : value < 0 ? 'change--down' : ''
 
 function ShareRows({ product, matchedShareCodes }) {
   return (
@@ -30,57 +32,6 @@ function ShareRows({ product, matchedShareCodes }) {
   )
 }
 
-function ProductSummary({ product }) {
-  const share = product.representativeShare
-  return (
-    <>
-      <div className="fund-card__heading">
-        <h2>{product.productName}</h2>
-        <span>{product.representativeCode}</span>
-      </div>
-      <p className="representative-share">
-        代表份额：{shareLabel(share.shareClass)}类（{share.code}）
-      </p>
-      <div className="fund-product-metrics">
-        <span>{formatValue(product.type)}</span>
-        <span>净值 {formatNetValue(share.netValue)}</span>
-        <span className={getChangeClass(share.dailyChangePercent)} style={getChangeStyle(share.dailyChangePercent)}>
-          {formatDailyChange(share.dailyChangePercent)}
-        </span>
-        <span>{formatValue(share.lastNetValueDate)}</span>
-        <span title="各份额最新公开份额×单位净值">估算规模 {formatScale(product.scaleYi)} · {product.scaleQuality}级</span>
-      </div>
-    </>
-  )
-}
-
-export const FundProductCards = memo(function FundProductCards({
-  products, expandedIds, matchedShareCodes, onToggle,
-}) {
-  return (
-    <section className="fund-grid" aria-label="基金产品卡片">
-      {products.map((product) => {
-        const expanded = expandedIds.has(product.productId)
-        return (
-          <article className="fund-card fund-product-card" key={product.productId}>
-            <ProductSummary product={product} />
-            <button
-              className="share-toggle"
-              type="button"
-              aria-expanded={expanded}
-              aria-controls={`shares-${product.productId}`}
-              onClick={() => onToggle(product.productId)}
-            >
-              {expanded ? '收起份额' : `查看${product.shareCount}个份额`}
-            </button>
-            {expanded ? <ShareRows product={product} matchedShareCodes={matchedShareCodes} /> : null}
-          </article>
-        )
-      })}
-    </section>
-  )
-})
-
 export const FundProductTable = memo(function FundProductTable({
   products, expandedIds, matchedShareCodes, onToggle,
 }) {
@@ -88,22 +39,26 @@ export const FundProductTable = memo(function FundProductTable({
     <div className="fund-table-wrap">
       <table className="fund-table fund-product-table">
         <caption className="sr-only">基金产品列表</caption>
-        <thead><tr><th>基金产品</th><th>代表份额</th><th>类型</th><th>净值</th><th>日涨跌幅</th><th>估算规模</th><th>份额</th></tr></thead>
+        <thead><tr><th>排名</th><th>基金产品</th><th>成立日期</th><th>代表份额 / 代码</th><th>单位净值</th><th>当前规模</th><th>规模净增额</th><th>规模增长率</th><th>净值增长</th><th>最大回撤</th><th>份额</th></tr></thead>
         <tbody>
-          {products.map((product) => {
+          {products.map((product, index) => {
             const share = product.representativeShare
             const expanded = expandedIds.has(product.productId)
             return [
               <tr key={product.productId}>
-                <th scope="row">{product.productName}</th>
+                <td className="rank-cell">{index + 1}</td>
+                <th scope="row">{product.productName}<span className="cell-note">{formatValue(product.type)}</span></th>
+                <td>{product.establishedDate || '待补充'}</td>
                 <td>{shareLabel(share.shareClass)}类（{share.code}）</td>
-                <td>{formatValue(product.type)}</td>
-                <td>{formatNetValue(share.netValue)}</td>
-                <td>{formatDailyChange(share.dailyChangePercent)}</td>
-                <td>{formatScale(product.scaleYi)}<span className="cell-note">{product.scaleQuality}级 · 净值日 {product.scaleDate || '待补全'}</span></td>
+                <td>{formatNetValue(share.netValue)}<span className="cell-note">{formatDailyChange(share.dailyChangePercent)} · {share.lastNetValueDate || '待更新'}</span></td>
+                <td>{formatScale(product.currentScaleYi)}<span className="cell-note">{product.scaleQuality}级 · {product.scaleDate || '待补全'}</span></td>
+                <td className={metricClass(product.scaleNetIncreaseYi)}>{formatScale(product.scaleNetIncreaseYi)}<span className="cell-note">基准：{product.baselineScaleType}</span></td>
+                <td className={metricClass(product.scaleGrowthPercent)}>{formatPercent(product.scaleGrowthPercent, '待基准')}</td>
+                <td className={metricClass(product.navGrowthPercent)}>{formatPercent(product.navGrowthPercent)}<span className="cell-note">{product.metricsCoverage}</span></td>
+                <td className={metricClass(product.maxDrawdownPercent)}>{formatPercent(product.maxDrawdownPercent)}<span className="cell-note">{product.drawdownStartDate && product.drawdownEndDate ? `${product.drawdownStartDate}—${product.drawdownEndDate}` : product.metricsCoverage}</span></td>
                 <td><button className="share-toggle" type="button" aria-expanded={expanded} aria-controls={`shares-${product.productId}`} onClick={() => onToggle(product.productId)}>{expanded ? '收起份额' : `查看${product.shareCount}个份额`}</button></td>
               </tr>,
-              expanded ? <tr className="fund-product-share-detail" key={`${product.productId}-shares`}><td colSpan="7"><ShareRows product={product} matchedShareCodes={matchedShareCodes} /></td></tr> : null,
+              expanded ? <tr className="fund-product-share-detail" key={`${product.productId}-shares`}><td colSpan="11"><ShareRows product={product} matchedShareCodes={matchedShareCodes} /></td></tr> : null,
             ]
           })}
         </tbody>

@@ -1,4 +1,12 @@
-import { classifyFund, normalizeFunds } from './fundModel.js'
+import { getFundCategories, normalizeFunds } from './fundModel.js'
+
+const normalizeMetric = (value) => {
+  if (value === null || value === undefined || value === '') return null
+  const number = Number(value)
+  return Number.isFinite(number) ? number : null
+}
+
+const normalizeProductDate = (value) => /^\d{4}-\d{2}-\d{2}$/.test(String(value ?? '')) ? String(value) : null
 
 const normalizeCode = (value) => {
   const code = String(value ?? '').trim()
@@ -44,6 +52,21 @@ export const normalizeProducts = (payload) => {
       scaleDate: shares.map((share) => share.scaleDate).filter(Boolean).sort().at(-1) ?? null,
       scaleStatus: shares.some((share) => share.scaleYi !== null) ? '各份额估算规模合计' : '待披露',
       scaleQuality: shares.some((share) => share.scaleQuality === 'U') ? 'U' : shares.some((share) => share.scaleQuality === 'C') ? 'C' : shares.some((share) => share.scaleQuality === 'B') ? 'B' : shares.some((share) => share.scaleQuality === 'A') ? 'A' : 'U',
+      establishedDate: normalizeProductDate(product.establishedDate) ?? shares.map((share) => share.establishedDate).filter(Boolean).sort()[0] ?? null,
+      initialScaleYi: normalizeMetric(product.initialScaleYi),
+      currentScaleYi: normalizeMetric(product.currentScaleYi) ?? (shares.some((share) => share.scaleYi !== null) ? shares.reduce((sum, share) => sum + (share.scaleYi ?? 0), 0) : null),
+      baselineScaleYi: normalizeMetric(product.baselineScaleYi),
+      baselineScaleDate: normalizeProductDate(product.baselineScaleDate),
+      baselineScaleType: product.baselineScaleType ?? '待补充去年年末规模',
+      scaleNetIncreaseYi: normalizeMetric(product.scaleNetIncreaseYi),
+      scaleGrowthPercent: normalizeMetric(product.scaleGrowthPercent),
+      navGrowthPercent: normalizeMetric(product.navGrowthPercent),
+      maxDrawdownPercent: normalizeMetric(product.maxDrawdownPercent),
+      drawdownStartDate: normalizeProductDate(product.drawdownStartDate),
+      drawdownEndDate: normalizeProductDate(product.drawdownEndDate),
+      metricsCoverageStart: normalizeProductDate(product.metricsCoverageStart),
+      metricsAsOf: normalizeProductDate(product.metricsAsOf),
+      metricsCoverage: product.metricsCoverage ?? '待积累',
     }
   }).filter(Boolean)
 }
@@ -60,16 +83,11 @@ export const fallbackProductsFromShares = (payload) => normalizeFunds(payload).m
 }))
 
 const SORT_FIELDS = {
-  'change-desc': ['dailyChangePercent', -1],
-  'change-asc': ['dailyChangePercent', 1],
-  'nav-desc': ['netValue', -1],
-  'nav-asc': ['netValue', 1],
-  'scale-desc': ['scaleYi', -1],
-  'scale-asc': ['scaleYi', 1],
-  'date-desc': ['lastNetValueDate', -1],
-  'date-asc': ['lastNetValueDate', 1],
-  'code-asc': ['code', 1],
-  'code-desc': ['code', -1],
+  'scale-desc': ['currentScaleYi', -1],
+  'scale-net-desc': ['scaleNetIncreaseYi', -1],
+  'scale-growth-desc': ['scaleGrowthPercent', -1],
+  'nav-growth-desc': ['navGrowthPercent', -1],
+  'drawdown-desc': ['maxDrawdownPercent', -1],
 }
 
 const compare = (left, right, direction) => {
@@ -93,14 +111,15 @@ export const selectProducts = (products, options = {}) => {
       : []
     shareMatches.forEach((share) => matchedShareCodes.add(share.code))
     const categoryMatch = !options.category || options.category === '全部' || options.category === 'all'
-      || classifyFund(product.representativeShare) === options.category
+      || getFundCategories({ type: product.type, name: product.productName }).includes(options.category)
     return (productMatch || shareMatches.length > 0) && categoryMatch
   })
   const sort = SORT_FIELDS[options.sortMode]
   const sorted = !sort ? [...selected] : [...selected].sort((a, b) => {
     const [field, direction] = sort
-    const left = field === 'code' ? a.representativeCode : field === 'scaleYi' ? a.scaleYi : a.representativeShare?.[field]
-    const right = field === 'code' ? b.representativeCode : field === 'scaleYi' ? b.scaleYi : b.representativeShare?.[field]
+    const productFields = new Set(['currentScaleYi', 'scaleNetIncreaseYi', 'scaleGrowthPercent', 'navGrowthPercent', 'maxDrawdownPercent'])
+    const left = field === 'code' ? a.representativeCode : productFields.has(field) ? a[field] : a.representativeShare?.[field]
+    const right = field === 'code' ? b.representativeCode : productFields.has(field) ? b[field] : b.representativeShare?.[field]
     return compare(left, right, direction)
   })
   return { products: sorted, matchedShareCodes }

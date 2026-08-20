@@ -37,7 +37,7 @@ const activeFunds = [
 ]
 
 const openFundLibrary = async (page) => {
-  await page.getByRole('button', { name: '基金产品库', exact: true }).click()
+  await page.getByRole('button', { name: '市场分析', exact: true }).click()
   await page.locator('.result-count').waitFor({ state: 'visible' })
 }
 
@@ -75,9 +75,9 @@ test('mobile fund flow stays compact and persists the selected view', async ({ p
   await openFundLibrary(page)
   await expect(page).toHaveTitle('AI虚拟产品经理')
   await expect(page.locator('.meta-row').first()).toContainText('数据日期：2026-08-10')
-  await expect(page.locator('.fund-card')).toHaveCount(activeFunds.length)
+  await expect(page.locator('.fund-product-table tbody > tr:not(.fund-product-share-detail)')).toHaveCount(activeFunds.length)
   await expect(page.locator('vite-error-overlay, nextjs-portal, #webpack-dev-server-client-overlay')).toHaveCount(0)
-  await expect(page.getByRole('button', { name: '卡片', exact: true })).toHaveAttribute('aria-pressed', 'true')
+  await expect(page.getByRole('button', { name: '卡片', exact: true })).toHaveCount(0)
 
   const geometry = await page.evaluate(() => {
     const buttons = [...document.querySelectorAll('.category-filter')]
@@ -97,8 +97,8 @@ test('mobile fund flow stays compact and persists the selected view', async ({ p
     }
   })
 
-  expect(geometry.rowCount).toBe(2)
-  expect(geometry.categoryHeight).toBeLessThan(130)
+  expect(geometry.rowCount).toBe(3)
+  expect(geometry.categoryHeight).toBeLessThan(180)
   expect(geometry.rowGap).toBeGreaterThanOrEqual(0)
   expect(geometry.rowGap).toBeLessThanOrEqual(16)
   expect(geometry.categoryToToolbarGap).toBeGreaterThanOrEqual(0)
@@ -108,28 +108,26 @@ test('mobile fund flow stays compact and persists the selected view', async ({ p
 
   await page.getByRole('button', { name: '股票型', exact: true }).click()
   await page.getByPlaceholder('搜索基金名称或代码').fill('消费')
-  await expect(page.locator('.result-count')).toHaveText('当前显示 2 只基金产品')
-  await page.getByLabel('基金排序方式').selectOption('change-desc')
-  await expect(page.locator('.fund-card h2')).toHaveText(['消费成长指数B', '消费先锋股票A'])
+  await expect(page.locator('.result-count')).toHaveText('当前匹配 1 只基金产品 · 仅展示前30支产品')
+  await page.getByLabel('基金排序方式').selectOption('scale-net-desc')
+  await expect(page.locator('.fund-product-table tbody th[scope="row"]')).toHaveText(['消费先锋股票A股票型'])
 
-  await page.getByRole('button', { name: '列表', exact: true }).click()
   await expect(page.locator('.fund-table')).toBeVisible()
   await page.reload()
   await openFundLibrary(page)
-  await expect(page.getByRole('button', { name: '列表', exact: true })).toHaveAttribute('aria-pressed', 'true')
-  await expect(page.getByRole('button', { name: '股票型', exact: true })).toHaveAttribute('aria-pressed', 'true')
-  await expect(page.getByLabel('基金排序方式')).toHaveValue('change-desc')
+  await expect(page.getByRole('button', { name: '列表', exact: true })).toHaveCount(0)
+  await expect(page.getByRole('button', { name: '全部', exact: true })).toHaveAttribute('aria-pressed', 'true')
+  await expect(page.getByLabel('基金排序方式')).toHaveValue('scale-desc')
   await expect(page.locator('.fund-table tbody tr th[scope="row"]')).toHaveText([
-    '消费成长指数B',
-    '消费先锋股票A',
-    '医疗创新股票C',
+    '消费先锋股票A股票型',
+    '消费成长指数B指数型-股票',
+    '医疗创新股票C股票型',
+    '稳健配置混合混合型',
+    '安心收益债券债券型',
+    '现金管理货币货币型',
+    '养老目标FOF基金中基金',
+    '另类策略基金商品型',
   ])
-
-  await page.getByRole('button', { name: '卡片', exact: true }).click()
-  await page.reload()
-  await openFundLibrary(page)
-  await expect(page.getByRole('button', { name: '卡片', exact: true })).toHaveAttribute('aria-pressed', 'true')
-  await expect(page.locator('.fund-card')).toHaveCount(3)
 
   await page.getByPlaceholder('搜索基金名称或代码').fill('不存在的基金XYZ')
   await expect(page.getByRole('heading', { name: '没有匹配结果' })).toBeVisible()
@@ -149,29 +147,15 @@ test('mobile fund flow stays compact and persists the selected view', async ({ p
   await page.screenshot({ path: path.join(os.tmpdir(), 'ai-fund-mate-mobile-e2e-green.png') })
 })
 
-const sortCases = [
-  ['default', ['000101', '000102', '000103', '000201', '000301', '000401', '000501', '000601']],
-  ['change-desc', ['000102', '000101', '000501', '000201', '000301', '000401', '000103', '000601']],
-  ['change-asc', ['000103', '000401', '000301', '000201', '000501', '000101', '000102', '000601']],
-  ['nav-desc', ['000102', '000501', '000201', '000101', '000301', '000401', '000103', '000601']],
-  ['nav-asc', ['000103', '000401', '000301', '000101', '000201', '000501', '000102', '000601']],
-  ['date-desc', ['000102', '000103', '000201', '000301', '000401', '000101', '000501', '000601']],
-  ['date-asc', ['000101', '000501', '000102', '000103', '000201', '000301', '000401', '000601']],
-  ['code-desc', ['000601', '000501', '000401', '000301', '000201', '000103', '000102', '000101']],
-  ['code-asc', ['000101', '000102', '000103', '000201', '000301', '000401', '000501', '000601']],
-]
-
-test('every sort direction orders real fields semantically and keeps null values last', async ({ page }) => {
+test('only exposes the five approved descending product metrics', async ({ page }) => {
   await routeActiveFunds(page)
   await clearStorage(page)
   await page.reload()
   await openFundLibrary(page)
 
-  const renderedCodes = page.locator('.fund-card__heading > span')
-  for (const [mode, expectedCodes] of sortCases) {
-    await page.getByLabel('基金排序方式').selectOption(mode)
-    await expect(renderedCodes).toHaveText(expectedCodes)
-  }
+  expect(await page.getByLabel('基金排序方式').locator('option').evaluateAll((options) => options.map((option) => option.value))).toEqual([
+    'scale-desc', 'scale-net-desc', 'scale-growth-desc', 'nav-growth-desc', 'drawdown-desc',
+  ])
 })
 test('snapshot data date is truthful and date sorting disappears when all real dates are missing', async ({ page }) => {
   const noDateFunds = activeFunds.slice(0, 2).map((fund) => ({ ...fund, lastNetValueDate: null }))
@@ -190,7 +174,7 @@ test('snapshot data date is truthful and date sorting disappears when all real d
   await openFundLibrary(page)
 
   await expect(page.locator('.meta-row').first()).toContainText('数据日期：2026-08-07')
-  await expect(page.getByLabel('基金排序方式')).toHaveValue('default')
+  await expect(page.getByLabel('基金排序方式')).toHaveValue('scale-desc')
   await expect(page.getByLabel('基金排序方式').locator('option[value="date-desc"]')).toHaveCount(0)
   await expect(page.getByLabel('基金排序方式').locator('option[value="date-asc"]')).toHaveCount(0)
 })
@@ -209,9 +193,9 @@ test('active-share fallback warns and renders unavailable real fields explicitly
   await page.reload()
   await openFundLibrary(page)
   await expect(page.locator('.meta-row').first()).toContainText('数据日期：2026-08-06')
-  await expect(page.locator('.fund-product-card')).toHaveCount(1)
-  await expect(page.locator('.fund-card__heading > span')).toHaveText('123456')
+  await expect(page.locator('.fund-product-table tbody > tr')).toHaveCount(1)
+  await expect(page.locator('.fund-product-table tbody > tr')).toContainText('123456')
   await expect(page.locator('.cache-warning')).toContainText('降级数据源')
-  await expect(page.locator('.fund-product-card')).toContainText('净值 --')
+  await expect(page.locator('.fund-product-table')).toContainText('--')
   expect(consoleProblems).toEqual([])
 })

@@ -10,6 +10,7 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Iterable
 from urllib.request import Request, urlopen
+from zoneinfo import ZoneInfo
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -17,6 +18,7 @@ PUBLIC_DIR = ROOT / "public"
 OUTPUT = PUBLIC_DIR / "issuance_insights.json"
 ACTIVE_FUNDS = PUBLIC_DIR / "funds_active.json"
 EXCLUDED_FUNDS = PUBLIC_DIR / "funds_excluded.json"
+SHANGHAI = ZoneInfo("Asia/Shanghai")
 
 
 def _text(row: dict[str, Any], *keys: str) -> str | None:
@@ -648,6 +650,18 @@ def _records(callable_, *args, **kwargs) -> list[dict[str, Any]]:
     return frame.where(frame.notna(), None).to_dict(orient="records")
 
 
+def _optional_records(callable_, label: str, *args, **kwargs) -> list[dict[str, Any]]:
+    """Keep an optional enrichment source from aborting the daily snapshot."""
+    if callable_ is None:
+        print(f"{label}: 接口不可用，跳过可选补充")
+        return []
+    try:
+        return _records(callable_, *args, **kwargs)
+    except Exception as error:  # third-party adapters raise multiple parser/network exception types
+        print(f"{label}: 获取失败，已降级跳过（{type(error).__name__}: {error}）")
+        return []
+
+
 def main() -> None:
     import akshare as ak
 
@@ -657,12 +671,13 @@ def main() -> None:
     offering_callable = getattr(ak, "fund_new_found_ths", None)
     offerings = _records(offering_callable, symbol="全部") if offering_callable else []
     scale_callable = getattr(ak, "fund_scale_open_sina", None)
-    scales = _records(scale_callable) if scale_callable else []
-    current_year = str(datetime.now(timezone.utc).year)
+    scales = _optional_records(scale_callable, "新浪基金规模")
+    now = datetime.now(SHANGHAI)
+    current_year = str(now.year)
     scale_codes = [_code(row.get("基金代码")) for row in established if str(row.get("成立日期", "")).startswith(current_year)]
     reported_scales = fetch_eastmoney_reported_scales(code for code in scale_codes if code)
     market_rows = _records(ak.fund_open_fund_rank_em, symbol="全部")
-    payload = build_payload(established, offerings, active_payload, datetime.now(timezone.utc), scales, reported_scales, market_rows, risk_payload)
+    payload = build_payload(established, offerings, active_payload, now, scales, reported_scales, market_rows, risk_payload)
     if not payload["rankings"]["ytd"] and not payload["offerings"]["ongoing"]:
         raise RuntimeError("新发基金数据为空，停止覆盖现有发行洞察快照")
     temporary = OUTPUT.with_suffix(".json.tmp")

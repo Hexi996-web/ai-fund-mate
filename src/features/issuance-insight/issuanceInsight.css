@@ -1,3 +1,58 @@
+.issuance-database-shell {
+  padding: 36px 0 70px;
+  background: #f7f9fc;
+}
+
+.issuance-database-heading,
+.issuance-window-tabs {
+  width: min(1400px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.issuance-database-heading h1 {
+  margin: 0;
+  color: #172036;
+  font-size: 34px;
+}
+
+.issuance-database-heading p {
+  margin: 8px 0 0;
+  color: #66758d;
+}
+
+.issuance-window-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.issuance-window-tabs button {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 68px;
+  padding: 14px 18px;
+  border: 1px solid #d8deea;
+  border-radius: 10px;
+  background: #fff;
+  color: #65738a;
+  text-align: left;
+}
+
+.issuance-window-tabs button strong { color: #2638c5; font-size: 17px; }
+.issuance-window-tabs button span { font-size: 12px; }
+.issuance-window-tabs button.active { border-color: #5368df; background: #edf0ff; box-shadow: inset 3px 0 #5368df; }
+.issuance-database-shell .app-shell { margin-top: 6px; }
+.issuance-database-shell .content { padding-top: 22px; }
+
+@media (max-width: 640px) {
+  .issuance-database-heading,
+  .issuance-window-tabs { width: calc(100% - 28px); }
+  .issuance-window-tabs { grid-template-columns: 1fr; }
+  .issuance-window-tabs button { align-items: flex-start; flex-direction: column; gap: 5px; }
+}
+
 .issuance-shell {
   width: min(1400px, calc(100% - 48px));
   margin: auto;

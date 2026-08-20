@@ -3,23 +3,20 @@ export const FUND_CATEGORIES = [
   '股票型',
   '混合型',
   '债券型',
-  '货币市场',
+  '货币型',
+  'QDII',
   'FOF',
-  '其他',
+  '指数型',
+  '商品',
+  'REITs',
 ]
 
 export const SORT_OPTIONS = [
-  { value: 'default', label: '默认顺序' },
-  { value: 'change-desc', label: '日涨跌幅：从高到低' },
-  { value: 'change-asc', label: '日涨跌幅：从低到高' },
-  { value: 'nav-desc', label: '单位净值：从高到低' },
-  { value: 'nav-asc', label: '单位净值：从低到高' },
-  { value: 'scale-desc', label: '估算规模：从大到小' },
-  { value: 'scale-asc', label: '估算规模：从小到大' },
-  { value: 'date-desc', label: '净值日期：从新到旧' },
-  { value: 'date-asc', label: '净值日期：从旧到新' },
-  { value: 'code-asc', label: '基金代码：升序' },
-  { value: 'code-desc', label: '基金代码：降序' },
+  { value: 'scale-desc', label: '当前规模 ↓' },
+  { value: 'scale-net-desc', label: '规模净增额 ↓' },
+  { value: 'scale-growth-desc', label: '规模增长率 ↓' },
+  { value: 'nav-growth-desc', label: '净值增长 ↓' },
+  { value: 'drawdown-desc', label: '最大回撤（较优）' },
 ]
 
 function SearchIcon() {
@@ -71,11 +68,7 @@ function CategoryFilters({ category, onCategoryChange, disabled }) {
   )
 }
 
-function FundToolbar({ sortMode, hasDateData, viewMode, onSortModeChange, onViewModeChange, disabled }) {
-  const availableSortOptions = hasDateData
-    ? SORT_OPTIONS
-    : SORT_OPTIONS.filter((option) => !option.value.startsWith('date-'))
-
+function FundToolbar({ sortMode, onSortModeChange, disabled }) {
   return (
     <div className="fund-toolbar">
       <label className="sort-control">
@@ -86,31 +79,11 @@ function FundToolbar({ sortMode, hasDateData, viewMode, onSortModeChange, onView
           disabled={disabled}
           aria-label="基金排序方式"
         >
-          {availableSortOptions.map((option) => (
+          {SORT_OPTIONS.map((option) => (
             <option value={option.value} key={option.value}>{option.label}</option>
           ))}
         </select>
       </label>
-      <div className="view-switch" role="group" aria-label="基金视图">
-        <button
-          type="button"
-          className={viewMode === 'list' ? 'view-switch__button view-switch__button--active' : 'view-switch__button'}
-          aria-pressed={viewMode === 'list'}
-          onClick={() => onViewModeChange('list')}
-          disabled={disabled}
-        >
-          列表
-        </button>
-        <button
-          type="button"
-          className={viewMode === 'card' ? 'view-switch__button view-switch__button--active' : 'view-switch__button'}
-          aria-pressed={viewMode === 'card'}
-          onClick={() => onViewModeChange('card')}
-          disabled={disabled}
-        >
-          卡片
-        </button>
-      </div>
     </div>
   )
 }
@@ -119,12 +92,9 @@ export function FundControls({
   query,
   category,
   sortMode,
-  hasDateData,
-  viewMode,
   onQueryChange,
   onCategoryChange,
   onSortModeChange,
-  onViewModeChange,
   disabled = false,
 }) {
   return (
@@ -134,10 +104,7 @@ export function FundControls({
         <CategoryFilters category={category} onCategoryChange={onCategoryChange} disabled={disabled} />
         <FundToolbar
           sortMode={sortMode}
-          hasDateData={hasDateData}
-          viewMode={viewMode}
           onSortModeChange={onSortModeChange}
-          onViewModeChange={onViewModeChange}
           disabled={disabled}
         />
       </div>
