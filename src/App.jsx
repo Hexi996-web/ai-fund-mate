@@ -234,6 +234,8 @@ export default function App({ initialQuery = '', onQueryChange, establishedWindo
           <DailyProductSummary
             products={scopedProducts}
             dataDate={dataDate}
+            establishedWindow={establishedWindow}
+            scopeStartDate={scopeStartDate}
             onSelectCategory={selectSummaryCategory}
             onSelectFund={selectSummaryFund}
           />

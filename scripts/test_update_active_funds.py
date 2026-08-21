@@ -180,6 +180,8 @@ class ProductOutputPayloadTests(unittest.TestCase):
         self.assertEqual(result["scaleNetIncreaseYi"], 2)
         self.assertEqual(result["scaleGrowthPercent"], 20)
         self.assertEqual(result["navGrowthPercent"], 0)
+        self.assertEqual(result["baselineNavType"], "成立")
+        self.assertEqual(result["baselineNavDate"], "2026-08-20")
 
     def test_updates_drawdown_and_preserves_year_baseline(self):
         current = {
@@ -195,6 +197,8 @@ class ProductOutputPayloadTests(unittest.TestCase):
         result = enrich_product_metrics([current], previous, date(2026, 8, 20))[0]
         self.assertEqual(result["scaleNetIncreaseYi"], 3)
         self.assertEqual(result["navGrowthPercent"], -10)
+        self.assertEqual(result["baselineNavType"], "年初")
+        self.assertEqual(result["baselineNavDate"], "2026-01-02")
         self.assertEqual(result["maxDrawdownPercent"], -25)
         self.assertEqual(result["metricsCoverage"], "全年")
 

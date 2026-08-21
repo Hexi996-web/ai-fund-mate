@@ -24,3 +24,16 @@ def test_calculates_full_2026_nav_scale_and_drawdown_metrics():
     assert result["maxDrawdownPercent"] == -25
     assert result["drawdownStartDate"] == "2026-03-01"
     assert result["drawdownEndDate"] == "2026-06-01"
+
+
+def test_prefers_unit_nav_when_adjusted_nav_has_a_different_quote_scale():
+    unit_nav = [[millis("2026-01-02"), 107.13], [millis("2026-08-20"), 110.6164]]
+    adjusted_nav = [[millis("2026-01-02"), 1.0713], [millis("2026-08-20"), 1.1062]]
+    content = (
+        f"var Data_ACWorthTrend = {json.dumps(adjusted_nav)};"
+        f"var Data_netWorthTrend = {json.dumps(unit_nav)};"
+    )
+    result = calculate_metrics(content)
+    assert result["ytdStartNav"] == 107.13
+    assert result["representativeNav"] == 110.6164
+    assert result["navGrowthPercent"] == 3.2544

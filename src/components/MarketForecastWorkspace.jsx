@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { buildMarketForecast } from '../data/marketForecast.js'
 import { DATA_STATUS_POLL_MS, fetchDataStatus } from '../data/dataStatus.js'
+import { ReportScope } from './ReportScope.jsx'
 
 const pct = (value) => Number.isFinite(value) ? `${value >= 0 ? '+' : ''}${value.toFixed(2)}%` : '—'
 const scale = (value) => Number.isFinite(value) ? `${value >= 0 ? '+' : ''}${value.toFixed(1)} 亿元` : '—'
@@ -73,6 +74,12 @@ export function MarketForecastWorkspace({ onOpenFundLibrary }) {
       <div><h1>行情预测</h1><p>以全市场公募基金的净值、回撤与规模变化为观测信号；数据日期 {forecast.dataDate}</p></div>
       <span>每日自动更新</span>
     </header>
+
+    <ReportScope label="行情预测数据口径" items={[
+      { term: '研究样本', description: '全部存续公募基金产品，不按成立日期筛选' },
+      { term: '观测区间', description: `净值增长、规模净增额和最大回撤为年初至${forecast.dataDate}累计；本年新成立产品从成立日起计算` },
+      { term: '信号性质', description: `基于${forecast.dataDate}收盘后可得数据每日重算，用于判断当前市场状态，不代表下一交易日收益预测` },
+    ]} />
 
     <section className="forecast-conclusion" aria-label="核心结论">
       <h2>核心结论</h2>

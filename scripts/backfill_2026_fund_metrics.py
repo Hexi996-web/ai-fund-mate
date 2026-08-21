@@ -10,6 +10,7 @@ the configured quality floor.
 from __future__ import annotations
 
 import argparse
+import http.client
 import json
 import re
 import time
@@ -17,19 +18,21 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
+from zoneinfo import ZoneInfo
 
 
 ROOT = Path(__file__).resolve().parents[1]
 PRODUCTS_PATH = ROOT / "public" / "fund_products.json"
-CACHE_PATH = ROOT / ".tmp" / "fund-metrics-2026-backfill.json"
+CACHE_PATH = ROOT / ".tmp" / "fund-metrics-2026-unit-nav-v2.json"
 TARGET_YEAR = 2026
+SHANGHAI_TZ = ZoneInfo("Asia/Shanghai")
 SCALE_PATTERN = re.compile(r"Data_fluctuationScale\s*=\s*(\{.*?\});")
 ADJUSTED_NAV_PATTERN = re.compile(r"Data_ACWorthTrend\s*=\s*(\[.*?\]);")
 UNIT_NAV_PATTERN = re.compile(r"Data_netWorthTrend\s*=\s*(\[.*?\]);")
 
 
 def _date_from_millis(value) -> str:
-    return datetime.fromtimestamp(float(value) / 1000, timezone.utc).date().isoformat()
+    return datetime.fromtimestamp(float(value) / 1000, SHANGHAI_TZ).date().isoformat()
 
 
 def _series(content: str, pattern: re.Pattern) -> list[tuple[str, float]]:
@@ -61,7 +64,10 @@ def _scale_series(content: str) -> list[tuple[str, float]]:
 
 
 def calculate_metrics(content: str) -> dict | None:
-    nav = _series(content, ADJUSTED_NAV_PATTERN) or _series(content, UNIT_NAV_PATTERN)
+    # Daily snapshots expose unit NAV, so the historical baseline must use the
+    # same series. Mixing adjusted/cumulative NAV with unit NAV can create a
+    # 100x discontinuity for exchange-traded bond funds.
+    nav = _series(content, UNIT_NAV_PATTERN) or _series(content, ADJUSTED_NAV_PATTERN)
     nav_2026 = [point for point in nav if point[0].startswith(f"{TARGET_YEAR}-")]
     scales = _scale_series(content)
     baseline = [point for point in scales if point[0] <= "2025-12-31"]
@@ -84,6 +90,7 @@ def calculate_metrics(content: str) -> dict | None:
         result.update({
             "representativeNav": last_nav,
             "ytdStartNav": first_nav,
+            "baselineNavDate": first_date,
             "navGrowthPercent": round((last_nav / first_nav - 1) * 100, 4) if first_nav else None,
             "ytdPeakNav": peak_nav,
             "maxDrawdownPercent": round(max_drawdown, 4),
@@ -125,26 +132,39 @@ def fetch_metrics(code: str, attempts: int = 3) -> tuple[str, dict | None]:
         try:
             with urlopen(request, timeout=15) as response:
                 return code, calculate_metrics(response.read().decode("utf-8", errors="ignore"))
-        except (OSError, ValueError, json.JSONDecodeError):
+        except (OSError, ValueError, json.JSONDecodeError, http.client.IncompleteRead):
             if attempt + 1 < attempts:
                 time.sleep(0.4 * (attempt + 1))
     return code, None
 
 
 def load_cache() -> dict[str, dict]:
-    if not CACHE_PATH.exists():
-        return {}
-    try:
-        return json.loads(CACHE_PATH.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError):
-        return {}
+    candidates = (CACHE_PATH.with_suffix(".tmp"), CACHE_PATH)
+    valid = []
+    for path in candidates:
+        if not path.exists():
+            continue
+        try:
+            value = json.loads(path.read_text(encoding="utf-8"))
+            if isinstance(value, dict):
+                valid.append(value)
+        except (OSError, json.JSONDecodeError):
+            continue
+    return max(valid, key=len, default={})
 
 
 def save_cache(cache: dict[str, dict]) -> None:
     CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
     temporary = CACHE_PATH.with_suffix(".tmp")
     temporary.write_text(json.dumps(cache, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    temporary.replace(CACHE_PATH)
+    for attempt in range(5):
+        try:
+            temporary.replace(CACHE_PATH)
+            return
+        except PermissionError:
+            if attempt == 4:
+                raise
+            time.sleep(0.25 * (attempt + 1))
 
 
 def backfill(workers: int = 24, limit: int | None = None, min_coverage: float = 0.75) -> dict:
@@ -173,8 +193,22 @@ def backfill(workers: int = 24, limit: int | None = None, min_coverage: float = 
         raise RuntimeError(f"回填覆盖率 {coverage:.2%} 低于发布门槛 {min_coverage:.2%}，不覆盖产品文件")
     for product in products:
         metrics = cache.get(str(product.get("representativeCode", "")).zfill(6))
+        if str(product.get("type") or "").startswith("货币"):
+            metrics = None
         if metrics:
+            established_date = str(product.get("establishedDate") or "")
+            metrics["baselineNavType"] = "成立" if established_date.startswith(f"{TARGET_YEAR}-") else "年初"
             product.update(metrics)
+        else:
+            # Never retain a metric from an older, incompatible NAV series when
+            # the same-unit historical series could not be refreshed.
+            for field in (
+                "ytdStartNav", "baselineNavDate", "baselineNavType",
+                "navGrowthPercent", "ytdPeakNav", "maxDrawdownPercent",
+                "drawdownStartDate", "drawdownEndDate", "metricsCoverageStart",
+                "metricsAsOf", "metricsCoverage",
+            ):
+                product[field] = None
     payload["metricsBackfill"] = {
         "targetYear": TARGET_YEAR,
         "completedAt": datetime.now(timezone.utc).isoformat(),

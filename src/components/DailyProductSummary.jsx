@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { FUND_CATEGORIES } from './FundControls.jsx'
+import { ReportScope } from './ReportScope.jsx'
 import { getFundCategories } from '../data/fundModel.js'
 
 const valid = (value) => Number.isFinite(value)
@@ -32,8 +33,10 @@ const categoryJudgement = (stats) => {
   return '整体处于分化阶段，产品选择重于类别配置。'
 }
 
-export function DailyProductSummary({ products, dataDate, onSelectCategory, onSelectFund }) {
+export function DailyProductSummary({ products, dataDate, establishedWindow, scopeStartDate, onSelectCategory, onSelectFund }) {
   const [expanded, setExpanded] = useState(false)
+  const [flowDetails, setFlowDetails] = useState(true)
+  const [chartMetric, setChartMetric] = useState('netTotal')
   const analysis = useMemo(() => {
     const globalRankings = {
       scaleNetIncreaseYi: rank(products, 'scaleNetIncreaseYi'),
@@ -81,6 +84,7 @@ export function DailyProductSummary({ products, dataDate, onSelectCategory, onSe
       globalRanks,
       categoriesByNet: [...categoryStats].sort((left, right) => right.netTotal - left.netTotal),
       netLeader: netProducts[0],
+      topFivePositive: positiveNet.slice(0, 5),
       growthLeader: rank(products, 'scaleGrowthPercent')[0],
       navLeader: rank(products, 'navGrowthPercent')[0],
       deepestDrawdown: rank(products, 'maxDrawdownPercent', 'asc')[0],
@@ -113,15 +117,75 @@ export function DailyProductSummary({ products, dataDate, onSelectCategory, onSe
   const secondCategory = analysis.categoriesByNet[1]
   const flowConcentrated = (analysis.topFivePositiveContribution ?? 0) >= 45 || (analysis.netBreadth ?? 100) < 50
   const returnBroad = (analysis.navBreadth ?? 0) >= 55 && (analysis.navMedian ?? 0) > 0
+  const chartOptions = {
+    netTotal: { label: '规模净增额', value: (stats) => stats.netTotal, format: yi },
+    count: { label: '产品数量', value: (stats) => stats.count, format: (value) => `${number(value, 0)}只` },
+    navBreadth: { label: '正收益占比', value: (stats) => stats.navBreadth, format: percent },
+  }
+  const activeChart = chartOptions[chartMetric]
+  const chartValues = analysis.categoryStats.map(activeChart.value).filter(valid)
+  const chartMaximum = Math.max(...chartValues.map(Math.abs), 1)
+  const topFlowMaximum = Math.max(...analysis.topFivePositive.map((product) => product.scaleNetIncreaseYi), 1)
+  const isIssuance = establishedWindow === 'quarter' || establishedWindow === 'ytd'
+  const sampleLabel = establishedWindow === 'quarter'
+    ? `近三个月成立基金（${scopeStartDate}—${dataDate || '待更新'}）`
+    : establishedWindow === 'ytd'
+      ? `本年至今成立基金（${scopeStartDate}—${dataDate || '待更新'}）`
+      : '全部存续公募基金产品（成立日期不限）'
+  const summaryTitle = isIssuance
+    ? `${establishedWindow === 'quarter' ? '近三个月' : '本年至今'}发行摘要`
+    : '全市场公募基金摘要'
+  const cumulativeDescription = isIssuance
+    ? `规模净增额、净值增长、最大回撤均从各产品成立日起累计至${dataDate || '当前数据日'}；“近三个月/本年至今”仅限定成立日期`
+    : `规模净增额、净值增长、最大回撤统计至${dataDate || '当前数据日'}；存量产品从年初计算，本年新成立产品从成立日起计算`
 
   return <section className="daily-product-summary" aria-labelledby="daily-summary-title">
-    <div className="daily-summary__header"><h2 id="daily-summary-title">{dataDate || '今日'}摘要</h2><span className="freshness-status"><i />数据已更新</span></div>
+    <div className="daily-summary__header"><div><h2 id="daily-summary-title">{summaryTitle}</h2><p>统计截止：{dataDate || '待更新'}</p></div><span className="freshness-status"><i />数据已更新</span></div>
+    <ReportScope items={[
+      { term: '研究样本', description: sampleLabel },
+      { term: '累计指标', description: cumulativeDescription },
+      { term: '当日快照', description: `单位净值和当前规模采用截至${dataDate || '当前数据日'}的最近可得数据，并非仅指当日发生的增量` },
+    ]} />
 
     <div className="summary-section">
       <h3>市场现状：</h3>
       <p className="category-counts">{analysis.categoryStats.map((stats, index) => <span key={stats.category}>{index ? '、' : ''}{categoryLink(stats)}</span>)}。</p>
       <p><strong>产品经理判断：</strong>{topCategory?.netTotal > 0 ? <>{categoryLink(topCategory)}以{yi(topCategory.netTotal)}的规模净增额居前{secondCategory ? <>，领先{secondCategory.category}基金{yi(topCategory.netTotal - secondCategory.netTotal)}</> : null}；但{percent(topCategory.netBreadth)}的区内产品实现规模正增长，说明资金流入{topCategory.netBreadth >= 55 ? '具备一定广度' : '仍偏头部集中'}。</> : <>九类视角暂未形成明确正向规模增量，市场处于存量再配置阶段。</>}</p>
-      <p><strong>全市场结构：</strong>具备规模基准的产品共{analysis.comparableNetCount.toLocaleString('zh-CN')}只，规模净增额合计{yi(analysis.netTotal)}，正增长产品占{percent(analysis.netBreadth)}；前五只净流入产品贡献正向增量的{percent(analysis.topFivePositiveContribution)}。{flowConcentrated ? '增量集中度偏高，不能把头部吸金等同于全市场扩容。' : '增量分布相对均衡，资金扩散信号较为健康。'}</p>
+      <p><strong>全市场结构：</strong>具备规模基准的产品共{analysis.comparableNetCount.toLocaleString('zh-CN')}只，规模净增额合计{yi(analysis.netTotal)}，正增长产品占{percent(analysis.netBreadth)}；<button className="summary-link" type="button" aria-expanded={flowDetails} aria-controls="market-flow-visuals" onClick={() => setFlowDetails((value) => !value)}>前五只净流入产品贡献正向增量的{percent(analysis.topFivePositiveContribution)}</button>。{flowConcentrated ? '增量集中度偏高，不能把头部吸金等同于全市场扩容。' : '增量分布相对均衡，资金扩散信号较为健康。'}</p>
+
+      {flowDetails ? <div className="market-visuals" id="market-flow-visuals">
+        <section className="market-chart" aria-labelledby="category-flow-title">
+          <div className="market-chart__header">
+            <div><h4 id="category-flow-title">九类基金对比</h4><span>点击类别联动下方数据库</span></div>
+            <div className="chart-metric-switch" role="group" aria-label="九类基金对比指标">
+              {Object.entries(chartOptions).map(([key, option]) => <button type="button" aria-pressed={chartMetric === key} key={key} onClick={() => setChartMetric(key)}>{option.label}</button>)}
+            </div>
+          </div>
+          <div className="category-bars">
+            {analysis.categoryStats.map((stats) => {
+              const value = activeChart.value(stats)
+              return <button className="category-bar" type="button" key={stats.category} onClick={() => onSelectCategory(stats.category)} aria-label={`${stats.category}基金，${activeChart.label}${activeChart.format(value)}`}>
+                <span className="category-bar__label">{stats.category}</span>
+                <span className="category-bar__track"><i data-direction={value < 0 ? 'negative' : 'positive'} style={{ width: `${Math.max(Math.abs(value) / chartMaximum * 100, 2)}%` }} /></span>
+                <strong>{activeChart.format(value)}</strong>
+              </button>
+            })}
+          </div>
+        </section>
+
+        <section className="market-chart top-flow-chart" aria-labelledby="top-flow-title">
+          <div className="market-chart__header"><div><h4 id="top-flow-title">前五净流入产品</h4><span>合计贡献正向增量的{percent(analysis.topFivePositiveContribution)}</span></div></div>
+          <ol>
+            {analysis.topFivePositive.map((product) => <li key={product.productId}>
+              <button type="button" onClick={() => onSelectFund(product.productName)}>
+                <span className="top-flow-chart__name"><strong>{product.productName}</strong><small>{product.representativeCode}</small></span>
+                <span className="top-flow-chart__track"><i style={{ width: `${product.scaleNetIncreaseYi / topFlowMaximum * 100}%` }} /></span>
+                <b>{yi(product.scaleNetIncreaseYi)}</b>
+              </button>
+            </li>)}
+          </ol>
+        </section>
+      </div> : null}
     </div>
 
     <div className="summary-section summary-analysis">

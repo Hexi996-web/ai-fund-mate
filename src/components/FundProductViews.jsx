@@ -39,7 +39,7 @@ export const FundProductTable = memo(function FundProductTable({
     <div className="fund-table-wrap">
       <table className="fund-table fund-product-table">
         <caption className="sr-only">基金产品列表</caption>
-        <thead><tr><th>排名</th><th>基金产品</th><th>成立日期</th><th>代表份额 / 代码</th><th>单位净值</th><th>当前规模</th><th>规模净增额</th><th>规模增长率</th><th>净值增长</th><th>最大回撤</th><th>份额</th></tr></thead>
+        <thead><tr><th>排名</th><th>基金产品</th><th>成立日期</th><th>代表份额 / 代码</th><th>当前规模</th><th>规模净增额</th><th>规模增长率</th><th>单位净值</th><th>基准净值</th><th>净值增长</th><th>最大回撤</th><th>份额</th></tr></thead>
         <tbody>
           {products.map((product, index) => {
             const share = product.representativeShare
@@ -50,15 +50,16 @@ export const FundProductTable = memo(function FundProductTable({
                 <th scope="row">{product.productName}<span className="cell-note">{formatValue(product.type)}</span></th>
                 <td>{product.establishedDate || '待补充'}</td>
                 <td>{shareLabel(share.shareClass)}类（{share.code}）</td>
-                <td>{formatNetValue(share.netValue)}<span className="cell-note">{formatDailyChange(share.dailyChangePercent)} · {share.lastNetValueDate || '待更新'}</span></td>
                 <td>{formatScale(product.currentScaleYi)}<span className="cell-note">{product.scaleQuality}级 · {product.scaleDate || '待补全'}</span></td>
                 <td className={metricClass(product.scaleNetIncreaseYi)}>{formatScale(product.scaleNetIncreaseYi)}<span className="cell-note">基准：{product.baselineScaleType}</span></td>
                 <td className={metricClass(product.scaleGrowthPercent)}>{formatPercent(product.scaleGrowthPercent, '待基准')}</td>
+                <td>{formatNetValue(share.netValue)}<span className="cell-note">{formatDailyChange(share.dailyChangePercent)} · {share.lastNetValueDate || '待更新'}</span></td>
+                <td>{formatNetValue(product.ytdStartNav)}<span className="cell-note">{product.baselineNavType} · {product.baselineNavDate || '待补全'}</span></td>
                 <td className={metricClass(product.navGrowthPercent)}>{formatPercent(product.navGrowthPercent)}<span className="cell-note">{product.metricsCoverage}</span></td>
                 <td className={metricClass(product.maxDrawdownPercent)}>{formatPercent(product.maxDrawdownPercent)}<span className="cell-note">{product.drawdownStartDate && product.drawdownEndDate ? `${product.drawdownStartDate}—${product.drawdownEndDate}` : product.metricsCoverage}</span></td>
                 <td><button className="share-toggle" type="button" aria-expanded={expanded} aria-controls={`shares-${product.productId}`} onClick={() => onToggle(product.productId)}>{expanded ? '收起份额' : `查看${product.shareCount}个份额`}</button></td>
               </tr>,
-              expanded ? <tr className="fund-product-share-detail" key={`${product.productId}-shares`}><td colSpan="11"><ShareRows product={product} matchedShareCodes={matchedShareCodes} /></td></tr> : null,
+              expanded ? <tr className="fund-product-share-detail" key={`${product.productId}-shares`}><td colSpan="12"><ShareRows product={product} matchedShareCodes={matchedShareCodes} /></td></tr> : null,
             ]
           })}
         </tbody>

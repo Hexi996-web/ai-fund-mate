@@ -215,12 +215,18 @@ def enrich_product_metrics(products, previous_products, snapshot_date=None):
 
         if same_year:
             ytd_start_nav = safe_float(previous.get("ytdStartNav"))
+            baseline_nav_date = parse_date(previous.get("baselineNavDate")) or coverage_start
+            baseline_nav_type = previous.get("baselineNavType") or (
+                "成立" if established_date and established_date.year == snapshot_date.year else "年初"
+            )
             peak_nav = safe_float(previous.get("ytdPeakNav"))
             max_drawdown = safe_float(previous.get("maxDrawdownPercent"))
             drawdown_start = previous.get("drawdownStartDate")
             drawdown_end = previous.get("drawdownEndDate")
         else:
             ytd_start_nav = safe_float(previous.get("representativeNav")) or current_nav
+            baseline_nav_date = nav_date
+            baseline_nav_type = "成立" if established_date and established_date.year == snapshot_date.year else "年初"
             peak_nav = current_nav
             max_drawdown = 0.0 if current_nav is not None else None
             drawdown_start = nav_date.isoformat() if current_nav is not None else None
@@ -275,6 +281,8 @@ def enrich_product_metrics(products, previous_products, snapshot_date=None):
             "scaleGrowthPercent": scale_growth,
             "representativeNav": current_nav,
             "ytdStartNav": ytd_start_nav,
+            "baselineNavDate": baseline_nav_date.isoformat() if baseline_nav_date else None,
+            "baselineNavType": baseline_nav_type,
             "navGrowthPercent": nav_growth,
             "ytdPeakNav": peak_nav,
             "maxDrawdownPercent": round(max_drawdown, 4) if max_drawdown is not None else None,
