@@ -2,12 +2,14 @@ import { useCallback, useState } from 'react'
 import FundApp from './App.jsx'
 import { MarketForecastWorkspace } from './components/MarketForecastWorkspace.jsx'
 import { IssuanceInsight } from './features/issuance-insight/IssuanceInsight.jsx'
+import { PreResearchPool } from './components/PreResearchPool.jsx'
 import './workspace.css'
 
 const WORKSPACES = [
   { id: 'funds', label: '市场分析' },
   { id: 'forecast', label: '行情预测' },
   { id: 'issuance', label: '发行洞察' },
+  { id: 'research', label: '预研产品池' },
 ]
 
 export default function WorkspaceApp() {
@@ -38,6 +40,7 @@ export default function WorkspaceApp() {
       </div>
     </nav>
     {workspace === 'issuance' ? <IssuanceInsight /> : null}
+    {workspace === 'research' ? <PreResearchPool /> : null}
     {workspace === 'forecast' ? <MarketForecastWorkspace onOpenFundLibrary={openFundLibrary} /> : null}
     {workspace === 'funds' ? <FundApp initialQuery={fundContext.query} onQueryChange={rememberFundQuery} /> : null}
   </>
