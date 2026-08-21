@@ -1,22 +1,39 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { PRE_RESEARCH_POOL } from '../data/preResearchPool.js'
 
-const STATUS = ['重点预研', '持续观察', '暂不考虑']
+const yi = (value) => Number.isFinite(value) ? `${value.toFixed(1)}亿元` : '—'
+const pct = (value) => Number.isFinite(value) ? `${value.toFixed(1)}%` : '—'
 
-function ResearchCard({ item, expanded, selected, compared, onExpand, onSelect, onCompare }) {
-  return <article className={`selection-row ${expanded ? 'expanded' : ''}`}><div className="selection-row__main"><button type="button" className="selection-row__open" onClick={onExpand} aria-expanded={expanded}><span className="selection-row__name"><strong>{item.name}</strong><small>{item.definition}</small></span><span><small>客户欲望</small><strong>{item.desire}</strong></span><span><small>资产承载</small><strong>{item.assetMap}</strong></span><span><small>当前供给</small><strong>{item.supply}</strong></span><span className="selection-row__question"><small>关键问题</small><strong>{item.question}</strong></span></button><div className="selection-row__actions"><button type="button" onClick={onCompare} className={compared ? 'active' : ''}>{compared ? '已加入比较' : '加入比较'}</button><button type="button" onClick={onSelect} className={selected ? 'selected' : ''}>{selected ? '移出篮子' : '加入篮子'}</button></div></div>{expanded && <div className="research-sheet"><div><small>叙事如何形成</small><p>{item.narrative}</p></div><div><small>支持这项选择</small><p>{item.support}</p></div><div><small>反对这项选择</small><p>{item.counter}</p></div><div><small>下一步要回答</small><p>{item.nextQuestion}</p></div></div>}</article>
+function marketMetrics(item, products) {
+  const peers = products.filter((product) => item.keywords.some((word) => product.productName?.toLowerCase().includes(word.toLowerCase())))
+  const scales = peers.map((p) => Number(p.currentScaleYi)).filter(Number.isFinite).sort((a,b) => b-a)
+  const total = scales.reduce((sum,value) => sum+value,0)
+  const top = scales[0] ?? 0
+  const top3 = scales.slice(0,3).reduce((sum,value) => sum+value,0)
+  const recent = peers.filter((p) => String(p.establishedDate || '') >= '2024-01-01').length
+  const gapScore = peers.length < 3 ? 40 : Math.max(0, Math.min(100, 92 - peers.length * 1.5 - recent * 1.2 + (total && top3 / total > .65 ? 8 : 0)))
+  const state = peers.length < 8 ? '产品缺失' : peers.length > 35 || recent > 12 ? '供给过剩' : '仍有空位'
+  return { count:peers.length, recent, total, topShare:total ? top/total*100 : null, top3Share:total ? top3/total*100 : null, gapScore, state }
 }
 
-export function PreResearchPool() {
-  const [expandedId, setExpandedId] = useState(PRE_RESEARCH_POOL[0].id)
-  const [basket, setBasket] = useState(['ai-agent', 'power', 'biotech'])
-  const [compare, setCompare] = useState([])
-  const [basketOpen, setBasketOpen] = useState(false)
-  const [statuses, setStatuses] = useState({ 'ai-agent': '重点预研', power: '重点预研', biotech: '持续观察' })
-  const basketItems = useMemo(() => PRE_RESEARCH_POOL.filter((item) => basket.includes(item.id)), [basket])
-  const compareItems = useMemo(() => PRE_RESEARCH_POOL.filter((item) => compare.includes(item.id)), [compare])
-  const toggleCompare = (id) => setCompare((current) => current.includes(id) ? current.filter((entry) => entry !== id) : current.length < 4 ? [...current, id] : current)
-  const toggleBasket = (id) => setBasket((current) => current.includes(id) ? current.filter((entry) => entry !== id) : [...current, id])
+function Metric({ label, value, note }) { return <div className="decision-metric"><small>{label}</small><strong>{value}</strong>{note && <span>{note}</span>}</div> }
 
-  return <main className="workspace-main research-pool selection-mode"><header className="selection-hero"><div><h1>预研产品池</h1><p>从社会认知中寻找可被公募产品承载的客户需求。先判断“值不值得研究”，暂不讨论发行。</p></div><button type="button" className="basket-trigger" onClick={() => setBasketOpen(!basketOpen)}>候选篮子 <strong>{basket.length}</strong></button></header><section className="selection-guide" aria-label="选择方法"><span>选择时只回答四件事</span><p><b>社会认知</b>是否正在形成</p><p><b>资产</b>能否真实承载</p><p><b>供给</b>是否留下空位</p><p><b>客户</b>是否有明确用途</p></section><div className="selection-table-head"><span>候选产品方向</span><span>客户欲望</span><span>资产承载</span><span>当前供给</span><span>最关键的待验证问题</span></div><section className="selection-list" aria-label="候选产品方向">{PRE_RESEARCH_POOL.map((item) => <ResearchCard key={item.id} item={item} expanded={expandedId === item.id} selected={basket.includes(item.id)} compared={compare.includes(item.id)} onExpand={() => setExpandedId(expandedId === item.id ? '' : item.id)} onSelect={() => toggleBasket(item.id)} onCompare={() => toggleCompare(item.id)} />)}</section>{compareItems.length > 0 && <section className="compare-dock" aria-label="产品横向比较"><div className="compare-dock__top"><div><strong>横向比较</strong><span>{compareItems.length}/4 个方向</span></div><button type="button" onClick={() => setCompare([])}>清空</button></div><div className="compare-grid"><span className="compare-label">产品方向</span>{compareItems.map((item) => <strong key={item.id}>{item.name}</strong>)}<span className="compare-label">客户用途</span>{compareItems.map((item) => <p key={item.id}>{item.useCase}</p>)}<span className="compare-label">资产纯度</span>{compareItems.map((item) => <p key={item.id}>{item.purity}</p>)}<span className="compare-label">供给空位</span>{compareItems.map((item) => <p key={item.id}>{item.gap}</p>)}<span className="compare-label">主要矛盾</span>{compareItems.map((item) => <p key={item.id}>{item.question}</p>)}</div></section>}{basketOpen && <aside className="basket-panel" aria-label="候选篮子"><div className="basket-panel__head"><div><strong>候选篮子</strong><small>只管理研究优先级，不代表立项结论</small></div><button type="button" onClick={() => setBasketOpen(false)}>关闭</button></div>{basketItems.length ? basketItems.map((item) => <div className="basket-item" key={item.id}><span><strong>{item.name}</strong><small>{item.question}</small></span><select aria-label={`${item.name}研究状态`} value={statuses[item.id] || '持续观察'} onChange={(event) => setStatuses({ ...statuses, [item.id]: event.target.value })}>{STATUS.map((status) => <option key={status}>{status}</option>)}</select><button type="button" onClick={() => toggleBasket(item.id)}>移除</button></div>) : <p className="basket-empty">还没有候选方向，可从列表加入。</p>}</aside>}{basketOpen && <button className="basket-backdrop" aria-label="关闭候选篮子" onClick={() => setBasketOpen(false)} />}</main>
+export function PreResearchPool() {
+  const [payload, setPayload] = useState({ products:[], updateTime:'加载中' })
+  const [selected, setSelected] = useState('')
+  useEffect(() => { const controller = new AbortController(); fetch('/fund_products.json',{signal:controller.signal,cache:'no-store'}).then(r=>r.json()).then(setPayload).catch(()=>{}); return () => controller.abort() },[])
+  const ranked = useMemo(() => PRE_RESEARCH_POOL.map((item) => { const market=marketMetrics(item,payload.products || []); return {...item,market,score:market.gapScore*.35+item.readiness*.65} }).sort((a,b)=>b.score-a.score).slice(0,10),[payload])
+  const active = ranked.find((item)=>item.id===selected) || ranked[0]
+
+  return <main className="workspace-main research-pool decision-mode">
+    <header className="decision-hero"><div><h1>动态预研 Top 10</h1><p>从候选宇宙中动态选出10个方向。当前排序已接入产品空位；资产与成分重合度数据未接入前，不伪造完整结论。</p></div><div className="decision-date"><small>基金快照</small><strong>{payload.updateTime || '—'}</strong><span>{PRE_RESEARCH_POOL.length} 选 10</span></div></header>
+    <section className="decision-layout">
+      <div className="decision-ranking"><div className="decision-ranking__head"><span>排名 / 产品方向</span><span>市场状态</span><span>动态分</span></div>{ranked.map((item,index)=><button type="button" className={active?.id===item.id?'active':''} onClick={()=>setSelected(item.id)} key={item.id}><i>{String(index+1).padStart(2,'0')}</i><span><strong>{item.name}</strong><small>{item.definition}</small></span><b className={`market-${item.market.state}`}>{item.market.state}</b><em>{Math.round(item.score)}</em></button>)}</div>
+      {active && <section className="decision-detail"><div className="decision-detail__title"><div><small>当前研究对象</small><h2>{active.name}</h2></div><span>动态第 {ranked.indexOf(active)+1} 位</span></div>
+        <h3>产品空位判断</h3><div className="decision-metrics"><Metric label="同类基金" value={`${active.market.count}只`} note={`名称关键词：${active.keywords.join(' / ')}`} /><Metric label="2024年以来新发" value={`${active.market.recent}只`} /><Metric label="同类总规模" value={yi(active.market.total)} /><Metric label="头部产品占比" value={pct(active.market.topShare)} /><Metric label="前三产品占比" value={pct(active.market.top3Share)} /><Metric label="市场结论" value={active.market.state} /></div><p className="metric-note">口径：按全市场基金产品名称关键词匹配、产品份额合并后计算。点击其他方向会立即重算，不把名称匹配等同于最终同类认定。</p>
+        <h3>可投资资产检验</h3><div className="data-contract"><div><small>候选股票数</small><strong>待接入</strong></div><div><small>组合日均成交额</small><strong>待接入</strong></div><div><small>第一行业占比</small><strong>待接入</strong></div><div><small>前十大权重</small><strong>待接入</strong></div><div><small>主题收入纯度</small><strong>待接入</strong></div><div><small>概念映射风险</small><strong>不可判定</strong></div></div><p className="blocked-note">需要先选择代表指数或建立候选股票池；没有成分与收入数据时，本模块不会给出“可投”结论。</p>
+        <h3>产品差异化检验</h3><div className="difference-empty"><strong>尚不能判断是不是“换名字的旧产品”</strong><p>下一数据接口必须包含：代表指数成分及权重、同类ETF成分及权重、公司内部产品持仓。接入后计算成分重合率、权重重合率与内部产品重合率。</p><div><span>代表指数 ↔ 同类ETF</span><b>待计算</b><span>代表指数 ↔ 公司产品</span><b>待计算</b></div></div>
+      </section>}
+    </section>
+  </main>
 }

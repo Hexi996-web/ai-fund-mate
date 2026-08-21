@@ -12,3 +12,18 @@ const rows = [
 ]
 
 export const PRE_RESEARCH_POOL = rows.map(([id,name,definition,desire,assetMap,supply,question,narrative,support,counter,nextQuestion,useCase,purity,gap]) => ({id,name,definition,desire,assetMap,supply,question,narrative,support,counter,nextQuestion,useCase,purity,gap}))
+
+PRE_RESEARCH_POOL.push(
+  { id:'industrial-software', name:'工业软件与自主生产系统', definition:'聚焦研发设计、生产控制与工业数据软件。', desire:'分享制造业软件化升级', assetMap:'工业软件、自动化与工业互联网', question:'独立软件收入能否构成足够样本？', useCase:'配置制造业数字化', purity:'待接入指数成分数据', gap:'由全市场基金快照计算' },
+  { id:'ai-application', name:'AI应用与数字生产力', definition:'剥离硬件后，聚焦AI商业化应用与软件收入。', desire:'直接参与AI应用收入增长', assetMap:'企业软件、云应用、互联网平台', question:'应用收入纯度何时达到产品门槛？', useCase:'配置AI商业化下半场', purity:'待接入指数成分数据', gap:'由全市场基金快照计算' },
+)
+
+const CONFIG = {
+  'ai-agent': [['人工智能','AI','算力','云计算','大数据'],72], 'embodied-ai': [['机器人','智能制造','自动化'],62],
+  space: [['航天','卫星','军工'],48], power: [['电力','电网','储能','新能源'],78], 'hard-tech': [['半导体','芯片','工业母机','自主可控'],76],
+  biotech: [['创新药','生物医药','医药'],74], longevity: [['养老','银发','医疗服务','健康'],52], experience: [['旅游','消费','文娱','传媒'],54],
+  resources: [['有色','稀土','新材料','资源','矿业'],69], 'future-tech': [['量子','6G','脑机','核聚变'],34],
+  'industrial-software': [['工业软件','软件','工业互联网'],66], 'ai-application': [['软件','云计算','互联网','人工智能'],64],
+}
+
+PRE_RESEARCH_POOL.forEach((item) => { const [keywords, readiness] = CONFIG[item.id]; item.keywords = keywords; item.readiness = readiness })
