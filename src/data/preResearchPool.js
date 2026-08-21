@@ -18,3 +18,25 @@ export const PRE_RESEARCH_POOL = [
   ['resources', '战略资源与先进材料安全', 'B', '命名期', 'ETF / 商品联接 / 指数增强', '数字化和能源转型最终受制于资源与材料的物理瓶颈。', '库存、长协、资本开支纪律和企业自由现金流共同确认。', '供给快速扩张，或客户把权益产品误认作商品现货。'],
   ['future-tech', '未来产业技术期权', 'C', '潜伏期', '主动小规模 / 观察指数', '6G、量子、脑机接口与核聚变从实验室走向工程验证。', '标准路线、示范工程、商业订单和可投资样本达到门槛。', '只能依靠参股概念映射，或技术里程碑长期不可核验。'],
 ].map(([id, name, priority, stage, vehicle, narrative, trigger, stop]) => ({ id, name, priority, stage, vehicle, narrative, trigger, stop }))
+
+const FACTS = {
+  'ai-agent': { status: '政策锚点', headline: '人工智能+行动', subline: '智能体被明确写入规划', facts: [['政策', '全面实施“人工智能+”行动'], ['方向', '多模态、智能体、具身智能']], source: '十五五规划纲要｜2026-03' },
+  'embodied-ai': { status: '政策锚点', headline: '机器人产业', subline: '具身智能列入未来产业', facts: [['产业', '机器人列入战略性新兴产业'], ['技术', '具身智能列入未来产业']], source: '十五五规划纲要｜2026-03' },
+  space: { status: '政策锚点', headline: '航空航天', subline: '北斗与低空场景同步部署', facts: [['产业', '航空航天列入战略性新兴产业'], ['场景', '北斗规模应用、低空经济']], source: '十五五规划纲要｜2026-03' },
+  power: { status: '有量化数据', headline: '1.36亿千瓦', subline: '2025年末新型储能装机', delta: '+84%', chart: [31, 54, 100], labels: ['2023', '2024', '2025'], facts: [['装机', '1.36亿千瓦 / 3.51亿千瓦时'], ['同比', '较2024年末增长84%']], source: '国家能源局｜2026-01' },
+  'hard-tech': { status: '政策锚点', headline: '5类关键底座', subline: '全链条推动核心技术攻关', facts: [['领域', '集成电路、工业母机、高端仪器'], ['底座', '基础软件、先进材料']], source: '十五五规划纲要｜2026-03' },
+  biotech: { status: '政策锚点', headline: '多元支付', subline: '创新药临床与支付机制完善', facts: [['临床', '支持创新药临床使用'], ['支付', '鼓励商业保险扩大支付范围']], source: '十五五规划纲要｜2026-03' },
+  longevity: { status: '有量化数据', headline: '3.23亿人', subline: '2025年末60岁及以上人口', delta: '23.0%', chart: [18.7, 21.1, 23.0], labels: ['2020', '2023', '2025'], facts: [['规模', '60岁及以上人口3.2338亿'], ['占比', '占全国人口23.0%']], source: '国家统计局｜2026-01' },
+  experience: { status: '政策锚点', headline: '服务消费', subline: '体验式消费进入政策框架', facts: [['方向', '扩大服务消费、丰富消费场景'], ['场景', '支持情绪式、体验式服务消费']], source: '扩大消费十五五规划｜2026-07' },
+  resources: { status: '政策锚点', headline: '新材料', subline: '产业链安全与材料能力并重', facts: [['产业', '新材料列入战略性新兴产业'], ['约束', '强化产业链供应链薄弱环节']], source: '十五五规划纲要｜2026-03' },
+  'future-tech': { status: '待补数据', headline: '6类方向', subline: '产业化数据尚待统一接入', facts: [['方向', '量子、生物制造、氢能和核聚变'], ['方向', '脑机接口、具身智能、6G']], source: '十五五规划纲要｜2026-03' },
+}
+
+PRE_RESEARCH_POOL.forEach((item) => Object.assign(item, FACTS[item.id]))
+
+export const FACT_OVERVIEW = [
+  { icon: 'policy', label: '政策覆盖', value: '10 / 10', note: '均有国家规划或专项政策锚点' },
+  { icon: 'energy', label: '储能装机', value: '1.36亿kW', note: '2025年末，同比+84%' },
+  { icon: 'people', label: '60岁以上', value: '3.23亿人', note: '2025年末，占人口23.0%' },
+  { icon: 'data', label: '数据状态', value: '2项量化', note: '其余先展示官方政策事实' },
+]
