@@ -49,7 +49,6 @@ export function PreResearchPool() {
 
   return <main className="workspace-main research-pool decision-mode">
     <header className="decision-hero"><div><h1>季度预研产品池</h1><p>面向产品经理的前瞻观察池。数据持续更新，名单原则上按季度调整；重大政策、技术突破或企业证伪时触发临时复核。</p></div><div className="decision-date"><small>基金快照</small><strong>{payload.updateTime || '—'}</strong><span>{PRE_RESEARCH_POOL.length} 选 10</span></div></header>
-    <section className="review-strip" aria-label="产品池更新机制"><div><small>常规调整</small><strong>季度</strong></div><div><small>数据刷新</small><strong>每日快照</strong></div><div><small>临时复核触发</small><strong>重大政策 · 技术突破 · 企业证伪</strong></div><div><small>当前证据层</small><strong>产品供给与规模</strong></div></section>
     <section className="decision-layout">
       <div className="decision-ranking"><div className="decision-ranking__head"><span>季度序位 / 产品方向</span><span>近12月新发</span><span>规模变化</span><span>结论</span></div>{ranked.map((item,index)=><button type="button" className={active?.id===item.id?'active':''} onClick={()=>setSelected(item.id)} key={item.id}><i>{String(index+1).padStart(2,'0')}</i><span><strong>{item.name}</strong><small>{item.definition}</small></span><em>{item.market.launched12.length}只</em><ChangeBar value={item.market.scaleGrowth} /><b className={`market-${item.market.state}`}>{item.market.state}</b></button>)}</div>
       {active && <section className="decision-detail"><div className="decision-detail__title"><div><small>当前研究对象</small><h2>{active.name}</h2></div><span>季度序位 {ranked.indexOf(active)+1}</span></div>
