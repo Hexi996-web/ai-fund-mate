@@ -31,19 +31,28 @@ function marketMetrics(item, products, updateTime) {
 
 function MetricButton({ label, value, onClick }) { return <button type="button" className="decision-metric decision-metric--link" onClick={onClick}><small>{label}</small><strong>{value}</strong><span>查看依据 →</span></button> }
 
+function ChangeBar({ value }) {
+  const width = Math.min(100, Math.abs(value || 0))
+  return <span className="change-visual"><i className={value >= 0 ? 'up' : 'down'} style={{width:`${width}%`}} /><b>{pct(value)}</b></span>
+}
+
 export function PreResearchPool() {
   const [payload, setPayload] = useState({ products:[], updateTime:'加载中' })
   const [selected, setSelected] = useState('')
   const [drawer, setDrawer] = useState('')
   useEffect(() => { const controller = new AbortController(); fetch('/fund_products.json',{signal:controller.signal,cache:'no-store'}).then(r=>r.json()).then(setPayload).catch(()=>{}); return () => controller.abort() },[])
-  const ranked = useMemo(() => PRE_RESEARCH_POOL.map((item) => { const market=marketMetrics(item,payload.products || [],payload.updateTime); return {...item,market,score:market.gapScore*.35+item.readiness*.65} }).sort((a,b)=>b.score-a.score).slice(0,10),[payload])
+  const ranked = useMemo(() => {
+    const priority = { '产品缺失':4, '存在空位':3, '继续观察':2, '供给过剩':1 }
+    return PRE_RESEARCH_POOL.map((item) => ({...item,market:marketMetrics(item,payload.products || [],payload.updateTime)})).sort((a,b) => priority[b.market.state]-priority[a.market.state] || (b.market.scaleGrowth||-999)-(a.market.scaleGrowth||-999) || a.market.launched12.length-b.market.launched12.length).slice(0,10)
+  },[payload])
   const active = ranked.find((item)=>item.id===selected) || ranked[0]
 
   return <main className="workspace-main research-pool decision-mode">
-    <header className="decision-hero"><div><h1>动态预研 Top 10</h1><p>从候选宇宙中动态选出10个方向。当前只依据可核验的市场产品供给判断空位，全部指标均可下钻核查。</p></div><div className="decision-date"><small>基金快照</small><strong>{payload.updateTime || '—'}</strong><span>{PRE_RESEARCH_POOL.length} 选 10</span></div></header>
+    <header className="decision-hero"><div><h1>季度预研产品池</h1><p>面向产品经理的前瞻观察池。数据持续更新，名单原则上按季度调整；重大政策、技术突破或企业证伪时触发临时复核。</p></div><div className="decision-date"><small>基金快照</small><strong>{payload.updateTime || '—'}</strong><span>{PRE_RESEARCH_POOL.length} 选 10</span></div></header>
+    <section className="review-strip" aria-label="产品池更新机制"><div><small>常规调整</small><strong>季度</strong></div><div><small>数据刷新</small><strong>每日快照</strong></div><div><small>临时复核触发</small><strong>重大政策 · 技术突破 · 企业证伪</strong></div><div><small>当前证据层</small><strong>产品供给与规模</strong></div></section>
     <section className="decision-layout">
-      <div className="decision-ranking"><div className="decision-ranking__head"><span>排名 / 产品方向</span><span>市场状态</span><span>动态分</span></div>{ranked.map((item,index)=><button type="button" className={active?.id===item.id?'active':''} onClick={()=>setSelected(item.id)} key={item.id}><i>{String(index+1).padStart(2,'0')}</i><span><strong>{item.name}</strong><small>{item.definition}</small></span><b className={`market-${item.market.state}`}>{item.market.state}</b><em>{Math.round(item.score)}</em></button>)}</div>
-      {active && <section className="decision-detail"><div className="decision-detail__title"><div><small>当前研究对象</small><h2>{active.name}</h2></div><span>动态第 {ranked.indexOf(active)+1} 位</span></div>
+      <div className="decision-ranking"><div className="decision-ranking__head"><span>季度序位 / 产品方向</span><span>近12月新发</span><span>规模变化</span><span>结论</span></div>{ranked.map((item,index)=><button type="button" className={active?.id===item.id?'active':''} onClick={()=>setSelected(item.id)} key={item.id}><i>{String(index+1).padStart(2,'0')}</i><span><strong>{item.name}</strong><small>{item.definition}</small></span><em>{item.market.launched12.length}只</em><ChangeBar value={item.market.scaleGrowth} /><b className={`market-${item.market.state}`}>{item.market.state}</b></button>)}</div>
+      {active && <section className="decision-detail"><div className="decision-detail__title"><div><small>当前研究对象</small><h2>{active.name}</h2></div><span>季度序位 {ranked.indexOf(active)+1}</span></div>
         <h3>产品空位判断</h3><div className="decision-metrics"><MetricButton label="同类基金" value={`${active.market.count}只`} onClick={()=>setDrawer('all')} /><MetricButton label="近12个月新发" value={`${active.market.launched12.length}只 · ${active.market.supplyState}`} onClick={()=>setDrawer('12m')} /><MetricButton label="近90天新发" value={`${active.market.launched90.length}只`} onClick={()=>setDrawer('90d')} /><MetricButton label="基准规模（2025年末披露规模）" value={yi(active.market.baselineTotal)} onClick={()=>setDrawer('scale')} /><MetricButton label="当前规模" value={yi(active.market.total)} onClick={()=>setDrawer('scale')} /><MetricButton label="规模增加额" value={`${signedYi(active.market.scaleIncrease)} · ${active.market.scaleState}`} onClick={()=>setDrawer('scale')} /><MetricButton label="头部产品占比" value={pct(active.market.topShare)} onClick={()=>setDrawer('top1')} /><MetricButton label="前三产品占比" value={pct(active.market.top3Share)} onClick={()=>setDrawer('top3')} /><MetricButton label="市场结论" value={active.market.state} onClick={()=>setDrawer('state')} /></div><div className="scale-definitions"><p><strong>基准规模</strong>可比产品在基准日（通常为2025年末）的规模合计；缺少基准数据的产品不计入。</p><p><strong>当前规模</strong>同类产品最近一期披露规模的合计，包含基准日后新成立的产品。</p><p><strong>规模增加额</strong>仅对同时拥有基准与当前规模的产品计算“当前－基准”并汇总；当前可比样本 {active.market.comparableCount}/{active.market.count}只，避免把新基金全部规模误算成增长。</p></div><p className="metric-note">滚动新发以快照日为基准。名称关键词：{active.keywords.join(' / ')}。</p>
       </section>}
     </section>
