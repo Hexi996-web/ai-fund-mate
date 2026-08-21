@@ -1,40 +1,22 @@
 import { useMemo, useState } from 'react'
-import { FACT_OVERVIEW, PRE_RESEARCH_AS_OF, PRE_RESEARCH_POOL } from '../data/preResearchPool.js'
+import { PRE_RESEARCH_POOL } from '../data/preResearchPool.js'
 
-const FILTERS = ['全部', '有量化数据', '政策锚点', '待补数据']
+const STATUS = ['重点预研', '持续观察', '暂不考虑']
 
-function FactIcon({ type }) {
-  const paths = { policy: 'M7 3h10v4H7zM5 9h14v12H5zM9 13h6M9 17h4', energy: 'M13 2L5 14h6l-1 8 9-13h-6z', people: 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm7 10v-2a7 7 0 0 0-14 0v2M16 4a3 3 0 0 1 0 6M22 21v-2a6 6 0 0 0-4-5.6', data: 'M4 19V9M10 19V5M16 19v-7M22 19H2' }
-  return <svg viewBox="0 0 24 24" aria-hidden="true"><path d={paths[type]} /></svg>
-}
-
-function MiniBars({ values, labels }) {
-  const max = Math.max(...values)
-  return <div className="fact-bars" aria-label="历史趋势">{values.map((value, index) => <div key={labels[index]}><i style={{ height: `${Math.max(18, value / max * 100)}%` }} /><span>{labels[index]}</span></div>)}</div>
+function ResearchCard({ item, expanded, selected, compared, onExpand, onSelect, onCompare }) {
+  return <article className={`selection-row ${expanded ? 'expanded' : ''}`}><div className="selection-row__main"><button type="button" className="selection-row__open" onClick={onExpand} aria-expanded={expanded}><span className="selection-row__name"><strong>{item.name}</strong><small>{item.definition}</small></span><span><small>客户欲望</small><strong>{item.desire}</strong></span><span><small>资产承载</small><strong>{item.assetMap}</strong></span><span><small>当前供给</small><strong>{item.supply}</strong></span><span className="selection-row__question"><small>关键问题</small><strong>{item.question}</strong></span></button><div className="selection-row__actions"><button type="button" onClick={onCompare} className={compared ? 'active' : ''}>{compared ? '已加入比较' : '加入比较'}</button><button type="button" onClick={onSelect} className={selected ? 'selected' : ''}>{selected ? '移出篮子' : '加入篮子'}</button></div></div>{expanded && <div className="research-sheet"><div><small>叙事如何形成</small><p>{item.narrative}</p></div><div><small>支持这项选择</small><p>{item.support}</p></div><div><small>反对这项选择</small><p>{item.counter}</p></div><div><small>下一步要回答</small><p>{item.nextQuestion}</p></div></div>}</article>
 }
 
 export function PreResearchPool() {
-  const [filter, setFilter] = useState('全部')
-  const [selectedId, setSelectedId] = useState(PRE_RESEARCH_POOL[0].id)
-  const visible = useMemo(() => filter === '全部' ? PRE_RESEARCH_POOL : PRE_RESEARCH_POOL.filter((item) => item.status === filter), [filter])
+  const [expandedId, setExpandedId] = useState(PRE_RESEARCH_POOL[0].id)
+  const [basket, setBasket] = useState(['ai-agent', 'power', 'biotech'])
+  const [compare, setCompare] = useState([])
+  const [basketOpen, setBasketOpen] = useState(false)
+  const [statuses, setStatuses] = useState({ 'ai-agent': '重点预研', power: '重点预研', biotech: '持续观察' })
+  const basketItems = useMemo(() => PRE_RESEARCH_POOL.filter((item) => basket.includes(item.id)), [basket])
+  const compareItems = useMemo(() => PRE_RESEARCH_POOL.filter((item) => compare.includes(item.id)), [compare])
+  const toggleCompare = (id) => setCompare((current) => current.includes(id) ? current.filter((entry) => entry !== id) : current.length < 4 ? [...current, id] : current)
+  const toggleBasket = (id) => setBasket((current) => current.includes(id) ? current.filter((entry) => entry !== id) : [...current, id])
 
-  return <main className="workspace-main research-pool fact-mode">
-    <header className="research-pool__hero"><div><h1>预研产品池</h1><p>只展示可核验的官方事实与数据状态。暂不加入产品经理评分、排序或立项判断。</p></div><div className="research-pool__date"><span>数据观察时点</span><strong>{PRE_RESEARCH_AS_OF}</strong><small>来源与日期随卡片展示</small></div></header>
-    <section className="fact-overview" aria-label="核心事实总览">{FACT_OVERVIEW.map((item) => <article key={item.label}><span><FactIcon type={item.icon} /></span><div><small>{item.label}</small><strong>{item.value}</strong><p>{item.note}</p></div></article>)}</section>
-    <div className="research-pool__toolbar"><div className="research-pool__filters" aria-label="数据状态筛选">{FILTERS.map((item) => <button key={item} type="button" className={filter === item ? 'active' : ''} aria-pressed={filter === item} onClick={() => setFilter(item)}>{item} {item === '全部' ? PRE_RESEARCH_POOL.length : PRE_RESEARCH_POOL.filter((entry) => entry.status === item).length}</button>)}</div><span>共 {visible.length} 个方向</span></div>
-    <section className="research-pool__grid" aria-label="社会认知事实列表">{visible.map((item) => {
-      const expanded = selectedId === item.id
-      return <article className={`research-card ${expanded ? 'expanded' : ''}`} key={item.id}>
-        <button type="button" className="research-card__summary fact-summary" aria-expanded={expanded} onClick={() => setSelectedId(expanded ? '' : item.id)}>
-          <span className="research-card__number">{String(PRE_RESEARCH_POOL.indexOf(item) + 1).padStart(2, '0')}</span>
-          <span className="research-card__title"><strong>{item.name}</strong><small>{item.narrative}</small></span>
-          <span className={`fact-status status-${item.status === '有量化数据' ? 'data' : item.status === '待补数据' ? 'pending' : 'policy'}`}>{item.status}</span>
-          <span className="fact-headline"><strong>{item.headline}</strong><small>{item.subline}</small></span>
-          {item.delta ? <span className="fact-delta">{item.delta}</span> : <span className="research-card__cue">{expanded ? '收起' : '查看事实'}</span>}
-        </button>
-        {expanded ? <div className="fact-detail"><div className="fact-list">{item.facts.map(([label, value]) => <div key={`${label}-${value}`}><small>{label}</small><strong>{value}</strong></div>)}</div>{item.chart ? <MiniBars values={item.chart} labels={item.labels} /> : <div className="fact-no-chart"><FactIcon type="data" /><span>统一产业与产品数据待接入</span></div>}<p className="fact-source">来源：{item.source}</p></div> : null}
-      </article>
-    })}</section>
-    <section className="research-pool__gate"><div><span>01</span><strong>可相信</strong><p>事实存在、来源可追溯，产品名称与底层资产一致。</p></div><div><span>02</span><strong>可实现</strong><p>后续接入容量、流动性、指数样本和产品供给数据。</p></div><div><span>03</span><strong>可负责</strong><p>正式立项前再补充客户结果与回撤情景。</p></div></section>
-  </main>
+  return <main className="workspace-main research-pool selection-mode"><header className="selection-hero"><div><h1>预研产品池</h1><p>从社会认知中寻找可被公募产品承载的客户需求。先判断“值不值得研究”，暂不讨论发行。</p></div><button type="button" className="basket-trigger" onClick={() => setBasketOpen(!basketOpen)}>候选篮子 <strong>{basket.length}</strong></button></header><section className="selection-guide" aria-label="选择方法"><span>选择时只回答四件事</span><p><b>社会认知</b>是否正在形成</p><p><b>资产</b>能否真实承载</p><p><b>供给</b>是否留下空位</p><p><b>客户</b>是否有明确用途</p></section><div className="selection-table-head"><span>候选产品方向</span><span>客户欲望</span><span>资产承载</span><span>当前供给</span><span>最关键的待验证问题</span></div><section className="selection-list" aria-label="候选产品方向">{PRE_RESEARCH_POOL.map((item) => <ResearchCard key={item.id} item={item} expanded={expandedId === item.id} selected={basket.includes(item.id)} compared={compare.includes(item.id)} onExpand={() => setExpandedId(expandedId === item.id ? '' : item.id)} onSelect={() => toggleBasket(item.id)} onCompare={() => toggleCompare(item.id)} />)}</section>{compareItems.length > 0 && <section className="compare-dock" aria-label="产品横向比较"><div className="compare-dock__top"><div><strong>横向比较</strong><span>{compareItems.length}/4 个方向</span></div><button type="button" onClick={() => setCompare([])}>清空</button></div><div className="compare-grid"><span className="compare-label">产品方向</span>{compareItems.map((item) => <strong key={item.id}>{item.name}</strong>)}<span className="compare-label">客户用途</span>{compareItems.map((item) => <p key={item.id}>{item.useCase}</p>)}<span className="compare-label">资产纯度</span>{compareItems.map((item) => <p key={item.id}>{item.purity}</p>)}<span className="compare-label">供给空位</span>{compareItems.map((item) => <p key={item.id}>{item.gap}</p>)}<span className="compare-label">主要矛盾</span>{compareItems.map((item) => <p key={item.id}>{item.question}</p>)}</div></section>}{basketOpen && <aside className="basket-panel" aria-label="候选篮子"><div className="basket-panel__head"><div><strong>候选篮子</strong><small>只管理研究优先级，不代表立项结论</small></div><button type="button" onClick={() => setBasketOpen(false)}>关闭</button></div>{basketItems.length ? basketItems.map((item) => <div className="basket-item" key={item.id}><span><strong>{item.name}</strong><small>{item.question}</small></span><select aria-label={`${item.name}研究状态`} value={statuses[item.id] || '持续观察'} onChange={(event) => setStatuses({ ...statuses, [item.id]: event.target.value })}>{STATUS.map((status) => <option key={status}>{status}</option>)}</select><button type="button" onClick={() => toggleBasket(item.id)}>移除</button></div>) : <p className="basket-empty">还没有候选方向，可从列表加入。</p>}</aside>}{basketOpen && <button className="basket-backdrop" aria-label="关闭候选篮子" onClick={() => setBasketOpen(false)} />}</main>
 }
