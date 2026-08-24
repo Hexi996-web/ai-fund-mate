@@ -12,7 +12,8 @@ try {
   page.on('console', (message) => { if (message.type() === 'error') errors.push(message.text()) })
   await page.goto(`${baseURL}?verify=${Date.now()}`, { waitUntil: 'networkidle', timeout: 60_000 })
 
-  await page.getByRole('heading', { name: new RegExp(`${expectedDate}摘要`) }).waitFor()
+  await page.getByRole('heading', { name: '全市场公募基金摘要' }).waitFor()
+  await page.getByText(`统计截止：${expectedDate}`).waitFor()
   await page.getByText(`数据日期：${expectedDate}`).waitFor()
 
   await page.getByRole('button', { name: '行情预测' }).click()
@@ -24,8 +25,14 @@ try {
   await page.getByRole('heading', { name: '发行洞察' }).waitFor()
   await page.getByRole('tabpanel').getByText(`数据日期：${expectedDate}`).waitFor()
 
+  await page.getByRole('button', { name: '预研产品池' }).click()
+  await page.getByRole('heading', { name: '季度预研产品池' }).waitFor()
+  await page.locator('.decision-date').getByText(new RegExp(expectedDate)).waitFor()
+  await page.getByRole('heading', { name: '三层验证证据' }).waitFor()
+  await page.getByRole('heading', { name: '产品空位判断' }).waitFor()
+
   if (errors.length) throw new Error(`browser errors: ${errors.join(' | ')}`)
-  console.log(`Production UI verified for all three workspaces at ${expectedDate}`)
+  console.log(`Production UI verified for all four workspaces at ${expectedDate}`)
 } finally {
   await browser.close()
 }

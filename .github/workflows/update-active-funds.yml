@@ -82,7 +82,7 @@ jobs:
         env:
           EXPECTED_DATE: ${{ steps.snapshot.outputs.date }}
         run: python scripts/verify_deployed_snapshot.py --base-url "$PRODUCTION_URL" --expected-date "$EXPECTED_DATE" --timeout-seconds 600
-      - name: Verify all three production interfaces
+      - name: Verify all four production interfaces
         env:
           EXPECTED_DATE: ${{ steps.snapshot.outputs.date }}
         run: |
