@@ -18,6 +18,11 @@ const median = (values) => {
   return sorted.length % 2 ? sorted[middle] : (sorted[middle - 1] + sorted[middle]) / 2
 }
 const sum = (values) => values.filter(finite).reduce((total, value) => total + value, 0)
+const comparableReturn = (product, dataDate) => {
+  if (product.type?.startsWith('货币型') || !finite(product.navGrowthPercent)) return false
+  const year = String(dataDate || '').slice(0, 4)
+  return Boolean(year && product.metricsCoverageStart && product.metricsCoverageStart <= `${year}-01-07`)
+}
 
 const judgement = (row) => {
   if (!finite(row.navMedian)) return '样本待补充'
@@ -30,15 +35,18 @@ const judgement = (row) => {
 
 export function buildMarketForecast(payload) {
   const products = payload?.products ?? []
+  const dataDate = payload?.dataDate ?? payload?.updateTime?.slice(0, 10) ?? '--'
   const rows = DEFINITIONS.map((definition) => {
     const funds = products.filter(definition.test)
+    const returnFunds = funds.filter((product) => comparableReturn(product, dataDate))
     const daily = funds.map((p) => p.representativeShare?.dailyChangePercent ?? p.shares?.[0]?.dailyChangePercent).filter(finite)
     const row = {
       ...definition,
       funds,
       observed: daily.length,
-      navMedian: median(funds.map((p) => p.navGrowthPercent)),
-      drawdownMedian: median(funds.map((p) => p.maxDrawdownPercent)),
+      navMedian: median(returnFunds.map((p) => p.navGrowthPercent)),
+      drawdownMedian: median(returnFunds.map((p) => p.maxDrawdownPercent)),
+      returnSampleCount: returnFunds.length,
       scaleNetIncrease: sum(funds.map((p) => p.scaleNetIncreaseYi)),
       upBreadth: daily.length ? daily.filter((value) => value > 0).length / daily.length * 100 : null,
     }
@@ -73,7 +81,7 @@ export function buildMarketForecast(payload) {
     action = '控制高波动新品节奏，优先现金管理、短久期及低波动配置工具。'
   }
   return {
-    dataDate: payload?.dataDate ?? payload?.updateTime?.slice(0, 10) ?? '--',
+    dataDate,
     rows,
     leaders: { return: ranked[0], inflow: inflow[0], risk: risk[0] },
     baseline: {

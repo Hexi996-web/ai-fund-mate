@@ -167,6 +167,22 @@ class ExtractLastNetValueDateTests(unittest.TestCase):
 
 
 class ProductOutputPayloadTests(unittest.TestCase):
+    def test_money_fund_does_not_treat_daily_income_as_nav_growth(self):
+        product = {
+            "productId": "money-1", "representativeCode": "000001", "type": "货币型-普通货币",
+            "shares": [{"code": "000001", "netValue": 0.56, "lastNetValueDate": "2026-08-24", "scaleYi": 12}],
+        }
+        previous = [{
+            "productId": "money-1", "metricsAsOf": "2026-08-23", "metricsCoverageStart": "2026-01-02",
+            "ytdStartNav": 0.21, "ytdPeakNav": 0.60, "maxDrawdownPercent": -10,
+            "baselineScaleYi": 10, "baselineScaleDate": "2025-12-31",
+        }]
+        result = enrich_product_metrics([product], previous, date(2026, 8, 24))[0]
+        self.assertIsNone(result["navGrowthPercent"])
+        self.assertIsNone(result["maxDrawdownPercent"])
+        self.assertIsNone(result["ytdStartNav"])
+        self.assertEqual(result["scaleNetIncreaseYi"], 2)
+
     def test_carries_daily_metrics_and_uses_launch_scale_for_a_new_fund(self):
         product = {
             "productId": "p1", "representativeCode": "000001",

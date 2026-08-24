@@ -38,11 +38,13 @@ export function DailyProductSummary({ products, dataDate, establishedWindow, sco
   const [flowDetails, setFlowDetails] = useState(true)
   const [chartMetric, setChartMetric] = useState('netTotal')
   const analysis = useMemo(() => {
+    const year = String(dataDate || '').slice(0, 4)
+    const returnProducts = products.filter((product) => !product.type?.startsWith('货币型') && valid(product.navGrowthPercent) && product.metricsCoverageStart && product.metricsCoverageStart <= `${year}-01-07`)
     const globalRankings = {
       scaleNetIncreaseYi: rank(products, 'scaleNetIncreaseYi'),
       scaleGrowthPercent: rank(products, 'scaleGrowthPercent'),
-      navGrowthPercent: rank(products, 'navGrowthPercent'),
-      maxDrawdownPercent: rank(products, 'maxDrawdownPercent', 'asc'),
+      navGrowthPercent: rank(returnProducts, 'navGrowthPercent'),
+      maxDrawdownPercent: rank(returnProducts, 'maxDrawdownPercent', 'asc'),
     }
     const globalRanks = Object.fromEntries(Object.entries(globalRankings).map(([field, ranked]) => [
       field, new Map(ranked.map((product, index) => [product.productId, index + 1])),
@@ -50,8 +52,9 @@ export function DailyProductSummary({ products, dataDate, establishedWindow, sco
     const categoryStats = FUND_CATEGORIES.slice(1).map((category) => {
       const categoryProducts = products.filter((product) => getFundCategories({ type: product.type, name: product.productName }).includes(category))
       const netValues = categoryProducts.map((product) => product.scaleNetIncreaseYi).filter(valid)
-      const navValues = categoryProducts.map((product) => product.navGrowthPercent).filter(valid)
-      const drawdowns = categoryProducts.map((product) => product.maxDrawdownPercent).filter(valid)
+      const categoryReturnProducts = categoryProducts.filter((product) => returnProducts.includes(product))
+      const navValues = categoryReturnProducts.map((product) => product.navGrowthPercent).filter(valid)
+      const drawdowns = categoryReturnProducts.map((product) => product.maxDrawdownPercent).filter(valid)
       const stats = {
         category,
         products: categoryProducts,
@@ -66,8 +69,8 @@ export function DailyProductSummary({ products, dataDate, establishedWindow, sco
         leaders: {
           scaleNetIncreaseYi: rank(categoryProducts, 'scaleNetIncreaseYi')[0],
           scaleGrowthPercent: rank(categoryProducts, 'scaleGrowthPercent')[0],
-          navGrowthPercent: rank(categoryProducts, 'navGrowthPercent')[0],
-          maxDrawdownPercent: rank(categoryProducts, 'maxDrawdownPercent', 'asc')[0],
+          navGrowthPercent: rank(categoryReturnProducts, 'navGrowthPercent')[0],
+          maxDrawdownPercent: rank(categoryReturnProducts, 'maxDrawdownPercent', 'asc')[0],
         },
         netTopThree: rank(categoryProducts, 'scaleNetIncreaseYi').slice(0, 3),
       }
@@ -77,8 +80,8 @@ export function DailyProductSummary({ products, dataDate, establishedWindow, sco
     const positiveNet = netProducts.filter((product) => product.scaleNetIncreaseYi > 0)
     const positiveNetTotal = sum(positiveNet.map((product) => product.scaleNetIncreaseYi))
     const netValues = products.map((product) => product.scaleNetIncreaseYi).filter(valid)
-    const navValues = products.map((product) => product.navGrowthPercent).filter(valid)
-    const drawdowns = products.map((product) => product.maxDrawdownPercent).filter(valid)
+    const navValues = returnProducts.map((product) => product.navGrowthPercent).filter(valid)
+    const drawdowns = returnProducts.map((product) => product.maxDrawdownPercent).filter(valid)
     return {
       categoryStats,
       globalRanks,
@@ -86,8 +89,8 @@ export function DailyProductSummary({ products, dataDate, establishedWindow, sco
       netLeader: netProducts[0],
       topFivePositive: positiveNet.slice(0, 5),
       growthLeader: rank(products, 'scaleGrowthPercent')[0],
-      navLeader: rank(products, 'navGrowthPercent')[0],
-      deepestDrawdown: rank(products, 'maxDrawdownPercent', 'asc')[0],
+      navLeader: rank(returnProducts, 'navGrowthPercent')[0],
+      deepestDrawdown: rank(returnProducts, 'maxDrawdownPercent', 'asc')[0],
       netTotal: sum(netValues),
       netBreadth: share(netValues, (value) => value > 0),
       topFivePositiveContribution: positiveNetTotal ? sum(positiveNet.slice(0, 5).map((product) => product.scaleNetIncreaseYi)) / positiveNetTotal * 100 : null,
@@ -97,7 +100,7 @@ export function DailyProductSummary({ products, dataDate, establishedWindow, sco
       comparableNetCount: netValues.length,
       navSampleCount: navValues.length,
     }
-  }, [products])
+  }, [products, dataDate])
 
   const fundLink = (product) => product
     ? <LinkValue onClick={() => onSelectFund(product.productName)}>{product.productName}（{product.representativeCode}）</LinkValue>

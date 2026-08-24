@@ -167,10 +167,18 @@ def save_cache(cache: dict[str, dict]) -> None:
             time.sleep(0.25 * (attempt + 1))
 
 
-def backfill(workers: int = 24, limit: int | None = None, min_coverage: float = 0.75) -> dict:
+NAV_FIELDS = (
+    "representativeNav", "ytdStartNav", "baselineNavDate", "baselineNavType",
+    "navGrowthPercent", "ytdPeakNav", "maxDrawdownPercent", "drawdownStartDate",
+    "drawdownEndDate", "metricsCoverageStart", "metricsAsOf", "metricsCoverage",
+)
+
+
+def backfill(workers: int = 24, limit: int | None = None, min_coverage: float = 0.75, missing_baseline_only: bool = False) -> dict:
     payload = json.loads(PRODUCTS_PATH.read_text(encoding="utf-8"))
     products = payload.get("products", [])
-    codes = [str(product.get("representativeCode", "")).zfill(6) for product in products]
+    targets = [product for product in products if not missing_baseline_only or product.get("baselineScaleYi") is None]
+    codes = [str(product.get("representativeCode", "")).zfill(6) for product in targets]
     if limit:
         codes = codes[:limit]
     cache = load_cache()
@@ -191,10 +199,15 @@ def backfill(workers: int = 24, limit: int | None = None, min_coverage: float = 
     coverage = covered / len(codes) if codes else 0
     if coverage < min_coverage:
         raise RuntimeError(f"回填覆盖率 {coverage:.2%} 低于发布门槛 {min_coverage:.2%}，不覆盖产品文件")
+    target_ids = {product.get("productId") for product in targets}
     for product in products:
+        if product.get("productId") not in target_ids:
+            continue
         metrics = cache.get(str(product.get("representativeCode", "")).zfill(6))
         if str(product.get("type") or "").startswith("货币"):
-            metrics = None
+            metrics = dict(metrics or {})
+            for field in NAV_FIELDS:
+                metrics.pop(field, None)
         if metrics:
             established_date = str(product.get("establishedDate") or "")
             metrics["baselineNavType"] = "成立" if established_date.startswith(f"{TARGET_YEAR}-") else "年初"
@@ -202,12 +215,10 @@ def backfill(workers: int = 24, limit: int | None = None, min_coverage: float = 
         else:
             # Never retain a metric from an older, incompatible NAV series when
             # the same-unit historical series could not be refreshed.
-            for field in (
-                "ytdStartNav", "baselineNavDate", "baselineNavType",
-                "navGrowthPercent", "ytdPeakNav", "maxDrawdownPercent",
-                "drawdownStartDate", "drawdownEndDate", "metricsCoverageStart",
-                "metricsAsOf", "metricsCoverage",
-            ):
+            for field in NAV_FIELDS:
+                product[field] = None
+        if str(product.get("type") or "").startswith("货币"):
+            for field in NAV_FIELDS:
                 product[field] = None
     payload["metricsBackfill"] = {
         "targetYear": TARGET_YEAR,
@@ -215,6 +226,7 @@ def backfill(workers: int = 24, limit: int | None = None, min_coverage: float = 
         "coveredProducts": covered,
         "totalProducts": len(codes),
         "coveragePercent": round(coverage * 100, 2),
+        "mode": "missing-baseline-only" if missing_baseline_only else "all-products",
     }
     temporary = PRODUCTS_PATH.with_suffix(".json.tmp")
     temporary.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
@@ -228,8 +240,9 @@ def main() -> None:
     parser.add_argument("--workers", type=int, default=24)
     parser.add_argument("--limit", type=int)
     parser.add_argument("--min-coverage", type=float, default=0.75)
+    parser.add_argument("--missing-baseline-only", action="store_true")
     args = parser.parse_args()
-    print(json.dumps(backfill(args.workers, args.limit, args.min_coverage), ensure_ascii=False))
+    print(json.dumps(backfill(args.workers, args.limit, args.min_coverage, args.missing_baseline_only), ensure_ascii=False))
 
 
 if __name__ == "__main__":
