@@ -59,17 +59,19 @@ function EvidenceDrawer({ layer, item, updateTime, onClose }) {
 export function PreResearchPool() {
   const [payload, setPayload] = useState({ products:[], updateTime:'加载中' })
   const [evidence, setEvidence] = useState({ items:[], updateTime:'加载中' })
+  const [attention, setAttention] = useState({ recommendedIds:CORE_ATTENTION_IDS })
   const [selected, setSelected] = useState('')
   const [drawer, setDrawer] = useState('')
   const [evidenceLayer, setEvidenceLayer] = useState('')
   const [peerSort, setPeerSort] = useState('current')
-  useEffect(() => { const controller = new AbortController(); Promise.all([fetch('/fund_products.json',{signal:controller.signal,cache:'no-store'}).then(r=>r.json()),fetch('/pre_research_evidence.json',{signal:controller.signal,cache:'no-store'}).then(r=>r.json())]).then(([funds,proof])=>{setPayload(funds);setEvidence(proof)}).catch(()=>{}); return () => controller.abort() },[])
+  useEffect(() => { const controller = new AbortController(); Promise.all([fetch('/fund_products.json',{signal:controller.signal,cache:'no-store'}).then(r=>r.json()),fetch('/pre_research_evidence.json',{signal:controller.signal,cache:'no-store'}).then(r=>r.json()),fetch('/attention_pool_evidence.json',{signal:controller.signal,cache:'no-store'}).then(r=>r.json())]).then(([funds,proof,attentionProof])=>{setPayload(funds);setEvidence(proof);setAttention(attentionProof)}).catch(()=>{}); return () => controller.abort() },[])
   const evidenceById = useMemo(() => new Map((evidence.items || []).map((item)=>[item.id,item])),[evidence.items])
   const ranked = useMemo(() => {
     const priority = { '产品缺失':4, '存在空位':3, '继续观察':2, '供给过剩':1 }
-    const coreOrder = new Map(CORE_ATTENTION_IDS.map((id,index)=>[id,index]))
+    const ids = attention.recommendedIds?.length===10 ? attention.recommendedIds : CORE_ATTENTION_IDS
+    const coreOrder = new Map(ids.map((id,index)=>[id,index]))
     return PRE_RESEARCH_POOL.map((item) => ({...item,market:marketMetrics(item,payload.products || [],payload.updateTime)})).filter((item)=>coreOrder.has(item.id)).sort((a,b) => coreOrder.get(a.id)-coreOrder.get(b.id) || priority[b.market.state]-priority[a.market.state]).slice(0,10)
-  },[payload])
+  },[attention.recommendedIds,payload])
   const active = ranked.find((item)=>item.id===selected) || ranked[0]
   const activeEvidence = active ? evidenceById.get(active.id) : null
   const drawerFunds = useMemo(() => {

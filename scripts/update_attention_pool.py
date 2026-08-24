@@ -1,8 +1,8 @@
 """Build the public-data snapshot for the social-attention foresight map.
 
 The two axes intentionally use observable proxies:
-- social attention: GDELT share of global online coverage, 90-day timeline;
-- market validation: Eastmoney concept-board price and turnover trend.
+- social attention: Eastmoney public-news search, recent publication density;
+- product-market validation: comparable fund scale growth and new launches.
 
 Neither proxy is labelled as enterprise revenue or a customer survey.  Themes
 without both series remain in the research universe but receive no coordinates.
@@ -11,8 +11,9 @@ from __future__ import annotations
 
 import json
 import math
+import re
 import time
-from datetime import datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from statistics import fmean
 
@@ -21,6 +22,7 @@ import requests
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "public" / "attention_pool_evidence.json"
 PRE_EVIDENCE = ROOT / "public" / "pre_research_evidence.json"
+FUND_PRODUCTS = ROOT / "public" / "fund_products.json"
 
 THEMES = [
     ("ai-agent", "人工智能", "BK0800"),
@@ -37,6 +39,16 @@ THEMES = [
     ("ai-application", "人工智能应用", "BK0579"),
 ]
 
+FUND_KEYWORDS = {
+    "ai-agent": ["人工智能", "AI", "算力", "云计算", "大数据"],
+    "embodied-ai": ["机器人", "智能制造", "自动化"], "space": ["航天", "卫星", "军工"],
+    "power": ["电力", "电网", "储能", "新能源"], "hard-tech": ["半导体", "芯片", "工业母机", "自主可控"],
+    "biotech": ["创新药", "生物医药", "医药"], "longevity": ["养老", "银发", "医疗服务", "健康"],
+    "experience": ["旅游", "消费", "文娱", "传媒"], "resources": ["有色", "稀土", "新材料", "资源", "矿业"],
+    "future-tech": ["量子", "6G", "脑机", "核聚变"], "industrial-software": ["工业软件", "软件", "工业互联网"],
+    "ai-application": ["软件", "云计算", "互联网", "人工智能"],
+}
+
 HEADERS = {"User-Agent": "Mozilla/5.0", "Referer": "https://quote.eastmoney.com/"}
 
 
@@ -50,65 +62,125 @@ def get_json(url: str, params: dict, timeout: int = 40) -> dict:
     return response.json()
 
 
-def gdelt_attention(query: str) -> dict:
-    payload = get_json(
-        "https://api.gdeltproject.org/api/v2/doc/doc",
-        {"query": f'"{query}"', "mode": "timelinevol", "format": "json", "timespan": "3months"},
-    )
-    timeline = (payload.get("timeline") or [{}])[0].get("data") or []
-    values = [float(row.get("value", 0)) for row in timeline if row.get("value") is not None]
-    if len(values) < 45:
-        raise ValueError(f"GDELT returned only {len(values)} observations")
-    recent = fmean(values[-30:])
-    prior = fmean(values[-60:-30]) or 1e-9
-    rank = sum(value <= recent for value in values) / len(values)
-    acceleration = (recent / prior - 1) * 100
-    score = clamp(25 + rank * 45 + clamp(acceleration, -50, 100) * 0.20)
+def eastmoney_attention(query: str) -> dict:
+    callback = "jQuery_attention"
+    articles = []
+    hits_total = None
+    for page in range(1, 6):
+        body = {
+            "uid": "", "keyword": query, "type": ["cmsArticleWebOld"],
+            "client": "web", "clientType": "web", "clientVersion": "curr",
+            "param": {"cmsArticleWebOld": {"searchScope": "default", "sort": "default",
+                      "pageIndex": page, "pageSize": 100, "preTag": "", "postTag": ""}},
+        }
+        response = requests.get(
+            "https://search-api-web.eastmoney.com/search/jsonp",
+            params={"cb": callback, "param": json.dumps(body, ensure_ascii=False, separators=(",", ":"))},
+            headers={**HEADERS, "Referer": "https://so.eastmoney.com/"}, timeout=40,
+        )
+        response.raise_for_status()
+        match = re.search(r"^[^(]+\((.*)\)\s*$", response.text, re.S)
+        if not match:
+            raise ValueError("Eastmoney news response was not valid JSONP")
+        payload = json.loads(match.group(1))
+        hits_total = payload.get("hitsTotal", hits_total)
+        page_articles = payload.get("result", {}).get("cmsArticleWebOld") or []
+        articles.extend(page_articles)
+        if len(page_articles) < 100:
+            break
+        time.sleep(0.15)
+    today = date.today()
+    parsed = []
+    for article in articles:
+        try:
+            parsed.append(datetime.strptime(article.get("date", "")[:10], "%Y-%m-%d").date())
+        except ValueError:
+            continue
+    recent = sum(day >= today - timedelta(days=30) for day in parsed)
+    prior = sum(today - timedelta(days=60) <= day < today - timedelta(days=30) for day in parsed)
+    acceleration = (recent / max(prior, 1) - 1) * 100
+    score = clamp(20 + math.log1p(recent) * 13 + clamp(acceleration, -50, 100) * 0.15)
     return {
         "score": round(score, 1),
-        "recent30Average": round(recent, 6),
-        "prior30Average": round(prior, 6),
+        "recent30Articles": recent,
+        "prior30Articles": prior,
         "accelerationPercent": round(acceleration, 1),
-        "observations": len(values),
-        "source": "GDELT DOC 2.0 TimelineVol",
-        "sourceUrl": "https://api.gdeltproject.org/api/v2/doc/doc",
+        "sampledArticles": len(parsed),
+        "hitsTotal": hits_total,
+        "source": "东方财富公开新闻搜索",
+        "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
         "status": "真实公开代理",
-        "note": "全球在线媒体覆盖占比；衡量媒体注意力，不等同中国居民搜索或申购意愿。",
+        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。",
     }
 
 
-def board_validation(board: str) -> dict:
-    payload = get_json(
-        "https://push2his.eastmoney.com/api/qt/stock/kline/get",
-        {
-            "secid": f"90.{board}", "fields1": "f1,f2,f3,f4,f5,f6",
-            "fields2": "f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61",
-            "klt": "101", "fqt": "1", "beg": "20250101", "end": "20500101",
-        },
-    ).get("data") or {}
-    rows = []
-    for raw in payload.get("klines") or []:
-        parts = raw.split(",")
-        if len(parts) >= 7:
-            rows.append({"date": parts[0], "close": float(parts[2]), "amount": float(parts[6])})
-    if len(rows) < 80:
-        raise ValueError(f"Eastmoney returned only {len(rows)} board observations")
-    recent_amount = fmean(row["amount"] for row in rows[-20:])
-    prior_amount = fmean(row["amount"] for row in rows[-80:-20]) or 1e-9
-    start = rows[-120]["close"] if len(rows) >= 120 else rows[0]["close"]
-    momentum = (rows[-1]["close"] / start - 1) * 100
-    amount_change = (recent_amount / prior_amount - 1) * 100
-    score = clamp(50 + clamp(momentum, -40, 60) * 0.45 + clamp(amount_change, -60, 100) * 0.20)
+def cninfo_total(query: str, start: date, end: date) -> int:
+    for attempt in range(3):
+        response = requests.post(
+            "http://www.cninfo.com.cn/new/hisAnnouncement/query",
+            data={"tabName": "fulltext", "pageSize": "30", "pageNum": "1", "column": "szse",
+                  "category": "", "plate": "", "searchkey": query, "secid": "", "trade": "",
+                  "seDate": f"{start.isoformat()}~{end.isoformat()}", "stock": "", "sortName": "",
+                  "sortType": "", "isHLtitle": "true"},
+            headers={**HEADERS, "X-Requested-With": "XMLHttpRequest"}, timeout=40,
+        )
+        response.raise_for_status()
+        try:
+            return int(response.json().get("totalAnnouncement") or 0)
+        except ValueError:
+            if attempt == 2:
+                raise
+            time.sleep(1.5 * (attempt + 1))
+    return 0
+
+
+def enterprise_validation(query: str) -> dict:
+    today = date.today()
+    recent = cninfo_total(query, today - timedelta(days=90), today)
+    time.sleep(1.0)
+    prior = cninfo_total(query, today - timedelta(days=180), today - timedelta(days=91))
+    acceleration = (recent / max(prior, 1) - 1) * 100
+    score = clamp(20 + math.log1p(recent) * 14 + clamp(acceleration, -50, 100) * 0.12)
     return {
         "score": round(score, 1),
-        "momentumPercent": round(momentum, 1),
-        "turnoverChangePercent": round(amount_change, 1),
-        "asOf": rows[-1]["date"],
-        "observations": len(rows),
-        "source": "东方财富公开概念板块日线",
-        "sourceUrl": "https://push2his.eastmoney.com/api/qt/stock/kline/get",
+        "recent90Announcements": recent,
+        "prior90Announcements": prior,
+        "accelerationPercent": round(acceleration, 1),
+        "asOf": today.isoformat(),
+        "source": "巨潮资讯全市场公告标题检索",
+        "sourceUrl": "http://www.cninfo.com.cn/new/hisAnnouncement/query",
         "status": "真实公开代理",
-        "note": "价格与成交趋势只代表资本市场验证代理，不替代行业产量、订单、收入或利润。",
+        "note": "公告标题命中衡量上市公司披露活跃度；不替代公告正文中的订单、收入或利润核验。",
+    }
+
+
+def product_validation(theme_id: str) -> dict:
+    payload = json.loads(FUND_PRODUCTS.read_text(encoding="utf-8"))
+    products = payload.get("products") or []
+    keywords = FUND_KEYWORDS[theme_id]
+    peers = [item for item in products if any(word.lower() in (item.get("productName") or "").lower() for word in keywords)]
+    comparable = [item for item in peers if item.get("baselineScaleType") == "2025年末披露规模"
+                  and isinstance(item.get("baselineScaleYi"), (int, float)) and isinstance(item.get("currentScaleYi"), (int, float))]
+    baseline = sum(item["baselineScaleYi"] for item in comparable)
+    increase = sum(item.get("scaleNetIncreaseYi", item["currentScaleYi"] - item["baselineScaleYi"]) for item in comparable)
+    growth = increase / baseline * 100 if baseline else 0
+    total = sum(item.get("currentScaleYi") or 0 for item in peers)
+    today = date.today()
+    launched = 0
+    for item in peers:
+        try:
+            established = datetime.strptime(item.get("establishedDate") or "", "%Y-%m-%d").date()
+        except ValueError:
+            continue
+        launched += established >= today - timedelta(days=365)
+    score = clamp(30 + clamp(growth, -40, 80) * 0.35 + math.log1p(total) * 4 + min(launched, 15) * 1.2)
+    return {
+        "score": round(score, 1), "peerFunds": len(peers), "comparableFunds": len(comparable),
+        "currentScaleYi": round(total, 1), "scaleNetIncreaseYi": round(increase, 1),
+        "scaleGrowthPercent": round(growth, 1), "launched12Months": launched,
+        "asOf": payload.get("updateTime"), "source": "AI Fund Mate全市场公开基金快照",
+        "sourceUrl": "/fund_products.json", "status": "真实公开数据",
+        "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。",
     }
 
 
@@ -149,14 +221,14 @@ def main() -> None:
         old = previous.get(theme_id, {})
         errors = []
         try:
-            attention = gdelt_attention(query)
+            attention = eastmoney_attention(query)
         except Exception as exc:  # keep the last usable snapshot on transient failures
             attention = old.get("attention")
             errors.append(f"attention: {type(exc).__name__}")
         if index < len(THEMES) - 1:
-            time.sleep(5.2)  # GDELT public endpoint asks clients to stay below 1 request / 5 seconds
+            time.sleep(0.8)
         try:
-            validation = board_validation(board)
+            validation = product_validation(theme_id)
         except Exception as exc:
             validation = old.get("validation")
             errors.append(f"validation: {type(exc).__name__}")
@@ -167,7 +239,26 @@ def main() -> None:
             "attention": attention, "validation": validation, "capacity": capacity,
             "errors": errors,
         })
+    attention_values = sorted(
+        item["attention"]["recent30Articles"] for item in items if item["verified"]
+    )
+    if attention_values:
+        for item in items:
+            if not item["verified"]:
+                continue
+            value = item["attention"]["recent30Articles"]
+            lower = attention_values.index(value)
+            upper = len(attention_values) - 1 - attention_values[::-1].index(value)
+            percentile = ((lower + upper) / 2 + 1) / len(attention_values)
+            item["attention"]["score"] = round(25 + percentile * 65, 1)
+            item["attention"]["scoreMethod"] = "本期已验证方向的近30日媒体文章数横截面百分位"
     verified_count = sum(bool(item["verified"]) for item in items)
+    ranked = sorted(
+        (item for item in items if item["verified"]),
+        key=lambda item: item["attention"]["score"] * 0.35 + item["validation"]["score"] * 0.45 + item["capacity"]["score"] * 0.20,
+        reverse=True,
+    )
+    recommended_ids = [item["id"] for item in ranked[:10]]
     output = {
         "schemaVersion": 1,
         "generatedAt": datetime.now().astimezone().isoformat(),
@@ -175,8 +266,9 @@ def main() -> None:
         "universeCount": 36,
         "mappedCount": len(THEMES),
         "verifiedCount": verified_count,
+        "recommendedIds": recommended_ids,
         "items": items,
-        "disclosure": "媒体注意力和资本市场验证均为公开代理；不替代企业经营、客户调研或投资结论。",
+        "disclosure": "媒体注意力为公开代理，产品市场验证来自基金规模与新发数据；均不替代企业经营、客户调研或投资结论。",
     }
     OUT.write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"wrote {OUT}: {verified_count}/{len(THEMES)} mapped themes verified")
@@ -186,4 +278,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
