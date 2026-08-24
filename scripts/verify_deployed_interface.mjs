@@ -27,7 +27,12 @@ try {
 
   await page.getByRole('button', { name: '预研产品池' }).click()
   await page.getByRole('heading', { name: '季度预研产品池' }).waitFor()
+  await page.getByRole('region', { name: '母池选择标准' }).waitFor()
+  await page.getByText('每日更新证据与核心10排序').waitFor()
   await page.locator('.decision-date').getByText(new RegExp(expectedDate)).waitFor()
+  await page.getByText('母池36个方向全部展示').waitFor()
+  if (await page.locator('.attention-dot').count() !== 36) throw new Error('attention heatmap did not render all 36 verified themes')
+  if (await page.locator('.attention-dot.is-core').count() !== 10) throw new Error('attention heatmap did not render exactly 10 core themes')
   await page.getByRole('heading', { name: '三层验证证据' }).waitFor()
   await page.getByRole('heading', { name: '产品空位判断' }).waitFor()
 

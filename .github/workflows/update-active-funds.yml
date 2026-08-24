@@ -58,7 +58,8 @@ jobs:
           python scripts/validate_published_freshness.py public/funds_active.json --field updateTime --max-age-hours 12 --min-items funds=1000
           python scripts/validate_published_freshness.py public/fund_products.json --field updateTime --max-age-hours 12 --min-items products=1000
           python scripts/validate_published_freshness.py public/issuance_insights.json --field generatedAt --max-age-hours 12
-          python scripts/validate_published_freshness.py public/attention_pool_evidence.json --field generatedAt --max-age-hours 12 --min-items items=1
+          python scripts/validate_published_freshness.py public/attention_pool_evidence.json --field generatedAt --max-age-hours 12 --min-items items=36
+          python -c "import json; d=json.load(open('public/attention_pool_evidence.json',encoding='utf-8')); assert d['verifiedCount']==36 and len(d['recommendedIds'])==10, d"
           python scripts/validate_published_freshness.py public/data_status.json --field generatedAt --max-age-hours 12
       - name: Verify frontend build against the generated snapshots
         run: |
