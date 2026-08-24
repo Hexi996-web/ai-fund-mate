@@ -76,8 +76,8 @@ export function MarketForecastWorkspace({ onOpenFundLibrary }) {
     </header>
 
     <ReportScope label="行情预测数据口径" items={[
-      { term: '研究样本', description: '全部存续公募基金产品，不按成立日期筛选' },
-      { term: '观测区间', description: `净值增长、规模净增额和最大回撤为年初至${forecast.dataDate}累计；本年新成立产品从成立日起计算` },
+      { term: '研究样本', description: '规模指标覆盖全部具备可比规模的存续产品；收益指标排除货币基金和非年初覆盖产品' },
+      { term: '观测区间', description: `收益与回撤仅比较年初至${forecast.dataDate}的同区间样本；新基金不进入跨类型收益排名` },
       { term: '信号性质', description: `基于${forecast.dataDate}收盘后可得数据每日重算，用于判断当前市场状态，不代表下一交易日收益预测` },
     ]} />
 
@@ -105,7 +105,7 @@ export function MarketForecastWorkspace({ onOpenFundLibrary }) {
     <section className="forecast-table" aria-label="分类行情预测">
       <div className="forecast-row forecast-row--head"><span>基金类型</span><span>当前判断</span><span>情景区间</span><span>年内收益中位数</span><span>规模净增额</span><span>最大回撤中位数</span></div>
       {forecast.rows.map((row) => <button type="button" key={row.id} className={`forecast-row ${selected?.id === row.id ? 'selected' : ''}`} onClick={() => setSelectedId(row.id)}>
-        <strong>{row.name}</strong><span>{row.judgement}</span><span>{row.range}</span><span className={(row.navMedian ?? 0) >= 0 ? 'positive' : 'negative'}>{pct(row.navMedian)}</span><span className={row.scaleNetIncrease >= 0 ? 'positive' : 'negative'}>{scale(row.scaleNetIncrease)}</span><span className="negative">{pct(row.drawdownMedian)}</span>
+        <strong>{row.name}</strong><span>{row.judgement}</span><span>{row.range}</span><span className={(row.navMedian ?? 0) >= 0 ? 'positive' : 'negative'}>{pct(row.navMedian)}<small>{row.returnSampleCount}只同区间样本</small></span><span className={row.scaleNetIncrease >= 0 ? 'positive' : 'negative'}>{scale(row.scaleNetIncrease)}</span><span className="negative">{pct(row.drawdownMedian)}</span>
       </button>)}
     </section>
 

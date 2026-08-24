@@ -1,0 +1,23 @@
+import { test, expect } from '@playwright/test'
+
+test('shows public-data evidence and drills into product supply', async ({ page }) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: '预研产品池', exact: true }).click()
+  await expect(page.getByRole('heading', { name: '季度预研产品池' })).toBeVisible()
+  await expect(page.getByText('三层验证证据')).toBeVisible()
+  await expect(page.getByText('结构驱动', { exact: true })).toBeVisible()
+  await expect(page.getByText('企业兑现', { exact: true })).toBeVisible()
+  await expect(page.getByText('资产承载', { exact: true })).toBeVisible()
+  await page.getByRole('button', { name: /企业兑现/ }).click()
+  await expect(page.getByRole('heading', { name: '自身趋势 × 同行业比较' })).toBeVisible()
+  await expect(page.getByText(/PE属于估值，不代表/)).toBeVisible()
+  await page.getByRole('button', { name: '关闭', exact: true }).click()
+  await page.getByRole('button', { name: /同类基金/ }).click()
+  await expect(page.getByRole('heading', { name: '全部同类基金' })).toBeVisible()
+  const table = page.locator('.peer-table')
+  const columnValues = async (column) => table.locator(':scope > div').evaluateAll((rows, index) => rows.slice(1).map((row) => Number.parseFloat(row.children[index].textContent)), column)
+  const isDescending = (values) => values.every((value, index) => index === 0 || values[index - 1] >= value)
+  await expect.poll(async () => isDescending(await columnValues(3))).toBe(true)
+  await page.getByLabel('同类基金排序').selectOption('growth')
+  await expect.poll(async () => isDescending(await columnValues(5))).toBe(true)
+})

@@ -196,6 +196,7 @@ def enrich_product_metrics(products, previous_products, snapshot_date=None):
         previous = previous_by_id.get(product.get("productId"), {})
         share = _representative_share(product)
         current_nav = safe_float(share.get("netValue"))
+        is_money = str(product.get("type") or "").startswith("货币")
         current_scale = _product_scale(product)
         nav_date = parse_date(share.get("lastNetValueDate")) or snapshot_date
         established_dates = [
@@ -232,7 +233,7 @@ def enrich_product_metrics(products, previous_products, snapshot_date=None):
             drawdown_start = nav_date.isoformat() if current_nav is not None else None
             drawdown_end = nav_date.isoformat() if current_nav is not None else None
 
-        if current_nav is not None:
+        if current_nav is not None and not is_money:
             if peak_nav is None or current_nav > peak_nav:
                 peak_nav = current_nav
                 drawdown_start = nav_date.isoformat()
@@ -268,7 +269,7 @@ def enrich_product_metrics(products, previous_products, snapshot_date=None):
         )
         nav_growth = (
             round((current_nav / ytd_start_nav - 1) * 100, 4)
-            if current_nav is not None and ytd_start_nav not in (None, 0) else None
+            if not is_money and current_nav is not None and ytd_start_nav not in (None, 0) else None
         )
         product.update({
             "establishedDate": established_date.isoformat() if established_date else None,
@@ -280,17 +281,17 @@ def enrich_product_metrics(products, previous_products, snapshot_date=None):
             "scaleNetIncreaseYi": scale_increase,
             "scaleGrowthPercent": scale_growth,
             "representativeNav": current_nav,
-            "ytdStartNav": ytd_start_nav,
-            "baselineNavDate": baseline_nav_date.isoformat() if baseline_nav_date else None,
-            "baselineNavType": baseline_nav_type,
+            "ytdStartNav": None if is_money else ytd_start_nav,
+            "baselineNavDate": None if is_money else (baseline_nav_date.isoformat() if baseline_nav_date else None),
+            "baselineNavType": None if is_money else baseline_nav_type,
             "navGrowthPercent": nav_growth,
-            "ytdPeakNav": peak_nav,
-            "maxDrawdownPercent": round(max_drawdown, 4) if max_drawdown is not None else None,
-            "drawdownStartDate": drawdown_start,
-            "drawdownEndDate": drawdown_end,
-            "metricsCoverageStart": coverage_start.isoformat() if coverage_start else None,
+            "ytdPeakNav": None if is_money else peak_nav,
+            "maxDrawdownPercent": None if is_money else (round(max_drawdown, 4) if max_drawdown is not None else None),
+            "drawdownStartDate": None if is_money else drawdown_start,
+            "drawdownEndDate": None if is_money else drawdown_end,
+            "metricsCoverageStart": None if is_money else (coverage_start.isoformat() if coverage_start else None),
             "metricsAsOf": snapshot_date.isoformat(),
-            "metricsCoverage": "全年" if coverage_start and coverage_start <= date(snapshot_date.year, 1, 7) else "接入后累计",
+            "metricsCoverage": None if is_money else ("全年" if coverage_start and coverage_start <= date(snapshot_date.year, 1, 7) else "接入后累计"),
         })
     return products
 

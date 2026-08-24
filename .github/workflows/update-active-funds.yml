@@ -40,6 +40,7 @@ jobs:
       - name: Build active fund dataset
         run: |
           python scripts/update_active_funds.py
+          python scripts/backfill_2026_fund_metrics.py --missing-baseline-only --workers 24 --min-coverage 0.50
           python scripts/update_issuance_insights.py
           python scripts/publish_data_status.py
       - name: Read generated snapshot date
