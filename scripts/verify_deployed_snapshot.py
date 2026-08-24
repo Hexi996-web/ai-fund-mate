@@ -32,13 +32,16 @@ def wait_for_deployment(base_url: str, expected_date: str, timeout_seconds: int)
         try:
             products = _json(urljoin(base_url.rstrip("/") + "/", "fund_products.json"))
             issuance = _json(urljoin(base_url.rstrip("/") + "/", "issuance_insights.json"))
+            attention = _json(urljoin(base_url.rstrip("/") + "/", "attention_pool_evidence.json"))
             status = _json(urljoin(base_url.rstrip("/") + "/", "data_status.json"))
             last_observed = {
                 "fund_products": _date(products.get("updateTime")),
                 "issuance_insights": _date(issuance.get("dataDate")),
+                "attention_pool": _date(attention.get("generatedAt")),
                 "data_status": _date(status.get("snapshotDate")),
             }
-            if all(value == expected_date for value in last_observed.values()):
+            attention_complete = attention.get("verifiedCount") == 36 and len(attention.get("recommendedIds") or []) == 10
+            if all(value == expected_date for value in last_observed.values()) and attention_complete:
                 print(f"Production snapshots are current: {last_observed}")
                 return
         except (OSError, ValueError, json.JSONDecodeError) as error:
