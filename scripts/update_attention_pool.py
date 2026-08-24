@@ -37,6 +37,14 @@ THEMES = [
     ("future-tech", "量子科技", "BK0710"),
     ("industrial-software", "工业软件", "BK0696"),
     ("ai-application", "人工智能应用", "BK0579"),
+    ("cybersecurity", "数据安全", "BK1047"),
+    ("smart-healthcare", "医疗服务", "BK0727"),
+    ("synthetic-biology", "合成生物", "BK1174"),
+    ("nuclear-energy", "核能核电", "BK0577"),
+    ("water-security", "水利建设", "BK0597"),
+    ("low-altitude", "低空经济", "BK1166"),
+    ("autonomous-driving", "车联网", "BK0920"),
+    ("obesity-care", "减肥药", "BK1146"),
 ]
 
 FUND_KEYWORDS = {
@@ -47,6 +55,14 @@ FUND_KEYWORDS = {
     "experience": ["旅游", "消费", "文娱", "传媒"], "resources": ["有色", "稀土", "新材料", "资源", "矿业"],
     "future-tech": ["量子", "6G", "脑机", "核聚变"], "industrial-software": ["工业软件", "软件", "工业互联网"],
     "ai-application": ["软件", "云计算", "互联网", "人工智能"],
+    "cybersecurity": ["网络安全", "数据安全", "信息安全"],
+    "smart-healthcare": ["医疗服务", "智慧医疗", "互联网医疗"],
+    "synthetic-biology": ["合成生物", "生物制造"],
+    "nuclear-energy": ["核电", "核能"],
+    "water-security": ["水务", "水利", "节水"],
+    "low-altitude": ["低空经济", "航空装备", "无人机"],
+    "autonomous-driving": ["智能驾驶", "自动驾驶", "车联网"],
+    "obesity-care": ["减肥药", "体重管理", "代谢"],
 }
 
 HEADERS = {"User-Agent": "Mozilla/5.0", "Referer": "https://quote.eastmoney.com/"}
@@ -185,21 +201,31 @@ def product_validation(theme_id: str) -> dict:
 
 
 def asset_capacity() -> dict[str, dict]:
-    if not PRE_EVIDENCE.exists():
-        return {}
-    payload = json.loads(PRE_EVIDENCE.read_text(encoding="utf-8-sig"))
-    values = {
-        item["id"]: item.get("assets", {}).get("floatMarketCapYi")
-        for item in payload.get("items", [])
-        if isinstance(item.get("assets", {}).get("floatMarketCapYi"), (int, float))
-    }
+    """Fetch current float market cap for every mapped Eastmoney concept board."""
+    values = {}
+    names = {}
+    for theme_id, _query, board in THEMES:
+        try:
+            payload = get_json(
+                "https://push2.eastmoney.com/api/qt/stock/get",
+                {"secid": f"90.{board}", "fields": "f57,f58,f116,f117"},
+            ).get("data") or {}
+            float_cap = payload.get("f117")
+            if isinstance(float_cap, (int, float)) and float_cap > 0:
+                values[theme_id] = float_cap / 100_000_000
+                names[theme_id] = payload.get("f58") or board
+        except Exception:
+            continue
+        time.sleep(0.15)
     ordered = sorted(values.values())
     result = {}
     for theme_id, value in values.items():
         percentile = (ordered.index(value) + 1) / len(ordered)
         result[theme_id] = {
             "score": round(30 + percentile * 65, 1), "floatMarketCapYi": value,
-            "source": "东方财富公开板块行情", "status": "真实公开数据",
+            "boardName": names.get(theme_id), "asOf": date.today().isoformat(),
+            "source": "东方财富公开板块行情", "sourceUrl": "https://push2.eastmoney.com/api/qt/stock/get",
+            "status": "真实公开数据",
         }
     return result
 
@@ -262,7 +288,7 @@ def main() -> None:
     output = {
         "schemaVersion": 1,
         "generatedAt": datetime.now().astimezone().isoformat(),
-        "methodologyVersion": "attention-public-proxy-v1",
+        "methodologyVersion": "attention-public-proxy-v2",
         "universeCount": 36,
         "mappedCount": len(THEMES),
         "verifiedCount": verified_count,

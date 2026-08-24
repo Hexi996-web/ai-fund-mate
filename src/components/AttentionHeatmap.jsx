@@ -38,7 +38,6 @@ export function AttentionHeatmap({ onSelectCore }) {
     <div className="attention-toolbar" aria-label="候选池筛选"><div>{DRIVERS.map((item)=><button type="button" className={driver===item?'active':''} onClick={()=>setDriver(item)} key={item}>{item}</button>)}</div><label><input type="checkbox" checked={showLabels} onChange={(event)=>setShowLabels(event.target.checked)}/> 显示名称</label></div>
     <div className="attention-grid">
       <div className="attention-canvas">
-        <div className="attention-y-title">社会注意力潜力 ↑</div>
         <div className="quadrant quadrant--lead"><b>提前预研区</b><strong>产品市场开始验证，社会注意力尚未集中</strong></div>
         <div className="quadrant quadrant--resonance"><b>产品—注意力共振区</b><strong>基金市场验证与社会关注同步增强</strong></div>
         <div className="quadrant quadrant--seed"><b>结构萌芽区</b><strong>长期逻辑存在，产品市场验证仍不足</strong></div>
