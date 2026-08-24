@@ -1,21 +1,21 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-24T07:45:06.197961+00:00",
+  "generatedAt": "2026-08-24T16:00:05.200798+08:00",
   "methodologyVersion": "attention-public-proxy-v2",
   "universeCount": 36,
   "mappedCount": 20,
-  "verifiedCount": 12,
+  "verifiedCount": 20,
   "recommendedIds": [
-    "hard-tech",
     "resources",
-    "power",
-    "biotech",
+    "hard-tech",
     "ai-agent",
+    "biotech",
+    "embodied-ai",
     "ai-application",
+    "power",
     "space",
-    "industrial-software",
     "experience",
-    "embodied-ai"
+    "industrial-software"
   ],
   "items": [
     {
@@ -24,12 +24,12 @@
       "boardCode": "BK0800",
       "verified": true,
       "attention": {
-        "score": 60.2,
-        "recent30Articles": 0,
+        "score": 86.8,
+        "recent30Articles": 500,
         "prior30Articles": 0,
-        "accelerationPercent": -100.0,
-        "sampledArticles": 0,
-        "hitsTotal": 1,
+        "accelerationPercent": 49900.0,
+        "sampledArticles": 500,
+        "hitsTotal": 10000,
         "source": "东方财富公开新闻搜索",
         "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
         "status": "真实公开代理",
@@ -51,12 +51,12 @@
         "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
       },
       "capacity": {
-        "score": 78.8,
+        "score": 91.8,
         "floatMarketCapYi": 121956.80512,
         "boardName": "人工智能",
         "asOf": "2026-08-24",
         "source": "东方财富公开板块行情",
-        "sourceUrl": "https://push2.eastmoney.com/api/qt/stock/get",
+        "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
       "errors": []
@@ -67,12 +67,12 @@
       "boardCode": "BK1184",
       "verified": true,
       "attention": {
-        "score": 60.2,
-        "recent30Articles": 0,
+        "score": 86.8,
+        "recent30Articles": 500,
         "prior30Articles": 0,
-        "accelerationPercent": -100.0,
-        "sampledArticles": 0,
-        "hitsTotal": 1,
+        "accelerationPercent": 49900.0,
+        "sampledArticles": 500,
+        "hitsTotal": 10000,
         "source": "东方财富公开新闻搜索",
         "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
         "status": "真实公开代理",
@@ -94,12 +94,12 @@
         "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
       },
       "capacity": {
-        "score": 62.5,
+        "score": 85.2,
         "floatMarketCapYi": 52326.02368,
         "boardName": "人形机器人",
         "asOf": "2026-08-24",
         "source": "东方财富公开板块行情",
-        "sourceUrl": "https://push2.eastmoney.com/api/qt/stock/get",
+        "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
       "errors": []
@@ -110,12 +110,12 @@
       "boardCode": "BK0963",
       "verified": true,
       "attention": {
-        "score": 60.2,
-        "recent30Articles": 0,
-        "prior30Articles": 0,
-        "accelerationPercent": -100.0,
-        "sampledArticles": 0,
-        "hitsTotal": 1,
+        "score": 54.2,
+        "recent30Articles": 389,
+        "prior30Articles": 111,
+        "accelerationPercent": 250.5,
+        "sampledArticles": 500,
+        "hitsTotal": 9800,
         "source": "东方财富公开新闻搜索",
         "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
         "status": "真实公开代理",
@@ -137,9 +137,12 @@
         "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
       },
       "capacity": {
-        "score": 73.3,
-        "floatMarketCapYi": 50151.0,
+        "score": 82.0,
+        "floatMarketCapYi": 50068.1856,
+        "boardName": "商业航天",
+        "asOf": "2026-08-24",
         "source": "东方财富公开板块行情",
+        "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
       "errors": []
@@ -150,12 +153,12 @@
       "boardCode": "BK1647",
       "verified": true,
       "attention": {
-        "score": 60.2,
-        "recent30Articles": 0,
-        "prior30Articles": 0,
-        "accelerationPercent": -100.0,
-        "sampledArticles": 0,
-        "hitsTotal": 1,
+        "score": 41.2,
+        "recent30Articles": 165,
+        "prior30Articles": 165,
+        "accelerationPercent": 0.0,
+        "sampledArticles": 500,
+        "hitsTotal": 1439,
         "source": "东方财富公开新闻搜索",
         "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
         "status": "真实公开代理",
@@ -177,9 +180,12 @@
         "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
       },
       "capacity": {
-        "score": 57.1,
-        "floatMarketCapYi": 26725.9,
+        "score": 62.5,
+        "floatMarketCapYi": 26681.80912,
+        "boardName": "电网概念",
+        "asOf": "2026-08-24",
         "source": "东方财富公开板块行情",
+        "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
       "errors": []
@@ -190,12 +196,12 @@
       "boardCode": "BK0917",
       "verified": true,
       "attention": {
-        "score": 60.2,
-        "recent30Articles": 0,
-        "prior30Articles": 0,
-        "accelerationPercent": -100.0,
-        "sampledArticles": 0,
-        "hitsTotal": 1,
+        "score": 70.5,
+        "recent30Articles": 461,
+        "prior30Articles": 39,
+        "accelerationPercent": 1082.1,
+        "sampledArticles": 500,
+        "hitsTotal": 10000,
         "source": "东方财富公开新闻搜索",
         "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
         "status": "真实公开代理",
@@ -222,7 +228,7 @@
         "boardName": "半导体概念",
         "asOf": "2026-08-24",
         "source": "东方财富公开板块行情",
-        "sourceUrl": "https://push2.eastmoney.com/api/qt/stock/get",
+        "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
       "errors": []
@@ -233,12 +239,12 @@
       "boardCode": "BK1106",
       "verified": true,
       "attention": {
-        "score": 60.2,
-        "recent30Articles": 0,
+        "score": 86.8,
+        "recent30Articles": 500,
         "prior30Articles": 0,
-        "accelerationPercent": -100.0,
-        "sampledArticles": 0,
-        "hitsTotal": 1,
+        "accelerationPercent": 49900.0,
+        "sampledArticles": 500,
+        "hitsTotal": 10000,
         "source": "东方财富公开新闻搜索",
         "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
         "status": "真实公开代理",
@@ -260,9 +266,12 @@
         "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
       },
       "capacity": {
-        "score": 62.5,
-        "floatMarketCapYi": 30209.7,
+        "score": 65.8,
+        "floatMarketCapYi": 30100.16688,
+        "boardName": "创新药",
+        "asOf": "2026-08-24",
         "source": "东方财富公开板块行情",
+        "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
       "errors": []
@@ -273,12 +282,12 @@
       "boardCode": "BK0653",
       "verified": true,
       "attention": {
-        "score": 60.2,
-        "recent30Articles": 0,
-        "prior30Articles": 0,
-        "accelerationPercent": -100.0,
-        "sampledArticles": 0,
-        "hitsTotal": 1,
+        "score": 38.0,
+        "recent30Articles": 101,
+        "prior30Articles": 32,
+        "accelerationPercent": 215.6,
+        "sampledArticles": 500,
+        "hitsTotal": 566,
         "source": "东方财富公开新闻搜索",
         "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
         "status": "真实公开代理",
@@ -300,9 +309,12 @@
         "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
       },
       "capacity": {
-        "score": 40.8,
-        "floatMarketCapYi": 20345.9,
+        "score": 52.8,
+        "floatMarketCapYi": 20313.84064,
+        "boardName": "养老概念",
+        "asOf": "2026-08-24",
         "source": "东方财富公开板块行情",
+        "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
       "errors": []
@@ -313,12 +325,12 @@
       "boardCode": "BK1652",
       "verified": true,
       "attention": {
-        "score": 60.2,
-        "recent30Articles": 0,
-        "prior30Articles": 0,
-        "accelerationPercent": -100.0,
-        "sampledArticles": 0,
-        "hitsTotal": 1,
+        "score": 78.6,
+        "recent30Articles": 487,
+        "prior30Articles": 13,
+        "accelerationPercent": 3646.2,
+        "sampledArticles": 500,
+        "hitsTotal": 10000,
         "source": "东方财富公开新闻搜索",
         "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
         "status": "真实公开代理",
@@ -340,12 +352,12 @@
         "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
       },
       "capacity": {
-        "score": 46.2,
+        "score": 33.2,
         "floatMarketCapYi": 6228.1736,
         "boardName": "新消费",
         "asOf": "2026-08-24",
         "source": "东方财富公开板块行情",
-        "sourceUrl": "https://push2.eastmoney.com/api/qt/stock/get",
+        "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
       "errors": []
@@ -356,12 +368,12 @@
       "boardCode": "BK0523",
       "verified": true,
       "attention": {
-        "score": 60.2,
-        "recent30Articles": 0,
-        "prior30Articles": 0,
-        "accelerationPercent": -100.0,
-        "sampledArticles": 0,
-        "hitsTotal": 1,
+        "score": 78.6,
+        "recent30Articles": 487,
+        "prior30Articles": 13,
+        "accelerationPercent": 3646.2,
+        "sampledArticles": 500,
+        "hitsTotal": 10000,
         "source": "东方财富公开新闻搜索",
         "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
         "status": "真实公开代理",
@@ -383,9 +395,12 @@
         "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
       },
       "capacity": {
-        "score": 84.2,
-        "floatMarketCapYi": 63335.8,
+        "score": 88.5,
+        "floatMarketCapYi": 63041.36448,
+        "boardName": "新材料",
+        "asOf": "2026-08-24",
         "source": "东方财富公开板块行情",
+        "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
       "errors": []
@@ -396,12 +411,12 @@
       "boardCode": "BK0710",
       "verified": true,
       "attention": {
-        "score": 60.2,
-        "recent30Articles": 0,
-        "prior30Articles": 0,
-        "accelerationPercent": -100.0,
-        "sampledArticles": 0,
-        "hitsTotal": 1,
+        "score": 60.8,
+        "recent30Articles": 430,
+        "prior30Articles": 58,
+        "accelerationPercent": 641.4,
+        "sampledArticles": 500,
+        "hitsTotal": 2710,
         "source": "东方财富公开新闻搜索",
         "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
         "status": "真实公开代理",
@@ -423,9 +438,12 @@
         "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
       },
       "capacity": {
-        "score": 46.2,
-        "floatMarketCapYi": 21895.9,
+        "score": 56.0,
+        "floatMarketCapYi": 21768.94064,
+        "boardName": "量子科技",
+        "asOf": "2026-08-24",
         "source": "东方财富公开板块行情",
+        "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
       "errors": []
@@ -436,12 +454,12 @@
       "boardCode": "BK0696",
       "verified": true,
       "attention": {
-        "score": 60.2,
-        "recent30Articles": 0,
-        "prior30Articles": 0,
-        "accelerationPercent": -100.0,
-        "sampledArticles": 0,
-        "hitsTotal": 1,
+        "score": 51.0,
+        "recent30Articles": 252,
+        "prior30Articles": 195,
+        "accelerationPercent": 29.2,
+        "sampledArticles": 500,
+        "hitsTotal": 1419,
         "source": "东方财富公开新闻搜索",
         "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
         "status": "真实公开代理",
@@ -463,9 +481,12 @@
         "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
       },
       "capacity": {
-        "score": 51.7,
-        "floatMarketCapYi": 24285.2,
+        "score": 59.2,
+        "floatMarketCapYi": 24262.68144,
+        "boardName": "国产软件",
+        "asOf": "2026-08-24",
         "source": "东方财富公开板块行情",
+        "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
       "errors": []
@@ -476,12 +497,12 @@
       "boardCode": "BK0579",
       "verified": true,
       "attention": {
-        "score": 60.2,
-        "recent30Articles": 0,
-        "prior30Articles": 0,
-        "accelerationPercent": -100.0,
-        "sampledArticles": 0,
-        "hitsTotal": 1,
+        "score": 67.2,
+        "recent30Articles": 458,
+        "prior30Articles": 42,
+        "accelerationPercent": 990.5,
+        "sampledArticles": 500,
+        "hitsTotal": 10000,
         "source": "东方财富公开新闻搜索",
         "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
         "status": "真实公开代理",
@@ -503,9 +524,12 @@
         "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
       },
       "capacity": {
-        "score": 67.9,
-        "floatMarketCapYi": 45432.6,
+        "score": 75.5,
+        "floatMarketCapYi": 45226.83136,
+        "boardName": "云计算",
+        "asOf": "2026-08-24",
         "source": "东方财富公开板块行情",
+        "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
       "errors": []
@@ -514,18 +538,19 @@
       "id": "cybersecurity",
       "query": "数据安全",
       "boardCode": "BK1047",
-      "verified": false,
+      "verified": true,
       "attention": {
-        "score": 12.5,
-        "recent30Articles": 0,
-        "prior30Articles": 0,
-        "accelerationPercent": -100.0,
-        "sampledArticles": 0,
-        "hitsTotal": 1,
+        "score": 64.0,
+        "recent30Articles": 432,
+        "prior30Articles": 55,
+        "accelerationPercent": 685.5,
+        "sampledArticles": 500,
+        "hitsTotal": 3809,
         "source": "东方财富公开新闻搜索",
         "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
         "status": "真实公开代理",
-        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。"
+        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。",
+        "scoreMethod": "本期已验证方向的近30日媒体文章数横截面百分位"
       },
       "validation": {
         "score": 45.0,
@@ -541,25 +566,34 @@
         "status": "真实公开数据",
         "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
       },
-      "capacity": null,
+      "capacity": {
+        "score": 43.0,
+        "floatMarketCapYi": 9660.9256,
+        "boardName": "数据安全",
+        "asOf": "2026-08-24",
+        "source": "东方财富公开板块行情",
+        "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
+        "status": "真实公开数据"
+      },
       "errors": []
     },
     {
       "id": "smart-healthcare",
       "query": "医疗服务",
       "boardCode": "BK0727",
-      "verified": false,
+      "verified": true,
       "attention": {
-        "score": 12.5,
-        "recent30Articles": 0,
-        "prior30Articles": 0,
-        "accelerationPercent": -100.0,
-        "sampledArticles": 0,
-        "hitsTotal": 1,
+        "score": 73.8,
+        "recent30Articles": 484,
+        "prior30Articles": 16,
+        "accelerationPercent": 2925.0,
+        "sampledArticles": 500,
+        "hitsTotal": 3664,
         "source": "东方财富公开新闻搜索",
         "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
         "status": "真实公开代理",
-        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。"
+        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。",
+        "scoreMethod": "本期已验证方向的近30日媒体文章数横截面百分位"
       },
       "validation": {
         "score": 55.2,
@@ -575,25 +609,34 @@
         "status": "真实公开数据",
         "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
       },
-      "capacity": null,
+      "capacity": {
+        "score": 39.8,
+        "floatMarketCapYi": 9642.4872,
+        "boardName": "医疗服务",
+        "asOf": "2026-08-24",
+        "source": "东方财富公开板块行情",
+        "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
+        "status": "真实公开数据"
+      },
       "errors": []
     },
     {
       "id": "synthetic-biology",
       "query": "合成生物",
       "boardCode": "BK1174",
-      "verified": false,
+      "verified": true,
       "attention": {
-        "score": 12.5,
-        "recent30Articles": 0,
-        "prior30Articles": 0,
-        "accelerationPercent": -100.0,
-        "sampledArticles": 0,
-        "hitsTotal": 1,
+        "score": 47.8,
+        "recent30Articles": 207,
+        "prior30Articles": 182,
+        "accelerationPercent": 13.7,
+        "sampledArticles": 500,
+        "hitsTotal": 1089,
         "source": "东方财富公开新闻搜索",
         "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
         "status": "真实公开代理",
-        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。"
+        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。",
+        "scoreMethod": "本期已验证方向的近30日媒体文章数横截面百分位"
       },
       "validation": {
         "score": 30.0,
@@ -609,25 +652,34 @@
         "status": "真实公开数据",
         "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
       },
-      "capacity": null,
+      "capacity": {
+        "score": 46.2,
+        "floatMarketCapYi": 11669.37568,
+        "boardName": "合成生物",
+        "asOf": "2026-08-24",
+        "source": "东方财富公开板块行情",
+        "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
+        "status": "真实公开数据"
+      },
       "errors": []
     },
     {
       "id": "nuclear-energy",
       "query": "核能核电",
       "boardCode": "BK0577",
-      "verified": false,
+      "verified": true,
       "attention": {
-        "score": 12.5,
-        "recent30Articles": 0,
+        "score": 28.2,
+        "recent30Articles": 10,
         "prior30Articles": 0,
-        "accelerationPercent": -100.0,
-        "sampledArticles": 0,
-        "hitsTotal": 1,
+        "accelerationPercent": 900.0,
+        "sampledArticles": 21,
+        "hitsTotal": 21,
         "source": "东方财富公开新闻搜索",
         "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
         "status": "真实公开代理",
-        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。"
+        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。",
+        "scoreMethod": "本期已验证方向的近30日媒体文章数横截面百分位"
       },
       "validation": {
         "score": 30.0,
@@ -643,25 +695,34 @@
         "status": "真实公开数据",
         "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
       },
-      "capacity": null,
+      "capacity": {
+        "score": 72.2,
+        "floatMarketCapYi": 40061.38352,
+        "boardName": "核能核电",
+        "asOf": "2026-08-24",
+        "source": "东方财富公开板块行情",
+        "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
+        "status": "真实公开数据"
+      },
       "errors": []
     },
     {
       "id": "water-security",
       "query": "水利建设",
       "boardCode": "BK0597",
-      "verified": false,
+      "verified": true,
       "attention": {
-        "score": 12.5,
-        "recent30Articles": 0,
-        "prior30Articles": 0,
-        "accelerationPercent": -100.0,
-        "sampledArticles": 0,
-        "hitsTotal": 1,
+        "score": 31.5,
+        "recent30Articles": 19,
+        "prior30Articles": 24,
+        "accelerationPercent": -20.8,
+        "sampledArticles": 133,
+        "hitsTotal": 133,
         "source": "东方财富公开新闻搜索",
         "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
         "status": "真实公开代理",
-        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。"
+        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。",
+        "scoreMethod": "本期已验证方向的近30日媒体文章数横截面百分位"
       },
       "validation": {
         "score": 30.0,
@@ -677,25 +738,34 @@
         "status": "真实公开数据",
         "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
       },
-      "capacity": null,
+      "capacity": {
+        "score": 49.5,
+        "floatMarketCapYi": 19700.16384,
+        "boardName": "水利建设",
+        "asOf": "2026-08-24",
+        "source": "东方财富公开板块行情",
+        "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
+        "status": "真实公开数据"
+      },
       "errors": []
     },
     {
       "id": "low-altitude",
       "query": "低空经济",
       "boardCode": "BK1166",
-      "verified": false,
+      "verified": true,
       "attention": {
-        "score": 12.5,
-        "recent30Articles": 0,
-        "prior30Articles": 0,
-        "accelerationPercent": -100.0,
-        "sampledArticles": 0,
-        "hitsTotal": 1,
+        "score": 57.5,
+        "recent30Articles": 412,
+        "prior30Articles": 88,
+        "accelerationPercent": 368.2,
+        "sampledArticles": 500,
+        "hitsTotal": 7190,
         "source": "东方财富公开新闻搜索",
         "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
         "status": "真实公开代理",
-        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。"
+        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。",
+        "scoreMethod": "本期已验证方向的近30日媒体文章数横截面百分位"
       },
       "validation": {
         "score": 30.0,
@@ -711,25 +781,34 @@
         "status": "真实公开数据",
         "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
       },
-      "capacity": null,
+      "capacity": {
+        "score": 69.0,
+        "floatMarketCapYi": 34221.70352,
+        "boardName": "低空经济",
+        "asOf": "2026-08-24",
+        "source": "东方财富公开板块行情",
+        "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
+        "status": "真实公开数据"
+      },
       "errors": []
     },
     {
       "id": "autonomous-driving",
       "query": "车联网",
       "boardCode": "BK0920",
-      "verified": false,
+      "verified": true,
       "attention": {
-        "score": 12.5,
-        "recent30Articles": 0,
-        "prior30Articles": 0,
-        "accelerationPercent": -100.0,
-        "sampledArticles": 0,
-        "hitsTotal": 1,
+        "score": 34.8,
+        "recent30Articles": 90,
+        "prior30Articles": 95,
+        "accelerationPercent": -5.3,
+        "sampledArticles": 500,
+        "hitsTotal": 616,
         "source": "东方财富公开新闻搜索",
         "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
         "status": "真实公开代理",
-        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。"
+        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。",
+        "scoreMethod": "本期已验证方向的近30日媒体文章数横截面百分位"
       },
       "validation": {
         "score": 48.8,
@@ -745,25 +824,34 @@
         "status": "真实公开数据",
         "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
       },
-      "capacity": null,
+      "capacity": {
+        "score": 78.8,
+        "floatMarketCapYi": 47780.78464,
+        "boardName": "车联网(车路云)",
+        "asOf": "2026-08-24",
+        "source": "东方财富公开板块行情",
+        "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
+        "status": "真实公开数据"
+      },
       "errors": []
     },
     {
       "id": "obesity-care",
       "query": "减肥药",
       "boardCode": "BK1146",
-      "verified": false,
+      "verified": true,
       "attention": {
-        "score": 12.5,
-        "recent30Articles": 0,
-        "prior30Articles": 0,
-        "accelerationPercent": -100.0,
-        "sampledArticles": 0,
-        "hitsTotal": 1,
+        "score": 44.5,
+        "recent30Articles": 172,
+        "prior30Articles": 209,
+        "accelerationPercent": -17.7,
+        "sampledArticles": 500,
+        "hitsTotal": 866,
         "source": "东方财富公开新闻搜索",
         "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
         "status": "真实公开代理",
-        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。"
+        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。",
+        "scoreMethod": "本期已验证方向的近30日媒体文章数横截面百分位"
       },
       "validation": {
         "score": 30.0,
@@ -779,7 +867,15 @@
         "status": "真实公开数据",
         "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
       },
-      "capacity": null,
+      "capacity": {
+        "score": 36.5,
+        "floatMarketCapYi": 8213.48272,
+        "boardName": "减肥药",
+        "asOf": "2026-08-24",
+        "source": "东方财富公开板块行情",
+        "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
+        "status": "真实公开数据"
+      },
       "errors": []
     }
   ],

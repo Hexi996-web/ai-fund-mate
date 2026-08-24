@@ -207,7 +207,7 @@ def asset_capacity() -> dict[str, dict]:
     for theme_id, _query, board in THEMES:
         try:
             payload = get_json(
-                "https://push2.eastmoney.com/api/qt/stock/get",
+                "https://push2delay.eastmoney.com/api/qt/stock/get",
                 {"secid": f"90.{board}", "fields": "f57,f58,f116,f117"},
             ).get("data") or {}
             float_cap = payload.get("f117")
@@ -224,7 +224,7 @@ def asset_capacity() -> dict[str, dict]:
         result[theme_id] = {
             "score": round(30 + percentile * 65, 1), "floatMarketCapYi": value,
             "boardName": names.get(theme_id), "asOf": date.today().isoformat(),
-            "source": "东方财富公开板块行情", "sourceUrl": "https://push2.eastmoney.com/api/qt/stock/get",
+            "source": "东方财富公开板块行情", "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
             "status": "真实公开数据",
         }
     return result
