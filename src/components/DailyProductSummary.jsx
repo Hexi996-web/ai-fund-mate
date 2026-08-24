@@ -39,7 +39,18 @@ export function DailyProductSummary({ products, dataDate, establishedWindow, sco
   const [chartMetric, setChartMetric] = useState('netTotal')
   const analysis = useMemo(() => {
     const year = String(dataDate || '').slice(0, 4)
-    const returnProducts = products.filter((product) => !product.type?.startsWith('货币型') && valid(product.navGrowthPercent) && product.metricsCoverageStart && product.metricsCoverageStart <= `${year}-01-07`)
+    const isIssuanceScope = establishedWindow === 'quarter' || establishedWindow === 'ytd'
+    const returnProducts = products.filter((product) => {
+      if (product.type?.startsWith('货币型') || !valid(product.navGrowthPercent) || !product.metricsCoverageStart) return false
+      if (!isIssuanceScope) return product.metricsCoverageStart <= `${year}-01-07`
+      if (!product.establishedDate) return false
+      const observationStart = new Date(`${product.metricsCoverageStart}T00:00:00`)
+      const observationEnd = new Date(`${dataDate}T00:00:00`)
+      if ((observationEnd - observationStart) / 86_400_000 < 7) return false
+      const latestAcceptedStart = new Date(`${product.establishedDate}T00:00:00`)
+      latestAcceptedStart.setDate(latestAcceptedStart.getDate() + 7)
+      return observationStart <= latestAcceptedStart
+    })
     const globalRankings = {
       scaleNetIncreaseYi: rank(products, 'scaleNetIncreaseYi'),
       scaleGrowthPercent: rank(products, 'scaleGrowthPercent'),
@@ -100,7 +111,7 @@ export function DailyProductSummary({ products, dataDate, establishedWindow, sco
       comparableNetCount: netValues.length,
       navSampleCount: navValues.length,
     }
-  }, [products, dataDate])
+  }, [products, dataDate, establishedWindow])
 
   const fundLink = (product) => product
     ? <LinkValue onClick={() => onSelectFund(product.productName)}>{product.productName}（{product.representativeCode}）</LinkValue>
@@ -139,7 +150,7 @@ export function DailyProductSummary({ products, dataDate, establishedWindow, sco
     ? `${establishedWindow === 'quarter' ? '近三个月' : '本年至今'}发行摘要`
     : '全市场公募基金摘要'
   const cumulativeDescription = isIssuance
-    ? `规模净增额、净值增长、最大回撤均从各产品成立日起累计至${dataDate || '当前数据日'}；“近三个月/本年至今”仅限定成立日期`
+    ? `规模净增额从成立日起计算；净值增长与最大回撤仅纳入成立后7天内开始记录、且已积累至少7天的非货币产品；“近三个月/本年至今”限定成立日期`
     : `规模净增额、净值增长、最大回撤统计至${dataDate || '当前数据日'}；存量产品从年初计算，本年新成立产品从成立日起计算`
 
   return <section className="daily-product-summary" aria-labelledby="daily-summary-title">
