@@ -1,0 +1,245 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-24T14:40:25.481219+08:00",
+  "methodologyVersion": "attention-public-proxy-v1",
+  "universeCount": 36,
+  "mappedCount": 12,
+  "verifiedCount": 0,
+  "items": [
+    {
+      "id": "ai-agent",
+      "query": "人工智能",
+      "boardCode": "BK0800",
+      "verified": false,
+      "attention": null,
+      "validation": null,
+      "capacity": {
+        "score": 89.6,
+        "floatMarketCapYi": 122466.4,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": [
+        "attention: HTTPError",
+        "validation: ProxyError"
+      ]
+    },
+    {
+      "id": "embodied-ai",
+      "query": "人形机器人",
+      "boardCode": "BK1184",
+      "verified": false,
+      "attention": null,
+      "validation": {
+        "score": 41.1,
+        "momentumPercent": -10.5,
+        "turnoverChangePercent": -20.6,
+        "asOf": "2026-08-24",
+        "observations": 398,
+        "source": "东方财富公开概念板块日线",
+        "sourceUrl": "https://push2his.eastmoney.com/api/qt/stock/kline/get",
+        "status": "真实公开代理",
+        "note": "价格与成交趋势只代表资本市场验证代理，不替代行业产量、订单、收入或利润。"
+      },
+      "capacity": {
+        "score": 78.8,
+        "floatMarketCapYi": 52423.9,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": [
+        "attention: ValueError"
+      ]
+    },
+    {
+      "id": "space",
+      "query": "商业航天",
+      "boardCode": "BK0963",
+      "verified": false,
+      "attention": null,
+      "validation": null,
+      "capacity": {
+        "score": 73.3,
+        "floatMarketCapYi": 50151.0,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": [
+        "attention: HTTPError",
+        "validation: ProxyError"
+      ]
+    },
+    {
+      "id": "power",
+      "query": "智能电网",
+      "boardCode": "BK1647",
+      "verified": false,
+      "attention": null,
+      "validation": null,
+      "capacity": {
+        "score": 57.1,
+        "floatMarketCapYi": 26725.9,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": [
+        "attention: HTTPError",
+        "validation: ProxyError"
+      ]
+    },
+    {
+      "id": "hard-tech",
+      "query": "半导体设备",
+      "boardCode": "BK0917",
+      "verified": false,
+      "attention": null,
+      "validation": null,
+      "capacity": {
+        "score": 95.0,
+        "floatMarketCapYi": 139495.8,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": [
+        "attention: ValueError",
+        "validation: ProxyError"
+      ]
+    },
+    {
+      "id": "biotech",
+      "query": "创新药",
+      "boardCode": "BK1106",
+      "verified": false,
+      "attention": null,
+      "validation": null,
+      "capacity": {
+        "score": 62.5,
+        "floatMarketCapYi": 30209.7,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": [
+        "attention: JSONDecodeError",
+        "validation: ProxyError"
+      ]
+    },
+    {
+      "id": "longevity",
+      "query": "养老产业",
+      "boardCode": "BK0653",
+      "verified": false,
+      "attention": null,
+      "validation": null,
+      "capacity": {
+        "score": 40.8,
+        "floatMarketCapYi": 20345.9,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": [
+        "attention: JSONDecodeError",
+        "validation: ProxyError"
+      ]
+    },
+    {
+      "id": "experience",
+      "query": "文旅消费",
+      "boardCode": "BK1652",
+      "verified": false,
+      "attention": null,
+      "validation": null,
+      "capacity": {
+        "score": 35.4,
+        "floatMarketCapYi": 6235.4,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": [
+        "attention: JSONDecodeError",
+        "validation: ProxyError"
+      ]
+    },
+    {
+      "id": "resources",
+      "query": "战略资源",
+      "boardCode": "BK0523",
+      "verified": false,
+      "attention": null,
+      "validation": null,
+      "capacity": {
+        "score": 84.2,
+        "floatMarketCapYi": 63335.8,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": [
+        "attention: HTTPError",
+        "validation: ProxyError"
+      ]
+    },
+    {
+      "id": "future-tech",
+      "query": "量子科技",
+      "boardCode": "BK0710",
+      "verified": false,
+      "attention": null,
+      "validation": null,
+      "capacity": {
+        "score": 46.2,
+        "floatMarketCapYi": 21895.9,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": [
+        "attention: JSONDecodeError",
+        "validation: ProxyError"
+      ]
+    },
+    {
+      "id": "industrial-software",
+      "query": "工业软件",
+      "boardCode": "BK0696",
+      "verified": false,
+      "attention": null,
+      "validation": {
+        "score": 38.7,
+        "momentumPercent": -18.8,
+        "turnoverChangePercent": -14.0,
+        "asOf": "2026-08-24",
+        "observations": 398,
+        "source": "东方财富公开概念板块日线",
+        "sourceUrl": "https://push2his.eastmoney.com/api/qt/stock/kline/get",
+        "status": "真实公开代理",
+        "note": "价格与成交趋势只代表资本市场验证代理，不替代行业产量、订单、收入或利润。"
+      },
+      "capacity": {
+        "score": 51.7,
+        "floatMarketCapYi": 24285.2,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": [
+        "attention: HTTPError"
+      ]
+    },
+    {
+      "id": "ai-application",
+      "query": "人工智能应用",
+      "boardCode": "BK0579",
+      "verified": false,
+      "attention": null,
+      "validation": null,
+      "capacity": {
+        "score": 67.9,
+        "floatMarketCapYi": 45432.6,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": [
+        "attention: HTTPError",
+        "validation: ProxyError"
+      ]
+    }
+  ],
+  "disclosure": "媒体注意力和资本市场验证均为公开代理；不替代企业经营、客户调研或投资结论。"
+}

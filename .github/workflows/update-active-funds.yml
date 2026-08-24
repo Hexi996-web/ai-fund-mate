@@ -42,6 +42,7 @@ jobs:
           python scripts/update_active_funds.py
           python scripts/backfill_2026_fund_metrics.py --missing-baseline-only --workers 24 --min-coverage 0.50
           python scripts/update_issuance_insights.py
+          python scripts/update_attention_pool.py
           python scripts/publish_data_status.py
       - name: Read generated snapshot date
         id: snapshot
@@ -57,6 +58,7 @@ jobs:
           python scripts/validate_published_freshness.py public/funds_active.json --field updateTime --max-age-hours 12 --min-items funds=1000
           python scripts/validate_published_freshness.py public/fund_products.json --field updateTime --max-age-hours 12 --min-items products=1000
           python scripts/validate_published_freshness.py public/issuance_insights.json --field generatedAt --max-age-hours 12
+          python scripts/validate_published_freshness.py public/attention_pool_evidence.json --field generatedAt --max-age-hours 12 --min-items items=1
           python scripts/validate_published_freshness.py public/data_status.json --field generatedAt --max-age-hours 12
       - name: Verify frontend build against the generated snapshots
         run: |
@@ -70,7 +72,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/funds_active.json public/funds_excluded.json public/fund_products.json public/funds_grouping_review.json public/issuance_insights.json public/data_status.json
+          git add public/funds_active.json public/funds_excluded.json public/fund_products.json public/funds_grouping_review.json public/issuance_insights.json public/attention_pool_evidence.json public/data_status.json
           git diff --cached --quiet || git commit -m "data: update active funds"
           for attempt in 1 2 3; do
             git pull --rebase origin "$GITHUB_REF_NAME"
