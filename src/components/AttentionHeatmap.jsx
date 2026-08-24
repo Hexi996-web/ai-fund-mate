@@ -40,10 +40,10 @@ export function AttentionHeatmap({ onSelectCore }) {
     <div className="attention-toolbar" aria-label="候选池筛选"><div>{DRIVERS.map((item)=><button type="button" className={driver===item?'active':''} onClick={()=>setDriver(item)} key={item}>{item}</button>)}</div><label><input type="checkbox" checked={showLabels} onChange={(event)=>setShowLabels(event.target.checked)}/> 显示名称</label></div>
     <div className="attention-grid">
       <div className="attention-canvas">
-        <div className="quadrant quadrant--lead"><b>提前预研区</b><strong>产品市场开始验证，社会注意力尚未集中</strong></div>
+        <div className="quadrant quadrant--lead"><b>叙事验证区</b><strong>公众关注跑在产品市场验证之前</strong></div>
         <div className="quadrant quadrant--resonance"><b>产品—注意力共振区</b><strong>基金市场验证与社会关注同步增强</strong></div>
         <div className="quadrant quadrant--seed"><b>结构萌芽区</b><strong>长期逻辑存在，产品市场验证仍不足</strong></div>
-        <div className="quadrant quadrant--risk"><b>叙事验证区</b><strong>公众关注跑在产品市场验证之前</strong></div>
+        <div className="quadrant quadrant--risk"><b>提前预研区</b><strong>产品市场开始验证，社会注意力尚未集中</strong></div>
         {plotted.map((item)=><button type="button" aria-label={`${item.name}，媒体注意力${item.attention}，产品市场验证${item.industry}`} title={item.name} className={`attention-dot attention-dot--${STAGE_CLASS[item.stage] || 'seed'} ${item.bucket==='核心10'?'is-core':''} ${selectedId===item.id?'is-active':''}`} style={{left:`${plotPosition(item.industry)}%`,bottom:`${plotPosition(item.attention)}%`,width:`${18+item.capacity*.18}px`,height:`${18+item.capacity*.18}px`}} onClick={()=>setSelectedId(item.id)} key={item.id}>{showLabels || selectedId===item.id ? <span>{item.name}</span> : null}</button>)}
         <div className="attention-midline attention-midline--x"/><div className="attention-midline attention-midline--y"/>
       </div>
