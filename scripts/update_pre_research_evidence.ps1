@@ -33,6 +33,23 @@ $items = foreach ($theme in $themes) {
   }
 }
 
+$peValues = @($items | ForEach-Object { $_.enterprise.value } | Where-Object { $null -ne $_ } | Sort-Object)
+if ($peValues.Count) {
+  $middle = [math]::Floor($peValues.Count / 2)
+  $medianPe = if ($peValues.Count % 2) { [double]$peValues[$middle] } else { ([double]$peValues[$middle-1] + [double]$peValues[$middle]) / 2 }
+  foreach ($item in $items) {
+    if ($null -eq $item.enterprise.value) { continue }
+    $pe = [double]$item.enterprise.value
+    $relative = [math]::Round(($pe / $medianPe - 1) * 100, 1)
+    $rank = 1 + @($peValues | Where-Object { $_ -gt $pe }).Count
+    $item.enterprise['peerMedian'] = [math]::Round($medianPe, 1)
+    $item.enterprise['relativeToMedian'] = $relative
+    $item.enterprise['rank'] = "$rank/$($peValues.Count)"
+    $item.enterprise['level'] = if ($relative -gt 25) { '相对偏高' } elseif ($relative -lt -25) { '相对偏低' } else { '中位附近' }
+    $item.enterprise.note = '与本候选池代表板块横向比较；不是历史估值分位'
+  }
+}
+
 $output = [ordered]@{ updateTime=(Get-Date).ToString('yyyy-MM-dd HH:mm:ss'); methodologyVersion='v1-free-public-data'; items=$items }
 $path = Join-Path $PSScriptRoot '..\public\pre_research_evidence.json'
 $output | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $path -Encoding utf8
