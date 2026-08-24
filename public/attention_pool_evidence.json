@@ -1,0 +1,503 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-24T07:19:53.617593+00:00",
+  "methodologyVersion": "attention-public-proxy-v1",
+  "universeCount": 36,
+  "mappedCount": 12,
+  "verifiedCount": 12,
+  "recommendedIds": [
+    "hard-tech",
+    "resources",
+    "power",
+    "ai-agent",
+    "biotech",
+    "ai-application",
+    "space",
+    "industrial-software",
+    "embodied-ai",
+    "experience"
+  ],
+  "items": [
+    {
+      "id": "ai-agent",
+      "query": "人工智能",
+      "boardCode": "BK0800",
+      "verified": true,
+      "attention": {
+        "score": 60.2,
+        "recent30Articles": 0,
+        "prior30Articles": 0,
+        "accelerationPercent": -100.0,
+        "sampledArticles": 0,
+        "hitsTotal": 1,
+        "source": "东方财富公开新闻搜索",
+        "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
+        "status": "真实公开代理",
+        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。",
+        "scoreMethod": "本期已验证方向的近30日媒体文章数横截面百分位"
+      },
+      "validation": {
+        "score": 85.0,
+        "peerFunds": 124,
+        "comparableFunds": 98,
+        "currentScaleYi": 1393.0,
+        "scaleNetIncreaseYi": 242.0,
+        "scaleGrowthPercent": 22.8,
+        "launched12Months": 20,
+        "asOf": "2026-08-24 15:17:25",
+        "source": "AI Fund Mate全市场公开基金快照",
+        "sourceUrl": "/fund_products.json",
+        "status": "真实公开数据",
+        "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
+      },
+      "capacity": {
+        "score": 89.6,
+        "floatMarketCapYi": 122466.4,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": []
+    },
+    {
+      "id": "embodied-ai",
+      "query": "人形机器人",
+      "boardCode": "BK1184",
+      "verified": true,
+      "attention": {
+        "score": 60.2,
+        "recent30Articles": 0,
+        "prior30Articles": 0,
+        "accelerationPercent": -100.0,
+        "sampledArticles": 0,
+        "hitsTotal": 1,
+        "source": "东方财富公开新闻搜索",
+        "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
+        "status": "真实公开代理",
+        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。",
+        "scoreMethod": "本期已验证方向的近30日媒体文章数横截面百分位"
+      },
+      "validation": {
+        "score": 62.0,
+        "peerFunds": 44,
+        "comparableFunds": 39,
+        "currentScaleYi": 775.9,
+        "scaleNetIncreaseYi": -13.3,
+        "scaleGrowthPercent": -1.7,
+        "launched12Months": 5,
+        "asOf": "2026-08-24 15:17:25",
+        "source": "AI Fund Mate全市场公开基金快照",
+        "sourceUrl": "/fund_products.json",
+        "status": "真实公开数据",
+        "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
+      },
+      "capacity": {
+        "score": 78.8,
+        "floatMarketCapYi": 52423.9,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": []
+    },
+    {
+      "id": "space",
+      "query": "商业航天",
+      "boardCode": "BK0963",
+      "verified": true,
+      "attention": {
+        "score": 60.2,
+        "recent30Articles": 0,
+        "prior30Articles": 0,
+        "accelerationPercent": -100.0,
+        "sampledArticles": 0,
+        "hitsTotal": 1,
+        "source": "东方财富公开新闻搜索",
+        "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
+        "status": "真实公开代理",
+        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。",
+        "scoreMethod": "本期已验证方向的近30日媒体文章数横截面百分位"
+      },
+      "validation": {
+        "score": 75.1,
+        "peerFunds": 39,
+        "comparableFunds": 35,
+        "currentScaleYi": 984.5,
+        "scaleNetIncreaseYi": 242.3,
+        "scaleGrowthPercent": 32.9,
+        "launched12Months": 5,
+        "asOf": "2026-08-24 15:17:25",
+        "source": "AI Fund Mate全市场公开基金快照",
+        "sourceUrl": "/fund_products.json",
+        "status": "真实公开数据",
+        "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
+      },
+      "capacity": {
+        "score": 73.3,
+        "floatMarketCapYi": 50151.0,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": []
+    },
+    {
+      "id": "power",
+      "query": "智能电网",
+      "boardCode": "BK1647",
+      "verified": true,
+      "attention": {
+        "score": 60.2,
+        "recent30Articles": 0,
+        "prior30Articles": 0,
+        "accelerationPercent": -100.0,
+        "sampledArticles": 0,
+        "hitsTotal": 1,
+        "source": "东方财富公开新闻搜索",
+        "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
+        "status": "真实公开代理",
+        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。",
+        "scoreMethod": "本期已验证方向的近30日媒体文章数横截面百分位"
+      },
+      "validation": {
+        "score": 100,
+        "peerFunds": 172,
+        "comparableFunds": 123,
+        "currentScaleYi": 1982.3,
+        "scaleNetIncreaseYi": 803.1,
+        "scaleGrowthPercent": 76.2,
+        "launched12Months": 28,
+        "asOf": "2026-08-24 15:17:25",
+        "source": "AI Fund Mate全市场公开基金快照",
+        "sourceUrl": "/fund_products.json",
+        "status": "真实公开数据",
+        "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
+      },
+      "capacity": {
+        "score": 57.1,
+        "floatMarketCapYi": 26725.9,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": []
+    },
+    {
+      "id": "hard-tech",
+      "query": "半导体设备",
+      "boardCode": "BK0917",
+      "verified": true,
+      "attention": {
+        "score": 60.2,
+        "recent30Articles": 0,
+        "prior30Articles": 0,
+        "accelerationPercent": -100.0,
+        "sampledArticles": 0,
+        "hitsTotal": 1,
+        "source": "东方财富公开新闻搜索",
+        "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
+        "status": "真实公开代理",
+        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。",
+        "scoreMethod": "本期已验证方向的近30日媒体文章数横截面百分位"
+      },
+      "validation": {
+        "score": 100,
+        "peerFunds": 121,
+        "comparableFunds": 98,
+        "currentScaleYi": 4871.5,
+        "scaleNetIncreaseYi": 3027.2,
+        "scaleGrowthPercent": 173.0,
+        "launched12Months": 15,
+        "asOf": "2026-08-24 15:17:25",
+        "source": "AI Fund Mate全市场公开基金快照",
+        "sourceUrl": "/fund_products.json",
+        "status": "真实公开数据",
+        "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
+      },
+      "capacity": {
+        "score": 95.0,
+        "floatMarketCapYi": 139495.8,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": []
+    },
+    {
+      "id": "biotech",
+      "query": "创新药",
+      "boardCode": "BK1106",
+      "verified": true,
+      "attention": {
+        "score": 60.2,
+        "recent30Articles": 0,
+        "prior30Articles": 0,
+        "accelerationPercent": -100.0,
+        "sampledArticles": 0,
+        "hitsTotal": 1,
+        "source": "东方财富公开新闻搜索",
+        "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
+        "status": "真实公开代理",
+        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。",
+        "scoreMethod": "本期已验证方向的近30日媒体文章数横截面百分位"
+      },
+      "validation": {
+        "score": 92.4,
+        "peerFunds": 176,
+        "comparableFunds": 165,
+        "currentScaleYi": 2700.8,
+        "scaleNetIncreaseYi": 719.5,
+        "scaleGrowthPercent": 36.7,
+        "launched12Months": 16,
+        "asOf": "2026-08-24 15:17:25",
+        "source": "AI Fund Mate全市场公开基金快照",
+        "sourceUrl": "/fund_products.json",
+        "status": "真实公开数据",
+        "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
+      },
+      "capacity": {
+        "score": 62.5,
+        "floatMarketCapYi": 30209.7,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": []
+    },
+    {
+      "id": "longevity",
+      "query": "养老产业",
+      "boardCode": "BK0653",
+      "verified": true,
+      "attention": {
+        "score": 60.2,
+        "recent30Articles": 0,
+        "prior30Articles": 0,
+        "accelerationPercent": -100.0,
+        "sampledArticles": 0,
+        "hitsTotal": 1,
+        "source": "东方财富公开新闻搜索",
+        "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
+        "status": "真实公开代理",
+        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。",
+        "scoreMethod": "本期已验证方向的近30日媒体文章数横截面百分位"
+      },
+      "validation": {
+        "score": 71.2,
+        "peerFunds": 329,
+        "comparableFunds": 326,
+        "currentScaleYi": 1167.1,
+        "scaleNetIncreaseYi": 219.9,
+        "scaleGrowthPercent": 23.2,
+        "launched12Months": 4,
+        "asOf": "2026-08-24 15:17:25",
+        "source": "AI Fund Mate全市场公开基金快照",
+        "sourceUrl": "/fund_products.json",
+        "status": "真实公开数据",
+        "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
+      },
+      "capacity": {
+        "score": 40.8,
+        "floatMarketCapYi": 20345.9,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": []
+    },
+    {
+      "id": "experience",
+      "query": "文旅消费",
+      "boardCode": "BK1652",
+      "verified": true,
+      "attention": {
+        "score": 60.2,
+        "recent30Articles": 0,
+        "prior30Articles": 0,
+        "accelerationPercent": -100.0,
+        "sampledArticles": 0,
+        "hitsTotal": 1,
+        "source": "东方财富公开新闻搜索",
+        "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
+        "status": "真实公开代理",
+        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。",
+        "scoreMethod": "本期已验证方向的近30日媒体文章数横截面百分位"
+      },
+      "validation": {
+        "score": 75.0,
+        "peerFunds": 281,
+        "comparableFunds": 250,
+        "currentScaleYi": 1368.2,
+        "scaleNetIncreaseYi": -78.0,
+        "scaleGrowthPercent": -5.5,
+        "launched12Months": 38,
+        "asOf": "2026-08-24 15:17:25",
+        "source": "AI Fund Mate全市场公开基金快照",
+        "sourceUrl": "/fund_products.json",
+        "status": "真实公开数据",
+        "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
+      },
+      "capacity": {
+        "score": 35.4,
+        "floatMarketCapYi": 6235.4,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": []
+    },
+    {
+      "id": "resources",
+      "query": "战略资源",
+      "boardCode": "BK0523",
+      "verified": true,
+      "attention": {
+        "score": 60.2,
+        "recent30Articles": 0,
+        "prior30Articles": 0,
+        "accelerationPercent": -100.0,
+        "sampledArticles": 0,
+        "hitsTotal": 1,
+        "source": "东方财富公开新闻搜索",
+        "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
+        "status": "真实公开代理",
+        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。",
+        "scoreMethod": "本期已验证方向的近30日媒体文章数横截面百分位"
+      },
+      "validation": {
+        "score": 100,
+        "peerFunds": 128,
+        "comparableFunds": 88,
+        "currentScaleYi": 1775.2,
+        "scaleNetIncreaseYi": 709.1,
+        "scaleGrowthPercent": 77.7,
+        "launched12Months": 27,
+        "asOf": "2026-08-24 15:17:25",
+        "source": "AI Fund Mate全市场公开基金快照",
+        "sourceUrl": "/fund_products.json",
+        "status": "真实公开数据",
+        "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
+      },
+      "capacity": {
+        "score": 84.2,
+        "floatMarketCapYi": 63335.8,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": []
+    },
+    {
+      "id": "future-tech",
+      "query": "量子科技",
+      "boardCode": "BK0710",
+      "verified": true,
+      "attention": {
+        "score": 60.2,
+        "recent30Articles": 0,
+        "prior30Articles": 0,
+        "accelerationPercent": -100.0,
+        "sampledArticles": 0,
+        "hitsTotal": 1,
+        "source": "东方财富公开新闻搜索",
+        "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
+        "status": "真实公开代理",
+        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。",
+        "scoreMethod": "本期已验证方向的近30日媒体文章数横截面百分位"
+      },
+      "validation": {
+        "score": 44.5,
+        "peerFunds": 1,
+        "comparableFunds": 1,
+        "currentScaleYi": 0.4,
+        "scaleNetIncreaseYi": 0.1,
+        "scaleGrowthPercent": 37.6,
+        "launched12Months": 0,
+        "asOf": "2026-08-24 15:17:25",
+        "source": "AI Fund Mate全市场公开基金快照",
+        "sourceUrl": "/fund_products.json",
+        "status": "真实公开数据",
+        "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
+      },
+      "capacity": {
+        "score": 46.2,
+        "floatMarketCapYi": 21895.9,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": []
+    },
+    {
+      "id": "industrial-software",
+      "query": "工业软件",
+      "boardCode": "BK0696",
+      "verified": true,
+      "attention": {
+        "score": 60.2,
+        "recent30Articles": 0,
+        "prior30Articles": 0,
+        "accelerationPercent": -100.0,
+        "sampledArticles": 0,
+        "hitsTotal": 1,
+        "source": "东方财富公开新闻搜索",
+        "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
+        "status": "真实公开代理",
+        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。",
+        "scoreMethod": "本期已验证方向的近30日媒体文章数横截面百分位"
+      },
+      "validation": {
+        "score": 83.8,
+        "peerFunds": 38,
+        "comparableFunds": 25,
+        "currentScaleYi": 255.4,
+        "scaleNetIncreaseYi": 112.0,
+        "scaleGrowthPercent": 92.0,
+        "launched12Months": 3,
+        "asOf": "2026-08-24 15:17:25",
+        "source": "AI Fund Mate全市场公开基金快照",
+        "sourceUrl": "/fund_products.json",
+        "status": "真实公开数据",
+        "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
+      },
+      "capacity": {
+        "score": 51.7,
+        "floatMarketCapYi": 24285.2,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": []
+    },
+    {
+      "id": "ai-application",
+      "query": "人工智能应用",
+      "boardCode": "BK0579",
+      "verified": true,
+      "attention": {
+        "score": 60.2,
+        "recent30Articles": 0,
+        "prior30Articles": 0,
+        "accelerationPercent": -100.0,
+        "sampledArticles": 0,
+        "hitsTotal": 1,
+        "source": "东方财富公开新闻搜索",
+        "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
+        "status": "真实公开代理",
+        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。",
+        "scoreMethod": "本期已验证方向的近30日媒体文章数横截面百分位"
+      },
+      "validation": {
+        "score": 79.2,
+        "peerFunds": 219,
+        "comparableFunds": 169,
+        "currentScaleYi": 3366.6,
+        "scaleNetIncreaseYi": -124.6,
+        "scaleGrowthPercent": -3.7,
+        "launched12Months": 30,
+        "asOf": "2026-08-24 15:17:25",
+        "source": "AI Fund Mate全市场公开基金快照",
+        "sourceUrl": "/fund_products.json",
+        "status": "真实公开数据",
+        "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。"
+      },
+      "capacity": {
+        "score": 67.9,
+        "floatMarketCapYi": 45432.6,
+        "source": "东方财富公开板块行情",
+        "status": "真实公开数据"
+      },
+      "errors": []
+    }
+  ],
+  "disclosure": "媒体注意力为公开代理，产品市场验证来自基金规模与新发数据；均不替代企业经营、客户调研或投资结论。"
+}
