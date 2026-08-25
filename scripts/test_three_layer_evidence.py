@@ -1,4 +1,5 @@
 from scripts.update_attention_pool import THEMES
+from scripts import update_three_layer_evidence as evidence
 from scripts.update_three_layer_evidence import STRUCTURE_CONTRACTS, number
 
 
@@ -13,3 +14,16 @@ def test_invalid_market_values_do_not_break_a_theme_snapshot():
     assert number("-") == 0
     assert number(None) == 0
     assert number("123.4") == 123.4
+
+
+def test_constituents_follow_every_result_page(monkeypatch):
+    calls = []
+    def fake_get(_url, params):
+        calls.append(params["pn"])
+        start = (params["pn"] - 1) * 100
+        size = 100 if params["pn"] < 3 else 5
+        return {"data": {"total": 205, "diff": [{"f12": str(start + index)} for index in range(size)]}}
+    monkeypatch.setattr(evidence, "get_json", fake_get)
+    rows = evidence.constituents("BK0000")
+    assert calls == [1, 2, 3]
+    assert len(rows) == 205

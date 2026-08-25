@@ -6,14 +6,14 @@ import { PreResearchPool } from './components/PreResearchPool.jsx'
 import './workspace.css'
 
 const WORKSPACES = [
-  { id: 'funds', label: '市场分析' },
-  { id: 'forecast', label: '行情预测' },
-  { id: 'issuance', label: '发行洞察' },
   { id: 'research', label: '预研产品池' },
+  { id: 'funds', label: '市场分析' },
+  { id: 'issuance', label: '发行洞察' },
+  { id: 'forecast', label: '行情预测' },
 ]
 
 export default function WorkspaceApp() {
-  const [workspace, setWorkspace] = useState('funds')
+  const [workspace, setWorkspace] = useState('research')
   const [fundContext, setFundContext] = useState({ query: '', contextLabel: '' })
   const openFundLibrary = (context = {}) => {
     setFundContext({ query: context.query ?? '', contextLabel: context.contextLabel ?? '' })

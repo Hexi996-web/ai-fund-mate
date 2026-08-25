@@ -9,8 +9,11 @@ from __future__ import annotations
 
 import json
 import math
+import re
+import sys
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from statistics import median
 
@@ -64,38 +67,149 @@ STRUCTURE_CONTRACTS = {
     "service-robot": ("家庭服务机器人采用", ["服务机器人产量", "家庭保有量", "复购与活跃率"], "国家统计局／企业公告"),
 }
 
+STRUCTURE_SERIES = {
+    "embodied-ai": ("https://s.askci.com/data/industry/a020922/", "工业机器人月产量", "套"),
+    "service-robot": ("https://s.askci.com/data/industry/a02092u/", "服务机器人月产量", "套"),
+    "hard-tech": ("https://s.askci.com/data/industry/a02092q/", "集成电路月产量", "亿块"),
+    "autonomous-driving": ("https://s.askci.com/data/industry/a0209202605a/", "新能源汽车月产量", "万辆"),
+    "grid-storage": ("https://s.askci.com/data/industry/a02092d/", "锂离子电池月产量", "万只"),
+    "nuclear-energy": ("https://s.askci.com/data/energy/a03010j/", "核能月发电量", "亿千瓦时"),
+    "agri-tech": ("https://s.askci.com/data/industry/a02091y/", "大型拖拉机月产量", "台"),
+}
+
+PUBLIC_SERIES_PENDING = {
+    "space", "power", "biotech", "longevity", "experience", "resources",
+    "industrial-software", "cybersecurity", "smart-healthcare", "water-security",
+    "climate-adaptation", "digital-health", "obesity-care", "mental-health",
+    "sports-outdoor", "inbound-consumption", "recycling", "ocean-economy",
+}
+
+CATALYST_TYPES = (
+    ("证伪事件", ("终止", "延期", "撤回", "失败", "停产", "减产", "处罚"), "原有产业假设是否被削弱", "negative"),
+    ("订单与采购", ("中标", "订单", "合同", "签订", "采购"), "是否出现真实付费需求", "positive"),
+    ("准入与审批", ("获批", "批准", "注册证", "许可", "核准"), "商业化准入是否打开", "positive"),
+    ("投产与运营", ("投产", "量产", "商业运营", "上线", "交付", "并网"), "是否进入规模化供给或使用", "positive"),
+    ("项目执行", ("开工", "验收", "发射"), "项目是否从规划进入执行", "positive"),
+)
+
+
+def clean_html(value: str) -> str:
+    return re.sub(r"<[^>]+>", "", value or "").strip()
+
+
+def cninfo_catalysts(query: str, window_days: int = 120) -> list[dict]:
+    """Keep only disclosure events that can confirm or falsify real demand."""
+    end = date.today()
+    response = requests.post(
+        "http://www.cninfo.com.cn/new/hisAnnouncement/query",
+        data={"tabName": "fulltext", "pageSize": "50", "pageNum": "1", "column": "szse",
+              "category": "", "plate": "", "searchkey": query, "secid": "", "trade": "",
+              "seDate": f"{end - timedelta(days=window_days)}~{end}", "stock": "",
+              "sortName": "pubdate", "sortType": "desc", "isHLtitle": "true"},
+        headers={"User-Agent": HEADERS.get("User-Agent", "Mozilla/5.0"),
+                 "Referer": "http://www.cninfo.com.cn/", "X-Requested-With": "XMLHttpRequest"}, timeout=40,
+    )
+    response.raise_for_status()
+    events, seen = [], set()
+    for row in response.json().get("announcements") or []:
+        title = clean_html(row.get("announcementTitle"))
+        match = next(((label, validates, impact) for label, words, validates, impact in CATALYST_TYPES
+                      if any(word in title for word in words)), None)
+        if not match or title in seen:
+            continue
+        seen.add(title)
+        label, validates, impact = match
+        timestamp = row.get("announcementTime")
+        event_date = datetime.fromtimestamp(timestamp / 1000).date().isoformat() if timestamp else None
+        events.append({"date": event_date, "type": label, "impact": impact, "validates": validates,
+                       "company": clean_html(row.get("secName")), "title": title,
+                       "source": "巨潮资讯上市公司公告",
+                       "sourceUrl": f"https://static.cninfo.com.cn/{row.get('adjunctUrl')}" if row.get("adjunctUrl") else ""})
+        if len(events) == 5:
+            break
+    return events
+
 
 def get_json(url: str, params: dict) -> dict:
-    response = requests.get(url, params=params, headers=HEADERS, timeout=40)
+    last_error = None
+    for attempt in range(3):
+        try:
+            response = requests.get(url, params=params, headers=HEADERS, timeout=15)
+            response.raise_for_status()
+            return response.json()
+        except requests.RequestException as exc:
+            last_error = exc
+            time.sleep(1.5 * (attempt + 1))
+    raise last_error
+
+
+def structure_history(theme_id: str) -> dict:
+    config = STRUCTURE_SERIES.get(theme_id)
+    if not config:
+        status = "公开数据可接入，尚未自动化" if theme_id in PUBLIC_SERIES_PENDING else "无稳定统一免费序列"
+        return {"history": [], "status": status, "accessStatus": status}
+    url, metric, unit = config
+    response = requests.get(url, headers=HEADERS, timeout=20)
     response.raise_for_status()
-    return response.json()
+    text = response.text
+    dates_match = re.search(r"xAxis:\s*\[\s*\{.*?data:\s*\[([^\]]+)\]", text, re.S)
+    values_match = re.search(r"series:\s*\[\s*\{.*?data:\s*\[([^\]]*)\]", text, re.S)
+    if not dates_match or not values_match:
+        raise ValueError("structure series not found")
+    dates = re.findall(r"['\"](\d{6})['\"]", dates_match.group(1))
+    raw_values = values_match.group(1).split(",")
+    rows = []
+    for period, raw in zip(dates, raw_values):
+        value = number(raw.strip()) if raw.strip() else None
+        if value is not None:
+            rows.append({"date": f"{period[:4]}-{period[4:]}", "value": value})
+    return {"metric": metric, "unit": unit, "history": list(reversed(rows[:36])),
+            "source": "国家统计局口径／中商产业数据库公开页", "sourceUrl": url,
+            "status": "真实连续数据" if len(rows) >= 4 else "数据不足", "accessStatus": "已自动接入"}
 
 
 def constituents(board: str) -> list[dict]:
-    payload = get_json("https://push2delay.eastmoney.com/api/qt/clist/get", {
-        "pn": 1, "pz": 500, "po": 1, "np": 1, "fltt": 2, "invt": 2,
-        "fid": "f20", "fs": f"b:{board}", "fields": "f12,f14,f6,f20,f21",
+    params = {"pn": 1, "pz": 100, "po": 1, "np": 1, "fltt": 2, "invt": 2,
+              "fid": "f21", "fs": f"b:{board}", "fields": "f12,f14,f6,f20,f21"}
+    payload = get_json("https://push2delay.eastmoney.com/api/qt/clist/get", params)
+    data = payload.get("data") or {}
+    rows = list(data.get("diff") or [])
+    pages = math.ceil(int(data.get("total") or len(rows)) / params["pz"])
+    for page in range(2, pages + 1):
+        time.sleep(.35)
+        params["pn"] = page
+        more = get_json("https://push2delay.eastmoney.com/api/qt/clist/get", params)
+        rows.extend(((more.get("data") or {}).get("diff") or []))
+    return list({row.get("f12"): row for row in rows if row.get("f12")}.values())
+
+
+def board_history(board: str) -> list[dict]:
+    payload = get_json("https://push2his.eastmoney.com/api/qt/stock/kline/get", {
+        "secid": f"90.{board}", "klt": 101, "fqt": 1, "lmt": 300, "end": "20500101",
+        "fields1": "f1,f2,f3", "fields2": "f51,f52,f53,f56,f57",
     })
-    return (payload.get("data") or {}).get("diff") or []
+    result = []
+    for line in (payload.get("data") or {}).get("klines") or []:
+        fields = line.split(",")
+        if len(fields) >= 5:
+            result.append({"date": fields[0], "close": number(fields[2]), "turnoverYi": round(number(fields[4]) / 100_000_000, 2)})
+    return result
 
 
 def secucode(code: str) -> str:
     return f"{code}.SH" if code.startswith(("5", "6", "9")) else f"{code}.BJ" if code.startswith(("4", "8")) else f"{code}.SZ"
 
 
-def financial(code: str) -> dict | None:
+def financial(code: str) -> list[dict]:
     payload = get_json("https://datacenter.eastmoney.com/securities/api/data/get", {
         "type": "RPT_F10_FINANCE_MAINFINADATA", "sty": "APP_F10_MAINFINADATA",
-        "filter": f'(SECUCODE="{secucode(code)}")', "p": 1, "ps": 8,
+        "filter": f'(SECUCODE="{secucode(code)}")', "p": 1, "ps": 20,
         "sr": -1, "st": "REPORT_DATE", "source": "HSF10", "client": "PC",
     })
     rows = ((payload.get("result") or {}).get("data") or [])
-    if not rows:
-        return None
-    row = rows[0]
-    return {"code": code, "reportDate": str(row.get("REPORT_DATE") or "")[:10],
-            "revenueGrowth": row.get("TOTALOPERATEREVETZ"), "profitGrowth": row.get("PARENTNETPROFITTZ"),
-            "cashToRevenue": row.get("JYXJLYYSR")}
+    return [{"code": code, "reportDate": str(row.get("REPORT_DATE") or "")[:10],
+             "revenueGrowth": row.get("TOTALOPERATEREVETZ"), "profitGrowth": row.get("PARENTNETPROFITTZ"),
+             "cashToRevenue": row.get("JYXJLYYSR")} for row in rows if row.get("REPORT_DATE")]
 
 
 def finite_values(values):
@@ -116,36 +230,70 @@ def build_item(theme_id: str, query: str, board: str, capacity: dict) -> dict:
     total_market = sum(number(row.get("f20")) for row in rows)
     turnover = sum(number(row.get("f6")) for row in rows)
     shares = sorted((number(row.get("f21")) / total_float for row in rows if total_float), reverse=True)
-    top = rows[:10]
-    reports = []
+    top = sorted(rows, key=lambda row: number(row.get("f21")), reverse=True)[:10]
+    reports_by_company = []
     with ThreadPoolExecutor(max_workers=6) as executor:
         futures = {executor.submit(financial, row["f12"]): row for row in top if row.get("f12")}
         for future in as_completed(futures):
             try:
-                value = future.result()
-                if value:
-                    reports.append(value)
+                values = future.result()
+                if values:
+                    reports_by_company.append(values)
             except Exception:
                 pass
+    report_dates = sorted({item["reportDate"] for reports in reports_by_company for item in reports}, reverse=True)
+    latest_date = report_dates[0] if report_dates else None
+    reports = [item for company in reports_by_company for item in company if item["reportDate"] == latest_date]
     revenue = finite_values(item.get("revenueGrowth") for item in reports)
     profit = finite_values(item.get("profitGrowth") for item in reports)
     cash = finite_values(item.get("cashToRevenue") for item in reports)
-    report_dates = sorted((item["reportDate"] for item in reports if item.get("reportDate")), reverse=True)
+    enterprise_history = []
+    for report_date in report_dates[:12]:
+        period = [item for company in reports_by_company for item in company if item["reportDate"] == report_date]
+        period_revenue = finite_values(item.get("revenueGrowth") for item in period)
+        period_profit = finite_values(item.get("profitGrowth") for item in period)
+        period_cash = finite_values(item.get("cashToRevenue") for item in period)
+        if period_revenue or period_profit:
+            enterprise_history.append({"reportDate": report_date, "sampleCompanies": len(period),
+                "revenueGrowthMedian": round(median(period_revenue), 1) if period_revenue else None,
+                "positiveRevenueShare": round(sum(value > 0 for value in period_revenue) / len(period_revenue) * 100, 1) if period_revenue else None,
+                "profitGrowthMedian": round(median(period_profit), 1) if period_profit else None,
+                "positiveProfitShare": round(sum(value > 0 for value in period_profit) / len(period_profit) * 100, 1) if period_profit else None,
+                "cashToRevenueMedian": round(median(period_cash), 1) if period_cash else None})
+    try:
+        market_history = board_history(board)
+    except Exception:
+        market_history = []
     contract = STRUCTURE_CONTRACTS[theme_id]
+    try:
+        structure_series = structure_history(theme_id)
+    except Exception:
+        structure_series = {"history": [], "status": "获取失败"}
+    if not structure_series.get("history"):
+        try:
+            structure_series["catalysts"] = cninfo_catalysts(query)
+            structure_series["catalystStatus"] = "已更新"
+        except Exception:
+            structure_series["catalysts"] = []
+            structure_series["catalystStatus"] = "本次采集失败"
+        structure_series["catalystWindowDays"] = 120
+        structure_series["catalystSource"] = "巨潮资讯上市公司公告"
     return {
         "id": theme_id,
         "structure": {"signal": contract[0], "metrics": contract[1], "source": contract[2],
-                      "status": "指标合同已建立", "historyPoints": 0,
-                      "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"},
+                      **structure_series,
+                      "historyPoints": len(structure_series.get("history") or []),
+                      "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"},
         "enterprise": {"sampleCompanies": len(top), "reportedCompanies": len(reports),
                        "coveragePercent": round(sum(number(row.get("f21")) for row in top) / total_float * 100, 1) if total_float else 0,
-                       "reportDate": report_dates[0] if report_dates else None,
+                       "reportDate": latest_date,
                        "revenueGrowthMedian": round(median(revenue), 1) if revenue else None,
                        "positiveRevenueShare": round(sum(value > 0 for value in revenue) / len(revenue) * 100, 1) if revenue else None,
                        "profitGrowthMedian": round(median(profit), 1) if profit else None,
                        "positiveProfitShare": round(sum(value > 0 for value in profit) / len(profit) * 100, 1) if profit else None,
                        "cashToRevenueMedian": round(median(cash), 1) if cash else None,
                        "source": "东方财富上市公司财务报告", "status": "真实公开数据" if reports else "获取失败",
+                       "history": enterprise_history,
                        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。"},
         "assets": {"boardCode": board, "boardName": capacity.get("boardName") or query,
                    "constituentCount": len(rows), "liquidConstituentCount": sum(number(row.get("f6")) >= 100_000_000 for row in rows),
@@ -154,6 +302,12 @@ def build_item(theme_id: str, query: str, board: str, capacity: dict) -> dict:
                    "floatMarketCapYi": round(total_float / 100_000_000, 1),
                    "top10SharePercent": round(sum(shares[:10]) * 100, 1) if shares else None,
                    "hhi": round(sum(share * share for share in shares) * 10000, 1) if shares else None,
+                   "topConstituents": [{"rank": index + 1, "code": row.get("f12"), "name": row.get("f14"),
+                        "floatMarketCapYi": round(number(row.get("f21")) / 100_000_000, 1),
+                        "dailyTurnoverYi": round(number(row.get("f6")) / 100_000_000, 2),
+                        "weightPercent": round(number(row.get("f21")) / total_float * 100, 2) if total_float else None}
+                        for index, row in enumerate(top)],
+                   "marketHistory": market_history,
                    "source": "东方财富公开板块成分与行情", "status": "真实公开数据" if rows else "获取失败"},
     }
 
@@ -165,17 +319,21 @@ def main() -> None:
     previous_map = {item["id"]: item for item in previous.get("items", [])}
     items = []
     for theme_id, query, board in THEMES:
+        print(f"fetching {theme_id} ({len(items) + 1}/36)...", flush=True)
         try:
             items.append(build_item(theme_id, query, board, capacities.get(theme_id, {})))
         except Exception as exc:
             fallback = previous_map.get(theme_id, {"id": theme_id})
             fallback["error"] = type(exc).__name__
             items.append(fallback)
+        time.sleep(.5)
     now = datetime.now().astimezone().isoformat()
     today = date.today().isoformat()
     for item in items:
         old = previous_map.get(item["id"], {})
         asset = item.get("assets") or {}
+        if not asset.get("marketHistory"):
+            asset["marketHistory"] = (old.get("assets") or {}).get("marketHistory") or []
         asset_point = {"date": today, "constituentCount": asset.get("constituentCount"),
                        "floatMarketCapYi": asset.get("floatMarketCapYi"), "dailyTurnoverYi": asset.get("dailyTurnoverYi"),
                        "top10SharePercent": asset.get("top10SharePercent"), "hhi": asset.get("hhi")}
@@ -188,17 +346,48 @@ def main() -> None:
                             "positiveRevenueShare": enterprise.get("positiveRevenueShare"),
                             "positiveProfitShare": enterprise.get("positiveProfitShare"),
                             "coveragePercent": enterprise.get("coveragePercent")}
-        enterprise_history = [point for point in (old.get("enterprise") or {}).get("history", []) if point.get("reportDate") != report_date]
-        enterprise["history"] = (enterprise_history + ([enterprise_point] if report_date else []))[-20:]
-        item["structure"]["historyPoints"] = len((old.get("structure") or {}).get("history", []))
+        history_by_period = {point.get("reportDate"): point for point in (old.get("enterprise") or {}).get("history", []) if point.get("reportDate")}
+        history_by_period.update({point.get("reportDate"): point for point in enterprise.get("history", []) if point.get("reportDate")})
+        if report_date:
+            history_by_period[report_date] = {**history_by_period.get(report_date, {}), **enterprise_point}
+        enterprise["history"] = [history_by_period[key] for key in sorted(history_by_period, reverse=True)[:20]]
+        structure = item.get("structure") or {}
+        if not structure.get("history"):
+            old_structure = old.get("structure") or {}
+            structure["history"] = old_structure.get("history") or []
+            if structure["history"]:
+                structure.update({key: old_structure.get(key) for key in ("metric", "unit", "source", "sourceUrl", "status") if old_structure.get(key)})
+        structure["historyPoints"] = len(structure.get("history") or [])
     output = {"schemaVersion": 2, "updateTime": now, "methodologyVersion": "three-layer-36-v1",
-              "universeCount": 36, "coveredCount": len(items),
-              "enterpriseDataCount": sum((item.get("enterprise") or {}).get("status") == "真实公开数据" for item in items),
-              "assetDataCount": sum((item.get("assets") or {}).get("status") == "真实公开数据" for item in items),
+              "universeCount": 36, "coveredCount": sum(not item.get("error") for item in items),
+              "enterpriseDataCount": sum(len((item.get("enterprise") or {}).get("history") or []) >= 4 for item in items),
+              "assetDataCount": sum(len((item.get("assets") or {}).get("topConstituents") or []) == min(10, (item.get("assets") or {}).get("constituentCount") or 0) for item in items),
+              "assetMarketHistoryCount": sum(len((item.get("assets") or {}).get("marketHistory") or []) >= 200 for item in items),
+              "structureDataCount": sum(len((item.get("structure") or {}).get("history") or []) >= 4 for item in items),
               "items": items}
     OUT.write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"wrote {OUT}: {len(items)}/36 contracts, enterprise={output['enterpriseDataCount']}, assets={output['assetDataCount']}")
 
 
+def refresh_catalysts() -> None:
+    payload = json.loads(OUT.read_text(encoding="utf-8"))
+    queries = {theme_id: query for theme_id, query, _ in THEMES}
+    for item in payload.get("items", []):
+        structure = item.get("structure") or {}
+        if structure.get("history"):
+            continue
+        try:
+            structure["catalysts"] = cninfo_catalysts(queries[item["id"]])
+            structure["catalystStatus"] = "已更新"
+        except Exception:
+            structure["catalystStatus"] = "本次采集失败"
+        structure["catalystWindowDays"] = 120
+        structure["catalystSource"] = "巨潮资讯上市公司公告"
+        time.sleep(.7)
+    payload["updateTime"] = datetime.now().astimezone().isoformat()
+    OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    print("refreshed catalyst events")
+
+
 if __name__ == "__main__":
-    main()
+    refresh_catalysts() if "--catalysts-only" in sys.argv else main()

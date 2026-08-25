@@ -1,102 +1,998 @@
-import { useEffect, useMemo, useState } from 'react'
-import { PRE_RESEARCH_POOL } from '../data/preResearchPool.js'
-import { CORE_ATTENTION_IDS } from '../data/attentionPool.js'
-import { AttentionHeatmap } from './AttentionHeatmap.jsx'
-import { ResearchHorizonBrief } from './ResearchHorizonBrief.jsx'
+import { useEffect, useMemo, useState } from "react";
+import { PRE_RESEARCH_POOL } from "../data/preResearchPool.js";
+import { CORE_ATTENTION_IDS } from "../data/attentionPool.js";
+import { AttentionHeatmap } from "./AttentionHeatmap.jsx";
+import { ResearchHorizonBrief } from "./ResearchHorizonBrief.jsx";
 
-const yi = (value) => Number.isFinite(value) ? `${value.toFixed(1)}亿元` : '—'
-const pct = (value) => Number.isFinite(value) ? `${value.toFixed(1)}%` : '—'
-const signedYi = (value) => Number.isFinite(value) ? `${value >= 0 ? '+' : ''}${value.toFixed(1)}亿元` : '—'
-const num = (value) => value == null ? Number.NaN : Number(value)
-const fundGrowth = (fund) => Number.isFinite(num(fund.scaleGrowthPercent)) ? num(fund.scaleGrowthPercent) : Number.isFinite(num(fund.baselineScaleYi)) && num(fund.baselineScaleYi) ? (num(fund.currentScaleYi)-num(fund.baselineScaleYi))/num(fund.baselineScaleYi)*100 : Number.NaN
-const sortable = (value) => Number.isFinite(value) ? value : -Infinity
-const latestDate = (values) => values.filter(Boolean).sort().at(-1) || '—'
+const yi = (value) =>
+  Number.isFinite(value) ? `${value.toFixed(1)}亿元` : "—";
+const pct = (value) => (Number.isFinite(value) ? `${value.toFixed(1)}%` : "—");
+const signedYi = (value) =>
+  Number.isFinite(value)
+    ? `${value >= 0 ? "+" : ""}${value.toFixed(1)}亿元`
+    : "—";
+const num = (value) => (value == null ? Number.NaN : Number(value));
+const fundGrowth = (fund) =>
+  Number.isFinite(num(fund.scaleGrowthPercent))
+    ? num(fund.scaleGrowthPercent)
+    : Number.isFinite(num(fund.baselineScaleYi)) && num(fund.baselineScaleYi)
+      ? ((num(fund.currentScaleYi) - num(fund.baselineScaleYi)) /
+          num(fund.baselineScaleYi)) *
+        100
+      : Number.NaN;
+const sortable = (value) => (Number.isFinite(value) ? value : -Infinity);
+const latestDate = (values) => values.filter(Boolean).sort().at(-1) || "—";
 
-function marketMetrics(item, products, updateTime) {
-  const peers = products.filter((product) => item.keywords.some((word) => product.productName?.toLowerCase().includes(word.toLowerCase())))
-  const scales = peers.map((p) => num(p.currentScaleYi)).filter(Number.isFinite).sort((a,b) => b-a)
-  const total = scales.reduce((sum,value) => sum+value,0)
-  const comparable = peers.filter((p) => p.baselineScaleType === '2025年末披露规模' && Number.isFinite(num(p.baselineScaleYi)) && Number.isFinite(num(p.currentScaleYi)))
-  const baselineScaleDate = comparable.length ? '2025-12-31' : '—'
-  const currentScaleDate = latestDate(peers.flatMap((p) => (p.shares || []).map((share) => share.scaleDate)))
-  const baselineTotal = comparable.reduce((sum,p) => sum+num(p.baselineScaleYi),0)
-  const comparableCurrent = comparable.reduce((sum,p) => sum+num(p.currentScaleYi),0)
-  const scaleIncrease = comparable.reduce((sum,p) => sum+(Number.isFinite(num(p.scaleNetIncreaseYi)) ? num(p.scaleNetIncreaseYi) : num(p.currentScaleYi)-num(p.baselineScaleYi)),0)
-  const scaleGrowth = baselineTotal ? scaleIncrease/baselineTotal*100 : null
-  const top = scales[0] ?? 0
-  const top3 = scales.slice(0,3).reduce((sum,value) => sum+value,0)
-  const asOf = new Date(String(updateTime || '').replace(' ','T'))
-  const cutoff12 = new Date(asOf); cutoff12.setFullYear(cutoff12.getFullYear()-1)
-  const cutoff90 = new Date(asOf); cutoff90.setDate(cutoff90.getDate()-90)
-  const launched12 = peers.filter((p) => new Date(p.establishedDate) >= cutoff12)
-  const launched90 = peers.filter((p) => new Date(p.establishedDate) >= cutoff90)
-  const gapScore = peers.length < 3 ? 40 : Math.max(0, Math.min(100, 92 - peers.length*1.5 - launched12.length*2 + (total && top3/total>.65 ? 8 : 0)))
-  const supplyState = launched12.length > 10 || launched90.length > 4 ? '新增拥挤' : launched12.length < 3 ? '新增稀少' : '新增适中'
-  const scaleState = scaleGrowth > 10 ? '规模扩张' : scaleGrowth < -10 ? '规模收缩' : '规模平稳'
-  const state = peers.length < 8 ? '产品缺失' : peers.length > 35 && supplyState === '新增拥挤' ? '供给过剩' : supplyState === '新增稀少' && scaleState === '规模扩张' ? '存在空位' : '继续观察'
-  return { count:peers.length, launched12, launched90, total, baselineTotal, baselineScaleDate, currentScaleDate, comparableCurrent, comparableCount:comparable.length, scaleIncrease, scaleGrowth, supplyState, scaleState, topShare:total ? top/total*100 : null, top3Share:total ? top3/total*100 : null, gapScore, state, peers:peers.sort((a,b)=>(b.currentScaleYi||0)-(a.currentScaleYi||0)) }
+function MiniTrend({ rows, field, unit = "", delta = false }) {
+  const values = rows.map((row) => num(row[field])).filter(Number.isFinite);
+  if (values.length < 2)
+    return <p className="evidence-principle">历史序列积累中</p>;
+  const low = Math.min(...values),
+    high = Math.max(...values),
+    spread = high - low || 1;
+  const points = values
+    .map(
+      (value, index) =>
+        `${((index / (values.length - 1)) * 100).toFixed(2)},${(42 - ((value - low) / spread) * 36).toFixed(2)}`,
+    )
+    .join(" ");
+  const first = values[0],
+    last = values.at(-1),
+    change = delta ? last - first : first ? (last / first - 1) * 100 : null;
+  return (
+    <div className="evidence-trend">
+      <svg
+        viewBox="0 0 100 46"
+        role="img"
+        aria-label={`${field}历史趋势`}
+        preserveAspectRatio="none"
+      >
+        <polyline points={points} />
+      </svg>
+      <div>
+        <span>{rows[0]?.date || rows[0]?.reportDate}</span>
+        <strong>
+          {Number.isFinite(change)
+            ? `${change >= 0 ? "+" : ""}${change.toFixed(1)}${delta ? "个百分点" : "%"}`
+            : "—"}
+        </strong>
+        <span>
+          {rows.at(-1)?.date || rows.at(-1)?.reportDate} · {last.toFixed(1)}
+          {unit}
+        </span>
+      </div>
+    </div>
+  );
 }
 
-function MetricButton({ label, value, onClick }) { return <button type="button" className="decision-metric decision-metric--link" onClick={onClick}><small>{label}</small><strong>{value}</strong><span>查看依据 →</span></button> }
+function marketMetrics(item, products, updateTime) {
+  const peers = products.filter((product) =>
+    item.keywords.some((word) =>
+      product.productName?.toLowerCase().includes(word.toLowerCase()),
+    ),
+  );
+  const scales = peers
+    .map((p) => num(p.currentScaleYi))
+    .filter(Number.isFinite)
+    .sort((a, b) => b - a);
+  const total = scales.reduce((sum, value) => sum + value, 0);
+  const comparable = peers.filter(
+    (p) =>
+      p.baselineScaleType === "2025年末披露规模" &&
+      Number.isFinite(num(p.baselineScaleYi)) &&
+      Number.isFinite(num(p.currentScaleYi)),
+  );
+  const baselineScaleDate = comparable.length ? "2025-12-31" : "—";
+  const currentScaleDate = latestDate(
+    peers.flatMap((p) => (p.shares || []).map((share) => share.scaleDate)),
+  );
+  const baselineTotal = comparable.reduce(
+    (sum, p) => sum + num(p.baselineScaleYi),
+    0,
+  );
+  const comparableCurrent = comparable.reduce(
+    (sum, p) => sum + num(p.currentScaleYi),
+    0,
+  );
+  const scaleIncrease = comparable.reduce(
+    (sum, p) =>
+      sum +
+      (Number.isFinite(num(p.scaleNetIncreaseYi))
+        ? num(p.scaleNetIncreaseYi)
+        : num(p.currentScaleYi) - num(p.baselineScaleYi)),
+    0,
+  );
+  const scaleGrowth = baselineTotal
+    ? (scaleIncrease / baselineTotal) * 100
+    : null;
+  const top = scales[0] ?? 0;
+  const top3 = scales.slice(0, 3).reduce((sum, value) => sum + value, 0);
+  const asOf = new Date(String(updateTime || "").replace(" ", "T"));
+  const cutoff12 = new Date(asOf);
+  cutoff12.setFullYear(cutoff12.getFullYear() - 1);
+  const cutoff90 = new Date(asOf);
+  cutoff90.setDate(cutoff90.getDate() - 90);
+  const launched12 = peers.filter(
+    (p) => new Date(p.establishedDate) >= cutoff12,
+  );
+  const launched90 = peers.filter(
+    (p) => new Date(p.establishedDate) >= cutoff90,
+  );
+  const gapScore =
+    peers.length < 3
+      ? 40
+      : Math.max(
+          0,
+          Math.min(
+            100,
+            92 -
+              peers.length * 1.5 -
+              launched12.length * 2 +
+              (total && top3 / total > 0.65 ? 8 : 0),
+          ),
+        );
+  const supplyState =
+    launched12.length > 10 || launched90.length > 4
+      ? "新增拥挤"
+      : launched12.length < 3
+        ? "新增稀少"
+        : "新增适中";
+  const scaleState =
+    scaleGrowth > 10 ? "规模扩张" : scaleGrowth < -10 ? "规模收缩" : "规模平稳";
+  const state =
+    peers.length < 8
+      ? "产品缺失"
+      : peers.length > 35 && supplyState === "新增拥挤"
+        ? "供给过剩"
+        : supplyState === "新增稀少" && scaleState === "规模扩张"
+          ? "存在空位"
+          : "继续观察";
+  return {
+    count: peers.length,
+    launched12,
+    launched90,
+    total,
+    baselineTotal,
+    baselineScaleDate,
+    currentScaleDate,
+    comparableCurrent,
+    comparableCount: comparable.length,
+    scaleIncrease,
+    scaleGrowth,
+    supplyState,
+    scaleState,
+    topShare: total ? (top / total) * 100 : null,
+    top3Share: total ? (top3 / total) * 100 : null,
+    gapScore,
+    state,
+    peers: peers.sort(
+      (a, b) => (b.currentScaleYi || 0) - (a.currentScaleYi || 0),
+    ),
+  };
+}
+
+function MetricButton({ label, value, onClick }) {
+  return (
+    <button
+      type="button"
+      className="decision-metric decision-metric--link"
+      onClick={onClick}
+    >
+      <small>{label}</small>
+      <strong>{value}</strong>
+      <span>查看依据 →</span>
+    </button>
+  );
+}
 
 function ChangeBar({ value }) {
-  const width = Math.min(100, Math.max(6, Math.log10(Math.abs(value || 0) + 1) * 32))
-  return <span className="change-visual" title="同口径可比基金当前规模减去2025年末披露规模"><i className={value >= 0 ? 'up' : 'down'} style={{width:`${width}%`}} /><b>{signedYi(value)}</b></span>
+  const width = Math.min(
+    100,
+    Math.max(6, Math.log10(Math.abs(value || 0) + 1) * 32),
+  );
+  return (
+    <span
+      className="change-visual"
+      title="同口径可比基金当前规模减去2025年末披露规模"
+    >
+      <i
+        className={value >= 0 ? "up" : "down"}
+        style={{ width: `${width}%` }}
+      />
+      <b>{signedYi(value)}</b>
+    </span>
+  );
 }
 
 const evidenceMeta = {
-  structure:{title:'结构驱动', self:'核心产业指标的3年趋势', peer:'所属产业基准', metrics:['需求量/渗透率','产能或基础设施','政策目标完成度']},
-  enterprise:{title:'企业兑现', self:'板块收入与利润连续性', peer:'同产业企业中位数', metrics:['收入增速','利润增速','订单或合同负债']},
-  assets:{title:'资产承载', self:'可投资资产池自身变化', peer:'相近可投资资产池', metrics:['流通市值','成交额与流动性','成分数量与集中度']}
+  structure: { title: "产业需求是否成立" },
+  enterprise: { title: "龙头企业是否兑现" },
+  assets: { title: "资产池能否支撑产品" },
+};
+const PUBLIC_STRUCTURE_PENDING = new Set([
+  "space",
+  "power",
+  "biotech",
+  "longevity",
+  "experience",
+  "resources",
+  "industrial-software",
+  "cybersecurity",
+  "smart-healthcare",
+  "water-security",
+  "climate-adaptation",
+  "digital-health",
+  "obesity-care",
+  "mental-health",
+  "sports-outdoor",
+  "inbound-consumption",
+  "recycling",
+  "ocean-economy",
+]);
+
+function seriesChange(rows, field) {
+  const values = rows.map((row) => num(row[field])).filter(Number.isFinite);
+  if (values.length < 2 || !values[0]) return Number.NaN;
+  return (values.at(-1) / values[0] - 1) * 100;
+}
+
+function seriesDelta(rows, field) {
+  const values = rows.map((row) => num(row[field])).filter(Number.isFinite);
+  return values.length >= 2 ? values.at(-1) - values[0] : Number.NaN;
+}
+
+function signedPct(value) {
+  return Number.isFinite(value)
+    ? `${value >= 0 ? "+" : ""}${value.toFixed(1)}%`
+    : "—";
+}
+function signedPoints(value) {
+  return Number.isFinite(value)
+    ? `${value >= 0 ? "+" : ""}${value.toFixed(1)}个百分点`
+    : "—";
+}
+function yearOverYear(rows, field = "value") {
+  const latest = rows.at(-1);
+  if (!latest?.date) return Number.NaN;
+  const [year, month] = latest.date.split("-");
+  const base = rows.find((row) => row.date === `${Number(year) - 1}-${month}`);
+  const current = num(latest[field]),
+    previous = num(base?.[field]);
+  return Number.isFinite(current) && Number.isFinite(previous) && previous
+    ? (current / previous - 1) * 100
+    : Number.NaN;
 }
 
 function EvidenceDrawer({ layer, item, updateTime, onClose }) {
-  const meta = evidenceMeta[layer]
-  const asset = item.assets
-  const enterprise = item.enterprise
-  const structure = item.structure
-  const hasTrend = Array.isArray(item[layer]?.history) && item[layer].history.length >= 4
-  const content = layer==='assets' ? <div className="evidence-current"><h3>当前资产承载</h3><div><span><small>成分股</small><strong>{asset.constituentCount ?? '—'}只</strong></span><span><small>流通市值</small><strong>{yi(asset.floatMarketCapYi)}</strong></span><span><small>日成交额</small><strong>{yi(asset.dailyTurnoverYi)}</strong></span><span><small>成交额≥1亿元</small><strong>{asset.liquidConstituentCount ?? '—'}只</strong></span><span><small>前十大占比</small><strong>{pct(asset.top10SharePercent)}</strong></span><span><small>集中度 HHI</small><strong>{Number.isFinite(asset.hhi)?asset.hhi.toFixed(0):'—'}</strong></span></div></div> : layer==='enterprise' ? <div className="evidence-current"><h3>最新企业兑现 · {enterprise.reportDate || '报告期未知'}</h3><div><span><small>收入增速中位数</small><strong>{pct(enterprise.revenueGrowthMedian)}</strong></span><span><small>收入正增长占比</small><strong>{pct(enterprise.positiveRevenueShare)}</strong></span><span><small>利润增速中位数</small><strong>{pct(enterprise.profitGrowthMedian)}</strong></span><span><small>利润正增长占比</small><strong>{pct(enterprise.positiveProfitShare)}</strong></span><span><small>现金收入比中位数</small><strong>{pct(enterprise.cashToRevenueMedian)}</strong></span><span><small>财报样本覆盖</small><strong>{enterprise.reportedCompanies}/{enterprise.sampleCompanies}家 · {pct(enterprise.coveragePercent)}</strong></span></div></div> : <div className="evidence-current"><h3>{structure.signal}</h3><div>{structure.metrics.map(metric=><span key={metric}><small>专属结构指标</small><strong>{metric}</strong></span>)}</div><p className="evidence-principle">来源合同：{structure.source}。当前已建立指标映射，官方同口径历史尚未达到4期，因此不显示方向性结论。</p></div>
-  return <><button className="peer-backdrop" aria-label="关闭证据趋势" onClick={onClose}/><aside className="peer-drawer evidence-drawer" aria-label={`${meta.title}趋势`}><header><div><small>{meta.title}</small><h2>自身趋势 × 同行业比较</h2><p>数据快照 {updateTime}</p></div><button type="button" onClick={onClose}>关闭</button></header><div className="evidence-compare-axis"><div><small>纵向</small><strong>{meta.self}</strong></div><div><small>横向</small><strong>{meta.peer}</strong></div></div>{content}<div className="trend-contract"><div><small>趋势状态</small><strong>{hasTrend?'达到4期，可查看':'开始积累；未达到4期不判趋势'}</strong></div>{meta.metrics.map(metric=><div key={metric}><small>判断口径</small><strong>{metric}</strong></div>)}</div><p className="evidence-principle">企业层按流通市值前10家公司汇总并披露覆盖率；资产层使用全部成分股。同口径历史达到4期后才显示趋势，不使用候选池内部排名替代同行业基准。</p></aside></>
+  const [assetWindow, setAssetWindow] = useState("1y");
+  const meta = evidenceMeta[layer];
+  const asset = item.assets;
+  const enterprise = item.enterprise;
+  const structure = item.structure;
+  const catalysts = structure.catalysts || [];
+  const marketRows = (asset.marketHistory || []).slice(
+    assetWindow === "3m" ? -65 : -300,
+  );
+  const enterpriseRows = [...(enterprise.history || [])].reverse();
+  const structureRows = structure.history || [];
+  const structureAccess =
+    structure.accessStatus ||
+    (structureRows.length >= 4
+      ? "已自动接入"
+      : PUBLIC_STRUCTURE_PENDING.has(item.id)
+        ? "公开数据可接入，尚未自动化"
+        : "无稳定统一免费序列");
+  const structureYoy = yearOverYear(structureRows);
+  const revenueNow = enterprise.revenueGrowthMedian,
+    profitNow = enterprise.profitGrowthMedian;
+  const enterpriseConclusion =
+    revenueNow > 0 && profitNow > 0
+      ? "收入和利润同步增长，产业兑现成立"
+      : revenueNow > 0
+        ? "收入增长但利润承压，仍需验证盈利转化"
+        : "收入尚未形成增长，产业兑现不足";
+  const concentration =
+    asset.top10SharePercent >= 60
+      ? "高度集中，产品表现容易被少数公司主导"
+      : asset.top10SharePercent >= 40
+        ? "集中度偏高，需要检查头部公司风险"
+        : "成分分散度尚可，具备组合承载基础";
+  const assetConclusion = `${asset.constituentCount || 0}只成分股、${asset.liquidConstituentCount || 0}只日成交额超过1亿元；${concentration}。`;
+  const content =
+    layer === "assets" ? (
+      <>
+        <div className="evidence-answer">
+          <b>当前判断</b>
+          <strong>{assetConclusion}</strong>
+        </div>
+        <div className="evidence-current">
+          <h3>当前可投资资产池</h3>
+          <div>
+            <span>
+              <small>全部成分股</small>
+              <strong>{asset.constituentCount ?? "—"}只</strong>
+            </span>
+            <span>
+              <small>流通市值</small>
+              <strong>{yi(asset.floatMarketCapYi)}</strong>
+            </span>
+            <span>
+              <small>日成交额</small>
+              <strong>{yi(asset.dailyTurnoverYi)}</strong>
+            </span>
+            <span>
+              <small>成交额≥1亿元</small>
+              <strong>{asset.liquidConstituentCount ?? "—"}只</strong>
+            </span>
+            <span>
+              <small>前十大占比</small>
+              <strong>{pct(asset.top10SharePercent)}</strong>
+            </span>
+            <span>
+              <small>集中度 HHI</small>
+              <strong>
+                {Number.isFinite(asset.hhi) ? asset.hhi.toFixed(0) : "—"}
+              </strong>
+            </span>
+          </div>
+        </div>
+        <section className="asset-history">
+          <header>
+            <strong>板块价格与成交额趋势</strong>
+            <nav>
+              {[
+                ["3m", "近3个月"],
+                ["1y", "近1年"],
+              ].map(([id, label]) => (
+                <button
+                  type="button"
+                  className={assetWindow === id ? "active" : ""}
+                  onClick={() => setAssetWindow(id)}
+                  key={id}
+                >
+                  {label}
+                </button>
+              ))}
+            </nav>
+          </header>
+          {marketRows.length >= 2 ? (
+            <>
+              <div className="trend-result">
+                <span>
+                  板块价格变化{" "}
+                  <b>{signedPct(seriesChange(marketRows, "close"))}</b>
+                </span>
+                <span>
+                  成交额变化{" "}
+                  <b>{signedPct(seriesChange(marketRows, "turnoverYi"))}</b>
+                </span>
+              </div>
+              <MiniTrend rows={marketRows} field="close" />
+              <MiniTrend rows={marketRows} field="turnoverYi" unit="亿元" />
+            </>
+          ) : (
+            <div className="trend-missing">
+              <strong>历史接口本期未返回数据</strong>
+              <span>
+                先看当前成分数量、流动性、集中度和前十大公司；系统同时保留每日资产快照，达到4期后显示自身变化。
+              </span>
+            </div>
+          )}
+        </section>
+        <details className="top-constituents" open>
+          <summary>前十大成分股 · 合计{pct(asset.top10SharePercent)}</summary>
+          <div>
+            <div>
+              <span>排名／公司</span>
+              <span>流通市值</span>
+              <span>日成交额</span>
+              <span>权重</span>
+            </div>
+            {(asset.topConstituents || []).map((row) => (
+              <div key={row.code}>
+                <span>
+                  <i>{String(row.rank).padStart(2, "0")}</i>
+                  <strong>{row.name}</strong>
+                  <small>{row.code}</small>
+                </span>
+                <span>{yi(row.floatMarketCapYi)}</span>
+                <span>{yi(row.dailyTurnoverYi)}</span>
+                <b>{pct(row.weightPercent)}</b>
+              </div>
+            ))}
+          </div>
+        </details>
+      </>
+    ) : layer === "enterprise" ? (
+      <>
+        <div className="evidence-answer">
+          <b>当前判断</b>
+          <strong>{enterpriseConclusion}</strong>
+        </div>
+        <div className="evidence-current">
+          <h3>
+            前十大成分股财报汇总 · {enterprise.reportDate || "报告期未知"}
+          </h3>
+          <div>
+            <span>
+              <small>10家公司收入增速中位数</small>
+              <strong>{pct(enterprise.revenueGrowthMedian)}</strong>
+            </span>
+            <span>
+              <small>收入正增长公司占比</small>
+              <strong>{pct(enterprise.positiveRevenueShare)}</strong>
+            </span>
+            <span>
+              <small>10家公司利润增速中位数</small>
+              <strong>{pct(enterprise.profitGrowthMedian)}</strong>
+            </span>
+            <span>
+              <small>利润正增长公司占比</small>
+              <strong>{pct(enterprise.positiveProfitShare)}</strong>
+            </span>
+            <span>
+              <small>经营现金流／收入中位数</small>
+              <strong>{pct(enterprise.cashToRevenueMedian)}</strong>
+            </span>
+            <span>
+              <small>前十公司市值覆盖</small>
+              <strong>{pct(enterprise.coveragePercent)}</strong>
+            </span>
+          </div>
+        </div>
+        <section className="asset-history">
+          <header>
+            <strong>
+              前十大公司财报趋势 · {enterprise.history?.length || 0}个报告期
+            </strong>
+          </header>
+          <div className="trend-result">
+            <span>
+              收入增速中位数变化{" "}
+              <b>
+                {signedPoints(
+                  seriesDelta(enterpriseRows, "revenueGrowthMedian"),
+                )}
+              </b>
+            </span>
+            <span>
+              利润增速中位数变化{" "}
+              <b>
+                {signedPoints(
+                  seriesDelta(enterpriseRows, "profitGrowthMedian"),
+                )}
+              </b>
+            </span>
+          </div>
+          <MiniTrend
+            rows={enterpriseRows}
+            field="revenueGrowthMedian"
+            unit="%"
+            delta
+          />
+          <MiniTrend
+            rows={enterpriseRows}
+            field="profitGrowthMedian"
+            unit="%"
+            delta
+          />
+        </section>
+      </>
+    ) : structureRows.length >= 4 ? (
+      <>
+        <div className="evidence-answer">
+          <b>真实产业指标判断</b>
+          <strong>
+            {structure.metric}最新同比{signedPct(structureYoy)}，
+            {structureYoy > 10
+              ? "需求与生产活动明显扩张"
+              : structureYoy > 0
+                ? "产业活动温和增长"
+                : "产业活动尚未扩张"}
+            。
+          </strong>
+        </div>
+        <section className="asset-history">
+          <header>
+            <strong>{structure.metric}</strong>
+          </header>
+          <div className="trend-result">
+            <span>
+              最新值{" "}
+              <b>
+                {structureRows.at(-1)?.value?.toFixed(1)}
+                {structure.unit}
+              </b>
+            </span>
+            <span>
+              较上年同月 <b>{signedPct(structureYoy)}</b>
+            </span>
+          </div>
+          <MiniTrend rows={structureRows} field="value" unit={structure.unit} />
+        </section>
+      </>
+    ) : (
+      <div className="evidence-empty">
+        <b>{structureAccess}</b>
+        <h3>关键验证动态</h3>
+        <p>
+          只保留会改变产品预研判断的订单、准入、投产、项目执行与证伪事件，不展示一般新闻和泛化财务旁证。
+        </p>
+        <div className="catalyst-head">
+          <strong>
+            {catalysts.length
+              ? `近${structure.catalystWindowDays || 120}日发现 ${catalysts.length} 条有效事件`
+              : `近${structure.catalystWindowDays || 120}日暂无有效验证事件`}
+          </strong>
+          <span>
+            {structure.catalystSource || "公开公告"} · {structure.catalystStatus || "待更新"}
+          </span>
+        </div>
+        {catalysts.length ? (
+          <section className="catalyst-list">
+            {catalysts.map((event, index) => (
+              <article
+                className={`catalyst-${event.impact}`}
+                key={`${event.date}-${event.title}-${index}`}
+              >
+                <div>
+                  <time>{event.date || "日期未知"}</time>
+                  <span>{event.type}</span>
+                  <b>{event.impact === "negative" ? "削弱判断" : "加强判断"}</b>
+                </div>
+                <strong>
+                  {event.company ? `${event.company}｜` : ""}
+                  {event.title}
+                </strong>
+                <p>验证：{event.validates}</p>
+                {event.sourceUrl ? (
+                  <a href={event.sourceUrl} target="_blank" rel="noreferrer">
+                    查看原公告 →
+                  </a>
+                ) : null}
+              </article>
+            ))}
+          </section>
+        ) : (
+          <div className="catalyst-none">
+            <strong>这不是“零分”</strong>
+            <span>
+              表示当前公开公告中尚未出现符合严格事件口径的验证信号，产业需求暂不能被确认，也不因缺失数据而强行打分。
+            </span>
+          </div>
+        )}
+      </div>
+    );
+  return (
+    <>
+      <button
+        className="peer-backdrop"
+        aria-label="关闭证据趋势"
+        onClick={onClose}
+      />
+      <aside className="peer-drawer evidence-drawer" aria-label={meta.title}>
+        <header>
+          <div>
+            <h2>{meta.title}</h2>
+            <p>数据快照 {updateTime}</p>
+          </div>
+          <button type="button" onClick={onClose}>
+            关闭
+          </button>
+        </header>
+        {content}
+      </aside>
+    </>
+  );
 }
 
 export function PreResearchPool() {
-  const [payload, setPayload] = useState({ products:[], updateTime:'加载中' })
-  const [evidence, setEvidence] = useState({ items:[], updateTime:'加载中' })
-  const [attention, setAttention] = useState({ recommendedIds:CORE_ATTENTION_IDS })
-  const [selected, setSelected] = useState('')
-  const [drawer, setDrawer] = useState('')
-  const [evidenceLayer, setEvidenceLayer] = useState('')
-  const [peerSort, setPeerSort] = useState('current')
-  const [briefFocus, setBriefFocus] = useState('')
-  useEffect(() => { const controller = new AbortController(); Promise.all([fetch('/fund_products.json',{signal:controller.signal,cache:'no-store'}).then(r=>r.json()),fetch('/pre_research_evidence.json',{signal:controller.signal,cache:'no-store'}).then(r=>r.json()),fetch('/attention_pool_evidence.json',{signal:controller.signal,cache:'no-store'}).then(r=>r.json())]).then(([funds,proof,attentionProof])=>{setPayload(funds);setEvidence(proof);setAttention(attentionProof)}).catch(()=>{}); return () => controller.abort() },[])
-  const evidenceById = useMemo(() => new Map((evidence.items || []).map((item)=>[item.id,item])),[evidence.items])
+  const [payload, setPayload] = useState({
+    products: [],
+    updateTime: "加载中",
+  });
+  const [evidence, setEvidence] = useState({ items: [], updateTime: "加载中" });
+  const [attention, setAttention] = useState({
+    recommendedIds: CORE_ATTENTION_IDS,
+  });
+  const [selected, setSelected] = useState("");
+  const [drawer, setDrawer] = useState("");
+  const [evidenceLayer, setEvidenceLayer] = useState("");
+  const [peerSort, setPeerSort] = useState("current");
+  const [briefFocus, setBriefFocus] = useState("");
+  useEffect(() => {
+    const controller = new AbortController();
+    Promise.all([
+      fetch("/fund_products.json", {
+        signal: controller.signal,
+        cache: "no-store",
+      }).then((r) => r.json()),
+      fetch("/pre_research_evidence.json", {
+        signal: controller.signal,
+        cache: "no-store",
+      }).then((r) => r.json()),
+      fetch("/attention_pool_evidence.json", {
+        signal: controller.signal,
+        cache: "no-store",
+      }).then((r) => r.json()),
+    ])
+      .then(([funds, proof, attentionProof]) => {
+        setPayload(funds);
+        setEvidence(proof);
+        setAttention(attentionProof);
+      })
+      .catch(() => {});
+    return () => controller.abort();
+  }, []);
+  const evidenceById = useMemo(
+    () => new Map((evidence.items || []).map((item) => [item.id, item])),
+    [evidence.items],
+  );
   const ranked = useMemo(() => {
-    const priority = { '产品缺失':4, '存在空位':3, '继续观察':2, '供给过剩':1 }
-    const ids = attention.recommendedIds?.length===10 ? attention.recommendedIds : CORE_ATTENTION_IDS
-    const coreOrder = new Map(ids.map((id,index)=>[id,index]))
-    return PRE_RESEARCH_POOL.map((item) => ({...item,market:marketMetrics(item,payload.products || [],payload.updateTime)})).filter((item)=>coreOrder.has(item.id)).sort((a,b) => coreOrder.get(a.id)-coreOrder.get(b.id) || priority[b.market.state]-priority[a.market.state]).slice(0,10)
-  },[attention.recommendedIds,payload])
-  const active = ranked.find((item)=>item.id===selected) || ranked[0]
-  const activeEvidence = active ? evidenceById.get(active.id) : null
+    const priority = { 产品缺失: 4, 存在空位: 3, 继续观察: 2, 供给过剩: 1 };
+    const ids =
+      attention.recommendedIds?.length === 10
+        ? attention.recommendedIds
+        : CORE_ATTENTION_IDS;
+    const coreOrder = new Map(ids.map((id, index) => [id, index]));
+    return PRE_RESEARCH_POOL.map((item) => ({
+      ...item,
+      market: marketMetrics(item, payload.products || [], payload.updateTime),
+    }))
+      .filter((item) => coreOrder.has(item.id))
+      .sort(
+        (a, b) =>
+          coreOrder.get(a.id) - coreOrder.get(b.id) ||
+          priority[b.market.state] - priority[a.market.state],
+      )
+      .slice(0, 10);
+  }, [attention.recommendedIds, payload]);
+  const active = ranked.find((item) => item.id === selected) || ranked[0];
+  const activeEvidence = active ? evidenceById.get(active.id) : null;
   const drawerFunds = useMemo(() => {
-    if (!active) return []
-    const base = drawer==='12m'?active.market.launched12:drawer==='90d'?active.market.launched90:drawer==='top1'?active.market.peers.slice(0,1):drawer==='top3'?active.market.peers.slice(0,3):active.market.peers
-    return [...base].sort((a,b) => peerSort==='growth' ? sortable(fundGrowth(b))-sortable(fundGrowth(a)) : sortable(num(b.currentScaleYi))-sortable(num(a.currentScaleYi)))
-  },[active,drawer,peerSort])
+    if (!active) return [];
+    const base =
+      drawer === "12m"
+        ? active.market.launched12
+        : drawer === "90d"
+          ? active.market.launched90
+          : drawer === "top1"
+            ? active.market.peers.slice(0, 1)
+            : drawer === "top3"
+              ? active.market.peers.slice(0, 3)
+              : active.market.peers;
+    return [...base].sort((a, b) =>
+      peerSort === "growth"
+        ? sortable(fundGrowth(b)) - sortable(fundGrowth(a))
+        : sortable(num(b.currentScaleYi)) - sortable(num(a.currentScaleYi)),
+    );
+  }, [active, drawer, peerSort]);
 
-  return <main className="workspace-main research-pool decision-mode">
-    <header className="decision-hero"><div><h1>季度预研产品池</h1><p>面向产品经理的前瞻观察池。候选方向可动态进出，原则上按季度依据最新证据重排；重大政策、技术突破或企业证伪时触发临时复核，不按日追逐市场热点。</p></div><div className="decision-date"><small>基金快照</small><strong>{payload.updateTime || '—'}</strong><span>{PRE_RESEARCH_POOL.length} 选 10 · 季度重排</span></div></header>
-    <ResearchHorizonBrief snapshot={attention} onFocus={(id)=>{setBriefFocus(id); document.querySelector('.attention-section')?.scrollIntoView({behavior:'smooth',block:'start'})}} />
-    <AttentionHeatmap focusId={briefFocus} onSelectCore={(id)=>{setSelected(id); document.querySelector('.decision-layout')?.scrollIntoView({behavior:'smooth',block:'start'})}} />
-    <section className="decision-layout">
-      <div className="decision-ranking"><div className="decision-ranking__head"><span>季度序位 / 产品方向</span><span>近12月新发</span><span>规模净增加额</span><span>产品结论</span></div>{ranked.map((item,index)=><button type="button" className={active?.id===item.id?'active':''} onClick={()=>setSelected(item.id)} key={item.id}><i>{String(index+1).padStart(2,'0')}</i><span><strong>{item.name}</strong><small>{item.definition}</small></span><em>{item.market.launched12.length}只</em><ChangeBar value={item.market.scaleIncrease} /><b className={`market-${item.market.state}`}>{item.market.state}</b></button>)}</div>
-      {active && <section className="decision-detail"><div className="decision-detail__title"><div><small>当前研究对象</small><h2>{active.name}</h2></div><span>季度序位 {ranked.indexOf(active)+1}</span></div>
-        {activeEvidence ? <><h3>三层验证证据</h3><div className="evidence-four evidence-three"><button type="button" onClick={()=>setEvidenceLayer('structure')}><small>结构驱动</small><strong>{activeEvidence.structure.signal}</strong><span>{activeEvidence.structure.metrics.length}项专属指标合同 · 历史积累中</span><em>查看指标与来源 →</em></button><button type="button" onClick={()=>setEvidenceLayer('enterprise')}><small>企业兑现</small><strong>收入{pct(activeEvidence.enterprise.revenueGrowthMedian)} · 利润{pct(activeEvidence.enterprise.profitGrowthMedian)}</strong><span>前十大成分股 · 覆盖{pct(activeEvidence.enterprise.coveragePercent)}</span><em>查看财报兑现 →</em></button><button type="button" onClick={()=>setEvidenceLayer('assets')}><small>资产承载</small><strong>{activeEvidence.assets.constituentCount}只 · {yi(activeEvidence.assets.floatMarketCapYi)}</strong><span>日成交{yi(activeEvidence.assets.dailyTurnoverYi)} · 前十{pct(activeEvidence.assets.top10SharePercent)}</span><em>查看容量与集中度 →</em><i style={{width:`${Math.min(100,activeEvidence.assets.top10SharePercent || 0)}%`}} /></button></div><p className="evidence-source">36/36母池数据合同 · 企业兑现 {evidence.enterpriseDataCount || 0}/36 · 资产承载 {evidence.assetDataCount || 0}/36 · 快照 {evidence.updateTime}</p></> : null}
-        <h3>产品空位判断</h3><div className="decision-metrics"><MetricButton label="同类基金" value={`${active.market.count}只`} onClick={()=>setDrawer('all')} /><MetricButton label="近12个月新发" value={`${active.market.launched12.length}只 · ${active.market.supplyState}`} onClick={()=>setDrawer('12m')} /><MetricButton label="近90天新发" value={`${active.market.launched90.length}只`} onClick={()=>setDrawer('90d')} /><MetricButton label={`基准规模（${active.market.baselineScaleDate}）`} value={yi(active.market.baselineTotal)} onClick={()=>setDrawer('scale')} /><MetricButton label={`最新可得规模（截至${active.market.currentScaleDate}）`} value={yi(active.market.total)} onClick={()=>setDrawer('scale')} /><MetricButton label="规模增加额" value={`${signedYi(active.market.scaleIncrease)} · ${active.market.scaleState}`} onClick={()=>setDrawer('scale')} /><MetricButton label="头部产品占比" value={pct(active.market.topShare)} onClick={()=>setDrawer('top1')} /><MetricButton label="前三产品占比" value={pct(active.market.top3Share)} onClick={()=>setDrawer('top3')} /><MetricButton label="市场结论" value={active.market.state} onClick={()=>setDrawer('state')} /></div><div className="scale-definitions"><p><strong>基准规模 · {active.market.baselineScaleDate}</strong>可比产品在基准日的披露规模合计；缺少基准数据的产品不计入。</p><p><strong>最新可得规模 · 截至{active.market.currentScaleDate}</strong>同类产品各自最近有效规模的合计，包含基准日后新成立的产品；ETF可按交易数据估算，非ETF以最新公开披露为准，因此不等同盘中实时规模。</p><p><strong>规模增加额</strong>仅对同时拥有基准与当前规模的产品计算“当前－基准”并汇总；当前可比样本 {active.market.comparableCount}/{active.market.count}只，避免把新基金全部规模误算成增长。</p></div><p className="metric-note">滚动新发以快照日为基准。名称关键词：{active.keywords.join(' / ')}。</p>
-      </section>}
-    </section>
-    {drawer && active && <><button className="peer-backdrop" aria-label="关闭指标依据" onClick={()=>setDrawer('')} /><aside className="peer-drawer" aria-label="产品空位指标依据"><header><div><small>{active.name}</small><h2>{{all:'全部同类基金', '12m':'近12个月新发', '90d':'近90天新发', scale:'规模变化明细', top1:'头部产品占比', top3:'前三产品占比', state:'市场结论依据'}[drawer]}</h2><p>数据快照 {payload.updateTime}</p></div><div className="peer-head-actions">{drawer!=='state'?<select aria-label="同类基金排序" value={peerSort} onChange={(event)=>setPeerSort(event.target.value)}><option value="current">当前规模 ↓</option><option value="growth">规模增幅 ↓</option></select>:null}<button type="button" onClick={()=>setDrawer('')}>关闭</button></div></header>{drawer==='state'?<div className="state-explain"><strong>{active.market.state}</strong><div className="conclusion-axis"><div><small>新增供给</small><b>{active.market.supplyState}</b><p>近12个月 {active.market.launched12.length}只，近90天 {active.market.launched90.length}只。</p></div><div><small>规模变化</small><b>{active.market.scaleState}</b><p>可比规模 {signedYi(active.market.scaleIncrease)}，变化率 {pct(active.market.scaleGrowth)}。</p></div></div><ul><li>产品少于8只，判断为“产品缺失”。</li><li>产品超过35只且新增拥挤，判断为“供给过剩”。</li><li>新增稀少但可比规模扩张，判断为“存在空位”。</li><li>其余情况为“继续观察”。</li></ul></div>:<div className="peer-table peer-table--scale"><div><span>基金产品</span><span>代码</span><span>基准规模</span><span>当前规模</span><span>增加额</span><span>规模增幅</span></div>{drawerFunds.map((fund)=><div key={fund.productId}><strong>{fund.productName}</strong><span>{fund.representativeCode}</span><span>{yi(num(fund.baselineScaleYi))}</span><span>{yi(num(fund.currentScaleYi))}</span><span className={(num(fund.scaleNetIncreaseYi)||0)>=0?'positive':'negative'}>{signedYi(num(fund.scaleNetIncreaseYi))}</span><span className={(fundGrowth(fund)||0)>=0?'positive':'negative'}>{Number.isFinite(fundGrowth(fund))?`${fundGrowth(fund)>=0?'+':''}${fundGrowth(fund).toFixed(1)}%`:'—'}</span></div>)}</div>}</aside></>}
-    {evidenceLayer && activeEvidence ? <EvidenceDrawer layer={evidenceLayer} item={activeEvidence} updateTime={evidence.updateTime} onClose={()=>setEvidenceLayer('')} /> : null}
-  </main>
+  return (
+    <main className="workspace-main research-pool decision-mode">
+      <header className="decision-hero">
+        <h1>季度预研产品池</h1>
+      </header>
+      <ResearchHorizonBrief
+        snapshot={attention}
+        onFocus={(id) => {
+          setBriefFocus(id);
+          setSelected(id);
+          requestAnimationFrame(() =>
+            document
+              .querySelector(".decision-detail")
+              ?.scrollIntoView({ behavior: "smooth", block: "start" }),
+          );
+        }}
+      />
+      <AttentionHeatmap
+        focusId={briefFocus}
+        onSelectCore={(id) => {
+          setSelected(id);
+          document
+            .querySelector(".decision-layout")
+            ?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }}
+      />
+      <section className="decision-layout">
+        <div className="decision-ranking">
+          <div className="decision-ranking__head">
+            <span>季度序位 / 产品方向</span>
+            <span>近12月新发</span>
+            <span>较2025年末净增加</span>
+            <span>产品结论</span>
+          </div>
+          {ranked.map((item, index) => (
+            <button
+              type="button"
+              className={active?.id === item.id ? "active" : ""}
+              onClick={() => setSelected(item.id)}
+              key={item.id}
+            >
+              <i>{String(index + 1).padStart(2, "0")}</i>
+              <span>
+                <strong>{item.name}</strong>
+                <small>{item.definition}</small>
+              </span>
+              <em>{item.market.launched12.length}只</em>
+              <ChangeBar value={item.market.scaleIncrease} />
+              <b className={`market-${item.market.state}`}>
+                {item.market.state}
+              </b>
+            </button>
+          ))}
+        </div>
+        {active && (
+          <section className="decision-detail">
+            <div className="decision-detail__title">
+              <div>
+                <small>当前研究对象</small>
+                <h2>{active.name}</h2>
+              </div>
+              <span>季度序位 {ranked.indexOf(active) + 1}</span>
+            </div>
+            {activeEvidence ? (
+              <>
+                <h3>产品方向可行性</h3>
+                <div className="evidence-four evidence-three">
+                  <button
+                    type="button"
+                    onClick={() => setEvidenceLayer("structure")}
+                  >
+                    <small>产业需求是否成立</small>
+                    <strong>{activeEvidence.structure.signal}</strong>
+                    <span>
+                      {activeEvidence.structure.history?.length >= 4
+                        ? `${activeEvidence.structure.metric} · ${activeEvidence.structure.history.length}期真实数据`
+                        : activeEvidence.structure.accessStatus ||
+                          (PUBLIC_STRUCTURE_PENDING.has(active.id)
+                            ? "公开数据可接入，尚未自动化"
+                            : "无稳定统一免费序列")}
+                    </span>
+                    <em>
+                      {activeEvidence.structure.history?.length >= 4
+                        ? "查看产业趋势 →"
+                        : "查看关键动态 →"}
+                    </em>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setEvidenceLayer("enterprise")}
+                  >
+                    <small>龙头企业是否兑现</small>
+                    <strong>
+                      收入{pct(activeEvidence.enterprise.revenueGrowthMedian)} ·
+                      利润{pct(activeEvidence.enterprise.profitGrowthMedian)}
+                    </strong>
+                    <span>
+                      前十大公司财报 ·{" "}
+                      {activeEvidence.enterprise.history?.length || 0}个报告期
+                    </span>
+                    <em>查看财报结论 →</em>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setEvidenceLayer("assets")}
+                  >
+                    <small>资产池能否支撑产品</small>
+                    <strong>
+                      {activeEvidence.assets.constituentCount}只 ·{" "}
+                      {yi(activeEvidence.assets.floatMarketCapYi)}
+                    </strong>
+                    <span>
+                      日成交{yi(activeEvidence.assets.dailyTurnoverYi)} · 前十
+                      {pct(activeEvidence.assets.top10SharePercent)}
+                    </span>
+                    <em>查看容量和公司名单 →</em>
+                    <i
+                      style={{
+                        width: `${Math.min(100, activeEvidence.assets.top10SharePercent || 0)}%`,
+                      }}
+                    />
+                  </button>
+                </div>
+                <p className="evidence-source">
+                  真实产业趋势 {evidence.structureDataCount || 0}/36 ·
+                  企业财报历史 {evidence.enterpriseDataCount || 0}/36 ·
+                  当前资产池 {evidence.assetDataCount || 0}/36 · 快照{" "}
+                  {evidence.updateTime}
+                </p>
+              </>
+            ) : null}
+            <h3>产品空位判断</h3>
+            <div className="decision-metrics">
+              <MetricButton
+                label="同类基金"
+                value={`${active.market.count}只`}
+                onClick={() => setDrawer("all")}
+              />
+              <MetricButton
+                label="近12个月新发"
+                value={`${active.market.launched12.length}只 · ${active.market.supplyState}`}
+                onClick={() => setDrawer("12m")}
+              />
+              <MetricButton
+                label="近90天新发"
+                value={`${active.market.launched90.length}只`}
+                onClick={() => setDrawer("90d")}
+              />
+              <MetricButton
+                label={`基准规模（${active.market.baselineScaleDate}）`}
+                value={yi(active.market.baselineTotal)}
+                onClick={() => setDrawer("scale")}
+              />
+              <MetricButton
+                label={`最新可得规模（截至${active.market.currentScaleDate}）`}
+                value={yi(active.market.total)}
+                onClick={() => setDrawer("scale")}
+              />
+              <MetricButton
+                label={`较${active.market.baselineScaleDate}规模净增加`}
+                value={`${signedYi(active.market.scaleIncrease)} · ${active.market.scaleState}`}
+                onClick={() => setDrawer("scale")}
+              />
+              <MetricButton
+                label="头部产品占比"
+                value={pct(active.market.topShare)}
+                onClick={() => setDrawer("top1")}
+              />
+              <MetricButton
+                label="前三产品占比"
+                value={pct(active.market.top3Share)}
+                onClick={() => setDrawer("top3")}
+              />
+              <MetricButton
+                label="市场结论"
+                value={active.market.state}
+                onClick={() => setDrawer("state")}
+              />
+            </div>
+            <div className="scale-definitions">
+              <p>
+                <strong>基准规模 · {active.market.baselineScaleDate}</strong>
+                可比产品在基准日的披露规模合计；缺少基准数据的产品不计入。
+              </p>
+              <p>
+                <strong>
+                  最新可得规模 · 截至{active.market.currentScaleDate}
+                </strong>
+                同类产品各自最近有效规模的合计，包含基准日后新成立的产品；ETF可按交易数据估算，非ETF以最新公开披露为准，因此不等同盘中实时规模。
+              </p>
+              <p>
+                <strong>
+                  规模净增加 · 较{active.market.baselineScaleDate}
+                </strong>
+                仅对同时拥有基准与当前规模的产品计算“当前－基准”并汇总；当前可比样本{" "}
+                {active.market.comparableCount}/{active.market.count}
+                只，避免把新基金全部规模误算成增长。
+              </p>
+            </div>
+            <p className="metric-note">
+              滚动新发以快照日为基准。名称关键词：{active.keywords.join(" / ")}
+              。
+            </p>
+          </section>
+        )}
+      </section>
+      {drawer && active && (
+        <>
+          <button
+            className="peer-backdrop"
+            aria-label="关闭指标依据"
+            onClick={() => setDrawer("")}
+          />
+          <aside className="peer-drawer" aria-label="产品空位指标依据">
+            <header>
+              <div>
+                <small>{active.name}</small>
+                <h2>
+                  {
+                    {
+                      all: "全部同类基金",
+                      "12m": "近12个月新发",
+                      "90d": "近90天新发",
+                      scale: "规模变化明细",
+                      top1: "头部产品占比",
+                      top3: "前三产品占比",
+                      state: "市场结论依据",
+                    }[drawer]
+                  }
+                </h2>
+                <p>数据快照 {payload.updateTime}</p>
+              </div>
+              <div className="peer-head-actions">
+                {drawer !== "state" ? (
+                  <select
+                    aria-label="同类基金排序"
+                    value={peerSort}
+                    onChange={(event) => setPeerSort(event.target.value)}
+                  >
+                    <option value="current">当前规模 ↓</option>
+                    <option value="growth">规模增幅 ↓</option>
+                  </select>
+                ) : null}
+                <button type="button" onClick={() => setDrawer("")}>
+                  关闭
+                </button>
+              </div>
+            </header>
+            {drawer === "state" ? (
+              <div className="state-explain">
+                <strong>{active.market.state}</strong>
+                <div className="conclusion-axis">
+                  <div>
+                    <small>新增供给</small>
+                    <b>{active.market.supplyState}</b>
+                    <p>
+                      近12个月 {active.market.launched12.length}只，近90天{" "}
+                      {active.market.launched90.length}只。
+                    </p>
+                  </div>
+                  <div>
+                    <small>规模变化</small>
+                    <b>{active.market.scaleState}</b>
+                    <p>
+                      可比规模 {signedYi(active.market.scaleIncrease)}，变化率{" "}
+                      {pct(active.market.scaleGrowth)}。
+                    </p>
+                  </div>
+                </div>
+                <ul>
+                  <li>产品少于8只，判断为“产品缺失”。</li>
+                  <li>产品超过35只且新增拥挤，判断为“供给过剩”。</li>
+                  <li>新增稀少但可比规模扩张，判断为“存在空位”。</li>
+                  <li>其余情况为“继续观察”。</li>
+                </ul>
+              </div>
+            ) : (
+              <div className="peer-table peer-table--scale">
+                <div>
+                  <span>基金产品</span>
+                  <span>代码</span>
+                  <span>基准规模</span>
+                  <span>当前规模</span>
+                  <span>增加额</span>
+                  <span>规模增幅</span>
+                </div>
+                {drawerFunds.map((fund) => (
+                  <div key={fund.productId}>
+                    <strong>{fund.productName}</strong>
+                    <span>{fund.representativeCode}</span>
+                    <span>{yi(num(fund.baselineScaleYi))}</span>
+                    <span>{yi(num(fund.currentScaleYi))}</span>
+                    <span
+                      className={
+                        (num(fund.scaleNetIncreaseYi) || 0) >= 0
+                          ? "positive"
+                          : "negative"
+                      }
+                    >
+                      {signedYi(num(fund.scaleNetIncreaseYi))}
+                    </span>
+                    <span
+                      className={
+                        (fundGrowth(fund) || 0) >= 0 ? "positive" : "negative"
+                      }
+                    >
+                      {Number.isFinite(fundGrowth(fund))
+                        ? `${fundGrowth(fund) >= 0 ? "+" : ""}${fundGrowth(fund).toFixed(1)}%`
+                        : "—"}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </aside>
+        </>
+      )}
+      {evidenceLayer && activeEvidence ? (
+        <EvidenceDrawer
+          layer={evidenceLayer}
+          item={activeEvidence}
+          updateTime={evidence.updateTime}
+          onClose={() => setEvidenceLayer("")}
+        />
+      ) : null}
+    </main>
+  );
 }
