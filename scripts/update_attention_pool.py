@@ -1,7 +1,8 @@
 """Build the public-data snapshot for the social-attention foresight map.
 
 The two axes intentionally use observable proxies:
-- social attention: Eastmoney public-news search, recent publication density;
+- social attention: Baidu Hot Search and Toutiao Hot Board, cross-checked with
+  GDELT's media-agenda timeline;
 - product-market validation: comparable fund scale growth and new launches.
 
 Neither proxy is labelled as enterprise revenue or a customer survey.  Themes
@@ -11,6 +12,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import re
 import time
 from datetime import date, datetime, timedelta
@@ -21,6 +23,7 @@ import requests
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "public" / "attention_pool_evidence.json"
+ATTENTION_HISTORY = ROOT / "public" / "social_attention_history.json"
 PRE_EVIDENCE = ROOT / "public" / "pre_research_evidence.json"
 FUND_PRODUCTS = ROOT / "public" / "fund_products.json"
 
@@ -99,6 +102,45 @@ FUND_KEYWORDS = {
 
 HEADERS = {"User-Agent": "Mozilla/5.0", "Referer": "https://quote.eastmoney.com/"}
 
+THEME_TERMS = {
+    "ai-agent": ["人工智能", "AI智能体", "大模型", "推理算力", "算力"],
+    "embodied-ai": ["具身智能", "人形机器人", "机器人劳动力", "宇树机器人"],
+    "space": ["商业航天", "卫星互联网", "低轨卫星", "火箭发射"],
+    "power": ["智能电网", "新型电力系统", "算力能源", "电网建设"],
+    "hard-tech": ["半导体设备", "国产芯片", "工业母机", "自主可控"],
+    "biotech": ["创新药", "新药", "癌症疫苗", "医药出海"],
+    "longevity": ["银发经济", "养老产业", "养老服务", "康养"],
+    "experience": ["文旅消费", "情绪消费", "体验消费", "IP消费"],
+    "resources": ["战略资源", "稀土", "关键矿产", "先进材料"],
+    "future-tech": ["量子科技", "脑机接口", "6G", "未来产业"],
+    "industrial-software": ["工业软件", "工业互联网", "智能工厂", "自主生产"],
+    "ai-application": ["AI应用", "人工智能应用", "AI办公", "数字生产力"],
+    "cybersecurity": ["网络安全", "数据安全", "信息安全", "AI安全"],
+    "smart-healthcare": ["AI医疗", "医疗大模型", "人工智能诊断", "智慧医疗"],
+    "synthetic-biology": ["合成生物", "生物制造", "细胞工厂"],
+    "nuclear-energy": ["核聚变", "核能", "核电", "可控核聚变"],
+    "water-security": ["水资源", "水利建设", "节水", "水安全"],
+    "low-altitude": ["低空经济", "飞行汽车", "城市空中交通", "无人机"],
+    "autonomous-driving": ["自动驾驶", "智能驾驶", "无人驾驶", "车联网"],
+    "obesity-care": ["减肥药", "体重管理", "代谢健康", "GLP-1"],
+    "climate-adaptation": ["气候适应", "韧性城市", "极端天气", "地下管网"],
+    "digital-health": ["数字健康", "居家诊疗", "互联网医疗", "远程医疗"],
+    "mental-health": ["精神健康", "心理健康", "情绪服务", "心理咨询"],
+    "pet-economy": ["宠物经济", "宠物健康", "宠物消费", "陪伴经济"],
+    "sports-outdoor": ["户外运动", "运动健康", "体育消费", "户外生活"],
+    "inbound-consumption": ["入境消费", "入境游", "中国旅行", "免签"],
+    "new-food": ["功能营养", "新食品", "保健食品", "功能食品"],
+    "recycling": ["循环经济", "再制造", "再生资源", "废旧回收"],
+    "grid-storage": ["长时储能", "新型储能", "电网调节", "储能电站"],
+    "defense-tech": ["无人系统", "智能国防", "无人装备", "军用无人机"],
+    "agri-tech": ["农业科技", "粮食安全", "种业", "智慧农业"],
+    "wealth-longevity": ["养老金融", "个人养老金", "养老保险", "长寿金融"],
+    "human-upskilling": ["职业再训练", "职业教育", "技能培训", "AI就业"],
+    "creator-economy": ["AI内容", "AI创作", "创作者经济", "短剧"],
+    "ocean-economy": ["深海科技", "海洋经济", "海洋资源", "深海装备"],
+    "service-robot": ["服务机器人", "家庭机器人", "家务机器人", "陪伴机器人"],
+}
+
 
 def clamp(value: float, low: float = 0, high: float = 100) -> float:
     return max(low, min(high, value))
@@ -110,55 +152,169 @@ def get_json(url: str, params: dict, timeout: int = 40) -> dict:
     return response.json()
 
 
-def eastmoney_attention(query: str) -> dict:
-    callback = "jQuery_attention"
-    articles = []
-    hits_total = None
-    for page in range(1, 6):
-        body = {
-            "uid": "", "keyword": query, "type": ["cmsArticleWebOld"],
-            "client": "web", "clientType": "web", "clientVersion": "curr",
-            "param": {"cmsArticleWebOld": {"searchScope": "default", "sort": "default",
-                      "pageIndex": page, "pageSize": 100, "preTag": "", "postTag": ""}},
-        }
-        response = requests.get(
-            "https://search-api-web.eastmoney.com/search/jsonp",
-            params={"cb": callback, "param": json.dumps(body, ensure_ascii=False, separators=(",", ":"))},
-            headers={**HEADERS, "Referer": "https://so.eastmoney.com/"}, timeout=40,
-        )
-        response.raise_for_status()
-        match = re.search(r"^[^(]+\((.*)\)\s*$", response.text, re.S)
-        if not match:
-            raise ValueError("Eastmoney news response was not valid JSONP")
-        payload = json.loads(match.group(1))
-        hits_total = payload.get("hitsTotal", hits_total)
-        page_articles = payload.get("result", {}).get("cmsArticleWebOld") or []
-        articles.extend(page_articles)
-        if len(page_articles) < 100:
-            break
-        time.sleep(0.15)
-    today = date.today()
-    parsed = []
-    for article in articles:
+def parse_baidu_hotlist_html(html: str) -> list[dict]:
+    match = re.search(r"<!--s-data:(.*?)-->", html, re.S)
+    if not match:
+        raise ValueError("Baidu hot-list state was not found")
+    state = json.loads(match.group(1))
+    cards = state.get("data", {}).get("cards") or []
+    card = next((item for item in cards if item.get("component") == "hotList"), None)
+    if not card:
+        raise ValueError("Baidu hot-list card was not found")
+    entries = card.get("content") or []
+    return [{
+        "title": item.get("word") or item.get("query") or "",
+        "description": item.get("desc") or "", "rank": rank,
+        "heat": float(item.get("hotScore") or 0),
+    } for rank, item in enumerate(entries, 1) if item.get("word") or item.get("query")]
+
+
+def fetch_baidu_hotlist() -> list[dict]:
+    response = requests.get(
+        "https://top.baidu.com/board", params={"tab": "realtime"},
+        headers={**HEADERS, "Referer": "https://top.baidu.com/"}, timeout=40,
+    )
+    response.raise_for_status()
+    return parse_baidu_hotlist_html(response.text)
+
+
+def parse_toutiao_hotlist(payload: dict) -> list[dict]:
+    entries = payload.get("data") or []
+    return [{
+        "title": item.get("Title") or "", "description": item.get("LabelDesc") or "",
+        "rank": rank, "heat": float(item.get("HotValue") or 0),
+    } for rank, item in enumerate(entries, 1) if item.get("Title")]
+
+
+def fetch_toutiao_hotlist() -> list[dict]:
+    response = requests.get(
+        "https://www.toutiao.com/hot-event/hot-board/", params={"origin": "toutiao_pc"},
+        headers={**HEADERS, "Referer": "https://www.toutiao.com/"}, timeout=40,
+    )
+    response.raise_for_status()
+    return parse_toutiao_hotlist(response.json())
+
+
+def load_attention_history() -> dict:
+    if not ATTENTION_HISTORY.exists():
+        return {"schemaVersion": 1, "snapshots": []}
+    try:
+        payload = json.loads(ATTENTION_HISTORY.read_text(encoding="utf-8"))
+        return payload if isinstance(payload.get("snapshots"), list) else {"schemaVersion": 1, "snapshots": []}
+    except (ValueError, OSError):
+        return {"schemaVersion": 1, "snapshots": []}
+
+
+def collect_hotlist_snapshot() -> tuple[dict, list[str]]:
+    sources, errors = {}, []
+    for source, fetcher in (("baidu", fetch_baidu_hotlist), ("toutiao", fetch_toutiao_hotlist)):
         try:
-            parsed.append(datetime.strptime(article.get("date", "")[:10], "%Y-%m-%d").date())
-        except ValueError:
-            continue
-    recent = sum(day >= today - timedelta(days=30) for day in parsed)
-    prior = sum(today - timedelta(days=60) <= day < today - timedelta(days=30) for day in parsed)
-    acceleration = (recent / max(prior, 1) - 1) * 100
-    score = clamp(20 + math.log1p(recent) * 13 + clamp(acceleration, -50, 100) * 0.15)
+            entries = fetcher()
+            if len(entries) < 20:
+                raise ValueError(f"only {len(entries)} hot-list entries")
+            sources[source] = entries
+        except Exception as exc:
+            errors.append(f"{source}: {type(exc).__name__}")
+    return {"capturedAt": datetime.now().astimezone().isoformat(), "sources": sources}, errors
+
+
+def update_attention_history(snapshot: dict) -> dict:
+    history = load_attention_history()
+    # The main workflow may retry on the same day. Retain each materially distinct
+    # observation, but do not duplicate the same source payload within one hour.
+    bucket = snapshot["capturedAt"][:13]
+    snapshots = [item for item in history["snapshots"] if item.get("capturedAt", "")[:13] != bucket]
+    if snapshot.get("sources"):
+        snapshots.append(snapshot)
+    cutoff = datetime.now().astimezone() - timedelta(days=35)
+    snapshots = [item for item in snapshots if datetime.fromisoformat(item["capturedAt"]) >= cutoff]
+    history = {"schemaVersion": 1, "generatedAt": snapshot["capturedAt"], "snapshots": snapshots}
+    ATTENTION_HISTORY.write_text(json.dumps(history, ensure_ascii=False, indent=2), encoding="utf-8")
+    return history
+
+
+def matched_theme(entry: dict, theme_id: str) -> bool:
+    text = f"{entry.get('title', '')} {entry.get('description', '')}".lower()
+    return any(term.lower() in text for term in THEME_TERMS[theme_id])
+
+
+def gdelt_media_agenda(theme_id: str) -> dict | None:
+    if os.getenv("GDELT_ENABLED", "1") == "0":
+        return None
+    terms = THEME_TERMS[theme_id][:3]
+    query = "(" + " OR ".join(f'\"{term}\"' for term in terms) + ") sourcelang:Chinese"
+    payload = get_json(
+        "https://api.gdeltproject.org/api/v2/doc/doc",
+        {"query": query, "mode": "timelinevol", "format": "json", "timespan": "3months"},
+        timeout=60,
+    )
+    timelines = payload.get("timeline") or []
+    points = timelines[0].get("data", []) if timelines else []
+    values = [float(item.get("value") or 0) for item in points]
+    if not values:
+        raise ValueError("GDELT returned no timeline values")
+    split = max(1, len(values) // 3)
+    recent, prior = fmean(values[-split:]), fmean(values[-2 * split:-split] or [0])
+    acceleration = (recent / max(prior, 0.000001) - 1) * 100
     return {
-        "score": round(score, 1),
-        "recent30Articles": recent,
-        "prior30Articles": prior,
-        "accelerationPercent": round(acceleration, 1),
-        "sampledArticles": len(parsed),
-        "hitsTotal": hits_total,
-        "source": "东方财富公开新闻搜索",
-        "sourceUrl": "https://search-api-web.eastmoney.com/search/jsonp",
+        "recent30Share": round(recent, 6), "prior30Share": round(prior, 6),
+        "accelerationPercent": round(acceleration, 1), "samplePoints": len(values),
+        "source": "GDELT DOC 2.0中文媒体报道占比",
+        "sourceUrl": "https://api.gdeltproject.org/api/v2/doc/doc",
+    }
+
+
+def social_attention(theme_id: str, history: dict, media_agenda: dict | None = None) -> dict:
+    now = datetime.now().astimezone()
+    recent_cutoff, prior_cutoff = now - timedelta(days=7), now - timedelta(days=14)
+    recent = [item for item in history["snapshots"] if datetime.fromisoformat(item["capturedAt"]) >= recent_cutoff]
+    prior = [item for item in history["snapshots"] if prior_cutoff <= datetime.fromisoformat(item["capturedAt"]) < recent_cutoff]
+
+    def summarize(snapshots: list[dict]) -> dict:
+        appearances = resonance = weighted = 0.0
+        days, source_hits, best_rank = set(), set(), None
+        for snapshot in snapshots:
+            matched_sources = 0
+            for source, entries in snapshot.get("sources", {}).items():
+                matches = [entry for entry in entries if matched_theme(entry, theme_id)]
+                if not matches:
+                    continue
+                matched_sources += 1
+                source_hits.add(source)
+                rank = min(entry["rank"] for entry in matches)
+                best_rank = rank if best_rank is None else min(best_rank, rank)
+                appearances += 1
+                weighted += max(0, 51 - rank) / 50
+            if matched_sources:
+                days.add(snapshot["capturedAt"][:10])
+            if matched_sources >= 2:
+                resonance += 1
+        return {"appearances": int(appearances), "resonance": int(resonance), "weighted": weighted,
+                "days": len(days), "sourceCount": len(source_hits), "bestRank": best_rank}
+
+    current, before = summarize(recent), summarize(prior)
+    acceleration = (current["weighted"] / max(before["weighted"], 0.25) - 1) * 100 if current["weighted"] else -100
+    persistence = min(1, current["days"] / max(3, min(7, len({item["capturedAt"][:10] for item in recent}))))
+    resonance = min(1, current["resonance"] / max(1, len(recent)))
+    rank_strength = max(0, 51 - (current["bestRank"] or 51)) / 50
+    acceleration_factor = (clamp(acceleration, -100, 200) + 100) / 300
+    agenda_factor = 0.5
+    if media_agenda:
+        agenda_factor = (clamp(media_agenda["accelerationPercent"], -100, 200) + 100) / 300
+    score = 30 * resonance + 25 * persistence + 15 * rank_strength + 20 * acceleration_factor + 10 * agenda_factor
+    observed_days = len({item["capturedAt"][:10] for item in history["snapshots"]})
+    status = "社会共振" if current["resonance"] >= 2 else "开始扩散" if current["appearances"] else "未破圈"
+    return {
+        "score": round(clamp(score), 1), "statusLabel": status,
+        "recent7Appearances": current["appearances"], "prior7Appearances": before["appearances"],
+        "crossPlatformHits7d": current["resonance"], "activeDays7d": current["days"],
+        "bestRank7d": current["bestRank"], "accelerationPercent": round(acceleration, 1),
+        "observedDays": observed_days, "mediaAgenda": media_agenda,
+        "source": "百度热搜 × 头条热榜" + (" × GDELT" if media_agenda else ""),
+        "sourceUrl": "https://top.baidu.com/board?tab=realtime",
         "status": "真实公开代理",
-        "note": "统计最近最多500条公开新闻搜索结果的近期文章密度；衡量媒体注意力，不等同居民搜索、客户调研或申购意愿。",
+        "scoreMethod": "双平台共振30%＋持续性25%＋排名强度15%＋加速度20%＋GDELT媒体议程10%",
+        "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。",
     }
 
 
@@ -262,29 +418,45 @@ def asset_capacity() -> dict[str, dict]:
     return result
 
 
-def load_previous() -> dict:
+def load_previous_payload() -> dict:
     if not OUT.exists():
         return {}
     try:
-        return {item["id"]: item for item in json.loads(OUT.read_text(encoding="utf-8")).get("items", [])}
+        return json.loads(OUT.read_text(encoding="utf-8"))
     except (ValueError, OSError):
         return {}
 
 
+def load_previous() -> dict:
+    try:
+        return {item["id"]: item for item in load_previous_payload().get("items", [])}
+    except (KeyError, TypeError):
+        return {}
+
+
 def main() -> None:
+    previous_payload = load_previous_payload()
     previous = load_previous()
+    hotlist_snapshot, collection_errors = collect_hotlist_snapshot()
+    history = update_attention_history(hotlist_snapshot)
     capacities = asset_capacity()
     items = []
+    gdelt_enabled = os.getenv("GDELT_ENABLED", "1") != "0"
     for index, (theme_id, query, board) in enumerate(THEMES):
         old = previous.get(theme_id, {})
-        errors = []
-        try:
-            attention = eastmoney_attention(query)
-        except Exception as exc:  # keep the last usable snapshot on transient failures
-            attention = old.get("attention")
-            errors.append(f"attention: {type(exc).__name__}")
+        errors = list(collection_errors)
+        media_agenda = None
+        if gdelt_enabled:
+            try:
+                media_agenda = gdelt_media_agenda(theme_id)
+            except Exception as exc:
+                media_agenda = (old.get("attention") or {}).get("mediaAgenda")
+                errors.append(f"gdelt: {type(exc).__name__}")
+                if isinstance(exc, requests.HTTPError) and exc.response is not None and exc.response.status_code == 429:
+                    gdelt_enabled = False
+        attention = social_attention(theme_id, history, media_agenda)
         if index < len(THEMES) - 1:
-            time.sleep(0.8)
+            time.sleep(5.2 if gdelt_enabled else 0.1)
         try:
             validation = product_validation(theme_id)
         except Exception as exc:
@@ -297,36 +469,31 @@ def main() -> None:
             "attention": attention, "validation": validation, "capacity": capacity,
             "errors": errors,
         })
-    attention_values = sorted(
-        item["attention"]["recent30Articles"] for item in items if item["verified"]
-    )
-    if attention_values:
-        for item in items:
-            if not item["verified"]:
-                continue
-            value = item["attention"]["recent30Articles"]
-            lower = attention_values.index(value)
-            upper = len(attention_values) - 1 - attention_values[::-1].index(value)
-            percentile = ((lower + upper) / 2 + 1) / len(attention_values)
-            item["attention"]["score"] = round(25 + percentile * 65, 1)
-            item["attention"]["scoreMethod"] = "本期已验证方向的近30日媒体文章数横截面百分位"
     verified_count = sum(bool(item["verified"]) for item in items)
     ranked = sorted(
         (item for item in items if item["verified"]),
         key=lambda item: item["attention"]["score"] * 0.35 + item["validation"]["score"] * 0.45 + item["capacity"]["score"] * 0.20,
         reverse=True,
     )
-    recommended_ids = [item["id"] for item in ranked[:10]]
+    quarter = f"{date.today().year}-Q{(date.today().month - 1) // 3 + 1}"
+    previous_ids = previous_payload.get("recommendedIds") or []
+    previous_quarter = previous_payload.get("recommendationReviewQuarter")
+    force_review = os.getenv("FORCE_CORE_REVIEW", "0") == "1"
+    recommended_ids = previous_ids if len(previous_ids) == 10 and previous_quarter == quarter and not force_review else [item["id"] for item in ranked[:10]]
     output = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "generatedAt": datetime.now().astimezone().isoformat(),
-        "methodologyVersion": "attention-public-proxy-v2",
+        "methodologyVersion": "cn-hotlists-gdelt-v1",
         "universeCount": 36,
         "mappedCount": len(THEMES),
         "verifiedCount": verified_count,
         "recommendedIds": recommended_ids,
+        "recommendationReviewQuarter": quarter,
+        "recommendationPolicy": "核心10原则上按季度重排；重大政策、技术或企业证伪事件可通过FORCE_CORE_REVIEW触发临时复核。",
         "items": items,
-        "disclosure": "媒体注意力为公开代理，产品市场验证来自基金规模与新发数据；均不替代企业经营、客户调研或投资结论。",
+        "attentionObservationDays": max((item["attention"]["observedDays"] for item in items), default=0),
+        "attentionSources": ["百度热搜", "头条热榜", "GDELT DOC 2.0（早期媒体议程）"],
+        "disclosure": "社会注意力由百度热搜与头条热榜交叉验证，GDELT仅识别早期媒体议程；未上榜不等于没有关注。产品市场验证来自基金规模与新发数据。",
     }
     OUT.write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"wrote {OUT}: {verified_count}/{len(THEMES)} mapped themes verified")

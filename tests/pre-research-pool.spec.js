@@ -4,6 +4,8 @@ test('shows public-data evidence and drills into product supply', async ({ page 
   await page.goto('/')
   await page.getByRole('button', { name: '预研产品池', exact: true }).click()
   await expect(page.getByRole('heading', { name: '季度预研产品池' })).toBeVisible()
+  await expect(page.locator('.attention-proof').first()).toContainText('百度热搜 × 头条热榜')
+  await expect(page.locator('.attention-detail').getByText('社会注意力验证', { exact: true })).toBeVisible()
   const brief = page.getByRole('region', { name: '前瞻产品方向简报' })
   await expect(brief).toBeVisible()
   await expect(page.getByText('母池准入标准')).toHaveCount(0)
