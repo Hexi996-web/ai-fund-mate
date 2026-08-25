@@ -1,329 +1,2242 @@
 {
-  "updateTime": "2026-08-24 10:33:11",
-  "methodologyVersion": "v1-free-public-data",
+  "schemaVersion": 2,
+  "updateTime": "2026-08-25T11:43:41.795860+08:00",
+  "methodologyVersion": "three-layer-36-v1",
+  "universeCount": 36,
+  "coveredCount": 36,
+  "enterpriseDataCount": 36,
+  "assetDataCount": 36,
   "items": [
     {
       "id": "ai-agent",
       "structure": {
-        "signal": "人工智能+与智能体进入产业化阶段",
-        "source": "国家规划 / 东方财富公开板块",
-        "type": "结构证据"
+        "signal": "模型调用与软件商业化",
+        "metrics": [
+          "软件业务收入",
+          "云计算使用量",
+          "AI招投标数量"
+        ],
+        "source": "工信部／政府采购公开数据",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
       },
       "enterprise": {
-        "proxy": "板块市盈率",
-        "value": 46.5,
-        "status": "代理指标",
-        "note": "与本候选池代表板块横向比较；不是历史估值分位",
-        "peerMedian": 46.4,
-        "relativeToMedian": 0.2,
-        "rank": "6/12",
-        "level": "中位附近"
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 48.7,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 50.9,
+        "positiveRevenueShare": 90.0,
+        "profitGrowthMedian": 55.5,
+        "positiveProfitShare": 90.0,
+        "cashToRevenueMedian": 0.2,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 50.9,
+            "profitGrowthMedian": 55.5,
+            "positiveRevenueShare": 90.0,
+            "positiveProfitShare": 90.0,
+            "coveragePercent": 48.7
+          }
+        ]
       },
       "assets": {
         "boardCode": "BK0800",
         "boardName": "人工智能",
-        "totalMarketCapYi": 138190.3,
-        "floatMarketCapYi": 122466.4,
-        "floatRatio": 88.6,
-        "source": "东方财富公开板块行情",
-        "status": "真实数据"
+        "constituentCount": 100,
+        "liquidConstituentCount": 89,
+        "dailyTurnoverYi": 875.8,
+        "totalMarketCapYi": 95558.4,
+        "floatMarketCapYi": 84671.6,
+        "top10SharePercent": 50.3,
+        "hhi": 412.6,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 100,
+            "floatMarketCapYi": 84671.6,
+            "dailyTurnoverYi": 875.8,
+            "top10SharePercent": 50.3,
+            "hhi": 412.6
+          }
+        ]
       }
     },
     {
       "id": "embodied-ai",
       "structure": {
-        "signal": "机器人从自动化设备向通用劳动力演进",
-        "source": "国家规划 / 东方财富公开板块",
-        "type": "结构证据"
+        "signal": "机器人产量与真实部署",
+        "metrics": [
+          "工业机器人产量",
+          "机器人密度",
+          "批量订单"
+        ],
+        "source": "国家统计局／工信部",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
       },
       "enterprise": {
-        "proxy": "板块市盈率",
-        "value": 44.4,
-        "status": "代理指标",
-        "note": "与本候选池代表板块横向比较；不是历史估值分位",
-        "peerMedian": 46.4,
-        "relativeToMedian": -4.3,
-        "rank": "8/12",
-        "level": "中位附近"
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 39.3,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 22.2,
+        "positiveRevenueShare": 80.0,
+        "profitGrowthMedian": 33.0,
+        "positiveProfitShare": 70.0,
+        "cashToRevenueMedian": 0.1,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 22.2,
+            "profitGrowthMedian": 33.0,
+            "positiveRevenueShare": 80.0,
+            "positiveProfitShare": 70.0,
+            "coveragePercent": 39.3
+          }
+        ]
       },
       "assets": {
         "boardCode": "BK1184",
         "boardName": "人形机器人",
-        "totalMarketCapYi": 67095.7,
-        "floatMarketCapYi": 52423.9,
-        "floatRatio": 78.1,
-        "source": "东方财富公开板块行情",
-        "status": "真实数据"
+        "constituentCount": 100,
+        "liquidConstituentCount": 86,
+        "dailyTurnoverYi": 588.2,
+        "totalMarketCapYi": 54893.0,
+        "floatMarketCapYi": 41862.9,
+        "top10SharePercent": 44.7,
+        "hhi": 374.6,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 100,
+            "floatMarketCapYi": 41862.9,
+            "dailyTurnoverYi": 588.2,
+            "top10SharePercent": 44.7,
+            "hhi": 374.6
+          }
+        ]
       }
     },
     {
       "id": "space",
       "structure": {
-        "signal": "卫星组网与商业发射形成基础设施需求",
-        "source": "国家规划 / 东方财富公开板块",
-        "type": "结构证据"
+        "signal": "空间基础设施建设",
+        "metrics": [
+          "年度发射次数",
+          "在轨卫星数量",
+          "卫星应用收入"
+        ],
+        "source": "国家航天局／工信部",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
       },
       "enterprise": {
-        "proxy": "板块市盈率",
-        "value": 59.8,
-        "status": "代理指标",
-        "note": "与本候选池代表板块横向比较；不是历史估值分位",
-        "peerMedian": 46.4,
-        "relativeToMedian": 28.9,
-        "rank": "4/12",
-        "level": "相对偏高"
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 25.1,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 3.0,
+        "positiveRevenueShare": 70.0,
+        "profitGrowthMedian": -18.5,
+        "positiveProfitShare": 30.0,
+        "cashToRevenueMedian": 0.0,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 3.0,
+            "profitGrowthMedian": -18.5,
+            "positiveRevenueShare": 70.0,
+            "positiveProfitShare": 30.0,
+            "coveragePercent": 25.1
+          }
+        ]
       },
       "assets": {
         "boardCode": "BK0963",
         "boardName": "商业航天",
-        "totalMarketCapYi": 57571.1,
-        "floatMarketCapYi": 50151.0,
-        "floatRatio": 87.1,
-        "source": "东方财富公开板块行情",
-        "status": "真实数据"
+        "constituentCount": 100,
+        "liquidConstituentCount": 84,
+        "dailyTurnoverYi": 570.5,
+        "totalMarketCapYi": 43263.2,
+        "floatMarketCapYi": 37482.4,
+        "top10SharePercent": 28.2,
+        "hhi": 170.7,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 100,
+            "floatMarketCapYi": 37482.4,
+            "dailyTurnoverYi": 570.5,
+            "top10SharePercent": 28.2,
+            "hhi": 170.7
+          }
+        ]
       }
     },
     {
       "id": "power",
       "structure": {
-        "signal": "新能源与算力共同提高电网投资需求",
-        "source": "国家能源局 / 东方财富公开板块",
-        "type": "结构证据"
+        "signal": "电网投资与负荷增长",
+        "metrics": [
+          "电网投资完成额",
+          "全社会用电量",
+          "跨区输电能力"
+        ],
+        "source": "国家能源局／国家统计局",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
       },
       "enterprise": {
-        "proxy": "板块市盈率",
-        "value": 38.5,
-        "status": "代理指标",
-        "note": "与本候选池代表板块横向比较；不是历史估值分位",
-        "peerMedian": 46.4,
-        "relativeToMedian": -17.0,
-        "rank": "9/12",
-        "level": "中位附近"
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 39.9,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 22.0,
+        "positiveRevenueShare": 100.0,
+        "profitGrowthMedian": 18.6,
+        "positiveProfitShare": 80.0,
+        "cashToRevenueMedian": -0.0,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 22.0,
+            "profitGrowthMedian": 18.6,
+            "positiveRevenueShare": 100.0,
+            "positiveProfitShare": 80.0,
+            "coveragePercent": 39.9
+          }
+        ]
       },
       "assets": {
         "boardCode": "BK1647",
         "boardName": "电网概念",
-        "totalMarketCapYi": 29778.0,
-        "floatMarketCapYi": 26725.9,
-        "floatRatio": 89.8,
-        "source": "东方财富公开板块行情",
-        "status": "真实数据"
+        "constituentCount": 100,
+        "liquidConstituentCount": 62,
+        "dailyTurnoverYi": 481.8,
+        "totalMarketCapYi": 24941.7,
+        "floatMarketCapYi": 22493.7,
+        "top10SharePercent": 41.8,
+        "hhi": 263.9,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 100,
+            "floatMarketCapYi": 22493.7,
+            "dailyTurnoverYi": 481.8,
+            "top10SharePercent": 41.8,
+            "hhi": 263.9
+          }
+        ]
       }
     },
     {
       "id": "hard-tech",
       "structure": {
-        "signal": "关键生产工具与核心器件国产替代",
-        "source": "国家规划 / 东方财富公开板块",
-        "type": "结构证据"
+        "signal": "关键设备国产化",
+        "metrics": [
+          "集成电路产量",
+          "半导体设备收入",
+          "设备进口依赖度"
+        ],
+        "source": "国家统计局／海关总署",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
       },
       "enterprise": {
-        "proxy": "板块市盈率",
-        "value": 101.6,
-        "status": "代理指标",
-        "note": "与本候选池代表板块横向比较；不是历史估值分位",
-        "peerMedian": 46.4,
-        "relativeToMedian": 119.0,
-        "rank": "2/12",
-        "level": "相对偏高"
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 33.6,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 50.7,
+        "positiveRevenueShare": 90.0,
+        "profitGrowthMedian": 90.1,
+        "positiveProfitShare": 90.0,
+        "cashToRevenueMedian": 0.1,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 50.7,
+            "profitGrowthMedian": 90.1,
+            "positiveRevenueShare": 90.0,
+            "positiveProfitShare": 90.0,
+            "coveragePercent": 33.6
+          }
+        ]
       },
       "assets": {
         "boardCode": "BK0917",
         "boardName": "半导体概念",
-        "totalMarketCapYi": 220893.1,
-        "floatMarketCapYi": 139495.8,
-        "floatRatio": 63.2,
-        "source": "东方财富公开板块行情",
-        "status": "真实数据"
+        "constituentCount": 100,
+        "liquidConstituentCount": 99,
+        "dailyTurnoverYi": 1533.4,
+        "totalMarketCapYi": 166427.9,
+        "floatMarketCapYi": 94286.2,
+        "top10SharePercent": 37.0,
+        "hhi": 219.0,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 100,
+            "floatMarketCapYi": 94286.2,
+            "dailyTurnoverYi": 1533.4,
+            "top10SharePercent": 37.0,
+            "hhi": 219.0
+          }
+        ]
       }
     },
     {
       "id": "biotech",
       "structure": {
-        "signal": "创新药授权出海与多元支付逐步兑现",
-        "source": "国家规划 / 东方财富公开板块",
-        "type": "结构证据"
+        "signal": "创新药研发与商业授权",
+        "metrics": [
+          "IND/NDA数量",
+          "License-out金额",
+          "创新药销售收入"
+        ],
+        "source": "国家药监局／上市公司公告",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
       },
       "enterprise": {
-        "proxy": "板块市盈率",
-        "value": 53.4,
-        "status": "代理指标",
-        "note": "与本候选池代表板块横向比较；不是历史估值分位",
-        "peerMedian": 46.4,
-        "relativeToMedian": 15.1,
-        "rank": "5/12",
-        "level": "中位附近"
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 43.5,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 35.0,
+        "positiveRevenueShare": 80.0,
+        "profitGrowthMedian": 21.6,
+        "positiveProfitShare": 70.0,
+        "cashToRevenueMedian": 0.2,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 35.0,
+            "profitGrowthMedian": 21.6,
+            "positiveRevenueShare": 80.0,
+            "positiveProfitShare": 70.0,
+            "coveragePercent": 43.5
+          }
+        ]
       },
       "assets": {
         "boardCode": "BK1106",
         "boardName": "创新药",
-        "totalMarketCapYi": 38789.0,
-        "floatMarketCapYi": 30209.7,
-        "floatRatio": 77.9,
-        "source": "东方财富公开板块行情",
-        "status": "真实数据"
+        "constituentCount": 100,
+        "liquidConstituentCount": 70,
+        "dailyTurnoverYi": 391.1,
+        "totalMarketCapYi": 34121.5,
+        "floatMarketCapYi": 25923.6,
+        "top10SharePercent": 44.8,
+        "hhi": 453.4,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 100,
+            "floatMarketCapYi": 25923.6,
+            "dailyTurnoverYi": 391.1,
+            "top10SharePercent": 44.8,
+            "hhi": 453.4
+          }
+        ]
       }
     },
     {
       "id": "longevity",
       "structure": {
-        "signal": "老龄人口扩大健康、照护与服务需求",
-        "source": "国家统计局 / 东方财富公开板块",
-        "type": "结构证据"
+        "signal": "老龄人口与服务供给",
+        "metrics": [
+          "65岁以上人口",
+          "养老床位",
+          "长期护理险覆盖"
+        ],
+        "source": "国家统计局／民政部",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
       },
       "enterprise": {
-        "proxy": "板块市盈率",
-        "value": 15.4,
-        "status": "代理指标",
-        "note": "与本候选池代表板块横向比较；不是历史估值分位",
-        "peerMedian": 46.4,
-        "relativeToMedian": -66.8,
-        "rank": "12/12",
-        "level": "相对偏低"
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 64.1,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 3.4,
+        "positiveRevenueShare": 60.0,
+        "profitGrowthMedian": 7.6,
+        "positiveProfitShare": 70.0,
+        "cashToRevenueMedian": 0.2,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 3.4,
+            "profitGrowthMedian": 7.6,
+            "positiveRevenueShare": 60.0,
+            "positiveProfitShare": 70.0,
+            "coveragePercent": 64.1
+          }
+        ]
       },
       "assets": {
         "boardCode": "BK0653",
         "boardName": "养老概念",
-        "totalMarketCapYi": 27130.6,
-        "floatMarketCapYi": 20345.9,
-        "floatRatio": 75.0,
-        "source": "东方财富公开板块行情",
-        "status": "真实数据"
+        "constituentCount": 100,
+        "liquidConstituentCount": 45,
+        "dailyTurnoverYi": 203.9,
+        "totalMarketCapYi": 28167.9,
+        "floatMarketCapYi": 21449.6,
+        "top10SharePercent": 64.4,
+        "hhi": 992.7,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 100,
+            "floatMarketCapYi": 21449.6,
+            "dailyTurnoverYi": 203.9,
+            "top10SharePercent": 64.4,
+            "hhi": 992.7
+          }
+        ]
       }
     },
     {
       "id": "experience",
       "structure": {
-        "signal": "消费由商品拥有向服务与体验迁移",
-        "source": "消费政策 / 东方财富公开板块",
-        "type": "结构证据"
+        "signal": "服务与体验消费迁移",
+        "metrics": [
+          "旅游人次",
+          "文娱支出",
+          "服务零售额"
+        ],
+        "source": "文旅部／国家统计局",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
       },
       "enterprise": {
-        "proxy": "板块市盈率",
-        "value": 64.2,
-        "status": "代理指标",
-        "note": "与本候选池代表板块横向比较；不是历史估值分位",
-        "peerMedian": 46.4,
-        "relativeToMedian": 38.4,
-        "rank": "3/12",
-        "level": "相对偏高"
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 38.9,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 1.6,
+        "positiveRevenueShare": 50.0,
+        "profitGrowthMedian": 11.7,
+        "positiveProfitShare": 70.0,
+        "cashToRevenueMedian": 0.1,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 1.6,
+            "profitGrowthMedian": 11.7,
+            "positiveRevenueShare": 50.0,
+            "positiveProfitShare": 70.0,
+            "coveragePercent": 38.9
+          }
+        ]
       },
       "assets": {
         "boardCode": "BK1652",
         "boardName": "新消费",
-        "totalMarketCapYi": 7113.4,
-        "floatMarketCapYi": 6235.4,
-        "floatRatio": 87.7,
-        "source": "东方财富公开板块行情",
-        "status": "真实数据"
+        "constituentCount": 82,
+        "liquidConstituentCount": 24,
+        "dailyTurnoverYi": 101.4,
+        "totalMarketCapYi": 7181.7,
+        "floatMarketCapYi": 6308.8,
+        "top10SharePercent": 38.9,
+        "hhi": 258.3,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 82,
+            "floatMarketCapYi": 6308.8,
+            "dailyTurnoverYi": 101.4,
+            "top10SharePercent": 38.9,
+            "hhi": 258.3
+          }
+        ]
       }
     },
     {
       "id": "resources",
       "structure": {
-        "signal": "能源转型与供应链安全强化材料约束",
-        "source": "国家规划 / 东方财富公开板块",
-        "type": "结构证据"
+        "signal": "关键矿产供需约束",
+        "metrics": [
+          "主要矿产产量",
+          "进口依赖度",
+          "库存消费比"
+        ],
+        "source": "自然资源部／海关总署",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
       },
       "enterprise": {
-        "proxy": "板块市盈率",
-        "value": 46.3,
-        "status": "代理指标",
-        "note": "与本候选池代表板块横向比较；不是历史估值分位",
-        "peerMedian": 46.4,
-        "relativeToMedian": -0.2,
-        "rank": "7/12",
-        "level": "中位附近"
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 31.1,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 33.0,
+        "positiveRevenueShare": 90.0,
+        "profitGrowthMedian": 69.1,
+        "positiveProfitShare": 90.0,
+        "cashToRevenueMedian": 0.1,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 33.0,
+            "profitGrowthMedian": 69.1,
+            "positiveRevenueShare": 90.0,
+            "positiveProfitShare": 90.0,
+            "coveragePercent": 31.1
+          }
+        ]
       },
       "assets": {
         "boardCode": "BK0523",
         "boardName": "新材料",
-        "totalMarketCapYi": 70688.9,
-        "floatMarketCapYi": 63335.8,
-        "floatRatio": 89.6,
-        "source": "东方财富公开板块行情",
-        "status": "真实数据"
+        "constituentCount": 100,
+        "liquidConstituentCount": 95,
+        "dailyTurnoverYi": 923.4,
+        "totalMarketCapYi": 50037.6,
+        "floatMarketCapYi": 45427.1,
+        "top10SharePercent": 32.1,
+        "hhi": 182.2,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 100,
+            "floatMarketCapYi": 45427.1,
+            "dailyTurnoverYi": 923.4,
+            "top10SharePercent": 32.1,
+            "hhi": 182.2
+          }
+        ]
       }
     },
     {
       "id": "future-tech",
       "structure": {
-        "signal": "量子等未来技术进入工程验证窗口",
-        "source": "国家规划 / 东方财富公开板块",
-        "type": "结构证据"
+        "signal": "未来技术工程化",
+        "metrics": [
+          "研发投入",
+          "示范项目数量",
+          "技术合同额"
+        ],
+        "source": "科技部／工信部",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
       },
       "enterprise": {
-        "proxy": "板块市盈率",
-        "value": 38.0,
-        "status": "代理指标",
-        "note": "与本候选池代表板块横向比较；不是历史估值分位",
-        "peerMedian": 46.4,
-        "relativeToMedian": -18.1,
-        "rank": "10/12",
-        "level": "中位附近"
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 66.1,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 17.6,
+        "positiveRevenueShare": 90.0,
+        "profitGrowthMedian": 10.4,
+        "positiveProfitShare": 60.0,
+        "cashToRevenueMedian": -0.1,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 17.6,
+            "profitGrowthMedian": 10.4,
+            "positiveRevenueShare": 90.0,
+            "positiveProfitShare": 60.0,
+            "coveragePercent": 66.1
+          }
+        ]
       },
       "assets": {
         "boardCode": "BK0710",
         "boardName": "量子科技",
-        "totalMarketCapYi": 24377.1,
-        "floatMarketCapYi": 21895.9,
-        "floatRatio": 89.8,
-        "source": "东方财富公开板块行情",
-        "status": "真实数据"
+        "constituentCount": 80,
+        "liquidConstituentCount": 40,
+        "dailyTurnoverYi": 402.9,
+        "totalMarketCapYi": 27209.5,
+        "floatMarketCapYi": 24438.6,
+        "top10SharePercent": 66.1,
+        "hhi": 704.9,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 80,
+            "floatMarketCapYi": 24438.6,
+            "dailyTurnoverYi": 402.9,
+            "top10SharePercent": 66.1,
+            "hhi": 704.9
+          }
+        ]
       }
     },
     {
       "id": "industrial-software",
       "structure": {
-        "signal": "制造业数字化提高工业软件自主需求",
-        "source": "工信部 / 东方财富公开板块",
-        "type": "结构证据"
+        "signal": "制造业软件化",
+        "metrics": [
+          "工业软件收入",
+          "数字化研发工具普及率",
+          "智能工厂数量"
+        ],
+        "source": "工信部",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
       },
       "enterprise": {
-        "proxy": "板块市盈率",
-        "value": 138.2,
-        "status": "代理指标",
-        "note": "与本候选池代表板块横向比较；不是历史估值分位",
-        "peerMedian": 46.4,
-        "relativeToMedian": 197.8,
-        "rank": "1/12",
-        "level": "相对偏高"
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 44.5,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 17.6,
+        "positiveRevenueShare": 80.0,
+        "profitGrowthMedian": 26.9,
+        "positiveProfitShare": 70.0,
+        "cashToRevenueMedian": 0.3,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 17.6,
+            "profitGrowthMedian": 26.9,
+            "positiveRevenueShare": 80.0,
+            "positiveProfitShare": 70.0,
+            "coveragePercent": 44.5
+          }
+        ]
       },
       "assets": {
         "boardCode": "BK0696",
         "boardName": "国产软件",
-        "totalMarketCapYi": 27355.2,
-        "floatMarketCapYi": 24285.2,
-        "floatRatio": 88.8,
-        "source": "东方财富公开板块行情",
-        "status": "真实数据"
+        "constituentCount": 100,
+        "liquidConstituentCount": 62,
+        "dailyTurnoverYi": 238.4,
+        "totalMarketCapYi": 22832.2,
+        "floatMarketCapYi": 20319.8,
+        "top10SharePercent": 44.7,
+        "hhi": 331.5,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 100,
+            "floatMarketCapYi": 20319.8,
+            "dailyTurnoverYi": 238.4,
+            "top10SharePercent": 44.7,
+            "hhi": 331.5
+          }
+        ]
       }
     },
     {
       "id": "ai-application",
       "structure": {
-        "signal": "AI价值链由算力建设向应用收入扩散",
-        "source": "国家规划 / 东方财富公开板块",
-        "type": "结构证据"
+        "signal": "AI应用商业渗透",
+        "metrics": [
+          "AI软件收入",
+          "企业采用率",
+          "付费客户数量"
+        ],
+        "source": "工信部／上市公司公告",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
       },
       "enterprise": {
-        "proxy": "板块市盈率",
-        "value": 27.0,
-        "status": "代理指标",
-        "note": "与本候选池代表板块横向比较；不是历史估值分位",
-        "peerMedian": 46.4,
-        "relativeToMedian": -41.8,
-        "rank": "11/12",
-        "level": "相对偏低"
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 66.7,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 15.7,
+        "positiveRevenueShare": 80.0,
+        "profitGrowthMedian": 30.9,
+        "positiveProfitShare": 70.0,
+        "cashToRevenueMedian": 0.1,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 15.7,
+            "profitGrowthMedian": 30.9,
+            "positiveRevenueShare": 80.0,
+            "positiveProfitShare": 70.0,
+            "coveragePercent": 66.7
+          }
+        ]
       },
       "assets": {
         "boardCode": "BK0579",
         "boardName": "云计算",
-        "totalMarketCapYi": 69636.2,
-        "floatMarketCapYi": 45432.6,
-        "floatRatio": 65.2,
-        "source": "东方财富公开板块行情",
-        "status": "真实数据"
+        "constituentCount": 100,
+        "liquidConstituentCount": 65,
+        "dailyTurnoverYi": 393.0,
+        "totalMarketCapYi": 68207.6,
+        "floatMarketCapYi": 43994.5,
+        "top10SharePercent": 67.3,
+        "hhi": 1008.6,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 100,
+            "floatMarketCapYi": 43994.5,
+            "dailyTurnoverYi": 393.0,
+            "top10SharePercent": 67.3,
+            "hhi": 1008.6
+          }
+        ]
+      }
+    },
+    {
+      "id": "cybersecurity",
+      "structure": {
+        "signal": "安全支出刚性",
+        "metrics": [
+          "网络安全收入",
+          "安全采购金额",
+          "数据合规投入"
+        ],
+        "source": "工信部／政府采购公开数据",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 65.7,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 11.7,
+        "positiveRevenueShare": 100.0,
+        "profitGrowthMedian": 48.9,
+        "positiveProfitShare": 90.0,
+        "cashToRevenueMedian": -0.1,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 11.7,
+            "profitGrowthMedian": 48.9,
+            "positiveRevenueShare": 100.0,
+            "positiveProfitShare": 90.0,
+            "coveragePercent": 65.7
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK1047",
+        "boardName": "数据安全",
+        "constituentCount": 82,
+        "liquidConstituentCount": 27,
+        "dailyTurnoverYi": 129.2,
+        "totalMarketCapYi": 11981.7,
+        "floatMarketCapYi": 9724.8,
+        "top10SharePercent": 66.4,
+        "hhi": 891.5,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 82,
+            "floatMarketCapYi": 9724.8,
+            "dailyTurnoverYi": 129.2,
+            "top10SharePercent": 66.4,
+            "hhi": 891.5
+          }
+        ]
+      }
+    },
+    {
+      "id": "smart-healthcare",
+      "structure": {
+        "signal": "AI医疗临床采用",
+        "metrics": [
+          "获批AI医疗器械",
+          "医院采购金额",
+          "覆盖医疗机构"
+        ],
+        "source": "国家药监局／卫健委",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 70.9,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 14.2,
+        "positiveRevenueShare": 90.0,
+        "profitGrowthMedian": 10.6,
+        "positiveProfitShare": 80.0,
+        "cashToRevenueMedian": 0.2,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 14.2,
+            "profitGrowthMedian": 10.6,
+            "positiveRevenueShare": 90.0,
+            "positiveProfitShare": 80.0,
+            "coveragePercent": 70.9
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK0727",
+        "boardName": "医疗服务",
+        "constituentCount": 54,
+        "liquidConstituentCount": 39,
+        "dailyTurnoverYi": 253.3,
+        "totalMarketCapYi": 12074.2,
+        "floatMarketCapYi": 9864.8,
+        "top10SharePercent": 72.1,
+        "hhi": 1770.4,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 54,
+            "floatMarketCapYi": 9864.8,
+            "dailyTurnoverYi": 253.3,
+            "top10SharePercent": 72.1,
+            "hhi": 1770.4
+          }
+        ]
+      }
+    },
+    {
+      "id": "synthetic-biology",
+      "structure": {
+        "signal": "生物制造规模化",
+        "metrics": [
+          "示范产线",
+          "单位制造成本",
+          "生物制造收入"
+        ],
+        "source": "工信部／上市公司公告",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 39.8,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 10.5,
+        "positiveRevenueShare": 70.0,
+        "profitGrowthMedian": -0.4,
+        "positiveProfitShare": 50.0,
+        "cashToRevenueMedian": 0.0,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 10.5,
+            "profitGrowthMedian": -0.4,
+            "positiveRevenueShare": 70.0,
+            "positiveProfitShare": 50.0,
+            "coveragePercent": 39.8
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK1174",
+        "boardName": "合成生物",
+        "constituentCount": 100,
+        "liquidConstituentCount": 49,
+        "dailyTurnoverYi": 242.1,
+        "totalMarketCapYi": 13949.3,
+        "floatMarketCapYi": 11751.3,
+        "top10SharePercent": 39.8,
+        "hhi": 279.7,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 100,
+            "floatMarketCapYi": 11751.3,
+            "dailyTurnoverYi": 242.1,
+            "top10SharePercent": 39.8,
+            "hhi": 279.7
+          }
+        ]
+      }
+    },
+    {
+      "id": "nuclear-energy",
+      "structure": {
+        "signal": "先进核能工程周期",
+        "metrics": [
+          "核准机组",
+          "在建装机",
+          "设备投资额"
+        ],
+        "source": "国家能源局",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 43.9,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 4.0,
+        "positiveRevenueShare": 70.0,
+        "profitGrowthMedian": -6.5,
+        "positiveProfitShare": 40.0,
+        "cashToRevenueMedian": 0.2,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 4.0,
+            "profitGrowthMedian": -6.5,
+            "positiveRevenueShare": 70.0,
+            "positiveProfitShare": 40.0,
+            "coveragePercent": 43.9
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK0577",
+        "boardName": "核能核电",
+        "constituentCount": 100,
+        "liquidConstituentCount": 60,
+        "dailyTurnoverYi": 302.8,
+        "totalMarketCapYi": 43196.7,
+        "floatMarketCapYi": 36023.0,
+        "top10SharePercent": 47.3,
+        "hhi": 514.3,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 100,
+            "floatMarketCapYi": 36023.0,
+            "dailyTurnoverYi": 302.8,
+            "top10SharePercent": 47.3,
+            "hhi": 514.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "water-security",
+      "structure": {
+        "signal": "水安全资本开支",
+        "metrics": [
+          "水利投资完成额",
+          "再生水利用率",
+          "供水管网更新"
+        ],
+        "source": "水利部／住建部",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 68.2,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 1.7,
+        "positiveRevenueShare": 80.0,
+        "profitGrowthMedian": -17.4,
+        "positiveProfitShare": 40.0,
+        "cashToRevenueMedian": -0.2,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 1.7,
+            "profitGrowthMedian": -17.4,
+            "positiveRevenueShare": 80.0,
+            "positiveProfitShare": 40.0,
+            "coveragePercent": 68.2
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK0597",
+        "boardName": "水利建设",
+        "constituentCount": 100,
+        "liquidConstituentCount": 36,
+        "dailyTurnoverYi": 157.6,
+        "totalMarketCapYi": 21262.4,
+        "floatMarketCapYi": 19594.5,
+        "top10SharePercent": 68.4,
+        "hhi": 1439.6,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 100,
+            "floatMarketCapYi": 19594.5,
+            "dailyTurnoverYi": 157.6,
+            "top10SharePercent": 68.4,
+            "hhi": 1439.6
+          }
+        ]
+      }
+    },
+    {
+      "id": "low-altitude",
+      "structure": {
+        "signal": "低空商业运营",
+        "metrics": [
+          "商业航线数量",
+          "飞行小时",
+          "付费运营收入"
+        ],
+        "source": "民航局／地方公开数据",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 33.4,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 7.6,
+        "positiveRevenueShare": 80.0,
+        "profitGrowthMedian": -4.6,
+        "positiveProfitShare": 50.0,
+        "cashToRevenueMedian": -0.0,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 7.6,
+            "profitGrowthMedian": -4.6,
+            "positiveRevenueShare": 80.0,
+            "positiveProfitShare": 50.0,
+            "coveragePercent": 33.4
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK1166",
+        "boardName": "低空经济",
+        "constituentCount": 100,
+        "liquidConstituentCount": 67,
+        "dailyTurnoverYi": 263.2,
+        "totalMarketCapYi": 29980.9,
+        "floatMarketCapYi": 26315.9,
+        "top10SharePercent": 34.4,
+        "hhi": 199.2,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 100,
+            "floatMarketCapYi": 26315.9,
+            "dailyTurnoverYi": 263.2,
+            "top10SharePercent": 34.4,
+            "hhi": 199.2
+          }
+        ]
+      }
+    },
+    {
+      "id": "autonomous-driving",
+      "structure": {
+        "signal": "驾驶自动化渗透",
+        "metrics": [
+          "高阶智驾渗透率",
+          "测试里程",
+          "用户付费率"
+        ],
+        "source": "工信部／企业公告",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 61.6,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 9.7,
+        "positiveRevenueShare": 70.0,
+        "profitGrowthMedian": 21.9,
+        "positiveProfitShare": 80.0,
+        "cashToRevenueMedian": 0.0,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 9.7,
+            "profitGrowthMedian": 21.9,
+            "positiveRevenueShare": 70.0,
+            "positiveProfitShare": 80.0,
+            "coveragePercent": 61.6
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK0920",
+        "boardName": "车联网(车路云)",
+        "constituentCount": 100,
+        "liquidConstituentCount": 68,
+        "dailyTurnoverYi": 313.0,
+        "totalMarketCapYi": 51823.8,
+        "floatMarketCapYi": 43778.1,
+        "top10SharePercent": 61.6,
+        "hhi": 933.7,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 100,
+            "floatMarketCapYi": 43778.1,
+            "dailyTurnoverYi": 313.0,
+            "top10SharePercent": 61.6,
+            "hhi": 933.7
+          }
+        ]
+      }
+    },
+    {
+      "id": "obesity-care",
+      "structure": {
+        "signal": "体重管理治疗渗透",
+        "metrics": [
+          "获批适应症",
+          "处方量",
+          "支付覆盖"
+        ],
+        "source": "国家药监局／医保局",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 68.5,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": -4.2,
+        "positiveRevenueShare": 40.0,
+        "profitGrowthMedian": -11.5,
+        "positiveProfitShare": 30.0,
+        "cashToRevenueMedian": 0.2,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": -4.2,
+            "profitGrowthMedian": -11.5,
+            "positiveRevenueShare": 40.0,
+            "positiveProfitShare": 30.0,
+            "coveragePercent": 68.5
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK1146",
+        "boardName": "减肥药",
+        "constituentCount": 42,
+        "liquidConstituentCount": 28,
+        "dailyTurnoverYi": 137.7,
+        "totalMarketCapYi": 9206.9,
+        "floatMarketCapYi": 8291.4,
+        "top10SharePercent": 69.3,
+        "hhi": 1472.6,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 42,
+            "floatMarketCapYi": 8291.4,
+            "dailyTurnoverYi": 137.7,
+            "top10SharePercent": 69.3,
+            "hhi": 1472.6
+          }
+        ]
+      }
+    },
+    {
+      "id": "climate-adaptation",
+      "structure": {
+        "signal": "气候韧性投入",
+        "metrics": [
+          "防灾减灾投资",
+          "极端天气损失",
+          "韧性城市项目"
+        ],
+        "source": "应急管理部／住建部",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 57.9,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": -1.5,
+        "positiveRevenueShare": 40.0,
+        "profitGrowthMedian": 5.4,
+        "positiveProfitShare": 60.0,
+        "cashToRevenueMedian": 0.1,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": -1.5,
+            "profitGrowthMedian": 5.4,
+            "positiveRevenueShare": 40.0,
+            "positiveProfitShare": 60.0,
+            "coveragePercent": 57.9
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK1058",
+        "boardName": "地下管网",
+        "constituentCount": 54,
+        "liquidConstituentCount": 5,
+        "dailyTurnoverYi": 27.0,
+        "totalMarketCapYi": 3865.1,
+        "floatMarketCapYi": 3613.0,
+        "top10SharePercent": 57.9,
+        "hhi": 606.7,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 54,
+            "floatMarketCapYi": 3613.0,
+            "dailyTurnoverYi": 27.0,
+            "top10SharePercent": 57.9,
+            "hhi": 606.7
+          }
+        ]
+      }
+    },
+    {
+      "id": "digital-health",
+      "structure": {
+        "signal": "医疗服务居家化",
+        "metrics": [
+          "互联网诊疗量",
+          "远程医疗覆盖",
+          "支付方覆盖"
+        ],
+        "source": "卫健委／医保局",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 70.9,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 14.2,
+        "positiveRevenueShare": 90.0,
+        "profitGrowthMedian": 10.6,
+        "positiveProfitShare": 80.0,
+        "cashToRevenueMedian": 0.2,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 14.2,
+            "profitGrowthMedian": 10.6,
+            "positiveRevenueShare": 90.0,
+            "positiveProfitShare": 80.0,
+            "coveragePercent": 70.9
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK0727",
+        "boardName": "医疗服务",
+        "constituentCount": 54,
+        "liquidConstituentCount": 39,
+        "dailyTurnoverYi": 253.3,
+        "totalMarketCapYi": 12074.2,
+        "floatMarketCapYi": 9864.8,
+        "top10SharePercent": 72.1,
+        "hhi": 1770.4,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 54,
+            "floatMarketCapYi": 9864.8,
+            "dailyTurnoverYi": 253.3,
+            "top10SharePercent": 72.1,
+            "hhi": 1770.4
+          }
+        ]
+      }
+    },
+    {
+      "id": "mental-health",
+      "structure": {
+        "signal": "精神健康需求释放",
+        "metrics": [
+          "诊疗人次",
+          "精神卫生床位",
+          "心理服务支出"
+        ],
+        "source": "卫健委／国家统计局",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 70.9,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 14.2,
+        "positiveRevenueShare": 90.0,
+        "profitGrowthMedian": 10.6,
+        "positiveProfitShare": 80.0,
+        "cashToRevenueMedian": 0.2,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 14.2,
+            "profitGrowthMedian": 10.6,
+            "positiveRevenueShare": 90.0,
+            "positiveProfitShare": 80.0,
+            "coveragePercent": 70.9
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK0727",
+        "boardName": "医疗服务",
+        "constituentCount": 54,
+        "liquidConstituentCount": 39,
+        "dailyTurnoverYi": 253.3,
+        "totalMarketCapYi": 12074.2,
+        "floatMarketCapYi": 9864.8,
+        "top10SharePercent": 72.1,
+        "hhi": 1770.4,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 54,
+            "floatMarketCapYi": 9864.8,
+            "dailyTurnoverYi": 253.3,
+            "top10SharePercent": 72.1,
+            "hhi": 1770.4
+          }
+        ]
+      }
+    },
+    {
+      "id": "pet-economy",
+      "structure": {
+        "signal": "陪伴消费持续化",
+        "metrics": [
+          "宠物数量",
+          "宠物医疗渗透率",
+          "食品零售额"
+        ],
+        "source": "农业农村部／上市公司公告",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 39.6,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": -0.5,
+        "positiveRevenueShare": 50.0,
+        "profitGrowthMedian": -16.1,
+        "positiveProfitShare": 40.0,
+        "cashToRevenueMedian": 0.1,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": -0.5,
+            "profitGrowthMedian": -16.1,
+            "positiveRevenueShare": 50.0,
+            "positiveProfitShare": 40.0,
+            "coveragePercent": 39.6
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK0993",
+        "boardName": "宠物经济",
+        "constituentCount": 72,
+        "liquidConstituentCount": 15,
+        "dailyTurnoverYi": 56.8,
+        "totalMarketCapYi": 3967.1,
+        "floatMarketCapYi": 3506.0,
+        "top10SharePercent": 40.1,
+        "hhi": 256.4,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 72,
+            "floatMarketCapYi": 3506.0,
+            "dailyTurnoverYi": 56.8,
+            "top10SharePercent": 40.1,
+            "hhi": 256.4
+          }
+        ]
+      }
+    },
+    {
+      "id": "sports-outdoor",
+      "structure": {
+        "signal": "运动参与和消费",
+        "metrics": [
+          "经常锻炼人数",
+          "体育用品零售额",
+          "户外活动人次"
+        ],
+        "source": "体育总局／国家统计局",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 58.6,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 7.1,
+        "positiveRevenueShare": 70.0,
+        "profitGrowthMedian": 8.3,
+        "positiveProfitShare": 80.0,
+        "cashToRevenueMedian": 0.0,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 7.1,
+            "profitGrowthMedian": 8.3,
+            "positiveRevenueShare": 70.0,
+            "positiveProfitShare": 80.0,
+            "coveragePercent": 58.6
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK0708",
+        "boardName": "体育产业",
+        "constituentCount": 76,
+        "liquidConstituentCount": 21,
+        "dailyTurnoverYi": 72.7,
+        "totalMarketCapYi": 8040.6,
+        "floatMarketCapYi": 6363.6,
+        "top10SharePercent": 58.6,
+        "hhi": 610.3,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 76,
+            "floatMarketCapYi": 6363.6,
+            "dailyTurnoverYi": 72.7,
+            "top10SharePercent": 58.6,
+            "hhi": 610.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "inbound-consumption",
+      "structure": {
+        "signal": "入境消费恢复",
+        "metrics": [
+          "入境人次",
+          "国际航班量",
+          "入境游客消费"
+        ],
+        "source": "文旅部／民航局",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 66.6,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 5.6,
+        "positiveRevenueShare": 70.0,
+        "profitGrowthMedian": 21.6,
+        "positiveProfitShare": 80.0,
+        "cashToRevenueMedian": 0.2,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 5.6,
+            "profitGrowthMedian": 21.6,
+            "positiveRevenueShare": 70.0,
+            "positiveProfitShare": 80.0,
+            "coveragePercent": 66.6
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK0485",
+        "boardName": "旅游酒店",
+        "constituentCount": 39,
+        "liquidConstituentCount": 15,
+        "dailyTurnoverYi": 40.7,
+        "totalMarketCapYi": 3050.4,
+        "floatMarketCapYi": 2768.7,
+        "top10SharePercent": 67.9,
+        "hhi": 1543.1,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 39,
+            "floatMarketCapYi": 2768.7,
+            "dailyTurnoverYi": 40.7,
+            "top10SharePercent": 67.9,
+            "hhi": 1543.1
+          }
+        ]
+      }
+    },
+    {
+      "id": "new-food",
+      "structure": {
+        "signal": "功能营养渗透",
+        "metrics": [
+          "新品注册数量",
+          "功能食品零售额",
+          "复购率"
+        ],
+        "source": "市场监管总局／上市公司公告",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 9,
+        "reportedCompanies": 8,
+        "coveragePercent": 100.0,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": -4.4,
+        "positiveRevenueShare": 37.5,
+        "profitGrowthMedian": -36.7,
+        "positiveProfitShare": 12.5,
+        "cashToRevenueMedian": 0.1,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": -4.4,
+            "profitGrowthMedian": -36.7,
+            "positiveRevenueShare": 37.5,
+            "positiveProfitShare": 12.5,
+            "coveragePercent": 100.0
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK1579",
+        "boardName": "保健品",
+        "constituentCount": 9,
+        "liquidConstituentCount": 2,
+        "dailyTurnoverYi": 5.5,
+        "totalMarketCapYi": 509.6,
+        "floatMarketCapYi": 390.1,
+        "top10SharePercent": 100.0,
+        "hhi": 1815.1,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 9,
+            "floatMarketCapYi": 390.1,
+            "dailyTurnoverYi": 5.5,
+            "top10SharePercent": 100.0,
+            "hhi": 1815.1
+          }
+        ]
+      }
+    },
+    {
+      "id": "recycling",
+      "structure": {
+        "signal": "资源循环利用",
+        "metrics": [
+          "再生资源回收量",
+          "再生材料产量",
+          "产能利用率"
+        ],
+        "source": "商务部／国家统计局",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 36.5,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 6.5,
+        "positiveRevenueShare": 80.0,
+        "profitGrowthMedian": 5.8,
+        "positiveProfitShare": 70.0,
+        "cashToRevenueMedian": 0.1,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 6.5,
+            "profitGrowthMedian": 5.8,
+            "positiveRevenueShare": 80.0,
+            "positiveProfitShare": 70.0,
+            "coveragePercent": 36.5
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK0873",
+        "boardName": "垃圾分类",
+        "constituentCount": 96,
+        "liquidConstituentCount": 16,
+        "dailyTurnoverYi": 78.3,
+        "totalMarketCapYi": 7985.3,
+        "floatMarketCapYi": 7325.4,
+        "top10SharePercent": 36.5,
+        "hhi": 207.3,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 96,
+            "floatMarketCapYi": 7325.4,
+            "dailyTurnoverYi": 78.3,
+            "top10SharePercent": 36.5,
+            "hhi": 207.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "grid-storage",
+      "structure": {
+        "signal": "系统调节需求",
+        "metrics": [
+          "新型储能装机",
+          "平均利用小时",
+          "独立储能收益"
+        ],
+        "source": "国家能源局",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 77.4,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 6.0,
+        "positiveRevenueShare": 80.0,
+        "profitGrowthMedian": 22.4,
+        "positiveProfitShare": 70.0,
+        "cashToRevenueMedian": -0.1,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 6.0,
+            "profitGrowthMedian": 22.4,
+            "positiveRevenueShare": 80.0,
+            "positiveProfitShare": 70.0,
+            "coveragePercent": 77.4
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK1003",
+        "boardName": "抽水蓄能",
+        "constituentCount": 41,
+        "liquidConstituentCount": 15,
+        "dailyTurnoverYi": 124.2,
+        "totalMarketCapYi": 16971.9,
+        "floatMarketCapYi": 15889.5,
+        "top10SharePercent": 77.4,
+        "hhi": 2134.4,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 41,
+            "floatMarketCapYi": 15889.5,
+            "dailyTurnoverYi": 124.2,
+            "top10SharePercent": 77.4,
+            "hhi": 2134.4
+          }
+        ]
+      }
+    },
+    {
+      "id": "defense-tech",
+      "structure": {
+        "signal": "无人装备结构升级",
+        "metrics": [
+          "相关采购公告",
+          "研发投入",
+          "军民收入边界"
+        ],
+        "source": "政府采购公开数据／企业公告",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 27.4,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 17.9,
+        "positiveRevenueShare": 80.0,
+        "profitGrowthMedian": 37.3,
+        "positiveProfitShare": 80.0,
+        "cashToRevenueMedian": 0.1,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 17.9,
+            "profitGrowthMedian": 37.3,
+            "positiveRevenueShare": 80.0,
+            "positiveProfitShare": 80.0,
+            "coveragePercent": 27.4
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK0490",
+        "boardName": "军工",
+        "constituentCount": 100,
+        "liquidConstituentCount": 83,
+        "dailyTurnoverYi": 435.1,
+        "totalMarketCapYi": 36956.1,
+        "floatMarketCapYi": 32255.8,
+        "top10SharePercent": 30.5,
+        "hhi": 190.0,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 100,
+            "floatMarketCapYi": 32255.8,
+            "dailyTurnoverYi": 435.1,
+            "top10SharePercent": 30.5,
+            "hhi": 190.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "agri-tech",
+      "structure": {
+        "signal": "农业效率与安全",
+        "metrics": [
+          "粮食单产",
+          "高标准农田",
+          "农业机械化率"
+        ],
+        "source": "农业农村部／国家统计局",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 51.0,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 1.5,
+        "positiveRevenueShare": 60.0,
+        "profitGrowthMedian": 5.6,
+        "positiveProfitShare": 60.0,
+        "cashToRevenueMedian": 0.0,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 1.5,
+            "profitGrowthMedian": 5.6,
+            "positiveRevenueShare": 60.0,
+            "positiveProfitShare": 60.0,
+            "coveragePercent": 51.0
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK0888",
+        "boardName": "农业种植",
+        "constituentCount": 87,
+        "liquidConstituentCount": 33,
+        "dailyTurnoverYi": 152.5,
+        "totalMarketCapYi": 7317.3,
+        "floatMarketCapYi": 6587.7,
+        "top10SharePercent": 51.4,
+        "hhi": 531.4,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 87,
+            "floatMarketCapYi": 6587.7,
+            "dailyTurnoverYi": 152.5,
+            "top10SharePercent": 51.4,
+            "hhi": 531.4
+          }
+        ]
+      }
+    },
+    {
+      "id": "wealth-longevity",
+      "structure": {
+        "signal": "养老支付制度化",
+        "metrics": [
+          "个人养老金开户",
+          "养老金融规模",
+          "领取覆盖率"
+        ],
+        "source": "人社部／金融监管总局",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 5,
+        "reportedCompanies": 5,
+        "coveragePercent": 100.0,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": -5.1,
+        "positiveRevenueShare": 20.0,
+        "profitGrowthMedian": 4.3,
+        "positiveProfitShare": 60.0,
+        "cashToRevenueMedian": 0.7,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": -5.1,
+            "profitGrowthMedian": 4.3,
+            "positiveRevenueShare": 20.0,
+            "positiveProfitShare": 60.0,
+            "coveragePercent": 100.0
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK0474",
+        "boardName": "保险Ⅱ",
+        "constituentCount": 5,
+        "liquidConstituentCount": 5,
+        "dailyTurnoverYi": 50.5,
+        "totalMarketCapYi": 28516.8,
+        "floatMarketCapYi": 19542.7,
+        "top10SharePercent": 100.0,
+        "hhi": 2816.5,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 5,
+            "floatMarketCapYi": 19542.7,
+            "dailyTurnoverYi": 50.5,
+            "top10SharePercent": 100.0,
+            "hhi": 2816.5
+          }
+        ]
+      }
+    },
+    {
+      "id": "human-upskilling",
+      "structure": {
+        "signal": "职业技能迁移",
+        "metrics": [
+          "职业培训人次",
+          "企业培训支出",
+          "培训后就业率"
+        ],
+        "source": "人社部／教育部",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 81.8,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 2.0,
+        "positiveRevenueShare": 60.0,
+        "profitGrowthMedian": -17.8,
+        "positiveProfitShare": 40.0,
+        "cashToRevenueMedian": -0.1,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 2.0,
+            "profitGrowthMedian": -17.8,
+            "positiveRevenueShare": 60.0,
+            "positiveProfitShare": 40.0,
+            "coveragePercent": 81.8
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK0740",
+        "boardName": "教育",
+        "constituentCount": 16,
+        "liquidConstituentCount": 6,
+        "dailyTurnoverYi": 19.9,
+        "totalMarketCapYi": 796.9,
+        "floatMarketCapYi": 754.7,
+        "top10SharePercent": 81.8,
+        "hhi": 808.4,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 16,
+            "floatMarketCapYi": 754.7,
+            "dailyTurnoverYi": 19.9,
+            "top10SharePercent": 81.8,
+            "hhi": 808.4
+          }
+        ]
+      }
+    },
+    {
+      "id": "creator-economy",
+      "structure": {
+        "signal": "内容商业化重构",
+        "metrics": [
+          "数字内容收入",
+          "创作者分成",
+          "付费用户数"
+        ],
+        "source": "国家统计局／企业公告",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 37.8,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 33.5,
+        "positiveRevenueShare": 60.0,
+        "profitGrowthMedian": 50.4,
+        "positiveProfitShare": 90.0,
+        "cashToRevenueMedian": 0.1,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 33.5,
+            "profitGrowthMedian": 50.4,
+            "positiveRevenueShare": 60.0,
+            "positiveProfitShare": 90.0,
+            "coveragePercent": 37.8
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK0486",
+        "boardName": "传媒",
+        "constituentCount": 100,
+        "liquidConstituentCount": 37,
+        "dailyTurnoverYi": 146.9,
+        "totalMarketCapYi": 13140.3,
+        "floatMarketCapYi": 12080.7,
+        "top10SharePercent": 37.8,
+        "hhi": 231.7,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 100,
+            "floatMarketCapYi": 12080.7,
+            "dailyTurnoverYi": 146.9,
+            "top10SharePercent": 37.8,
+            "hhi": 231.7
+          }
+        ]
+      }
+    },
+    {
+      "id": "ocean-economy",
+      "structure": {
+        "signal": "海洋开发工程化",
+        "metrics": [
+          "海洋生产总值",
+          "海工装备订单",
+          "深海项目数量"
+        ],
+        "source": "自然资源部／企业公告",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 100.0,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 35.9,
+        "positiveRevenueShare": 90.0,
+        "profitGrowthMedian": 38.9,
+        "positiveProfitShare": 70.0,
+        "cashToRevenueMedian": -0.1,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 35.9,
+            "profitGrowthMedian": 38.9,
+            "positiveRevenueShare": 90.0,
+            "positiveProfitShare": 70.0,
+            "coveragePercent": 100.0
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK1230",
+        "boardName": "航海装备Ⅱ",
+        "constituentCount": 10,
+        "liquidConstituentCount": 7,
+        "dailyTurnoverYi": 29.1,
+        "totalMarketCapYi": 5336.3,
+        "floatMarketCapYi": 3677.0,
+        "top10SharePercent": 100.0,
+        "hhi": 4964.6,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 10,
+            "floatMarketCapYi": 3677.0,
+            "dailyTurnoverYi": 29.1,
+            "top10SharePercent": 100.0,
+            "hhi": 4964.6
+          }
+        ]
+      }
+    },
+    {
+      "id": "service-robot",
+      "structure": {
+        "signal": "家庭服务机器人采用",
+        "metrics": [
+          "服务机器人产量",
+          "家庭保有量",
+          "复购与活跃率"
+        ],
+        "source": "国家统计局／企业公告",
+        "status": "指标合同已建立",
+        "historyPoints": 0,
+        "note": "结构层不以行情代理；官方同口径历史未达到4期前不形成趋势分。"
+      },
+      "enterprise": {
+        "sampleCompanies": 10,
+        "reportedCompanies": 10,
+        "coveragePercent": 42.2,
+        "reportDate": "2026-06-30",
+        "revenueGrowthMedian": 20.5,
+        "positiveRevenueShare": 80.0,
+        "profitGrowthMedian": 28.8,
+        "positiveProfitShare": 70.0,
+        "cashToRevenueMedian": 0.0,
+        "source": "东方财富上市公司财务报告",
+        "status": "真实公开数据",
+        "note": "按板块流通市值前10家公司汇总；显示样本覆盖率，不以PE替代兑现。",
+        "history": [
+          {
+            "reportDate": "2026-06-30",
+            "revenueGrowthMedian": 20.5,
+            "profitGrowthMedian": 28.8,
+            "positiveRevenueShare": 80.0,
+            "positiveProfitShare": 70.0,
+            "coveragePercent": 42.2
+          }
+        ]
+      },
+      "assets": {
+        "boardCode": "BK1090",
+        "boardName": "机器人概念",
+        "constituentCount": 100,
+        "liquidConstituentCount": 90,
+        "dailyTurnoverYi": 913.2,
+        "totalMarketCapYi": 89486.3,
+        "floatMarketCapYi": 73921.5,
+        "top10SharePercent": 44.4,
+        "hhi": 407.1,
+        "source": "东方财富公开板块成分与行情",
+        "status": "真实公开数据",
+        "history": [
+          {
+            "date": "2026-08-25",
+            "constituentCount": 100,
+            "floatMarketCapYi": 73921.5,
+            "dailyTurnoverYi": 913.2,
+            "top10SharePercent": 44.4,
+            "hhi": 407.1
+          }
+        ]
       }
     }
   ]
