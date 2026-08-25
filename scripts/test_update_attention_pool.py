@@ -6,7 +6,9 @@ from scripts.update_attention_pool import (
     parse_toutiao_hotlist,
     rescore_product_validations,
     social_attention,
+    update_attention_history,
 )
+from scripts import update_attention_pool as attention_pool
 
 
 def test_parses_public_hot_lists():
@@ -60,4 +62,15 @@ def test_product_validation_score_rewards_absolute_demand_and_breadth():
     assert broad["score"] > tiny["score"]
     assert broad["scoreComponents"]["absoluteScaleIncrease"] > tiny["scoreComponents"]["absoluteScaleIncrease"]
     assert "净流入代理25%" in broad["scoreMethod"]
+
+
+def test_weekly_and_monthly_rollups_remain_archived(monkeypatch, tmp_path):
+    old = {"schemaVersion": 2, "snapshots": [], "daily": [],
+           "weekly": [{"period": "2020-W01", "activeDays": 3, "themes": {}}],
+           "monthly": [{"period": "2020-01", "activeDays": 9, "themes": {}}]}
+    monkeypatch.setattr(attention_pool, "load_attention_history", lambda: old)
+    monkeypatch.setattr(attention_pool, "ATTENTION_HISTORY", tmp_path / "history.json")
+    result = update_attention_history({"capturedAt": datetime.now().astimezone().isoformat(), "sources": {}})
+    assert result["weekly"][0]["period"] == "2020-W01"
+    assert result["monthly"][0]["period"] == "2020-01"
 

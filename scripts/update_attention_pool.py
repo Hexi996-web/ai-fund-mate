@@ -262,7 +262,16 @@ def update_attention_history(snapshot: dict) -> dict:
                 rank = values.get("bestRank")
                 if rank is not None:
                     merged["bestRank"] = rank if merged["bestRank"] is None else min(merged["bestRank"], rank)
-        return [groups[key] for key in sorted(groups)]
+        previous_key = "monthly" if period == "month" else "weekly"
+        previous_groups = {row.get("period"): row for row in history.get(previous_key, []) if row.get("period")}
+        # The first retained daily period may be partial because the three-year
+        # cutoff can fall mid-week/month. Preserve its previously complete rollup.
+        if groups:
+            first_current = min(groups)
+            if first_current in previous_groups:
+                groups[first_current] = previous_groups[first_current]
+        previous_groups.update(groups)
+        return [previous_groups[key] for key in sorted(previous_groups)]
 
     history = {"schemaVersion": 2, "generatedAt": snapshot["capturedAt"], "retention": {"rawDays": 90, "dailyDays": 1095, "weekly": "permanent", "monthly": "permanent"}, "snapshots": snapshots, "daily": daily_rows, "weekly": rollup("week"), "monthly": rollup("month")}
     ATTENTION_HISTORY.write_text(json.dumps(history, ensure_ascii=False, indent=2), encoding="utf-8")

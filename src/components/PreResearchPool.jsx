@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { DATA_STATUS_POLL_MS, fetchDataStatus } from "../data/dataStatus.js";
 import { PRE_RESEARCH_POOL } from "../data/preResearchPool.js";
 import { CORE_ATTENTION_IDS } from "../data/attentionPool.js";
 import { AttentionHeatmap } from "./AttentionHeatmap.jsx";
@@ -600,6 +601,8 @@ export function PreResearchPool() {
   const [evidenceLayer, setEvidenceLayer] = useState("");
   const [peerSort, setPeerSort] = useState("current");
   const [briefFocus, setBriefFocus] = useState("");
+  const [reloadKey, setReloadKey] = useState(0);
+  const dataVersionRef = useRef("");
   useEffect(() => {
     const controller = new AbortController();
     Promise.all([
@@ -620,9 +623,30 @@ export function PreResearchPool() {
         setPayload(funds);
         setEvidence(proof);
         setAttention(attentionProof);
+        dataVersionRef.current = `${funds.updateTime || ""}|${proof.updateTime || ""}|${attentionProof.generatedAt || ""}`;
       })
       .catch(() => {});
     return () => controller.abort();
+  }, [reloadKey]);
+  useEffect(() => {
+    const checkForUpdate = () =>
+      fetchDataStatus(fetch)
+        .then((status) => {
+          const nextVersion = `${status.productsUpdateTime || ""}|${status.preResearchUpdateTime || ""}|${status.attentionGeneratedAt || ""}`;
+          if (dataVersionRef.current && nextVersion !== dataVersionRef.current) {
+            setReloadKey((value) => value + 1);
+          }
+        })
+        .catch(() => {});
+    const interval = window.setInterval(checkForUpdate, DATA_STATUS_POLL_MS);
+    const onVisibility = () => {
+      if (document.visibilityState === "visible") checkForUpdate();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => {
+      window.clearInterval(interval);
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
   }, []);
   const evidenceById = useMemo(
     () => new Map((evidence.items || []).map((item) => [item.id, item])),
@@ -672,6 +696,10 @@ export function PreResearchPool() {
     <main className="workspace-main research-pool decision-mode">
       <header className="decision-hero">
         <h1>季度预研产品池</h1>
+        <div className="research-data-date">
+          <small>数据日期</small>
+          <strong>{String(payload.updateTime || "—").slice(0, 10)}</strong>
+        </div>
       </header>
       <ResearchHorizonBrief
         snapshot={attention}

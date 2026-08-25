@@ -1844,6 +1844,19 @@
   margin: 0 0 8px;
   font-size: 34px;
 }
+.research-data-date {
+  min-width: 132px;
+  padding: 10px 14px;
+  border: 1px solid #cfd8e7;
+  border-radius: 9px;
+  background: #fff;
+  text-align: right;
+  box-shadow: 0 3px 10px rgba(31, 48, 78, 0.06);
+}
+.research-data-date small,
+.research-data-date strong { display: block; }
+.research-data-date small { margin-bottom: 4px; color: #69778f; font-size: 12px; }
+.research-data-date strong { color: #172036; font-size: 16px; }
 .decision-hero p {
   max-width: 780px;
   margin: 0;

@@ -130,6 +130,19 @@ def cninfo_catalysts(query: str, window_days: int = 120) -> list[dict]:
     return events
 
 
+def merge_catalyst_history(old_structure: dict, structure: dict) -> list[dict]:
+    """Archive decision-changing events for later thesis validation."""
+    cutoff = (date.today() - timedelta(days=1095)).isoformat()
+    merged = {}
+    rows = (old_structure.get("catalystHistory") or []) + (old_structure.get("catalysts") or []) + (structure.get("catalysts") or [])
+    for event in rows:
+        if event.get("date") and event["date"] < cutoff:
+            continue
+        key = event.get("sourceUrl") or f"{event.get('date')}|{event.get('company')}|{event.get('title')}"
+        merged[key] = event
+    return sorted(merged.values(), key=lambda event: event.get("date") or "", reverse=True)
+
+
 def get_json(url: str, params: dict) -> dict:
     last_error = None
     for attempt in range(3):
@@ -352,8 +365,10 @@ def main() -> None:
             history_by_period[report_date] = {**history_by_period.get(report_date, {}), **enterprise_point}
         enterprise["history"] = [history_by_period[key] for key in sorted(history_by_period, reverse=True)[:20]]
         structure = item.get("structure") or {}
+        old_structure = old.get("structure") or {}
+        structure["catalystHistory"] = merge_catalyst_history(old_structure, structure)
+        structure["catalystHistoryDays"] = 1095
         if not structure.get("history"):
-            old_structure = old.get("structure") or {}
             structure["history"] = old_structure.get("history") or []
             if structure["history"]:
                 structure.update({key: old_structure.get(key) for key in ("metric", "unit", "source", "sourceUrl", "status") if old_structure.get(key)})
@@ -383,6 +398,8 @@ def refresh_catalysts() -> None:
             structure["catalystStatus"] = "本次采集失败"
         structure["catalystWindowDays"] = 120
         structure["catalystSource"] = "巨潮资讯上市公司公告"
+        structure["catalystHistory"] = merge_catalyst_history(structure, structure)
+        structure["catalystHistoryDays"] = 1095
         time.sleep(.7)
     payload["updateTime"] = datetime.now().astimezone().isoformat()
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")

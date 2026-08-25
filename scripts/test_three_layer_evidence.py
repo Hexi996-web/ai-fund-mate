@@ -1,6 +1,6 @@
 from scripts.update_attention_pool import THEMES
 from scripts import update_three_layer_evidence as evidence
-from scripts.update_three_layer_evidence import STRUCTURE_CONTRACTS, number
+from scripts.update_three_layer_evidence import STRUCTURE_CONTRACTS, merge_catalyst_history, number
 
 
 def test_every_mother_pool_theme_has_a_structure_contract():
@@ -27,3 +27,9 @@ def test_constituents_follow_every_result_page(monkeypatch):
     rows = evidence.constituents("BK0000")
     assert calls == [1, 2, 3]
     assert len(rows) == 205
+
+
+def test_catalyst_events_are_deduplicated_and_archived():
+    event = {"date": "2026-08-20", "title": "获得项目批准", "sourceUrl": "https://example.test/a"}
+    history = merge_catalyst_history({"catalystHistory": [event]}, {"catalysts": [event]})
+    assert history == [event]
