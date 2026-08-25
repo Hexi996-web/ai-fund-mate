@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updateTime": "2026-08-25T15:45:27.735450+08:00",
+  "updateTime": "2026-08-25T08:58:50.314080+00:00",
   "methodologyVersion": "three-layer-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
@@ -27,7 +27,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -161,7 +163,7 @@
         "liquidConstituentCount": 420,
         "dailyTurnoverYi": 2571.5,
         "totalMarketCapYi": 139191.5,
-        "floatMarketCapYi": 123339.0,
+        "floatMarketCapYi": 123339.4,
         "top10SharePercent": 34.7,
         "hhi": 198.9,
         "topConstituents": [
@@ -1754,7 +1756,7 @@
           {
             "date": "2026-08-25",
             "constituentCount": 726,
-            "floatMarketCapYi": 123339.0,
+            "floatMarketCapYi": 123339.4,
             "dailyTurnoverYi": 2571.5,
             "top10SharePercent": 34.7,
             "hhi": 198.9
@@ -1924,7 +1926,9 @@
         "status": "真实连续数据",
         "accessStatus": "已自动接入",
         "historyPoints": 36,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -2058,7 +2062,7 @@
         "liquidConstituentCount": 196,
         "dailyTurnoverYi": 1301.6,
         "totalMarketCapYi": 67546.3,
-        "floatMarketCapYi": 52830.3,
+        "floatMarketCapYi": 52834.9,
         "top10SharePercent": 35.5,
         "hhi": 238.9,
         "topConstituents": [
@@ -2150,7 +2154,7 @@
           {
             "date": "2026-08-25",
             "constituentCount": 291,
-            "floatMarketCapYi": 52830.3,
+            "floatMarketCapYi": 52834.9,
             "dailyTurnoverYi": 1301.6,
             "top10SharePercent": 35.5,
             "hhi": 238.9
@@ -2176,7 +2180,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -2309,8 +2315,8 @@
         "constituentCount": 311,
         "liquidConstituentCount": 212,
         "dailyTurnoverYi": 1308.3,
-        "totalMarketCapYi": 57816.5,
-        "floatMarketCapYi": 50361.8,
+        "totalMarketCapYi": 57829.2,
+        "floatMarketCapYi": 50371.9,
         "top10SharePercent": 21.1,
         "hhi": 99.5,
         "topConstituents": [
@@ -2352,7 +2358,7 @@
             "name": "景旺电子",
             "floatMarketCapYi": 893.9,
             "dailyTurnoverYi": 23.83,
-            "weightPercent": 1.78
+            "weightPercent": 1.77
           },
           {
             "rank": 6,
@@ -2402,7 +2408,7 @@
           {
             "date": "2026-08-25",
             "constituentCount": 311,
-            "floatMarketCapYi": 50361.8,
+            "floatMarketCapYi": 50371.9,
             "dailyTurnoverYi": 1308.3,
             "top10SharePercent": 21.1,
             "hhi": 99.5
@@ -2449,7 +2455,30 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [
+          {
+            "date": "2026-05-08",
+            "type": "订单与采购",
+            "impact": "positive",
+            "validates": "是否出现真实付费需求",
+            "company": "万胜智能",
+            "title": "关于收到国家电网中标通知书的公告",
+            "source": "巨潮资讯上市公司公告",
+            "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-05-08/1225284605.PDF"
+          },
+          {
+            "date": "2026-04-30",
+            "type": "订单与采购",
+            "impact": "positive",
+            "validates": "是否出现真实付费需求",
+            "company": "万胜智能",
+            "title": "关于国家电网项目预中标的提示性公告",
+            "source": "巨潮资讯上市公司公告",
+            "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225273742.PDF"
+          }
+        ],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -2583,7 +2612,7 @@
         "liquidConstituentCount": 121,
         "dailyTurnoverYi": 885.4,
         "totalMarketCapYi": 29969.7,
-        "floatMarketCapYi": 26925.8,
+        "floatMarketCapYi": 26923.3,
         "top10SharePercent": 35.1,
         "hhi": 189.8,
         "topConstituents": [
@@ -2675,7 +2704,7 @@
           {
             "date": "2026-08-25",
             "constituentCount": 229,
-            "floatMarketCapYi": 26925.8,
+            "floatMarketCapYi": 26923.3,
             "dailyTurnoverYi": 885.4,
             "top10SharePercent": 35.1,
             "hhi": 189.8
@@ -2845,7 +2874,9 @@
         "status": "真实连续数据",
         "accessStatus": "已自动接入",
         "historyPoints": 36,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -2979,7 +3010,7 @@
         "liquidConstituentCount": 416,
         "dailyTurnoverYi": 4192.3,
         "totalMarketCapYi": 219422.8,
-        "floatMarketCapYi": 138597.6,
+        "floatMarketCapYi": 138599.8,
         "top10SharePercent": 25.4,
         "hhi": 107.4,
         "topConstituents": [
@@ -4572,7 +4603,7 @@
           {
             "date": "2026-08-25",
             "constituentCount": 524,
-            "floatMarketCapYi": 138597.6,
+            "floatMarketCapYi": 138599.8,
             "dailyTurnoverYi": 4192.3,
             "top10SharePercent": 25.4,
             "hhi": 107.4
@@ -4605,7 +4636,7 @@
             "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-21/1225488085.PDF"
           },
           {
-            "date": "2026-08-19",
+            "date": "2026-08-18",
             "type": "准入与审批",
             "impact": "positive",
             "validates": "商业化准入是否打开",
@@ -4615,7 +4646,7 @@
             "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-19/1225480758.PDF"
           },
           {
-            "date": "2026-08-19",
+            "date": "2026-08-18",
             "type": "准入与审批",
             "impact": "positive",
             "validates": "商业化准入是否打开",
@@ -4625,7 +4656,7 @@
             "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-19/1225480088.PDF"
           },
           {
-            "date": "2026-08-19",
+            "date": "2026-08-18",
             "type": "准入与审批",
             "impact": "positive",
             "validates": "商业化准入是否打开",
@@ -4649,7 +4680,60 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [
+          {
+            "date": "2026-08-21",
+            "type": "准入与审批",
+            "impact": "positive",
+            "validates": "商业化准入是否打开",
+            "company": "一品红",
+            "title": "关于全资子公司创新药APH03867片获得临床试验批准通知书的公告",
+            "source": "巨潮资讯上市公司公告",
+            "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-21/1225488085.PDF"
+          },
+          {
+            "date": "2026-08-18",
+            "type": "准入与审批",
+            "impact": "positive",
+            "validates": "商业化准入是否打开",
+            "company": "上海谊众",
+            "title": "上海谊众药业股份有限公司关于在研创新药YXC-002获得药物临床试验批准通知书的自愿性披露公告",
+            "source": "巨潮资讯上市公司公告",
+            "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-19/1225480758.PDF"
+          },
+          {
+            "date": "2026-08-18",
+            "type": "准入与审批",
+            "impact": "positive",
+            "validates": "商业化准入是否打开",
+            "company": "海思科",
+            "title": "关于获得创新药HSK47388片（I）新适应症《药物临床试验批准通知书》的公告",
+            "source": "巨潮资讯上市公司公告",
+            "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-19/1225480088.PDF"
+          },
+          {
+            "date": "2026-08-18",
+            "type": "准入与审批",
+            "impact": "positive",
+            "validates": "商业化准入是否打开",
+            "company": "海思科",
+            "title": "关于获得创新药HSK51155片《药物临床试验批准通知书》的公告",
+            "source": "巨潮资讯上市公司公告",
+            "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-19/1225480087.PDF"
+          },
+          {
+            "date": "2026-08-18",
+            "type": "准入与审批",
+            "impact": "positive",
+            "validates": "商业化准入是否打开",
+            "company": "恩华药业",
+            "title": "关于收到1类创新药NH130片《药物临床试验批准通知书》的公告",
+            "source": "巨潮资讯上市公司公告",
+            "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-18/1225478966.PDF"
+          }
+        ],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -4783,7 +4867,7 @@
         "liquidConstituentCount": 146,
         "dailyTurnoverYi": 821.7,
         "totalMarketCapYi": 39304.7,
-        "floatMarketCapYi": 30662.2,
+        "floatMarketCapYi": 30662.7,
         "top10SharePercent": 38.1,
         "hhi": 330.8,
         "topConstituents": [
@@ -6376,7 +6460,7 @@
           {
             "date": "2026-08-25",
             "constituentCount": 198,
-            "floatMarketCapYi": 30662.2,
+            "floatMarketCapYi": 30662.7,
             "dailyTurnoverYi": 821.7,
             "top10SharePercent": 38.1,
             "hhi": 330.8
@@ -6402,7 +6486,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -8155,29 +8241,31 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
-        "reportedCompanies": 5,
+        "reportedCompanies": 6,
         "coveragePercent": 39.0,
         "reportDate": "2026-06-30",
-        "revenueGrowthMedian": -4.6,
-        "positiveRevenueShare": 40.0,
-        "profitGrowthMedian": 62.7,
-        "positiveProfitShare": 60.0,
-        "cashToRevenueMedian": 0.2,
+        "revenueGrowthMedian": -3.9,
+        "positiveRevenueShare": 33.3,
+        "profitGrowthMedian": 52.5,
+        "positiveProfitShare": 66.7,
+        "cashToRevenueMedian": 0.1,
         "source": "东方财富上市公司财务报告",
         "status": "真实公开数据",
         "history": [
           {
             "reportDate": "2026-06-30",
-            "sampleCompanies": 5,
-            "revenueGrowthMedian": -4.6,
-            "positiveRevenueShare": 40.0,
-            "profitGrowthMedian": 62.7,
-            "positiveProfitShare": 60.0,
-            "cashToRevenueMedian": 0.2,
+            "sampleCompanies": 6,
+            "revenueGrowthMedian": -3.9,
+            "positiveRevenueShare": 33.3,
+            "profitGrowthMedian": 52.5,
+            "positiveProfitShare": 66.7,
+            "cashToRevenueMedian": 0.1,
             "coveragePercent": 39.0
           },
           {
@@ -8968,7 +9056,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -9102,7 +9192,7 @@
         "liquidConstituentCount": 250,
         "dailyTurnoverYi": 1972.3,
         "totalMarketCapYi": 69933.8,
-        "floatMarketCapYi": 62718.3,
+        "floatMarketCapYi": 62718.4,
         "top10SharePercent": 23.4,
         "hhi": 100.3,
         "topConstituents": [
@@ -10695,7 +10785,7 @@
           {
             "date": "2026-08-25",
             "constituentCount": 394,
-            "floatMarketCapYi": 62718.3,
+            "floatMarketCapYi": 62718.4,
             "dailyTurnoverYi": 1972.3,
             "top10SharePercent": 23.4,
             "hhi": 100.3
@@ -10721,7 +10811,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -12474,7 +12566,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -12608,7 +12702,7 @@
         "liquidConstituentCount": 122,
         "dailyTurnoverYi": 515.5,
         "totalMarketCapYi": 27621.8,
-        "floatMarketCapYi": 24571.8,
+        "floatMarketCapYi": 24572.3,
         "top10SharePercent": 37.1,
         "hhi": 231.5,
         "topConstituents": [
@@ -14201,7 +14295,7 @@
           {
             "date": "2026-08-25",
             "constituentCount": 234,
-            "floatMarketCapYi": 24571.8,
+            "floatMarketCapYi": 24572.3,
             "dailyTurnoverYi": 515.5,
             "top10SharePercent": 37.1,
             "hhi": 231.5
@@ -14227,7 +14321,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -15980,7 +16076,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -17733,7 +17831,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -19486,7 +19586,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -21383,12 +21485,14 @@
         "status": "真实连续数据",
         "accessStatus": "已自动接入",
         "historyPoints": 36,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 3,
-        "coveragePercent": 42.2,
+        "coveragePercent": 42.1,
         "reportDate": "2026-06-30",
         "revenueGrowthMedian": 10.8,
         "positiveRevenueShare": 66.7,
@@ -21406,7 +21510,7 @@
             "profitGrowthMedian": -19.8,
             "positiveProfitShare": 0.0,
             "cashToRevenueMedian": 0.1,
-            "coveragePercent": 42.2
+            "coveragePercent": 42.1
           },
           {
             "reportDate": "2026-03-31",
@@ -21516,10 +21620,10 @@
         "constituentCount": 206,
         "liquidConstituentCount": 118,
         "dailyTurnoverYi": 621.4,
-        "totalMarketCapYi": 48284.6,
-        "floatMarketCapYi": 40388.5,
-        "top10SharePercent": 42.2,
-        "hhi": 407.8,
+        "totalMarketCapYi": 48297.3,
+        "floatMarketCapYi": 40401.2,
+        "top10SharePercent": 42.1,
+        "hhi": 407.6,
         "topConstituents": [
           {
             "rank": 1,
@@ -21527,7 +21631,7 @@
             "name": "长江电力",
             "floatMarketCapYi": 6902.5,
             "dailyTurnoverYi": 25.46,
-            "weightPercent": 17.09
+            "weightPercent": 17.08
           },
           {
             "rank": 2,
@@ -23110,10 +23214,10 @@
           {
             "date": "2026-08-25",
             "constituentCount": 206,
-            "floatMarketCapYi": 40388.5,
+            "floatMarketCapYi": 40401.2,
             "dailyTurnoverYi": 621.4,
-            "top10SharePercent": 42.2,
-            "hhi": 407.8
+            "top10SharePercent": 42.1,
+            "hhi": 407.6
           }
         ]
       }
@@ -23136,7 +23240,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -24889,28 +24995,30 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
-        "reportedCompanies": 5,
+        "reportedCompanies": 6,
         "coveragePercent": 26.3,
         "reportDate": "2026-06-30",
-        "revenueGrowthMedian": 9.0,
-        "positiveRevenueShare": 80.0,
-        "profitGrowthMedian": -28.9,
-        "positiveProfitShare": 40.0,
+        "revenueGrowthMedian": 14.3,
+        "positiveRevenueShare": 83.3,
+        "profitGrowthMedian": -23.1,
+        "positiveProfitShare": 33.3,
         "cashToRevenueMedian": -0.0,
         "source": "东方财富上市公司财务报告",
         "status": "真实公开数据",
         "history": [
           {
             "reportDate": "2026-06-30",
-            "sampleCompanies": 5,
-            "revenueGrowthMedian": 9.0,
-            "positiveRevenueShare": 80.0,
-            "profitGrowthMedian": -28.9,
-            "positiveProfitShare": 40.0,
+            "sampleCompanies": 6,
+            "revenueGrowthMedian": 14.3,
+            "positiveRevenueShare": 83.3,
+            "profitGrowthMedian": -23.1,
+            "positiveProfitShare": 33.3,
             "cashToRevenueMedian": -0.0,
             "coveragePercent": 26.3
           },
@@ -25022,10 +25130,10 @@
         "constituentCount": 295,
         "liquidConstituentCount": 169,
         "dailyTurnoverYi": 685.7,
-        "totalMarketCapYi": 39409.8,
-        "floatMarketCapYi": 34506.6,
+        "totalMarketCapYi": 39422.5,
+        "floatMarketCapYi": 34519.9,
         "top10SharePercent": 26.3,
-        "hhi": 120.4,
+        "hhi": 120.3,
         "topConstituents": [
           {
             "rank": 1,
@@ -26616,10 +26724,10 @@
           {
             "date": "2026-08-25",
             "constituentCount": 295,
-            "floatMarketCapYi": 34506.6,
+            "floatMarketCapYi": 34519.9,
             "dailyTurnoverYi": 685.7,
             "top10SharePercent": 26.3,
-            "hhi": 120.4
+            "hhi": 120.3
           }
         ]
       }
@@ -26694,29 +26802,31 @@
         "status": "真实连续数据",
         "accessStatus": "已自动接入",
         "historyPoints": 13,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
-        "reportedCompanies": 2,
+        "reportedCompanies": 3,
         "coveragePercent": 56.4,
         "reportDate": "2026-06-30",
-        "revenueGrowthMedian": 33.3,
+        "revenueGrowthMedian": 12.0,
         "positiveRevenueShare": 100.0,
-        "profitGrowthMedian": 67.8,
-        "positiveProfitShare": 100.0,
-        "cashToRevenueMedian": 0.0,
+        "profitGrowthMedian": 39.6,
+        "positiveProfitShare": 66.7,
+        "cashToRevenueMedian": 0.1,
         "source": "东方财富上市公司财务报告",
         "status": "真实公开数据",
         "history": [
           {
             "reportDate": "2026-06-30",
-            "sampleCompanies": 2,
-            "revenueGrowthMedian": 33.3,
+            "sampleCompanies": 3,
+            "revenueGrowthMedian": 12.0,
             "positiveRevenueShare": 100.0,
-            "profitGrowthMedian": 67.8,
-            "positiveProfitShare": 100.0,
-            "cashToRevenueMedian": 0.0,
+            "profitGrowthMedian": 39.6,
+            "positiveProfitShare": 66.7,
+            "cashToRevenueMedian": 0.1,
             "coveragePercent": 56.4
           },
           {
@@ -28447,7 +28557,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -30200,7 +30312,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -30334,7 +30448,7 @@
         "liquidConstituentCount": 16,
         "dailyTurnoverYi": 50.8,
         "totalMarketCapYi": 3881.6,
-        "floatMarketCapYi": 3627.9,
+        "floatMarketCapYi": 3628.1,
         "top10SharePercent": 57.8,
         "hhi": 605.5,
         "topConstituents": [
@@ -31927,7 +32041,7 @@
           {
             "date": "2026-08-25",
             "constituentCount": 54,
-            "floatMarketCapYi": 3627.9,
+            "floatMarketCapYi": 3628.1,
             "dailyTurnoverYi": 50.8,
             "top10SharePercent": 57.8,
             "hhi": 605.5
@@ -31953,7 +32067,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -33706,7 +33822,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -35459,7 +35577,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -37212,7 +37332,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -38965,29 +39087,31 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
-        "reportedCompanies": 4,
+        "reportedCompanies": 5,
         "coveragePercent": 67.9,
         "reportDate": "2026-06-30",
-        "revenueGrowthMedian": 1.7,
-        "positiveRevenueShare": 50.0,
-        "profitGrowthMedian": 11.2,
-        "positiveProfitShare": 75.0,
-        "cashToRevenueMedian": 0.2,
+        "revenueGrowthMedian": 5.1,
+        "positiveRevenueShare": 60.0,
+        "profitGrowthMedian": 19.5,
+        "positiveProfitShare": 80.0,
+        "cashToRevenueMedian": 0.1,
         "source": "东方财富上市公司财务报告",
         "status": "真实公开数据",
         "history": [
           {
             "reportDate": "2026-06-30",
-            "sampleCompanies": 4,
-            "revenueGrowthMedian": 1.7,
-            "positiveRevenueShare": 50.0,
-            "profitGrowthMedian": 11.2,
-            "positiveProfitShare": 75.0,
-            "cashToRevenueMedian": 0.2,
+            "sampleCompanies": 5,
+            "revenueGrowthMedian": 5.1,
+            "positiveRevenueShare": 60.0,
+            "profitGrowthMedian": 19.5,
+            "positiveProfitShare": 80.0,
+            "cashToRevenueMedian": 0.1,
             "coveragePercent": 67.9
           },
           {
@@ -40718,7 +40842,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 9,
@@ -42427,8 +42553,8 @@
           },
           {
             "date": "2026-08-25",
-            "close": 3610.63,
-            "turnoverYi": 7.83
+            "close": 3605.2,
+            "turnoverYi": 7.96
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -42463,7 +42589,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -42597,7 +42725,7 @@
         "liquidConstituentCount": 34,
         "dailyTurnoverYi": 121.0,
         "totalMarketCapYi": 8014.1,
-        "floatMarketCapYi": 7350.1,
+        "floatMarketCapYi": 7349.8,
         "top10SharePercent": 36.4,
         "hhi": 206.6,
         "topConstituents": [
@@ -44190,7 +44318,7 @@
           {
             "date": "2026-08-25",
             "constituentCount": 96,
-            "floatMarketCapYi": 7350.1,
+            "floatMarketCapYi": 7349.8,
             "dailyTurnoverYi": 121.0,
             "top10SharePercent": 36.4,
             "hhi": 206.6
@@ -44360,7 +44488,9 @@
         "status": "真实连续数据",
         "accessStatus": "已自动接入",
         "historyPoints": 36,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -46113,7 +46243,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -46246,8 +46378,8 @@
         "constituentCount": 428,
         "liquidConstituentCount": 241,
         "dailyTurnoverYi": 1160.9,
-        "totalMarketCapYi": 56853.9,
-        "floatMarketCapYi": 49662.0,
+        "totalMarketCapYi": 56866.6,
+        "floatMarketCapYi": 49677.2,
         "top10SharePercent": 19.9,
         "hhi": 86.2,
         "topConstituents": [
@@ -46265,7 +46397,7 @@
             "name": "中航沈飞",
             "floatMarketCapYi": 1254.1,
             "dailyTurnoverYi": 4.95,
-            "weightPercent": 2.53
+            "weightPercent": 2.52
           },
           {
             "rank": 3,
@@ -47840,7 +47972,7 @@
           {
             "date": "2026-08-25",
             "constituentCount": 428,
-            "floatMarketCapYi": 49662.0,
+            "floatMarketCapYi": 49677.2,
             "dailyTurnoverYi": 1160.9,
             "top10SharePercent": 19.9,
             "hhi": 86.2
@@ -48010,28 +48142,30 @@
         "status": "真实连续数据",
         "accessStatus": "已自动接入",
         "historyPoints": 36,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
-        "reportedCompanies": 3,
+        "reportedCompanies": 4,
         "coveragePercent": 51.3,
         "reportDate": "2026-06-30",
-        "revenueGrowthMedian": 13.9,
-        "positiveRevenueShare": 100.0,
-        "profitGrowthMedian": -2.7,
-        "positiveProfitShare": 33.3,
+        "revenueGrowthMedian": 7.2,
+        "positiveRevenueShare": 75.0,
+        "profitGrowthMedian": -6.2,
+        "positiveProfitShare": 25.0,
         "cashToRevenueMedian": 0.0,
         "source": "东方财富上市公司财务报告",
         "status": "真实公开数据",
         "history": [
           {
             "reportDate": "2026-06-30",
-            "sampleCompanies": 3,
-            "revenueGrowthMedian": 13.9,
-            "positiveRevenueShare": 100.0,
-            "profitGrowthMedian": -2.7,
-            "positiveProfitShare": 33.3,
+            "sampleCompanies": 4,
+            "revenueGrowthMedian": 7.2,
+            "positiveRevenueShare": 75.0,
+            "profitGrowthMedian": -6.2,
+            "positiveProfitShare": 25.0,
             "cashToRevenueMedian": 0.0,
             "coveragePercent": 51.3
           },
@@ -49763,7 +49897,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 5,
@@ -51476,7 +51612,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -53229,7 +53367,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -53363,7 +53503,7 @@
         "liquidConstituentCount": 58,
         "dailyTurnoverYi": 267.9,
         "totalMarketCapYi": 13939.2,
-        "floatMarketCapYi": 12827.2,
+        "floatMarketCapYi": 12827.3,
         "top10SharePercent": 35.8,
         "hhi": 208.4,
         "topConstituents": [
@@ -54956,7 +55096,7 @@
           {
             "date": "2026-08-25",
             "constituentCount": 128,
-            "floatMarketCapYi": 12827.2,
+            "floatMarketCapYi": 12827.3,
             "dailyTurnoverYi": 267.9,
             "top10SharePercent": 35.8,
             "hhi": 208.4
@@ -54982,7 +55122,9 @@
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "historyPoints": 0,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -56879,7 +57021,9 @@
         "status": "真实连续数据",
         "accessStatus": "已自动接入",
         "historyPoints": 36,
-        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"
+        "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
+        "catalystHistory": [],
+        "catalystHistoryDays": 1095
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -57013,7 +57157,7 @@
         "liquidConstituentCount": 412,
         "dailyTurnoverYi": 2641.8,
         "totalMarketCapYi": 138797.9,
-        "floatMarketCapYi": 116532.7,
+        "floatMarketCapYi": 116534.0,
         "top10SharePercent": 28.3,
         "hhi": 168.3,
         "topConstituents": [
@@ -58606,7 +58750,7 @@
           {
             "date": "2026-08-25",
             "constituentCount": 745,
-            "floatMarketCapYi": 116532.7,
+            "floatMarketCapYi": 116534.0,
             "dailyTurnoverYi": 2641.8,
             "top10SharePercent": 28.3,
             "hhi": 168.3
