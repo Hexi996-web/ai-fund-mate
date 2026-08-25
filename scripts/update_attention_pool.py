@@ -292,28 +292,34 @@ def social_attention(theme_id: str, history: dict, media_agenda: dict | None = N
         return {"appearances": int(appearances), "resonance": int(resonance), "weighted": weighted,
                 "days": len(days), "sourceCount": len(source_hits), "bestRank": best_rank}
 
-    current, before = summarize(recent), summarize(prior)
+    month = [item for item in history["snapshots"] if datetime.fromisoformat(item["capturedAt"]) >= now - timedelta(days=30)]
+    current, before, rolling_month = summarize(recent), summarize(prior), summarize(month)
     acceleration = (current["weighted"] / max(before["weighted"], 0.25) - 1) * 100 if current["weighted"] else -100
-    persistence = min(1, current["days"] / max(3, min(7, len({item["capturedAt"][:10] for item in recent}))))
+    observed7 = len({item["capturedAt"][:10] for item in recent})
+    observed30 = len({item["capturedAt"][:10] for item in month})
+    persistence7 = min(1, current["days"] / max(3, min(7, observed7)))
+    persistence30 = min(1, rolling_month["days"] / max(7, min(30, observed30)))
     resonance = min(1, current["resonance"] / max(1, len(recent)))
     rank_strength = max(0, 51 - (current["bestRank"] or 51)) / 50
     acceleration_factor = (clamp(acceleration, -100, 200) + 100) / 300
-    agenda_factor = 0.5
+    agenda_factor = 0
     if media_agenda:
         agenda_factor = (clamp(media_agenda["accelerationPercent"], -100, 200) + 100) / 300
-    score = 30 * resonance + 25 * persistence + 15 * rank_strength + 20 * acceleration_factor + 10 * agenda_factor
+    score = 25 * resonance + 20 * persistence7 + 15 * persistence30 + 15 * rank_strength + 15 * acceleration_factor + 10 * agenda_factor
     observed_days = len({item["capturedAt"][:10] for item in history["snapshots"]})
     status = "社会共振" if current["resonance"] >= 2 else "开始扩散" if current["appearances"] else "未破圈"
     return {
         "score": round(clamp(score), 1), "statusLabel": status,
         "recent7Appearances": current["appearances"], "prior7Appearances": before["appearances"],
         "crossPlatformHits7d": current["resonance"], "activeDays7d": current["days"],
+        "recent30Appearances": rolling_month["appearances"],
+        "crossPlatformHits30d": rolling_month["resonance"], "activeDays30d": rolling_month["days"],
         "bestRank7d": current["bestRank"], "accelerationPercent": round(acceleration, 1),
         "observedDays": observed_days, "mediaAgenda": media_agenda,
         "source": "百度热搜 × 头条热榜" + (" × GDELT" if media_agenda else ""),
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
         "status": "真实公开代理",
-        "scoreMethod": "双平台共振30%＋持续性25%＋排名强度15%＋加速度20%＋GDELT媒体议程10%",
+        "scoreMethod": "双平台共振25%＋7日持续性20%＋30日持续性15%＋排名强度15%＋7日加速度15%＋GDELT媒体议程10%",
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。",
     }
 
@@ -369,6 +375,23 @@ def product_validation(theme_id: str) -> dict:
     increase = sum(item.get("scaleNetIncreaseYi", item["currentScaleYi"] - item["baselineScaleYi"]) for item in comparable)
     growth = increase / baseline * 100 if baseline else 0
     total = sum(item.get("currentScaleYi") or 0 for item in peers)
+    scale_values = sorted((item.get("currentScaleYi") or 0 for item in peers), reverse=True)
+    top1_share = scale_values[0] / total * 100 if total and scale_values else 0
+    top3_share = sum(scale_values[:3]) / total * 100 if total else 0
+    effective = sum(value >= 2 for value in scale_values)
+    positive = sum((item.get("scaleNetIncreaseYi") or 0) > 0 for item in comparable)
+    breadth = positive / len(comparable) * 100 if comparable else 0
+    flow_proxy = 0.0
+    flow_comparable = 0
+    positive_flow = 0
+    for item in comparable:
+        nav_growth = item.get("navGrowthPercent")
+        if not isinstance(nav_growth, (int, float)):
+            continue
+        estimated = item["currentScaleYi"] - item["baselineScaleYi"] * (1 + nav_growth / 100)
+        flow_proxy += estimated
+        flow_comparable += 1
+        positive_flow += estimated > 0
     today = date.today()
     launched = 0
     for item in peers:
@@ -377,15 +400,52 @@ def product_validation(theme_id: str) -> dict:
         except ValueError:
             continue
         launched += established >= today - timedelta(days=365)
-    score = clamp(30 + clamp(growth, -40, 80) * 0.35 + math.log1p(total) * 4 + min(launched, 15) * 1.2)
     return {
-        "score": round(score, 1), "peerFunds": len(peers), "comparableFunds": len(comparable),
+        "score": 0, "peerFunds": len(peers), "comparableFunds": len(comparable),
         "currentScaleYi": round(total, 1), "scaleNetIncreaseYi": round(increase, 1),
         "scaleGrowthPercent": round(growth, 1), "launched12Months": launched,
+        "estimatedNetFlowYi": round(flow_proxy, 1), "flowComparableFunds": flow_comparable,
+        "positiveFlowFunds": positive_flow,
+        "growthBreadthPercent": round(breadth, 1), "positiveGrowthFunds": positive,
+        "effectiveFunds": effective, "effectiveScaleThresholdYi": 2,
+        "top1SharePercent": round(top1_share, 1), "top3SharePercent": round(top3_share, 1),
         "asOf": payload.get("updateTime"), "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json", "status": "真实公开数据",
-        "note": "衡量同类基金的规模与新增供给，只代表产品市场验证，不替代产业收入、利润或订单。",
+        "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
     }
+
+
+def percentile(values: list[float], value: float) -> float:
+    if not values:
+        return 0
+    ordered = sorted(values)
+    lower = ordered.index(value)
+    upper = len(ordered) - 1 - ordered[::-1].index(value)
+    return ((lower + upper) / 2 + 1) / len(ordered) * 100
+
+
+def rescore_product_validations(items: list[dict]) -> None:
+    validations = [item["validation"] for item in items if item.get("validation")]
+    fields = ("estimatedNetFlowYi", "scaleNetIncreaseYi", "scaleGrowthPercent", "effectiveFunds", "currentScaleYi", "launched12Months")
+    distributions = {field: [float(item.get(field) or 0) for item in validations] for field in fields}
+    for validation in validations:
+        components = {
+            "estimatedNetFlow": percentile(distributions["estimatedNetFlowYi"], float(validation.get("estimatedNetFlowYi") or 0)),
+            "absoluteScaleIncrease": percentile(distributions["scaleNetIncreaseYi"], float(validation.get("scaleNetIncreaseYi") or 0)),
+            "scaleGrowthRate": percentile(distributions["scaleGrowthPercent"], float(validation.get("scaleGrowthPercent") or 0)),
+            "growthBreadth": float(validation.get("growthBreadthPercent") or 0),
+            "concentrationBalance": 100 - float(validation.get("top1SharePercent") or 0),
+            "effectiveProducts": percentile(distributions["effectiveFunds"], float(validation.get("effectiveFunds") or 0)),
+            "currentScale": percentile(distributions["currentScaleYi"], float(validation.get("currentScaleYi") or 0)),
+            "newLaunches": percentile(distributions["launched12Months"], float(validation.get("launched12Months") or 0)),
+        }
+        score = (components["estimatedNetFlow"] * .25 + components["absoluteScaleIncrease"] * .15 +
+                 components["scaleGrowthRate"] * .10 + components["growthBreadth"] * .15 +
+                 components["concentrationBalance"] * .10 + components["effectiveProducts"] * .10 +
+                 components["currentScale"] * .10 + components["newLaunches"] * .05)
+        validation["score"] = round(clamp(score), 1)
+        validation["scoreComponents"] = {key: round(value, 1) for key, value in components.items()}
+        validation["scoreMethod"] = "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
 
 
 def asset_capacity() -> dict[str, dict]:
@@ -454,7 +514,7 @@ def main() -> None:
                 errors.append(f"gdelt: {type(exc).__name__}")
                 if isinstance(exc, requests.HTTPError) and exc.response is not None and exc.response.status_code == 429:
                     gdelt_enabled = False
-        attention = social_attention(theme_id, history, media_agenda)
+        attention = social_attention(theme_id, history, media_agenda) if hotlist_snapshot.get("sources") else old.get("attention")
         if index < len(THEMES) - 1:
             time.sleep(5.2 if gdelt_enabled else 0.1)
         try:
@@ -469,6 +529,7 @@ def main() -> None:
             "attention": attention, "validation": validation, "capacity": capacity,
             "errors": errors,
         })
+    rescore_product_validations(items)
     verified_count = sum(bool(item["verified"]) for item in items)
     ranked = sorted(
         (item for item in items if item["verified"]),

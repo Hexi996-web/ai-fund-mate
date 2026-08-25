@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from scripts.update_attention_pool import (
     parse_baidu_hotlist_html,
     parse_toutiao_hotlist,
+    rescore_product_validations,
     social_attention,
 )
 
@@ -38,6 +39,25 @@ def test_cross_platform_resonance_scores_above_no_breakout():
     assert resonance["statusLabel"] == "社会共振"
     assert resonance["crossPlatformHits7d"] == 3
     assert resonance["activeDays7d"] == 3
+    assert resonance["activeDays30d"] == 3
+    assert resonance["recent30Appearances"] == 6
     assert resonance["score"] > quiet["score"]
     assert quiet["statusLabel"] == "未破圈"
+    assert quiet["score"] == 0
+
+
+def test_product_validation_score_rewards_absolute_demand_and_breadth():
+    items = [
+        {"validation": {"estimatedNetFlowYi": 120, "scaleNetIncreaseYi": 150, "scaleGrowthPercent": 20,
+                        "growthBreadthPercent": 80, "top1SharePercent": 30, "effectiveFunds": 8,
+                        "currentScaleYi": 600, "launched12Months": 4}},
+        {"validation": {"estimatedNetFlowYi": 0.5, "scaleNetIncreaseYi": 1, "scaleGrowthPercent": 100,
+                        "growthBreadthPercent": 10, "top1SharePercent": 95, "effectiveFunds": 1,
+                        "currentScaleYi": 2, "launched12Months": 1}},
+    ]
+    rescore_product_validations(items)
+    broad, tiny = (item["validation"] for item in items)
+    assert broad["score"] > tiny["score"]
+    assert broad["scoreComponents"]["absoluteScaleIncrease"] > tiny["scoreComponents"]["absoluteScaleIncrease"]
+    assert "净流入代理25%" in broad["scoreMethod"]
 
