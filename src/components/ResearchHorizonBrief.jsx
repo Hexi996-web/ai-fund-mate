@@ -12,11 +12,16 @@ const pct = (value) => Number.isFinite(value) ? `${value >= 0 ? '+' : ''}${value
 
 function buildBrief(snapshot, horizon) {
   const definition = HORIZONS[horizon]
+  const attentionCap = snapshot.attentionMaturity?.effectiveWeight ?? .05
+  const attentionWeight = Math.min(definition.weights.attention,attentionCap)
+  const released = definition.weights.attention-attentionWeight
+  const base = definition.weights.validation+definition.weights.capacity
+  const weights = {...definition.weights,attention:attentionWeight,validation:definition.weights.validation+released*(definition.weights.validation/base),capacity:definition.weights.capacity+released*(definition.weights.capacity/base)}
   const metadata = new Map(ATTENTION_POOL.map((item) => [item.id,item]))
   return (snapshot.items || []).filter((item) => item.verified && metadata.has(item.id)).map((proof) => {
     const item = metadata.get(proof.id)
     const launchScore = Math.min(100,(proof.validation.launched12Months || 0) * 6)
-    const score = proof.attention.score * definition.weights.attention + proof.validation.score * definition.weights.validation + proof.capacity.score * definition.weights.capacity + launchScore * definition.weights.launch + (definition.stageBoost[item.stage] || 0)
+    const score = proof.attention.score * weights.attention + proof.validation.score * weights.validation + proof.capacity.score * weights.capacity + launchScore * weights.launch + (definition.stageBoost[item.stage] || 0)
     const evidence = horizon === 'month'
       ? `${proof.validation.launched12Months}只近12月新发，规模净变动${signedYi(proof.validation.scaleNetIncreaseYi)}`
       : horizon === 'quarter'
@@ -39,7 +44,7 @@ export function ResearchHorizonBrief({ snapshot, onFocus }) {
   const definition = HORIZONS[horizon]
 
   return <section className="horizon-brief" aria-label="前瞻产品方向简报">
-    <header><div><small>产品经理前瞻简报</small><h2>未来半年，先看什么</h2><p>{definition.eyebrow}。排序随每日公开数据变化，不等同发行建议。</p></div><nav aria-label="简报时间范围">{Object.entries(HORIZONS).map(([id,item])=><button type="button" className={horizon===id?'active':''} aria-pressed={horizon===id} onClick={()=>{setHorizon(id);setSelected('')}} key={id}>{item.label}</button>)}</nav></header>
+    <header><div><small>产品经理前瞻简报</small><h2>未来半年，先看什么</h2><p>{definition.eyebrow}。注意力仅有{snapshot.attentionMaturity?.observedDays||0}个有效观察日，当前按{Math.round((snapshot.attentionMaturity?.effectiveWeight||.05)*100)}%上限参与排序；排序不等同发行建议。</p></div><nav aria-label="简报时间范围">{Object.entries(HORIZONS).map(([id,item])=><button type="button" className={horizon===id?'active':''} aria-pressed={horizon===id} onClick={()=>{setHorizon(id);setSelected('')}} key={id}>{item.label}</button>)}</nav></header>
     <div className="horizon-body">
       <div className="horizon-list">{briefs.map((item,index)=><button type="button" className={(active?.id===item.id?'active ':'')+`horizon-rank-${index+1}`} onClick={()=>setSelected(item.id)} key={item.id}><i>{String(index+1).padStart(2,'0')}</i><span><small>{definition.tone}关注</small><strong>{item.name}</strong><em>{item.evidence}</em></span><b>→</b></button>)}</div>
       {active?<article className="horizon-analysis"><div><span>{active.driver}驱动 · {active.stage}</span><strong>{active.name}</strong></div><p>{active.thesis}</p><section><small>本窗口的判断重点</small><strong>{active.analysis}</strong></section><dl><div><dt>产品市场验证</dt><dd>{active.proof.validation.score.toFixed(1)}</dd></div><div><dt>规模净增加</dt><dd>{signedYi(active.proof.validation.scaleNetIncreaseYi)}</dd></div><div><dt>下一项验证</dt><dd>{active.validation}</dd></div></dl><button type="button" onClick={()=>onFocus(active.id)}>在热力图中查看 →</button></article>:<article className="horizon-analysis"><strong>数据加载中</strong></article>}

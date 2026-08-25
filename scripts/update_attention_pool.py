@@ -226,9 +226,45 @@ def update_attention_history(snapshot: dict) -> dict:
     snapshots = [item for item in history["snapshots"] if item.get("capturedAt", "")[:13] != bucket]
     if snapshot.get("sources"):
         snapshots.append(snapshot)
-    cutoff = datetime.now().astimezone() - timedelta(days=35)
+    cutoff = datetime.now().astimezone() - timedelta(days=90)
     snapshots = [item for item in snapshots if datetime.fromisoformat(item["capturedAt"]) >= cutoff]
-    history = {"schemaVersion": 1, "generatedAt": snapshot["capturedAt"], "snapshots": snapshots}
+    daily = {}
+    for item in snapshots:
+        day = item["capturedAt"][:10]
+        bucket_data = daily.setdefault(day, {"date": day, "samples": 0, "themes": {}})
+        bucket_data["samples"] += 1
+        for theme_id, _query, _board in THEMES:
+            summary = summarize_theme_snapshots(theme_id, [item])
+            if summary["appearances"]:
+                current = bucket_data["themes"].setdefault(theme_id, {"appearances": 0, "resonance": 0, "bestRank": None})
+                current["appearances"] += summary["appearances"]
+                current["resonance"] += summary["resonance"]
+                rank = summary["bestRank"]
+                current["bestRank"] = rank if current["bestRank"] is None else min(current["bestRank"], rank)
+    # Daily summaries remain compact and can be retained for three years even after raw 2-hour samples expire.
+    retained_daily = {item["date"]: item for item in history.get("daily", []) if item.get("date", "") < cutoff.date().isoformat()}
+    retained_daily.update(daily)
+    three_year_cutoff = (date.today() - timedelta(days=1095)).isoformat()
+    daily_rows = [retained_daily[key] for key in sorted(retained_daily) if key >= three_year_cutoff]
+
+    def rollup(period: str) -> list[dict]:
+        groups = {}
+        for row in daily_rows:
+            current_date = date.fromisoformat(row["date"])
+            key = current_date.strftime("%Y-%m") if period == "month" else f"{current_date.isocalendar().year}-W{current_date.isocalendar().week:02d}"
+            target = groups.setdefault(key, {"period": key, "activeDays": 0, "themes": {}})
+            target["activeDays"] += 1
+            for theme_id, values in row.get("themes", {}).items():
+                merged = target["themes"].setdefault(theme_id, {"appearances": 0, "resonance": 0, "activeDays": 0, "bestRank": None})
+                merged["appearances"] += values.get("appearances", 0)
+                merged["resonance"] += values.get("resonance", 0)
+                merged["activeDays"] += 1
+                rank = values.get("bestRank")
+                if rank is not None:
+                    merged["bestRank"] = rank if merged["bestRank"] is None else min(merged["bestRank"], rank)
+        return [groups[key] for key in sorted(groups)]
+
+    history = {"schemaVersion": 2, "generatedAt": snapshot["capturedAt"], "retention": {"rawDays": 90, "dailyDays": 1095, "weekly": "permanent", "monthly": "permanent"}, "snapshots": snapshots, "daily": daily_rows, "weekly": rollup("week"), "monthly": rollup("month")}
     ATTENTION_HISTORY.write_text(json.dumps(history, ensure_ascii=False, indent=2), encoding="utf-8")
     return history
 
@@ -236,6 +272,43 @@ def update_attention_history(snapshot: dict) -> dict:
 def matched_theme(entry: dict, theme_id: str) -> bool:
     text = f"{entry.get('title', '')} {entry.get('description', '')}".lower()
     return any(term.lower() in text for term in THEME_TERMS[theme_id])
+
+
+def summarize_theme_snapshots(theme_id: str, snapshots: list[dict]) -> dict:
+    appearances = resonance = 0
+    weighted = 0.0
+    days, source_hits, best_rank = set(), set(), None
+    for snapshot in snapshots:
+        matched_sources = 0
+        for source, entries in snapshot.get("sources", {}).items():
+            matches = [entry for entry in entries if matched_theme(entry, theme_id)]
+            if not matches:
+                continue
+            matched_sources += 1
+            source_hits.add(source)
+            rank = min(entry["rank"] for entry in matches)
+            best_rank = rank if best_rank is None else min(best_rank, rank)
+            appearances += 1
+            weighted += max(0, 51 - rank) / 50
+        if matched_sources:
+            days.add(snapshot["capturedAt"][:10])
+        if matched_sources >= 2:
+            resonance += 1
+    return {"appearances": appearances, "resonance": resonance, "weighted": weighted,
+            "days": len(days), "sourceCount": len(source_hits), "bestRank": best_rank}
+
+
+def attention_maturity(observed_days: int) -> dict:
+    if observed_days < 7:
+        weight, label = .05, "当日异动"
+    elif observed_days < 30:
+        weight, label = .10, "短期扩散"
+    elif observed_days < 90:
+        weight, label = .20, "初步趋势"
+    else:
+        weight, label = .35, "生命周期"
+    return {"observedDays": observed_days, "tier": label, "effectiveWeight": weight,
+            "targetDays": 90, "sampleAdequate": observed_days >= 90}
 
 
 def gdelt_media_agenda(theme_id: str) -> dict | None:
@@ -270,30 +343,8 @@ def social_attention(theme_id: str, history: dict, media_agenda: dict | None = N
     recent = [item for item in history["snapshots"] if datetime.fromisoformat(item["capturedAt"]) >= recent_cutoff]
     prior = [item for item in history["snapshots"] if prior_cutoff <= datetime.fromisoformat(item["capturedAt"]) < recent_cutoff]
 
-    def summarize(snapshots: list[dict]) -> dict:
-        appearances = resonance = weighted = 0.0
-        days, source_hits, best_rank = set(), set(), None
-        for snapshot in snapshots:
-            matched_sources = 0
-            for source, entries in snapshot.get("sources", {}).items():
-                matches = [entry for entry in entries if matched_theme(entry, theme_id)]
-                if not matches:
-                    continue
-                matched_sources += 1
-                source_hits.add(source)
-                rank = min(entry["rank"] for entry in matches)
-                best_rank = rank if best_rank is None else min(best_rank, rank)
-                appearances += 1
-                weighted += max(0, 51 - rank) / 50
-            if matched_sources:
-                days.add(snapshot["capturedAt"][:10])
-            if matched_sources >= 2:
-                resonance += 1
-        return {"appearances": int(appearances), "resonance": int(resonance), "weighted": weighted,
-                "days": len(days), "sourceCount": len(source_hits), "bestRank": best_rank}
-
     month = [item for item in history["snapshots"] if datetime.fromisoformat(item["capturedAt"]) >= now - timedelta(days=30)]
-    current, before, rolling_month = summarize(recent), summarize(prior), summarize(month)
+    current, before, rolling_month = summarize_theme_snapshots(theme_id, recent), summarize_theme_snapshots(theme_id, prior), summarize_theme_snapshots(theme_id, month)
     acceleration = (current["weighted"] / max(before["weighted"], 0.25) - 1) * 100 if current["weighted"] else -100
     observed7 = len({item["capturedAt"][:10] for item in recent})
     observed30 = len({item["capturedAt"][:10] for item in month})
@@ -307,7 +358,9 @@ def social_attention(theme_id: str, history: dict, media_agenda: dict | None = N
         agenda_factor = (clamp(media_agenda["accelerationPercent"], -100, 200) + 100) / 300
     score = 25 * resonance + 20 * persistence7 + 15 * persistence30 + 15 * rank_strength + 15 * acceleration_factor + 10 * agenda_factor
     observed_days = len({item["capturedAt"][:10] for item in history["snapshots"]})
-    status = "社会共振" if current["resonance"] >= 2 else "开始扩散" if current["appearances"] else "未破圈"
+    status = ("社会共振" if current["resonance"] >= 2 else "加速扩散" if current["appearances"] and acceleration >= 50
+              else "开始扩散" if current["appearances"] else "注意力消退" if rolling_month["appearances"]
+              else "媒体萌芽" if media_agenda and media_agenda.get("accelerationPercent", 0) > 25 else "未破圈")
     return {
         "score": round(clamp(score), 1), "statusLabel": status,
         "recent7Appearances": current["appearances"], "prior7Appearances": before["appearances"],
@@ -531,9 +584,14 @@ def main() -> None:
         })
     rescore_product_validations(items)
     verified_count = sum(bool(item["verified"]) for item in items)
+    observed_days = max((item["attention"]["observedDays"] for item in items if item.get("attention")), default=0)
+    maturity = attention_maturity(observed_days)
+    attention_weight = maturity["effectiveWeight"]
+    validation_weight = (1 - attention_weight) * 45 / 65
+    capacity_weight = (1 - attention_weight) * 20 / 65
     ranked = sorted(
         (item for item in items if item["verified"]),
-        key=lambda item: item["attention"]["score"] * 0.35 + item["validation"]["score"] * 0.45 + item["capacity"]["score"] * 0.20,
+        key=lambda item: item["attention"]["score"] * attention_weight + item["validation"]["score"] * validation_weight + item["capacity"]["score"] * capacity_weight,
         reverse=True,
     )
     quarter = f"{date.today().year}-Q{(date.today().month - 1) // 3 + 1}"
@@ -552,7 +610,10 @@ def main() -> None:
         "recommendationReviewQuarter": quarter,
         "recommendationPolicy": "核心10原则上按季度重排；重大政策、技术或企业证伪事件可通过FORCE_CORE_REVIEW触发临时复核。",
         "items": items,
-        "attentionObservationDays": max((item["attention"]["observedDays"] for item in items), default=0),
+        "attentionObservationDays": observed_days,
+        "attentionMaturity": maturity,
+        "rankingWeights": {"attention": round(attention_weight, 4), "validation": round(validation_weight, 4), "capacity": round(capacity_weight, 4)},
+        "historyCoverage": {"rawSamples": len(history.get("snapshots", [])), "daily": len(history.get("daily", [])), "weekly": len(history.get("weekly", [])), "monthly": len(history.get("monthly", []))},
         "attentionSources": ["百度热搜", "头条热榜", "GDELT DOC 2.0（早期媒体议程）"],
         "disclosure": "社会注意力由百度热搜与头条热榜交叉验证，GDELT仅识别早期媒体议程；未上榜不等于没有关注。产品市场验证来自基金规模与新发数据。",
     }
