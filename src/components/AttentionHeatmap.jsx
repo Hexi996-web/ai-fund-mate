@@ -4,6 +4,8 @@ import { ATTENTION_POOL } from '../data/attentionPool.js'
 const DRIVERS = ['全部','技术','人口','健康','能源','资源','安全','消费','环境']
 const STAGE_CLASS = {'结构萌芽':'seed','产业启动':'start','酝酿':'brew','共振':'resonance','叙事过热':'overheat'}
 const plotPosition = (value) => Math.min(95, Math.max(5, value))
+const yi = (value) => Number.isFinite(value) ? `${value >= 0 ? '+' : ''}${value.toFixed(1)}亿元` : '—'
+const pct = (value) => Number.isFinite(value) ? `${value.toFixed(1)}%` : '—'
 
 function CandidateDetail({ item, onSelectCore }) {
   if (!item) return null
@@ -12,6 +14,7 @@ function CandidateDetail({ item, onSelectCore }) {
     <p>{item.thesis}</p>
     {item.proof?<p className="attention-proof">数据：{item.proof.attention.source} · {item.proof.validation.source} · {item.proof.capacity.boardName || item.proof.capacity.source}（主题代理）· {item.proof.validation.asOf}</p>:<p className="attention-proof">待完成公开注意力、基金市场和可投资资产的统一映射，暂不生成坐标。</p>}
     <dl><div><dt>社会注意力验证</dt><dd>{item.proof?item.attention:'—'}</dd></div><div><dt>产品市场验证</dt><dd>{item.proof?item.industry:'—'}</dd></div><div><dt>资产承载</dt><dd>{item.proof?item.capacity:'—'}</dd></div></dl>
+    {item.proof?<div className="attention-breakdowns"><details><summary>社会注意力窗口</summary><div><span><small>近7日上榜</small><b>{item.proof.attention.recent7Appearances ?? 0}次</b></span><span><small>近30日上榜</small><b>{item.proof.attention.recent30Appearances ?? 0}次</b></span><span><small>近30日活跃</small><b>{item.proof.attention.activeDays30d ?? 0}天</b></span><span><small>双平台共振</small><b>{item.proof.attention.crossPlatformHits30d ?? 0}次</b></span></div></details><details><summary>产品市场验证构成</summary><div><span><small>净流入代理</small><b>{yi(item.proof.validation.estimatedNetFlowYi)}</b></span><span><small>规模净增加</small><b>{yi(item.proof.validation.scaleNetIncreaseYi)}</b></span><span><small>增长率</small><b>{pct(item.proof.validation.scaleGrowthPercent)}</b></span><span><small>增长广度</small><b>{pct(item.proof.validation.growthBreadthPercent)}</b></span><span><small>有效产品</small><b>{item.proof.validation.effectiveFunds ?? 0}只</b></span><span><small>头部占比</small><b>{pct(item.proof.validation.top1SharePercent)}</b></span></div></details></div>:null}
     <section><small>下一项关键验证</small><strong>{item.validation}</strong></section>
     <footer>{item.bucket === '核心10' ? <button type="button" onClick={() => onSelectCore(item.id)}>查看核心产品判断 →</button> : <span>尚未进入核心10：继续观察产业验证与产品时点</span>}</footer>
   </aside>
