@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { PRE_RESEARCH_POOL } from '../data/preResearchPool.js'
 import { CORE_ATTENTION_IDS } from '../data/attentionPool.js'
 import { AttentionHeatmap } from './AttentionHeatmap.jsx'
+import { ResearchHorizonBrief } from './ResearchHorizonBrief.jsx'
 
 const yi = (value) => Number.isFinite(value) ? `${value.toFixed(1)}亿元` : '—'
 const pct = (value) => Number.isFinite(value) ? `${value.toFixed(1)}%` : '—'
@@ -64,6 +65,7 @@ export function PreResearchPool() {
   const [drawer, setDrawer] = useState('')
   const [evidenceLayer, setEvidenceLayer] = useState('')
   const [peerSort, setPeerSort] = useState('current')
+  const [briefFocus, setBriefFocus] = useState('')
   useEffect(() => { const controller = new AbortController(); Promise.all([fetch('/fund_products.json',{signal:controller.signal,cache:'no-store'}).then(r=>r.json()),fetch('/pre_research_evidence.json',{signal:controller.signal,cache:'no-store'}).then(r=>r.json()),fetch('/attention_pool_evidence.json',{signal:controller.signal,cache:'no-store'}).then(r=>r.json())]).then(([funds,proof,attentionProof])=>{setPayload(funds);setEvidence(proof);setAttention(attentionProof)}).catch(()=>{}); return () => controller.abort() },[])
   const evidenceById = useMemo(() => new Map((evidence.items || []).map((item)=>[item.id,item])),[evidence.items])
   const ranked = useMemo(() => {
@@ -82,8 +84,8 @@ export function PreResearchPool() {
 
   return <main className="workspace-main research-pool decision-mode">
     <header className="decision-hero"><div><h1>季度预研产品池</h1><p>面向产品经理的前瞻观察池。候选方向可动态进出，原则上按季度依据最新证据重排；重大政策、技术突破或企业证伪时触发临时复核，不按日追逐市场热点。</p></div><div className="decision-date"><small>基金快照</small><strong>{payload.updateTime || '—'}</strong><span>{PRE_RESEARCH_POOL.length} 选 10 · 季度重排</span></div></header>
-    <section className="pool-criteria" aria-label="母池选择标准"><div><strong>母池准入标准</strong><small>先判断是否值得长期预研，再判断能否转化为公募产品；不按当日涨幅或新闻热度入池。</small></div><dl><div><dt>结构驱动</dt><dd>至少两项长期力量共振</dd></div><div><dt>社会注意力</dt><dd>存在由专业议题走向大众认知的路径</dd></div><div><dt>产业兑现</dt><dd>能够传导至收入、利润、订单或资本开支</dd></div><div><dt>资产承载</dt><dd>具备数量、规模、流动性与主题纯度</dd></div><div><dt>产品空位</dt><dd>不是供给拥挤后的同名重复产品</dd></div><div><dt>前置价值</dt><dd>尚未被市场与产品供给充分表达</dd></div><div><dt>持续验证</dt><dd>可以用公开指标跟踪兑现与证伪</dd></div><div><dt>清晰边界</dt><dd>具有明确纳入、排除和退出条件</dd></div></dl><footer><span>季度增删母池</span><span>重大事件临时复核</span><span>每日更新证据与核心10排序</span></footer></section>
-    <AttentionHeatmap onSelectCore={(id)=>{setSelected(id); document.querySelector('.decision-layout')?.scrollIntoView({behavior:'smooth',block:'start'})}} />
+    <ResearchHorizonBrief snapshot={attention} onFocus={(id)=>{setBriefFocus(id); document.querySelector('.attention-section')?.scrollIntoView({behavior:'smooth',block:'start'})}} />
+    <AttentionHeatmap focusId={briefFocus} onSelectCore={(id)=>{setSelected(id); document.querySelector('.decision-layout')?.scrollIntoView({behavior:'smooth',block:'start'})}} />
     <section className="decision-layout">
       <div className="decision-ranking"><div className="decision-ranking__head"><span>季度序位 / 产品方向</span><span>近12月新发</span><span>规模净增加额</span><span>产品结论</span></div>{ranked.map((item,index)=><button type="button" className={active?.id===item.id?'active':''} onClick={()=>setSelected(item.id)} key={item.id}><i>{String(index+1).padStart(2,'0')}</i><span><strong>{item.name}</strong><small>{item.definition}</small></span><em>{item.market.launched12.length}只</em><ChangeBar value={item.market.scaleIncrease} /><b className={`market-${item.market.state}`}>{item.market.state}</b></button>)}</div>
       {active && <section className="decision-detail"><div className="decision-detail__title"><div><small>当前研究对象</small><h2>{active.name}</h2></div><span>季度序位 {ranked.indexOf(active)+1}</span></div>

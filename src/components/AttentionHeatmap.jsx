@@ -17,12 +17,13 @@ function CandidateDetail({ item, onSelectCore }) {
   </aside>
 }
 
-export function AttentionHeatmap({ onSelectCore }) {
+export function AttentionHeatmap({ onSelectCore, focusId = '' }) {
   const [driver,setDriver] = useState('全部')
   const [selectedId,setSelectedId] = useState('industrial-software')
   const [showLabels,setShowLabels] = useState(false)
   const [snapshot,setSnapshot] = useState({items:[],verifiedCount:0,universeCount:ATTENTION_POOL.length,recommendedIds:[],generatedAt:''})
   useEffect(()=>{const controller=new AbortController();fetch('/attention_pool_evidence.json',{cache:'no-store',signal:controller.signal}).then((response)=>response.ok?response.json():Promise.reject()).then(setSnapshot).catch(()=>{});return()=>controller.abort()},[])
+  useEffect(()=>{if(focusId)setSelectedId(focusId)},[focusId])
   const candidates = useMemo(()=>{
     const evidence = new Map((snapshot.items||[]).filter((item)=>item.verified).map((item)=>[item.id,item]))
     const recommended = new Set(snapshot.recommendedIds||[])
