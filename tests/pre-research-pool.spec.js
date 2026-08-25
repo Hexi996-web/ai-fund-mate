@@ -6,6 +6,17 @@ test('shows public-data evidence and drills into product supply', async ({ page 
   await expect(page.getByRole('heading', { name: '季度预研产品池' })).toBeVisible()
   await expect(page.locator('.attention-proof').first()).toContainText('百度热搜 × 头条热榜')
   await expect(page.locator('.attention-detail').getByText('社会注意力验证', { exact: true })).toBeVisible()
+  await expect(page.locator('.attention-head')).toContainText('当日异动')
+  await expect(page.locator('.attention-head')).toContainText('注意力权重5%')
+  for (const label of ['注意力领先区','需求—注意力共振区','潜在方向观察区','提前预研区','未破圈观察带']) {
+    await expect(page.getByText(label,{exact:false}).first()).toBeVisible()
+  }
+  await page.getByLabel('显示名称',{exact:true}).check()
+  const clippedLabels = await page.locator('.attention-canvas').evaluate((canvas) => {
+    const bounds=canvas.getBoundingClientRect()
+    return [...canvas.querySelectorAll('.attention-dot.is-active span')].filter((label)=>{const box=label.getBoundingClientRect();return box.left<bounds.left||box.right>bounds.right||box.top<bounds.top||box.bottom>bounds.bottom}).length
+  })
+  expect(clippedLabels).toBe(0)
   await page.locator('.attention-detail').getByText('社会注意力窗口', { exact: true }).click()
   await expect(page.locator('.attention-detail').getByText('近30日上榜', { exact: true })).toBeVisible()
   await page.locator('.attention-detail').getByText('产品市场验证构成', { exact: true }).click()
