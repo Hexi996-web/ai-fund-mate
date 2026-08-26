@@ -38,17 +38,16 @@ function CandidateDetail({ item, onSelectCore, hasProduct }) {
   </aside>
 }
 
-export function AttentionHeatmap({ onSelectCore, focusId = '', externalSignals = [], productIds = [] }) {
+export function AttentionHeatmap({ onSelectCore, focusId = '', externalSignals = [], productIds = [], snapshot }) {
   const [driver,setDriver] = useState('全部')
   const [selectedId,setSelectedId] = useState('industrial-software')
   const [showLabels,setShowLabels] = useState(false)
-  const [snapshot,setSnapshot] = useState({items:[],verifiedCount:0,universeCount:ATTENTION_POOL.length,recommendedIds:[],generatedAt:''})
-  useEffect(()=>{const controller=new AbortController();fetch('/attention_pool_evidence.json',{cache:'no-store',signal:controller.signal}).then((response)=>response.ok?response.json():Promise.reject()).then(setSnapshot).catch(()=>{});return()=>controller.abort()},[])
+  const evidenceSnapshot = snapshot || {items:[],verifiedCount:0,universeCount:ATTENTION_POOL.length,recommendedIds:[],generatedAt:''}
   useEffect(()=>{if(focusId)setSelectedId(focusId)},[focusId])
   const candidates = useMemo(()=>{
-    const evidence = new Map((snapshot.items||[]).filter((item)=>item.verified).map((item)=>[item.id,item]))
+    const evidence = new Map((evidenceSnapshot.items||[]).filter((item)=>item.verified).map((item)=>[item.id,item]))
     const signals = new Map(externalSignals.map((item)=>[item.id,item]))
-    const recommended = new Set(snapshot.recommendedIds||[])
+    const recommended = new Set(evidenceSnapshot.recommendedIds||[])
     return ATTENTION_POOL.map((item)=>{
       const proof=evidence.get(item.id)
       if (!proof) return {...item,bucket:'待数据映射',proof:null}
@@ -57,13 +56,13 @@ export function AttentionHeatmap({ onSelectCore, focusId = '', externalSignals =
       const attention = wiki.score === null ? rawAttention : rawAttention * .8 + wiki.score * .2
       return {...item,bucket:recommended.has(item.id)?'核心10':'接近入池',attention,rawAttention,wiki,industry:proof.validation.score,capacity:proof.capacity.score,proof}
     })
-  },[snapshot.items,snapshot.recommendedIds,externalSignals])
+  },[evidenceSnapshot.items,evidenceSnapshot.recommendedIds,externalSignals])
   const visible = useMemo(() => driver === '全部' ? candidates : candidates.filter((item)=>item.driver===driver),[candidates,driver])
   const plotted = visible.filter((item)=>item.proof)
   const pending = visible.filter((item)=>!item.proof)
   const active = candidates.find((item)=>item.id===selectedId) || visible[0] || candidates[0]
   return <section className="attention-section" aria-label="未来社会注意力方向热力图">
-    <header className="attention-head"><div><p>母池36个方向全部展示：{snapshot.verifiedCount||0}个使用完整公开数据坐标。纵轴为综合社会注意力（短中期80%＋Wikimedia长期认知20%），横轴为同类基金市场表现；颜色只表示所在象限，蓝色外圈表示核心10。</p></div><div className="attention-legend"><span><i className="legend-lead"/>注意力领先</span><span><i className="legend-resonance"/>需求—注意力共振</span><span><i className="legend-seed"/>潜在方向观察</span><span><i className="legend-risk"/>提前预研</span><span><i className="legend-core"/>核心10外圈</span></div></header>
+    <header className="attention-head"><div><p>母池36个方向全部展示：{evidenceSnapshot.verifiedCount||0}个使用完整公开数据坐标。纵轴为综合社会注意力（短中期80%＋Wikimedia长期认知20%），横轴为同类基金市场表现；颜色只表示所在象限，蓝色外圈表示核心10。</p></div><div className="attention-legend"><span><i className="legend-lead"/>注意力领先</span><span><i className="legend-resonance"/>需求—注意力共振</span><span><i className="legend-seed"/>潜在方向观察</span><span><i className="legend-risk"/>提前预研</span><span><i className="legend-core"/>核心10外圈</span></div></header>
     <div className="attention-toolbar" aria-label="候选池筛选"><div>{DRIVERS.map((item)=><button type="button" className={driver===item?'active':''} onClick={()=>setDriver(item)} key={item}>{item}</button>)}</div><label><input type="checkbox" checked={showLabels} onChange={(event)=>setShowLabels(event.target.checked)}/> 显示名称</label></div>
     <div className="attention-grid">
         <div className="attention-canvas">

@@ -7,8 +7,11 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: social-attention-data
-  cancel-in-progress: true
+  # Every workflow that commits generated public data shares this lock.  This
+  # prevents two scheduled jobs from rebasing different versions of the same
+  # rolling history files at the same time.
+  group: public-data-writes
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -33,15 +36,20 @@ jobs:
           python scripts/update_attention_pool.py
           python scripts/publish_data_status.py
           python -m pytest scripts/test_update_attention_pool.py -q
+          python scripts/validate_published_freshness.py public/attention_pool_evidence.json --field generatedAt --max-age-hours 4 --min-items items=36
+          python scripts/validate_published_freshness.py public/data_status.json --field generatedAt --max-age-hours 4
       - name: Commit attention history
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add public/attention_pool_evidence.json public/social_attention_history.json public/data_status.json
-          git diff --cached --quiet || git commit -m "data: sample social attention"
+          if git diff --cached --quiet; then
+            echo "No attention changes to publish"
+            exit 0
+          fi
+          git commit -m "data: sample social attention"
           for attempt in 1 2 3; do
-            git pull --rebase origin "$GITHUB_REF_NAME"
-            git push && break
+            git pull --rebase origin "$GITHUB_REF_NAME" && git push && exit 0
             test "$attempt" -eq 3 && exit 1
             sleep $((attempt * 5))
           done

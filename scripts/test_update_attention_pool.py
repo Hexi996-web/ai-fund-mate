@@ -1,7 +1,9 @@
 import json
 from datetime import datetime, timedelta
 
+from scripts import update_attention_pool as attention_pool
 from scripts.update_attention_pool import (
+    atomic_write_json,
     parse_baidu_hotlist_html,
     parse_toutiao_hotlist,
     rescore_product_validations,
@@ -9,7 +11,14 @@ from scripts.update_attention_pool import (
     update_ranking_history,
     update_attention_history,
 )
-from scripts import update_attention_pool as attention_pool
+
+
+def test_atomic_write_json_replaces_complete_document(tmp_path):
+    target = tmp_path / "snapshot.json"
+    target.write_text('{"old":true}', encoding="utf-8")
+    atomic_write_json(target, {"new": True, "items": [1, 2]})
+    assert json.loads(target.read_text(encoding="utf-8")) == {"new": True, "items": [1, 2]}
+    assert not target.with_suffix(".json.tmp").exists()
 
 
 def test_parses_public_hot_lists():

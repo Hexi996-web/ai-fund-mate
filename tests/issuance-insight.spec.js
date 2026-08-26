@@ -56,6 +56,6 @@ test('reuses market-analysis categories, five sorts, and current-scale default',
 test('keeps the requested top-level workspace order', async ({ page }) => {
   await page.goto('/')
   await expect(page.locator('.workspace-nav button').allTextContents()).resolves.toEqual([
-    '市场分析', '行情预测', '发行洞察', '预研产品池',
+    '预研产品池', '市场分析', '发行洞察', '行情预测',
   ])
 })

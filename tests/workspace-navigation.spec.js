@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 
 test('merges signals and themes and preserves the fund query across workspace switches', async ({ page }) => {
   await page.goto('/')
-  await expect(page.getByRole('button', { name: '市场分析', exact: true })).toHaveAttribute('aria-current', 'page')
+  await expect(page.getByRole('button', { name: '预研产品池', exact: true })).toHaveAttribute('aria-current', 'page')
   await page.getByRole('button', { name: '发行洞察', exact: true }).click()
   await expect(page.getByRole('button', { name: '发行洞察', exact: true })).toHaveAttribute('aria-current', 'page')
   await page.getByRole('button', { name: '行情预测', exact: true }).click()

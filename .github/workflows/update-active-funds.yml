@@ -12,8 +12,10 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: active-fund-data
-  cancel-in-progress: true
+  # Serialize every workflow that writes files under public/.  In particular,
+  # the daily full refresh must not race the two-hour attention sampler.
+  group: public-data-writes
+  cancel-in-progress: false
 
 permissions:
   contents: write

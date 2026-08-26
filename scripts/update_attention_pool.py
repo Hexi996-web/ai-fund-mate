@@ -27,6 +27,13 @@ ATTENTION_HISTORY = ROOT / "public" / "social_attention_history.json"
 PRE_EVIDENCE = ROOT / "public" / "pre_research_evidence.json"
 FUND_PRODUCTS = ROOT / "public" / "fund_products.json"
 
+
+def atomic_write_json(path: Path, payload: dict) -> None:
+    """Publish a complete JSON document or leave the previous snapshot intact."""
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    temporary.replace(path)
+
 THEMES = [
     ("ai-agent", "人工智能", "BK0800"),
     ("embodied-ai", "人形机器人", "BK1184"),
@@ -274,7 +281,7 @@ def update_attention_history(snapshot: dict) -> dict:
         return [previous_groups[key] for key in sorted(previous_groups)]
 
     history = {"schemaVersion": 2, "generatedAt": snapshot["capturedAt"], "retention": {"rawDays": 90, "dailyDays": 1095, "weekly": "permanent", "monthly": "permanent"}, "snapshots": snapshots, "daily": daily_rows, "weekly": rollup("week"), "monthly": rollup("month")}
-    ATTENTION_HISTORY.write_text(json.dumps(history, ensure_ascii=False, indent=2), encoding="utf-8")
+    atomic_write_json(ATTENTION_HISTORY, history)
     return history
 
 
@@ -635,7 +642,7 @@ def main() -> None:
         "attentionSources": ["百度热搜", "头条热榜", "GDELT DOC 2.0（早期媒体议程）"],
         "disclosure": "社会注意力由百度热搜与头条热榜交叉验证，GDELT仅识别早期媒体议程；未上榜不等于没有关注。产品市场验证来自基金规模与新发数据。",
     }
-    OUT.write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")
+    atomic_write_json(OUT, output)
     print(f"wrote {OUT}: {verified_count}/{len(THEMES)} mapped themes verified")
     if verified_count == 0:
         raise SystemExit("no theme retained a complete real-data snapshot")

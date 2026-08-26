@@ -636,7 +636,7 @@ export function PreResearchPool() {
         setAttention(attentionProof);
         setAttentionHistory(attentionHistoryProof);
         setExternalSignals(externalProof);
-        dataVersionRef.current = `${funds.updateTime || ""}|${proof.updateTime || ""}|${attentionProof.generatedAt || ""}`;
+        dataVersionRef.current = `${funds.updateTime || ""}|${proof.updateTime || ""}|${attentionProof.generatedAt || ""}|${externalProof.generatedAt || ""}`;
       })
       .catch(() => {});
     return () => controller.abort();
@@ -645,7 +645,7 @@ export function PreResearchPool() {
     const checkForUpdate = () =>
       fetchDataStatus(fetch)
         .then((status) => {
-          const nextVersion = `${status.productsUpdateTime || ""}|${status.preResearchUpdateTime || ""}|${status.attentionGeneratedAt || ""}`;
+          const nextVersion = `${status.productsUpdateTime || ""}|${status.preResearchUpdateTime || ""}|${status.attentionGeneratedAt || ""}|${status.externalSignalsGeneratedAt || ""}`;
           if (dataVersionRef.current && nextVersion !== dataVersionRef.current) {
             setReloadKey((value) => value + 1);
           }
@@ -733,6 +733,7 @@ export function PreResearchPool() {
         focusId={briefFocus}
         externalSignals={externalSignals.items || []}
         productIds={ranked.map((item) => item.id)}
+        snapshot={attention}
         onSelectCore={(id) => {
           setSelected(id);
           document
