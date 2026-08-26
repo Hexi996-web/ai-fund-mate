@@ -6,6 +6,7 @@ from scripts.update_attention_pool import (
     parse_toutiao_hotlist,
     rescore_product_validations,
     social_attention,
+    update_ranking_history,
     update_attention_history,
 )
 from scripts import update_attention_pool as attention_pool
@@ -73,4 +74,13 @@ def test_weekly_and_monthly_rollups_remain_archived(monkeypatch, tmp_path):
     result = update_attention_history({"capturedAt": datetime.now().astimezone().isoformat(), "sources": {}})
     assert result["weekly"][0]["period"] == "2020-W01"
     assert result["monthly"][0]["period"] == "2020-01"
+
+
+def test_ranking_history_replaces_same_day_and_is_bounded():
+    old = [{"date": f"2024-01-{(day % 28) + 1:02d}-{day}", "recommendedIds": []} for day in range(1100)]
+    old.append({"date": "2026-08-26", "recommendedIds": ["old"]})
+    retained = update_ranking_history({"rankingHistory": old}, ["ai-agent"], ["ai-agent"], "2026-08-26", "2026-Q3")
+    assert len(retained) == 1095
+    assert retained[-1]["recommendedIds"] == ["ai-agent"]
+    assert sum(row["date"] == "2026-08-26" for row in retained) == 1
 

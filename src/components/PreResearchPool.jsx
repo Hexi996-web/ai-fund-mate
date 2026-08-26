@@ -4,6 +4,7 @@ import { PRE_RESEARCH_POOL } from "../data/preResearchPool.js";
 import { CORE_ATTENTION_IDS } from "../data/attentionPool.js";
 import { AttentionHeatmap } from "./AttentionHeatmap.jsx";
 import { ResearchHorizonBrief } from "./ResearchHorizonBrief.jsx";
+import { ThemeDecisionCockpit } from "./ThemeDecisionCockpit.jsx";
 
 const yi = (value) =>
   Number.isFinite(value) ? `${value.toFixed(1)}亿元` : "—";
@@ -596,6 +597,8 @@ export function PreResearchPool() {
   const [attention, setAttention] = useState({
     recommendedIds: CORE_ATTENTION_IDS,
   });
+  const [attentionHistory, setAttentionHistory] = useState({ daily: [] });
+  const [externalSignals, setExternalSignals] = useState({ items: [] });
   const [selected, setSelected] = useState("");
   const [drawer, setDrawer] = useState("");
   const [evidenceLayer, setEvidenceLayer] = useState("");
@@ -618,11 +621,21 @@ export function PreResearchPool() {
         signal: controller.signal,
         cache: "no-store",
       }).then((r) => r.json()),
+      fetch("/social_attention_history.json", {
+        signal: controller.signal,
+        cache: "no-store",
+      }).then((r) => r.json()),
+      fetch("/theme_external_signals.json", {
+        signal: controller.signal,
+        cache: "no-store",
+      }).then((r) => r.json()),
     ])
-      .then(([funds, proof, attentionProof]) => {
+      .then(([funds, proof, attentionProof, attentionHistoryProof, externalProof]) => {
         setPayload(funds);
         setEvidence(proof);
         setAttention(attentionProof);
+        setAttentionHistory(attentionHistoryProof);
+        setExternalSignals(externalProof);
         dataVersionRef.current = `${funds.updateTime || ""}|${proof.updateTime || ""}|${attentionProof.generatedAt || ""}`;
       })
       .catch(() => {});
@@ -715,6 +728,7 @@ export function PreResearchPool() {
       />
       <AttentionHeatmap
         focusId={briefFocus}
+        externalSignals={externalSignals.items || []}
         onSelectCore={(id) => {
           setSelected(id);
           document
@@ -761,6 +775,14 @@ export function PreResearchPool() {
             </div>
             {activeEvidence ? (
               <>
+                <ThemeDecisionCockpit
+                  item={active}
+                  proof={(attention.items || []).find((item) => item.id === active.id)}
+                  evidence={activeEvidence}
+                  attentionHistory={attentionHistory}
+                  rankingHistory={attention.rankingHistory || []}
+                  externalSignals={(externalSignals.items || []).find((item) => item.id === active.id)}
+                />
                 <h3>产品方向可行性</h3>
                 <div className="evidence-four evidence-three">
                   <button

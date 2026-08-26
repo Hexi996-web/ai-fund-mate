@@ -556,6 +556,12 @@ def load_previous() -> dict:
         return {}
 
 
+def update_ranking_history(previous_payload: dict, ranked_ids: list[str], recommended_ids: list[str], current_date: str, quarter: str) -> list[dict]:
+    history = [row for row in previous_payload.get("rankingHistory", []) if row.get("date") != current_date]
+    history.append({"date": current_date, "period": quarter, "recommendedIds": recommended_ids, "rankedIds": ranked_ids})
+    return history[-1095:]
+
+
 def main() -> None:
     previous_payload = load_previous_payload()
     previous = load_previous()
@@ -608,6 +614,8 @@ def main() -> None:
     previous_quarter = previous_payload.get("recommendationReviewQuarter")
     force_review = os.getenv("FORCE_CORE_REVIEW", "0") == "1"
     recommended_ids = previous_ids if len(previous_ids) == 10 and previous_quarter == quarter and not force_review else [item["id"] for item in ranked[:10]]
+    today = date.today().isoformat()
+    ranking_history = update_ranking_history(previous_payload, [item["id"] for item in ranked], recommended_ids, today, quarter)
     output = {
         "schemaVersion": 2,
         "generatedAt": datetime.now().astimezone().isoformat(),
@@ -618,6 +626,7 @@ def main() -> None:
         "recommendedIds": recommended_ids,
         "recommendationReviewQuarter": quarter,
         "recommendationPolicy": "核心10原则上按季度重排；重大政策、技术或企业证伪事件可通过FORCE_CORE_REVIEW触发临时复核。",
+        "rankingHistory": ranking_history,
         "items": items,
         "attentionObservationDays": observed_days,
         "attentionMaturity": maturity,

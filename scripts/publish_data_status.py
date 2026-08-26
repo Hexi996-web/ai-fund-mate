@@ -19,6 +19,7 @@ def main() -> int:
     issuance = json.loads((PUBLIC / "issuance_insights.json").read_text(encoding="utf-8"))
     attention = json.loads((PUBLIC / "attention_pool_evidence.json").read_text(encoding="utf-8"))
     evidence = json.loads((PUBLIC / "pre_research_evidence.json").read_text(encoding="utf-8"))
+    external = json.loads((PUBLIC / "theme_external_signals.json").read_text(encoding="utf-8"))
     payload = {
         "schemaVersion": 1,
         "snapshotDate": str(products["updateTime"])[:10],
@@ -26,6 +27,7 @@ def main() -> int:
         "issuanceDataDate": issuance["dataDate"],
         "attentionGeneratedAt": attention["generatedAt"],
         "preResearchUpdateTime": evidence["updateTime"],
+        "externalSignalsGeneratedAt": external["generatedAt"],
         "generatedAt": datetime.now(SHANGHAI).isoformat(),
     }
     temporary = OUTPUT.with_suffix(".json.tmp")

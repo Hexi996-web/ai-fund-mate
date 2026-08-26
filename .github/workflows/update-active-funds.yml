@@ -43,6 +43,7 @@ jobs:
           python scripts/backfill_2026_fund_metrics.py --missing-baseline-only --workers 24 --min-coverage 0.50
           python scripts/update_issuance_insights.py || echo "::warning::发行接口本次不可用，保留上一版快照并交由新鲜度校验"
           python scripts/update_attention_pool.py
+          python -m scripts.update_theme_external_signals
           python scripts/update_three_layer_evidence.py
           python scripts/publish_data_status.py
       - name: Read generated snapshot date
@@ -62,6 +63,7 @@ jobs:
           python scripts/validate_published_freshness.py public/fund_products.json --field updateTime --max-age-hours 12 --min-items products=1000
           python scripts/validate_published_freshness.py public/issuance_insights.json --field generatedAt --max-age-hours 12
           python scripts/validate_published_freshness.py public/attention_pool_evidence.json --field generatedAt --max-age-hours 12 --min-items items=36
+          python scripts/validate_published_freshness.py public/theme_external_signals.json --field generatedAt --max-age-hours 36 --min-items items=36
           python -c "import json; d=json.load(open('public/attention_pool_evidence.json',encoding='utf-8')); assert d['verifiedCount']==36 and len(d['recommendedIds'])==10, d"
           python -c "import json; d=json.load(open('public/pre_research_evidence.json',encoding='utf-8')); assert d['coveredCount']==36 and d['enterpriseDataCount']==36 and d['assetDataCount']==36, {k:d.get(k) for k in ('coveredCount','enterpriseDataCount','assetDataCount','assetMarketHistoryCount')}"
           python scripts/validate_published_freshness.py public/data_status.json --field generatedAt --max-age-hours 12
@@ -77,7 +79,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/funds_active.json public/funds_excluded.json public/fund_products.json public/funds_grouping_review.json public/issuance_insights.json public/attention_pool_evidence.json public/social_attention_history.json public/pre_research_evidence.json public/data_status.json
+          git add public/funds_active.json public/funds_excluded.json public/fund_products.json public/funds_grouping_review.json public/issuance_insights.json public/attention_pool_evidence.json public/social_attention_history.json public/theme_external_signals.json public/pre_research_evidence.json public/data_status.json
           git diff --cached --quiet || git commit -m "data: update active funds"
           for attempt in 1 2 3; do
             git pull --rebase origin "$GITHUB_REF_NAME"
