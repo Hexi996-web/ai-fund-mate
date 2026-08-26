@@ -4,6 +4,9 @@ from __future__ import annotations
 
 import json
 import re
+import signal
+import threading
+from contextlib import contextmanager
 from statistics import median
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date, datetime, timedelta, timezone
@@ -645,9 +648,33 @@ def build_payload(
     }
 
 
+@contextmanager
+def _call_deadline(seconds: int = 75):
+    """Bound third-party adapters that otherwise have no request timeout."""
+    if not hasattr(signal, "SIGALRM") or threading.current_thread() is not threading.main_thread():
+        yield
+        return
+    previous = signal.getsignal(signal.SIGALRM)
+    signal.signal(signal.SIGALRM, lambda _signum, _frame: (_ for _ in ()).throw(TimeoutError(f"AKShare call exceeded {seconds}s")))
+    signal.alarm(seconds)
+    try:
+        yield
+    finally:
+        signal.alarm(0)
+        signal.signal(signal.SIGALRM, previous)
+
+
 def _records(callable_, *args, **kwargs) -> list[dict[str, Any]]:
-    frame = callable_(*args, **kwargs)
-    return frame.where(frame.notna(), None).to_dict(orient="records")
+    last_error = None
+    for attempt in range(2):
+        try:
+            with _call_deadline():
+                frame = callable_(*args, **kwargs)
+            return frame.where(frame.notna(), None).to_dict(orient="records")
+        except TimeoutError as error:
+            last_error = error
+            print(f"AKShare接口超时，正在进行第{attempt + 2}次尝试" if attempt == 0 else "AKShare接口连续超时")
+    raise last_error
 
 
 def _optional_records(callable_, label: str, *args, **kwargs) -> list[dict[str, Any]]:

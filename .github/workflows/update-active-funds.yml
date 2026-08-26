@@ -41,7 +41,7 @@ jobs:
         run: |
           python scripts/update_active_funds.py
           python scripts/backfill_2026_fund_metrics.py --missing-baseline-only --workers 24 --min-coverage 0.50
-          python scripts/update_issuance_insights.py
+          python scripts/update_issuance_insights.py || echo "::warning::发行接口本次不可用，保留上一版快照并交由新鲜度校验"
           python scripts/update_attention_pool.py
           python scripts/update_three_layer_evidence.py
           python scripts/publish_data_status.py
