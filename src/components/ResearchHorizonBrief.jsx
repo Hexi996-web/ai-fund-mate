@@ -2,8 +2,9 @@ import { useMemo, useState } from 'react'
 import { ATTENTION_POOL } from '../data/attentionPool.js'
 
 const HORIZONS = {
-  month: { label: '未来1个月', eyebrow: '验证注意力能否转成资金与产品行动', tone: '近期', weights: { attention:.25, validation:.45, capacity:.15, launch:.15 }, stageBoost: {} },
-  quarter: { label: '未来3个月', eyebrow: '观察规模扩张和产业验证能否连续', tone: '季度', weights: { attention:.20, validation:.55, capacity:.25, launch:0 }, stageBoost: { '产业启动':4, '共振':2 } },
+  quarter: { label: '未来3个月', eyebrow: '确认注意力、资金和产业信号能否连续', tone: '季度', weights: { attention:.20, validation:.45, capacity:.20, launch:.15 }, stageBoost: { '产业启动':4, '共振':2 } },
+  halfYear: { label: '未来半年', eyebrow: '观察产业兑现能否带动产品需求持续扩张', tone: '半年', weights: { attention:.12, validation:.48, capacity:.30, launch:.10 }, stageBoost: { '产业启动':3, '共振':4 } },
+  year: { label: '未来1年', eyebrow: '寻找可形成长期产品赛道的结构性空间', tone: '年度', weights: { attention:.05, validation:.35, capacity:.50, launch:.10 }, stageBoost: { '产业启动':2, '共振':5 } },
 }
 
 const signedYi = (value) => Number.isFinite(value) ? `${value >= 0 ? '+' : ''}${value.toFixed(1)}亿元` : '—'
@@ -21,18 +22,22 @@ function buildBrief(snapshot, horizon) {
     const item = metadata.get(proof.id)
     const launchScore = Math.min(100,(proof.validation.launched12Months || 0) * 6)
     const score = proof.attention.score * weights.attention + proof.validation.score * weights.validation + proof.capacity.score * weights.capacity + launchScore * weights.launch + (definition.stageBoost[item.stage] || 0)
-    const evidence = horizon === 'month'
-      ? `${proof.validation.launched12Months}只近12月新发，规模净变动${signedYi(proof.validation.scaleNetIncreaseYi)}`
-      : `同类规模${proof.validation.currentScaleYi.toFixed(1)}亿元，较2025年末可比规模${pct(proof.validation.scaleGrowthPercent)}`
-    const analysis = horizon === 'month'
-      ? '关注规模净增是否连续、新发是否从单点变成同类扩散；短期热度不能替代持续申购。'
-      : '重点核对产品市场扩张能否与产业兑现同步，避免仅由存量头部产品上涨造成规模放大。'
+    const evidence = horizon === 'quarter'
+      ? `${proof.validation.launched12Months}只近12月新发，较2025年末规模净增加${signedYi(proof.validation.scaleNetIncreaseYi)}`
+      : horizon === 'halfYear'
+        ? `同类规模${proof.validation.currentScaleYi.toFixed(1)}亿元，较2025年末可比规模${pct(proof.validation.scaleGrowthPercent)}`
+        : `资产承载${proof.capacity.score.toFixed(0)}分，同类规模${proof.validation.currentScaleYi.toFixed(1)}亿元`
+    const analysis = horizon === 'quarter'
+      ? '重点确认关注度是否持续、规模净增是否连续，以及新发是否从单点扩散为同类需求。'
+      : horizon === 'halfYear'
+        ? '重点核对产业兑现与产品规模扩张是否同步，排除仅由存量头部产品上涨带来的规模放大。'
+        : '重点检验可投资资产容量、产品空位和产业持续性，短期热度与一次性催化不构成年度布局依据。'
     return {...item,proof,score,evidence,analysis}
   }).sort((a,b) => b.score-a.score).slice(0,3)
 }
 
 export function ResearchHorizonBrief({ snapshot, onFocus }) {
-  const [horizon,setHorizon] = useState('month')
+  const [horizon,setHorizon] = useState('quarter')
   const [selected,setSelected] = useState('')
   const briefs = useMemo(() => buildBrief(snapshot,horizon),[snapshot,horizon])
   const active = briefs.find((item) => item.id === selected) || briefs[0]
