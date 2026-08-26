@@ -716,6 +716,8 @@ export function PreResearchPool() {
       </header>
       <ResearchHorizonBrief
         snapshot={attention}
+        evidenceItems={evidence.items || []}
+        externalItems={externalSignals.items || []}
         onFocus={(id) => {
           setBriefFocus(id);
           setSelected(id);
