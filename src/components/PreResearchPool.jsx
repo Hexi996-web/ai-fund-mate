@@ -5,6 +5,7 @@ import { CORE_ATTENTION_IDS } from "../data/attentionPool.js";
 import { AttentionHeatmap } from "./AttentionHeatmap.jsx";
 import { ResearchHorizonBrief } from "./ResearchHorizonBrief.jsx";
 import { ThemeDecisionCockpit } from "./ThemeDecisionCockpit.jsx";
+import { ProductDecisionMonitor, windowState } from "./ProductDecisionMonitor.jsx";
 
 const yi = (value) =>
   Number.isFinite(value) ? `${value.toFixed(1)}亿元` : "—";
@@ -665,6 +666,10 @@ export function PreResearchPool() {
     () => new Map((evidence.items || []).map((item) => [item.id, item])),
     [evidence.items],
   );
+  const attentionById = useMemo(
+    () => new Map((attention.items || []).map((item) => [item.id, item])),
+    [attention.items],
+  );
   const ranked = useMemo(() => {
     const priority = { 产品缺失: 4, 存在空位: 3, 继续观察: 2, 供给过剩: 1 };
     const ids =
@@ -741,6 +746,17 @@ export function PreResearchPool() {
             ?.scrollIntoView({ behavior: "smooth", block: "start" });
         }}
       />
+      <ProductDecisionMonitor
+        ranked={ranked}
+        attention={attention}
+        attentionHistory={attentionHistory}
+        attentionById={attentionById}
+        selectedId={active?.id}
+        onSelect={(id) => {
+          setSelected(id);
+          requestAnimationFrame(() => document.querySelector(".decision-layout")?.scrollIntoView({ behavior: "smooth", block: "start" }));
+        }}
+      />
       <section className="decision-layout">
         <div className="decision-ranking">
           <div className="decision-ranking__head">
@@ -763,8 +779,8 @@ export function PreResearchPool() {
               </span>
               <em>{item.market.launched12.length}只</em>
               <ChangeBar value={item.market.scaleIncrease} />
-              <b className={`market-${item.market.state}`}>
-                {item.market.state}
+              <b className={`market-${item.market.state} window-${windowState(item, attentionById.get(item.id)).tone}`}>
+                {windowState(item, attentionById.get(item.id)).label}
               </b>
             </button>
           ))}

@@ -16,6 +16,8 @@ export const PRE_RESEARCH_POOL = rows.map(([id,name,definition,desire,assetMap,s
 PRE_RESEARCH_POOL.push(
   { id:'industrial-software', name:'工业软件与自主生产系统', definition:'聚焦研发设计、生产控制与工业数据软件。', desire:'分享制造业软件化升级', assetMap:'工业软件、自动化与工业互联网', question:'独立软件收入能否构成足够样本？', useCase:'配置制造业数字化', purity:'待接入指数成分数据', gap:'由全市场基金快照计算' },
   { id:'ai-application', name:'AI应用与数字生产力', definition:'剥离硬件后，聚焦AI商业化应用与软件收入。', desire:'直接参与AI应用收入增长', assetMap:'企业软件、云应用、互联网平台', question:'应用收入纯度何时达到产品门槛？', useCase:'配置AI商业化下半场', purity:'待接入指数成分数据', gap:'由全市场基金快照计算' },
+  { id:'creator-economy', name:'AI内容与创作者商业化', definition:'观察生成式内容工具、平台分发与创作者收入模式。', desire:'参与内容生产成本下降与新商业模式', assetMap:'传媒、内容平台、营销与软件工具', question:'工具渗透能否转化为持续付费和平台分成？', useCase:'配置AI驱动的内容产业重构', purity:'跨行业映射，收入纯度待验证', gap:'同类产品较少，需防止退化为传统传媒' },
+  { id:'grid-storage', name:'长时储能与系统调节', definition:'聚焦长时储能、调峰与新型电力系统调节能力。', desire:'参与新能源高渗透率下的系统性需求', assetMap:'储能设备、电网调节与能源运营', question:'项目回报与利用小时能否跨过经济性门槛？', useCase:'配置电力系统灵活性升级', purity:'设备资产充足，运营资产较少', gap:'储能供给较多，长时调节表达仍需区分' },
 )
 
 const CONFIG = {
@@ -24,6 +26,7 @@ const CONFIG = {
   biotech: [['创新药','生物医药','医药'],74], longevity: [['养老','银发','医疗服务','健康'],52], experience: [['旅游','消费','文娱','传媒'],54],
   resources: [['有色','稀土','新材料','资源','矿业'],69], 'future-tech': [['量子','6G','脑机','核聚变'],34],
   'industrial-software': [['工业软件','软件','工业互联网'],66], 'ai-application': [['软件','云计算','互联网','人工智能'],64],
+  'creator-economy': [['传媒','文娱','营销','互联网'],48], 'grid-storage': [['储能','电力','电网','新能源'],58],
 }
 
 PRE_RESEARCH_POOL.forEach((item) => { const [keywords, readiness] = CONFIG[item.id]; item.keywords = keywords; item.readiness = readiness })

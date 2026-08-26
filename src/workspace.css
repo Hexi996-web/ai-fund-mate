@@ -4210,6 +4210,72 @@
   }
 }
 
+.decision-monitor {
+  margin: 0 0 26px;
+  padding: 22px;
+  border: 1px solid #dfe5ef;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 8px 26px rgba(27, 42, 78, 0.055);
+}
+.decision-monitor > header { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; }
+.decision-monitor h2 { margin: 0 0 6px; color: #172036; font-size: 23px; }
+.decision-monitor > header p { margin: 0; color: #69778f; font-size: 13px; }
+.decision-monitor > header label { display: grid; gap: 5px; color: #69778f; font-size: 11px; }
+.decision-monitor select { min-height: 38px; padding: 7px 30px 7px 10px; border: 1px solid #ccd5e3; border-radius: 7px; background: #fff; color: #293750; font-weight: 750; }
+.window-strip { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin: 18px 0; }
+.window-strip button { min-height: 96px; padding: 12px; border: 1px solid #e0e5ed; border-top: 3px solid #8b96a8; border-radius: 8px; background: #fafbfc; color: #253149; text-align: left; }
+.window-strip button.active { background: #f2f4ff; box-shadow: 0 0 0 2px #4458d4; }
+.window-strip button.open { border-top-color: #13966b; }
+.window-strip button.near { border-top-color: #d79b2d; }
+.window-strip button.crowded,
+.window-strip button.closed { border-top-color: #cf5c5c; }
+.window-strip span,
+.window-strip strong,
+.window-strip small { display: block; }
+.window-strip span { font-size: 12px; font-weight: 800; line-height: 1.35; }
+.window-strip strong { margin: 7px 0 5px; color: #3147c8; font-size: 16px; }
+.window-strip small { color: #748096; font-size: 10px; line-height: 1.45; }
+.monitor-grid { display: grid; grid-template-columns: .85fr 1.15fr .8fr; gap: 12px; }
+.monitor-grid > section,
+.ranking-attribution { padding: 15px; border: 1px solid #e1e6ee; border-radius: 9px; background: #fafbfc; }
+.monitor-grid header,
+.ranking-attribution > header { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+.monitor-grid header small,
+.ranking-attribution header small { color: #7b879b; font-size: 10px; }
+.theme-alerts > button { width: 100%; display: flex; justify-content: space-between; gap: 10px; padding: 10px 0; border: 0; border-top: 1px solid #e5e9f0; background: transparent; color: #293750; text-align: left; }
+.theme-alerts > button span { font-size: 12px; font-weight: 800; }
+.theme-alerts > button small { display: block; margin-top: 4px; color: #7c8799; font-size: 9px; font-weight: 500; }
+.theme-alerts b { align-self: center; padding: 4px 7px; border-radius: 999px; background: #edf0f5; color: #607088; font-size: 10px; }
+.theme-alerts b.up { background: #e7f6ef; color: #087a4b; }
+.theme-alerts b.down { background: #fdecec; color: #ad3f45; }
+.ranking-attribution > header strong { display: block; margin-top: 4px; font-size: 15px; }
+.ranking-attribution > header span { color: #3446d8; font-size: 11px; font-weight: 800; }
+.ranking-attribution article { display: grid; grid-template-columns: 1fr auto; gap: 5px 10px; margin-top: 10px; font-size: 11px; }
+.ranking-attribution article i { grid-column: 1 / -1; display: block; height: 5px; border-radius: 4px; background: #5368df; }
+.ranking-attribution article i.negative { background: #cf5c5c; }
+.ranking-attribution p,
+.quarter-snapshot p { margin: 12px 0 0; color: #7b879b; font-size: 10px; line-height: 1.55; }
+.quarter-snapshot ol { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 10px; margin: 0; padding: 0; list-style: none; }
+.quarter-snapshot li { display: grid; grid-template-columns: 22px 1fr; align-items: center; padding: 5px 0; border-top: 1px solid #e8ebf0; font-size: 10px; }
+.quarter-snapshot li i { color: #596ed6; font-style: normal; font-weight: 800; }
+
+@media (max-width: 1050px) {
+  .window-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .monitor-grid { grid-template-columns: 1fr 1fr; }
+  .quarter-snapshot { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  .decision-monitor { padding: 16px 14px; }
+  .decision-monitor > header { align-items: flex-start; flex-direction: column; }
+  .decision-monitor > header label,
+  .decision-monitor select { width: 100%; box-sizing: border-box; }
+  .window-strip { display: flex; overflow-x: auto; padding: 2px; scroll-snap-type: x proximity; }
+  .window-strip button { flex: 0 0 78%; scroll-snap-align: start; }
+  .monitor-grid { grid-template-columns: 1fr; }
+  .quarter-snapshot { grid-column: auto; }
+}
+
 /* Mobile workspace: prioritize readable decisions over desktop density. */
 @media (max-width: 640px) {
   html,

@@ -87,3 +87,17 @@ test('shows public-data evidence and drills into product supply', async ({ page 
   await page.getByLabel('同类基金排序').selectOption('growth')
   await expect.poll(async () => isDescending(await columnValues(5))).toBe(true)
 })
+
+test('supports product windows, alerts, attribution and quarterly snapshots', async ({ page }) => {
+  await page.goto('/')
+  const monitor = page.getByRole('region', { name: '产品窗口与预警' })
+  await expect(monitor.getByRole('heading', { name: '产品窗口与变化监测' })).toBeVisible()
+  await expect(monitor.locator('.window-strip button')).toHaveCount(10)
+  await expect(monitor.getByText('主题升降级预警', { exact: true })).toBeVisible()
+  await expect(monitor.getByText('排名变化归因', { exact: true })).toBeVisible()
+  await expect(monitor.getByText('季度快照与历史回看', { exact: true })).toBeVisible()
+  const second = monitor.locator('.window-strip button').nth(1)
+  const secondName = await second.locator('span').innerText()
+  await second.click()
+  await expect(monitor.locator('.ranking-attribution header strong')).toHaveText(secondName)
+})

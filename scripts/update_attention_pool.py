@@ -563,9 +563,12 @@ def load_previous() -> dict:
         return {}
 
 
-def update_ranking_history(previous_payload: dict, ranked_ids: list[str], recommended_ids: list[str], current_date: str, quarter: str) -> list[dict]:
+def update_ranking_history(previous_payload: dict, ranked_ids: list[str], recommended_ids: list[str], current_date: str, quarter: str, scores: dict | None = None) -> list[dict]:
     history = [row for row in previous_payload.get("rankingHistory", []) if row.get("date") != current_date]
-    history.append({"date": current_date, "period": quarter, "recommendedIds": recommended_ids, "rankedIds": ranked_ids})
+    row = {"date": current_date, "period": quarter, "recommendedIds": recommended_ids, "rankedIds": ranked_ids}
+    if scores:
+        row["scores"] = scores
+    history.append(row)
     return history[-1095:]
 
 
@@ -622,7 +625,15 @@ def main() -> None:
     force_review = os.getenv("FORCE_CORE_REVIEW", "0") == "1"
     recommended_ids = previous_ids if len(previous_ids) == 10 and previous_quarter == quarter and not force_review else [item["id"] for item in ranked[:10]]
     today = date.today().isoformat()
-    ranking_history = update_ranking_history(previous_payload, [item["id"] for item in ranked], recommended_ids, today, quarter)
+    score_snapshot = {
+        item["id"]: {
+            "attention": round(item["attention"]["score"], 2),
+            "validation": round(item["validation"]["score"], 2),
+            "capacity": round(item["capacity"]["score"], 2),
+        }
+        for item in ranked
+    }
+    ranking_history = update_ranking_history(previous_payload, [item["id"] for item in ranked], recommended_ids, today, quarter, score_snapshot)
     output = {
         "schemaVersion": 2,
         "generatedAt": datetime.now().astimezone().isoformat(),
