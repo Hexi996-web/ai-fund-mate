@@ -60,14 +60,15 @@ function buildBrief(snapshot,horizon,evidenceItems,externalItems) {
   }).sort((a,b)=>b.score-a.score).slice(0,3)
 }
 
-export function ResearchHorizonBrief({ snapshot,onFocus,evidenceItems=[],externalItems=[] }) {
+export function ResearchHorizonBrief({ snapshot,onFocus,evidenceItems=[],externalItems=[],productIds=[] }) {
   const [horizon,setHorizon]=useState('quarter'),[selected,setSelected]=useState('')
   const briefs=useMemo(()=>buildBrief(snapshot,horizon,evidenceItems,externalItems),[snapshot,horizon,evidenceItems,externalItems])
   const active=briefs.find((item)=>item.id===selected)||briefs[0],definition=HORIZONS[horizon]
+  const productSet=useMemo(()=>new Set(productIds),[productIds])
   return <section className="horizon-brief" aria-label="前瞻产品方向简报">
     <header><div><h2>产品经理前瞻简报</h2><p>{definition.eyebrow}。三个期限分别排序，排序不等同发行建议。</p></div><nav aria-label="简报时间范围">{Object.entries(HORIZONS).map(([id,item])=><button type="button" className={horizon===id?'active':''} aria-pressed={horizon===id} onClick={()=>{setHorizon(id);setSelected('')}} key={id}>{item.label}</button>)}</nav></header>
     <div className="horizon-body"><div className="horizon-list">{briefs.map((item,index)=><button type="button" className={(active?.id===item.id?'active ':'')+`horizon-rank-${index+1}`} onClick={()=>setSelected(item.id)} key={item.id}><i>{String(index+1).padStart(2,'0')}</i><span><small>{definition.tone}</small><strong>{item.name}</strong><em>{item.evidence}</em></span><b>→</b></button>)}</div>
-      {active?<article className="horizon-analysis"><div><span>{active.driver}驱动 · {definition.tone}</span><strong>{active.name}</strong></div><p>{active.thesis}</p><section><small>该期限重点判断</small><strong>{active.analysis}</strong></section><dl className="horizon-analysis__facts"><div><dt>较2025年末规模净增加</dt><dd>{signedYi(active.proof.validation.scaleNetIncreaseYi)}</dd></div><div><dt>可比规模增幅</dt><dd>{pct(active.proof.validation.scaleGrowthPercent)}</dd></div></dl><button type="button" onClick={()=>onFocus(active.id)}>查看该方向完整判断 →</button></article>:<article className="horizon-analysis"><strong>数据加载中</strong></article>}
+      {active?<article className="horizon-analysis"><div><span>{active.driver}驱动 · {definition.tone}</span><strong>{active.name}</strong><em className={productSet.has(active.id)?'is-product':'is-watch'}>{productSet.has(active.id)?'核心产品池':'母池观察'}</em></div><p>{active.thesis}</p><section><small>该期限重点判断</small><strong>{active.analysis}</strong></section><dl className="horizon-analysis__facts"><div><dt>较2025年末规模净增加</dt><dd>{signedYi(active.proof.validation.scaleNetIncreaseYi)}</dd></div><div><dt>可比规模增幅</dt><dd>{pct(active.proof.validation.scaleGrowthPercent)}</dd></div></dl><button type="button" onClick={()=>onFocus(active.id)}>{productSet.has(active.id)?'查看方向验证与产品判断 →':'查看母池验证 →'}</button></article>:<article className="horizon-analysis"><strong>数据加载中</strong></article>}
     </div>
   </section>
 }

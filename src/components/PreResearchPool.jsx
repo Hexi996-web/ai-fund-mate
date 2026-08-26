@@ -718,12 +718,13 @@ export function PreResearchPool() {
         snapshot={attention}
         evidenceItems={evidence.items || []}
         externalItems={externalSignals.items || []}
+        productIds={ranked.map((item) => item.id)}
         onFocus={(id) => {
           setBriefFocus(id);
-          setSelected(id);
+          if (ranked.some((item) => item.id === id)) setSelected(id);
           requestAnimationFrame(() =>
             document
-              .querySelector(".decision-detail")
+              .querySelector(".attention-section")
               ?.scrollIntoView({ behavior: "smooth", block: "start" }),
           );
         }}
@@ -731,6 +732,7 @@ export function PreResearchPool() {
       <AttentionHeatmap
         focusId={briefFocus}
         externalSignals={externalSignals.items || []}
+        productIds={ranked.map((item) => item.id)}
         onSelectCore={(id) => {
           setSelected(id);
           document
