@@ -2,8 +2,9 @@ name: Update social attention history
 
 on:
   schedule:
-    # Every two hours at :17; raw samples retain 90 days, rollups accumulate.
-    - cron: "17 */2 * * *"
+    # Every two hours at :23; the non-round minute reduces GitHub scheduler congestion.
+    # Changed on 2026-08-27 to force GitHub to re-register a schedule that stopped dispatching.
+    - cron: "23 */2 * * *"
   workflow_dispatch:
 
 concurrency:

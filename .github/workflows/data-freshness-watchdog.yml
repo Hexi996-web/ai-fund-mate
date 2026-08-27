@@ -1,0 +1,67 @@
+name: Guard published data freshness
+
+on:
+  schedule:
+    # Independent fallback dispatcher. Two non-round checks per hour reduce the
+    # chance that a delayed primary schedule leaves the website silently stale.
+    - cron: "11,41 * * * *"
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: data-freshness-watchdog
+  cancel-in-progress: true
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - name: Inspect published timestamps
+        id: freshness
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          from datetime import datetime, timedelta, timezone
+          from pathlib import Path
+
+          status = json.loads(Path("public/data_status.json").read_text(encoding="utf-8"))
+          now = datetime.now(timezone.utc)
+          beijing = now.astimezone(timezone(timedelta(hours=8)))
+
+          raw_attention = status.get("attentionGeneratedAt") or ""
+          try:
+              attention_at = datetime.fromisoformat(raw_attention.replace("Z", "+00:00"))
+              attention_stale = now - attention_at.astimezone(timezone.utc) > timedelta(hours=3)
+          except (TypeError, ValueError):
+              attention_stale = True
+
+          snapshot_date = str(status.get("snapshotDate") or "")[:10]
+          fund_stale = beijing.hour >= 7 and snapshot_date != beijing.date().isoformat()
+
+          print(f"attention_stale={'true' if attention_stale else 'false'}")
+          print(f"fund_stale={'true' if fund_stale else 'false'}")
+          print(f"snapshot_date={snapshot_date or 'missing'}")
+          print(f"attention_at={raw_attention or 'missing'}")
+          PY
+      - name: Recover social-attention sampling
+        if: steps.freshness.outputs.attention_stale == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run update-social-attention.yml --ref "$GITHUB_REF_NAME"
+      - name: Recover daily fund refresh
+        if: steps.freshness.outputs.fund_stale == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run update-active-funds.yml --ref "$GITHUB_REF_NAME"
+      - name: Report freshness decision
+        run: |
+          echo "attention_stale=${{ steps.freshness.outputs.attention_stale }}"
+          echo "fund_stale=${{ steps.freshness.outputs.fund_stale }}"
+          echo "snapshot_date=${{ steps.freshness.outputs.snapshot_date }}"
+          echo "attention_at=${{ steps.freshness.outputs.attention_at }}"
