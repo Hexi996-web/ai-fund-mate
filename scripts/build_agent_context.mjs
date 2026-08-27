@@ -45,7 +45,7 @@ for (const product of products.products || []) {
 
 const output = {
   schemaVersion: 1,
-  generatedAt: new Date().toISOString(),
+  generatedAt: status.generatedAt,
   snapshotDate: status.snapshotDate,
   workspaces: {
     '预研产品池': {

@@ -31,7 +31,7 @@
 - 注意力母池：`scripts/update_attention_pool.py`
 - 生产部署校验：`scripts/verify_deployed_snapshot.py`、`scripts/verify_deployed_interface.mjs`
 
-主任务支持 `workflow_dispatch` 手动运行，并在北京时间每日 04:47、05:47、06:47 提供三次自动执行机会。任务只有在数据校验、前端构建、Vercel快照同步和四个页面验收全部通过后才成功。
+主任务支持 `workflow_dispatch` 手动运行，并在北京时间每日 04:43、05:53、07:03 提供三次自动执行机会。任务只有在数据校验、前端构建、Vercel快照同步和四个页面验收全部通过后才成功。社会注意力原则上每两小时更新，独立新鲜度守卫会在调度缺失时补触发；本机还配置了第二层更新守卫。
 
 ## 本地开发
 
