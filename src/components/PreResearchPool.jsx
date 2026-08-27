@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { DATA_STATUS_POLL_MS, fetchDataStatus } from "../data/dataStatus.js";
 import { PRE_RESEARCH_POOL } from "../data/preResearchPool.js";
-import { CORE_ATTENTION_IDS } from "../data/attentionPool.js";
+import { ATTENTION_POOL, CORE_ATTENTION_IDS } from "../data/attentionPool.js";
 import { AttentionHeatmap } from "./AttentionHeatmap.jsx";
 import { ResearchHorizonBrief } from "./ResearchHorizonBrief.jsx";
 import { ThemeDecisionCockpit } from "./ThemeDecisionCockpit.jsx";
@@ -23,6 +23,28 @@ const fundGrowth = (fund) =>
           num(fund.baselineScaleYi)) *
         100
       : Number.NaN;
+
+const PRODUCT_DIRECTION_BY_ID = new Map(PRE_RESEARCH_POOL.map((item) => [item.id, item]));
+const RESEARCH_UNIVERSE = ATTENTION_POOL.map((theme) => {
+  const product = PRODUCT_DIRECTION_BY_ID.get(theme.id);
+  return {
+    ...theme,
+    definition: product?.definition || theme.thesis,
+    desire: product?.desire || theme.thesis,
+    assetMap: product?.assetMap || `${theme.driver}相关上市公司与跨行业受益资产`,
+    question: product?.question || theme.validation,
+    narrative: product?.narrative || theme.thesis,
+    support: product?.support || `持续跟踪${theme.validation}，确认趋势能否由叙事进入经营兑现。`,
+    counter: product?.counter || "注意力上升不等于产业兑现，需警惕概念映射和资产纯度不足。",
+    nextQuestion: product?.nextQuestion || `验证${theme.validation}并建立可投资资产清单。`,
+    useCase: product?.useCase || `观察${theme.name}的产品化窗口`,
+    purity: product?.purity || "由资产承载数据动态验证",
+    gap: product?.gap || "由全市场基金快照计算",
+    keywords: product?.keywords || [theme.name, theme.driver],
+    readiness: product?.readiness ?? theme.capacity,
+    ...product,
+  };
+});
 const sortable = (value) => (Number.isFinite(value) ? value : -Infinity);
 const latestDate = (values) => values.filter(Boolean).sort().at(-1) || "—";
 
@@ -589,6 +611,36 @@ function EvidenceDrawer({ layer, item, updateTime, onClose }) {
   );
 }
 
+function ThemeResearchPage({ item, coreRank, proof, evidence, evidenceSummary, attentionHistory, rankingHistory, externalSignals, onBack, onEvidence, onMetric }) {
+  const state = windowState(item, proof);
+  return <main className="theme-research-page" aria-label={`${item.name}方向详情`}>
+    <header className="theme-page-header">
+      <button type="button" onClick={onBack}>← 返回预研产品池</button>
+      <div><small>{coreRank ? `核心10 · 核心池序位 ${coreRank}` : "36个母池方向 · 观察中"}</small><h1>{item.name}</h1><p>{item.definition}</p></div>
+      <strong className={`window-${state.tone}`}>{state.label}</strong>
+    </header>
+    <section className="theme-page-body">
+      {evidence ? <ThemeDecisionCockpit item={item} proof={proof} evidence={evidence} attentionHistory={attentionHistory} rankingHistory={rankingHistory} externalSignals={externalSignals} /> : null}
+      {evidence ? <section className="theme-page-section"><header><h2>产品方向可行性</h2><p>分别验证产业需求、企业兑现与资产承载。</p></header><div className="evidence-four evidence-three theme-page-evidence">
+        <button type="button" onClick={() => onEvidence("structure")}><small>产业需求是否成立</small><strong>{evidence.structure.signal}</strong><span>{evidence.structure.history?.length >= 4 ? `${evidence.structure.metric} · ${evidence.structure.history.length}期真实数据` : evidence.structure.accessStatus || "公开证据持续积累"}</span><em>查看产业趋势 →</em></button>
+        <button type="button" onClick={() => onEvidence("enterprise")}><small>龙头企业是否兑现</small><strong>收入{pct(evidence.enterprise.revenueGrowthMedian)} · 利润{pct(evidence.enterprise.profitGrowthMedian)}</strong><span>前十大公司财报 · {evidence.enterprise.history?.length || 0}个报告期</span><em>查看财报结论 →</em></button>
+        <button type="button" onClick={() => onEvidence("assets")}><small>资产池能否支撑产品</small><strong>{evidence.assets.constituentCount}只 · {yi(evidence.assets.floatMarketCapYi)}</strong><span>日成交{yi(evidence.assets.dailyTurnoverYi)} · 前十{pct(evidence.assets.top10SharePercent)}</span><em>查看容量和公司名单 →</em></button>
+      </div><p className="evidence-source">真实产业趋势 {evidenceSummary.structureDataCount || 0}/36 · 企业财报历史 {evidenceSummary.enterpriseDataCount || 0}/36 · 当前资产池 {evidenceSummary.assetDataCount || 0}/36</p></section> : null}
+      <section className="theme-page-section"><header><h2>产品空位判断</h2><p>所有规模均使用同口径可比产品，不把新基金全部规模误算为增长。</p></header><div className="decision-metrics theme-page-metrics">
+        <MetricButton label="同类基金" value={`${item.market.count}只`} onClick={() => onMetric("all")} />
+        <MetricButton label="近12个月新发" value={`${item.market.launched12.length}只 · ${item.market.supplyState}`} onClick={() => onMetric("12m")} />
+        <MetricButton label="近90天新发" value={`${item.market.launched90.length}只`} onClick={() => onMetric("90d")} />
+        <MetricButton label={`基准规模（${item.market.baselineScaleDate}）`} value={yi(item.market.baselineTotal)} onClick={() => onMetric("scale")} />
+        <MetricButton label={`最新规模（${item.market.currentScaleDate}）`} value={yi(item.market.total)} onClick={() => onMetric("scale")} />
+        <MetricButton label="规模净增加" value={`${signedYi(item.market.scaleIncrease)} · ${item.market.scaleState}`} onClick={() => onMetric("scale")} />
+        <MetricButton label="头部产品占比" value={pct(item.market.topShare)} onClick={() => onMetric("top1")} />
+        <MetricButton label="前三产品占比" value={pct(item.market.top3Share)} onClick={() => onMetric("top3")} />
+        <MetricButton label="市场结论" value={item.market.state} onClick={() => onMetric("state")} />
+      </div></section>
+    </section>
+  </main>;
+}
+
 export function PreResearchPool({ agentCommand, onContextChange }) {
   const [payload, setPayload] = useState({
     products: [],
@@ -604,9 +656,10 @@ export function PreResearchPool({ agentCommand, onContextChange }) {
   const [drawer, setDrawer] = useState("");
   const [evidenceLayer, setEvidenceLayer] = useState("");
   const [peerSort, setPeerSort] = useState("current");
-  const [briefFocus, setBriefFocus] = useState("");
+  const [detailId, setDetailId] = useState(() => new URLSearchParams(window.location.search).get("theme") || "");
   const [reloadKey, setReloadKey] = useState(0);
   const dataVersionRef = useRef("");
+  const returnScrollRef = useRef(0);
   useEffect(() => {
     const controller = new AbortController();
     Promise.all([
@@ -670,6 +723,10 @@ export function PreResearchPool({ agentCommand, onContextChange }) {
     () => new Map((attention.items || []).map((item) => [item.id, item])),
     [attention.items],
   );
+  const universe = useMemo(() => RESEARCH_UNIVERSE.map((item) => ({
+    ...item,
+    market: marketMetrics(item, payload.products || [], payload.updateTime),
+  })), [payload]);
   const ranked = useMemo(() => {
     const priority = { 产品缺失: 4, 存在空位: 3, 继续观察: 2, 供给过剩: 1 };
     const ids =
@@ -677,10 +734,7 @@ export function PreResearchPool({ agentCommand, onContextChange }) {
         ? attention.recommendedIds
         : CORE_ATTENTION_IDS;
     const coreOrder = new Map(ids.map((id, index) => [id, index]));
-    return PRE_RESEARCH_POOL.map((item) => ({
-      ...item,
-      market: marketMetrics(item, payload.products || [], payload.updateTime),
-    }))
+    return universe
       .filter((item) => coreOrder.has(item.id))
       .sort(
         (a, b) =>
@@ -688,19 +742,47 @@ export function PreResearchPool({ agentCommand, onContextChange }) {
           priority[b.market.state] - priority[a.market.state],
       )
       .slice(0, 10);
-  }, [attention.recommendedIds, payload]);
-  const active = ranked.find((item) => item.id === selected) || ranked[0];
+  }, [attention.recommendedIds, universe]);
+  const active = universe.find((item) => item.id === (detailId || selected)) || ranked[0];
   const activeEvidence = active ? evidenceById.get(active.id) : null;
+  const openTheme = (id) => {
+    if (!universe.some((item) => item.id === id)) return;
+    if (!detailId) returnScrollRef.current = window.scrollY;
+    setSelected(id);
+    setDetailId(id);
+    const url = new URL(window.location.href);
+    url.searchParams.set("theme", id);
+    window.history[detailId ? "replaceState" : "pushState"]({ theme: id }, "", url);
+    window.scrollTo({ top: 0, behavior: "auto" });
+  };
+  const closeTheme = () => {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("theme");
+    window.history.replaceState({}, "", url);
+    setDetailId("");
+    requestAnimationFrame(() => window.scrollTo({ top: returnScrollRef.current, behavior: "auto" }));
+  };
+  useEffect(() => {
+    const onPopState = () => setDetailId(new URLSearchParams(window.location.search).get("theme") || "");
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
+  useEffect(() => {
+    if (!detailId) return undefined;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = previous; };
+  }, [detailId]);
   useEffect(() => {
     if (agentCommand?.type !== 'focus-theme') return;
-    const target = ranked.find((item) => item.id === agentCommand.themeId || item.name === agentCommand.themeName);
+    const target = universe.find((item) => item.id === agentCommand.themeId || item.name === agentCommand.themeName);
     if (!target) return;
-    setSelected(target.id);
-    requestAnimationFrame(() => document.querySelector('.decision-detail')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
-  }, [agentCommand, ranked]);
+    openTheme(target.id);
+  }, [agentCommand, universe]);
   useEffect(() => {
     if (!active) return;
-    onContextChange?.({ selectedTheme: { id: active.id, name: active.name, rank: ranked.indexOf(active) + 1, marketState: active.market.state, peerCount: active.market.count, newFunds12m: active.market.launched12.length, scaleNetIncreaseYi: Number(active.market.scaleIncrease.toFixed(1)) }, drawer, evidenceLayer });
+    const coreRank = ranked.findIndex((item) => item.id === active.id);
+    onContextChange?.({ selectedTheme: { id: active.id, name: active.name, rank: coreRank >= 0 ? coreRank + 1 : null, universe: coreRank >= 0 ? "核心10" : "36个母池", marketState: active.market.state, peerCount: active.market.count, newFunds12m: active.market.launched12.length, scaleNetIncreaseYi: Number(active.market.scaleIncrease.toFixed(1)) }, drawer, evidenceLayer });
   }, [active, drawer, evidenceLayer, onContextChange, ranked]);
   const drawerFunds = useMemo(() => {
     if (!active) return [];
@@ -722,9 +804,27 @@ export function PreResearchPool({ agentCommand, onContextChange }) {
   }, [active, drawer, peerSort]);
 
   return (
-    <main className="workspace-main research-pool decision-mode">
+    <main className={`workspace-main research-pool decision-mode${detailId ? " theme-page-open" : ""}`}>
+      {detailId && active ? (
+        <ThemeResearchPage
+          item={active}
+          coreRank={ranked.findIndex((item) => item.id === active.id) + 1 || null}
+          proof={attentionById.get(active.id)}
+          evidence={activeEvidence}
+          evidenceSummary={evidence}
+          attentionHistory={attentionHistory}
+          rankingHistory={attention.rankingHistory || []}
+          externalSignals={(externalSignals.items || []).find((item) => item.id === active.id)}
+          onBack={closeTheme}
+          onEvidence={setEvidenceLayer}
+          onMetric={setDrawer}
+        />
+      ) : null}
       <header className="decision-hero">
-        <h1>季度预研产品池</h1>
+        <div>
+          <h1>核心预研产品池</h1>
+          <p>每季度重排 · 不等同未来三个月预测</p>
+        </div>
         <div className="research-data-date">
           <small>数据日期</small>
           <strong>{String(payload.updateTime || "—").slice(0, 10)}</strong>
@@ -735,27 +835,14 @@ export function PreResearchPool({ agentCommand, onContextChange }) {
         evidenceItems={evidence.items || []}
         externalItems={externalSignals.items || []}
         productIds={ranked.map((item) => item.id)}
-        onFocus={(id) => {
-          setBriefFocus(id);
-          if (ranked.some((item) => item.id === id)) setSelected(id);
-          requestAnimationFrame(() =>
-            document
-              .querySelector(".attention-section")
-              ?.scrollIntoView({ behavior: "smooth", block: "start" }),
-          );
-        }}
+        onOpen={openTheme}
       />
       <AttentionHeatmap
-        focusId={briefFocus}
+        focusId={detailId}
         externalSignals={externalSignals.items || []}
         productIds={ranked.map((item) => item.id)}
         snapshot={attention}
-        onSelectCore={(id) => {
-          setSelected(id);
-          document
-            .querySelector(".decision-layout")
-            ?.scrollIntoView({ behavior: "smooth", block: "start" });
-        }}
+        onSelectCore={openTheme}
       />
       <ProductDecisionMonitor
         ranked={ranked}
@@ -763,15 +850,12 @@ export function PreResearchPool({ agentCommand, onContextChange }) {
         attentionHistory={attentionHistory}
         attentionById={attentionById}
         selectedId={active?.id}
-        onSelect={(id) => {
-          setSelected(id);
-          requestAnimationFrame(() => document.querySelector(".decision-layout")?.scrollIntoView({ behavior: "smooth", block: "start" }));
-        }}
+        onSelect={openTheme}
       />
       <section className="decision-layout">
         <div className="decision-ranking">
           <div className="decision-ranking__head">
-            <span>季度序位 / 产品方向</span>
+            <span>核心池序位 / 产品方向</span>
             <span>近12月新发</span>
             <span>较2025年末净增加</span>
             <span>产品结论</span>
@@ -780,7 +864,7 @@ export function PreResearchPool({ agentCommand, onContextChange }) {
             <button
               type="button"
               className={active?.id === item.id ? "active" : ""}
-              onClick={() => setSelected(item.id)}
+              onClick={() => openTheme(item.id)}
               key={item.id}
             >
               <i>{String(index + 1).padStart(2, "0")}</i>
@@ -803,7 +887,7 @@ export function PreResearchPool({ agentCommand, onContextChange }) {
                 <small>当前研究对象</small>
                 <h2>{active.name}</h2>
               </div>
-              <span>季度序位 {ranked.indexOf(active) + 1}</span>
+              <span>核心池序位 {ranked.indexOf(active) + 1}</span>
             </div>
             {activeEvidence ? (
               <>

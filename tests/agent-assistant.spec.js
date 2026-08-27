@@ -60,7 +60,7 @@ test('executes only a whitelisted read-only page action returned by the model', 
   await panel.getByPlaceholder('询问产品方向、趋势或数据依据…').fill('打开工业软件方向')
   await panel.getByRole('button', { name: '发送' }).click()
   await expect(panel.getByText(/已执行页面操作：定位预研方向/)).toBeVisible()
-  await expect(page.getByRole('heading', { name: '工业软件与自主生产系统' })).toBeVisible()
+  await expect(page.getByRole('main', { name: '工业软件与自主生产系统方向详情' }).getByRole('heading', { name: '工业软件与自主生产系统' })).toBeVisible()
 })
 
 test('aborts an in-flight request when the conversation is cleared', async ({ page }) => {

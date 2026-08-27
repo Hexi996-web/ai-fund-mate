@@ -79,7 +79,7 @@ function ModelCalibration({ calibration }) {
   const active = horizons.find((row) => row.days === horizonDays) || horizons[0];
   const nextDate = calibration?.oldestForecastDate ? new Date(new Date(`${calibration.oldestForecastDate}T00:00:00`).getTime() + (active?.days || 90) * 86400000).toISOString().slice(0, 10) : null;
   return <section className="model-calibration">
-    <header><div><strong>历史命中率与模型校准</strong><small>模型口径 v1 · 仅使用真实季度快照</small></div><span>{active?.status || "积累中"}</span></header>
+    <header><div><strong>历史命中率与模型校准</strong><small>模型口径 v1 · 仅使用各期真实核心池快照</small></div><span>{active?.status || "积累中"}</span></header>
     <nav aria-label="预测检验期限">{horizons.map((row) => <button type="button" className={row.days === active?.days ? "active" : ""} onClick={() => setHorizonDays(row.days)} key={row.days}>{row.label}</button>)}</nav>
     {active?.evaluable ? <div className="calibration-result"><article><span>正式命中率</span><b>{active.hitRatePercent.toFixed(1)}%</b></article><article><span>综合有效率</span><b>{active.inclusiveHitRatePercent.toFixed(1)}%</b></article><article><span>有效样本</span><b>{active.evaluable}</b></article></div> : <div className="calibration-empty"><b>尚无到期样本</b><span>已保存{calibration?.quarterlyCohorts || 1}期真实预测{nextDate ? `；最早于${nextDate}形成首批${active?.label || ""}检验` : ""}。</span></div>}
     <p>{calibration?.disclosure || "只使用到期的真实预测，数据不足不计入成功或失败。"}</p>
@@ -96,12 +96,12 @@ export function ProductDecisionMonitor({ ranked, attention, attentionHistory, at
   const chosen = snapshotPeriod === "current" ? snapshots[0] : snapshots.find((row) => row.period === snapshotPeriod);
   const nameById = new Map(ATTENTION_POOL.map((item) => [item.id, item.name]));
   return <section className="decision-monitor" aria-label="产品窗口与预警">
-    <header><div><h2>产品窗口与变化监测</h2><p>把方向前景与当前产品时点分开判断，变化只使用已保存的真实快照。</p></div><label>季度快照<select value={snapshotPeriod} onChange={(event) => setSnapshotPeriod(event.target.value)}><option value="current">当前季度</option>{snapshots.slice(1).map((row) => <option value={row.period} key={row.period}>{row.period}</option>)}</select></label></header>
+    <header><div><h2>产品窗口与变化监测</h2><p>把方向前景与当前产品时点分开判断，变化只使用已保存的真实快照。</p></div><label>核心池历史<select value={snapshotPeriod} onChange={(event) => setSnapshotPeriod(event.target.value)}><option value="current">本期核心池</option>{snapshots.slice(1).map((row) => <option value={row.period} key={row.period}>{row.period}</option>)}</select></label></header>
     <div className="window-strip">{ranked.map((item) => { const state = windowState(item, attentionById.get(item.id)); return <button type="button" className={`${state.tone} ${active?.id === item.id ? "active" : ""}`} onClick={() => onSelect(item.id)} key={item.id}><span>{item.name}</span><strong>{state.label}</strong><small>{state.action}</small></button>; })}</div>
     <div className="monitor-grid">
       <section className="theme-alerts"><header><strong>主题升降级预警</strong><small>近7日对比前7日</small></header>{alerts.slice(0, 5).map(({ item, label, tone, detail }) => <button type="button" onClick={() => onSelect(item.id)} key={item.id}><span>{item.name}<small>{detail}</small></span><b className={tone}>{label}</b></button>)}</section>
       {active ? <Attribution item={active} proof={activeProof} history={attention.rankingHistory || []} /> : null}
-      <section className="quarter-snapshot"><header><strong>季度快照与历史回看</strong><small>{chosen?.period || attention.recommendationReviewQuarter || "当前季度"} · {chosen?.date || String(attention.generatedAt || "").slice(0, 10)}</small></header><ol>{(chosen?.recommendedIds || attention.recommendedIds || []).map((id, index) => <li key={id}><i>{String(index + 1).padStart(2, "0")}</i><span>{nameById.get(id) || id}</span></li>)}</ol>{snapshots.length < 2 ? <p>首期快照已建立；跨季度历史将在后续季度自动保留，不用模拟数据回填。</p> : null}</section>
+      <section className="quarter-snapshot"><header><strong>核心池历史快照</strong><small>{chosen?.period || attention.recommendationReviewQuarter || "本期"} · {chosen?.date || String(attention.generatedAt || "").slice(0, 10)}</small></header><ol>{(chosen?.recommendedIds || attention.recommendedIds || []).map((id, index) => <li key={id}><i>{String(index + 1).padStart(2, "0")}</i><span>{nameById.get(id) || id}</span></li>)}</ol>{snapshots.length < 2 ? <p>首期快照已建立；后续每次季度重排都会保留真实结果，不用模拟数据回填。</p> : null}</section>
     </div>
     {active ? <div className="decision-history-grid"><ThemeStateHistory item={active} proof={activeProof} history={attention.rankingHistory || []} /><ModelCalibration calibration={attention.modelCalibration} /></div> : null}
   </section>;
