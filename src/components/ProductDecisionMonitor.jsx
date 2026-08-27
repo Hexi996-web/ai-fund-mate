@@ -58,6 +58,34 @@ function Attribution({ item, proof, history }) {
   </div>;
 }
 
+const STATE_ORDER = ["新线索", "提前预研", "叙事验证", "窗口临近", "窗口开启", "拥挤观察", "证据转弱", "暂时退出"];
+
+function ThemeStateHistory({ item, proof, history }) {
+  const rows = history.filter((row) => row.states?.[item.id]).slice(-8);
+  const fallback = proof?.lifecycle || item.lifecycle || windowState(item, proof);
+  const current = rows.at(-1)?.states?.[item.id] || fallback;
+  return <section className="state-history">
+    <header><div><strong>主题状态迁移</strong><small>{item.name}</small></div><b>{current?.state || current?.label || "基线建立中"}</b></header>
+    <div className="state-rail" aria-label={`${item.name}状态轨迹`}>
+      {STATE_ORDER.map((state) => <span className={state === (current?.state || current?.label) ? "current" : ""} key={state}>{state}</span>)}
+    </div>
+    <ol>{rows.length ? rows.map((row, index) => { const state = row.states[item.id]; const previous = index ? rows[index - 1].states[item.id]?.state : null; return <li key={row.date} className={previous && previous !== state.state ? "changed" : ""}><time>{row.date.slice(5)}</time><b>{state.state}</b><span>{state.reason}</span></li>; }) : <li className="changed"><time>{String(proof?.validation?.asOf || "").slice(5, 10) || "本期"}</time><b>{current?.state || current?.label || "基线建立中"}</b><span>{current?.reason || current?.action || "首期状态将在下一次更新时写入不可覆盖的历史快照。"}</span></li>}</ol>
+  </section>;
+}
+
+function ModelCalibration({ calibration }) {
+  const horizons = calibration?.horizons || [{ days: 90, label: "3个月", status: "积累中" }, { days: 180, label: "半年", status: "积累中" }, { days: 365, label: "一年", status: "积累中" }];
+  const [horizonDays, setHorizonDays] = useState(horizons[0]?.days || 90);
+  const active = horizons.find((row) => row.days === horizonDays) || horizons[0];
+  const nextDate = calibration?.oldestForecastDate ? new Date(new Date(`${calibration.oldestForecastDate}T00:00:00`).getTime() + (active?.days || 90) * 86400000).toISOString().slice(0, 10) : null;
+  return <section className="model-calibration">
+    <header><div><strong>历史命中率与模型校准</strong><small>模型口径 v1 · 仅使用真实季度快照</small></div><span>{active?.status || "积累中"}</span></header>
+    <nav aria-label="预测检验期限">{horizons.map((row) => <button type="button" className={row.days === active?.days ? "active" : ""} onClick={() => setHorizonDays(row.days)} key={row.days}>{row.label}</button>)}</nav>
+    {active?.evaluable ? <div className="calibration-result"><article><span>正式命中率</span><b>{active.hitRatePercent.toFixed(1)}%</b></article><article><span>综合有效率</span><b>{active.inclusiveHitRatePercent.toFixed(1)}%</b></article><article><span>有效样本</span><b>{active.evaluable}</b></article></div> : <div className="calibration-empty"><b>尚无到期样本</b><span>已保存{calibration?.quarterlyCohorts || 1}期真实预测{nextDate ? `；最早于${nextDate}形成首批${active?.label || ""}检验` : ""}。</span></div>}
+    <p>{calibration?.disclosure || "只使用到期的真实预测，数据不足不计入成功或失败。"}</p>
+  </section>;
+}
+
 export function ProductDecisionMonitor({ ranked, attention, attentionHistory, attentionById, selectedId, onSelect }) {
   const [snapshotPeriod, setSnapshotPeriod] = useState("current");
   const snapshots = useMemo(() => snapshotRows(attention.rankingHistory || []), [attention.rankingHistory]);
@@ -75,6 +103,7 @@ export function ProductDecisionMonitor({ ranked, attention, attentionHistory, at
       {active ? <Attribution item={active} proof={activeProof} history={attention.rankingHistory || []} /> : null}
       <section className="quarter-snapshot"><header><strong>季度快照与历史回看</strong><small>{chosen?.period || attention.recommendationReviewQuarter || "当前季度"} · {chosen?.date || String(attention.generatedAt || "").slice(0, 10)}</small></header><ol>{(chosen?.recommendedIds || attention.recommendedIds || []).map((id, index) => <li key={id}><i>{String(index + 1).padStart(2, "0")}</i><span>{nameById.get(id) || id}</span></li>)}</ol>{snapshots.length < 2 ? <p>首期快照已建立；跨季度历史将在后续季度自动保留，不用模拟数据回填。</p> : null}</section>
     </div>
+    {active ? <div className="decision-history-grid"><ThemeStateHistory item={active} proof={activeProof} history={attention.rankingHistory || []} /><ModelCalibration calibration={attention.modelCalibration} /></div> : null}
   </section>;
 }
 

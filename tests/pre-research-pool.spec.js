@@ -88,7 +88,7 @@ test('shows public-data evidence and drills into product supply', async ({ page 
   await expect.poll(async () => isDescending(await columnValues(5))).toBe(true)
 })
 
-test('supports product windows, alerts, attribution and quarterly snapshots', async ({ page }) => {
+test('supports product windows, lifecycle history, attribution and honest model calibration', async ({ page }) => {
   await page.goto('/')
   const monitor = page.getByRole('region', { name: '产品窗口与预警' })
   await expect(monitor.getByRole('heading', { name: '产品窗口与变化监测' })).toBeVisible()
@@ -96,8 +96,14 @@ test('supports product windows, alerts, attribution and quarterly snapshots', as
   await expect(monitor.getByText('主题升降级预警', { exact: true })).toBeVisible()
   await expect(monitor.getByText('排名变化归因', { exact: true })).toBeVisible()
   await expect(monitor.getByText('季度快照与历史回看', { exact: true })).toBeVisible()
+  await expect(monitor.getByText('主题状态迁移', { exact: true })).toBeVisible()
+  await expect(monitor.getByText('历史命中率与模型校准', { exact: true })).toBeVisible()
+  await expect(monitor.getByText('尚无到期样本', { exact: true })).toBeVisible()
+  await monitor.getByRole('button', { name: '半年', exact: true }).click()
+  await expect(monitor.locator('.model-calibration')).toContainText('形成首批半年检验')
   const second = monitor.locator('.window-strip button').nth(1)
   const secondName = await second.locator('span').innerText()
   await second.click()
   await expect(monitor.locator('.ranking-attribution header strong')).toHaveText(secondName)
+  await expect(monitor.locator('.state-history header small')).toHaveText(secondName)
 })

@@ -4,6 +4,8 @@ from datetime import datetime, timedelta
 from scripts import update_attention_pool as attention_pool
 from scripts.update_attention_pool import (
     atomic_write_json,
+    build_model_calibration,
+    lifecycle_state,
     parse_baidu_hotlist_html,
     parse_toutiao_hotlist,
     rescore_product_validations,
@@ -93,4 +95,29 @@ def test_ranking_history_replaces_same_day_and_is_bounded():
     assert retained[-1]["recommendedIds"] == ["ai-agent"]
     assert retained[-1]["scores"]["ai-agent"]["validation"] == 60
     assert sum(row["date"] == "2026-08-26" for row in retained) == 1
+
+
+def test_lifecycle_state_distinguishes_window_from_crowding_and_weakening():
+    open_theme = {"attention": {"score": 65}, "validation": {"score": 70, "launched12Months": 2,
+                  "currentScaleYi": 300, "growthBreadthPercent": 70}, "capacity": {"score": 75}}
+    assert lifecycle_state(open_theme)["state"] == "窗口开启"
+    crowded = {**open_theme, "validation": {**open_theme["validation"], "launched12Months": 15, "currentScaleYi": 900}}
+    assert lifecycle_state(crowded)["state"] == "拥挤观察"
+    assert lifecycle_state(open_theme, {"attention": 85, "validation": 90, "capacity": 76})["state"] == "证据转弱"
+
+
+def test_model_calibration_waits_for_real_maturity_and_excludes_missing_data():
+    scores = {"ai-agent": {"attention": 60, "validation": 65, "capacity": 70, "rank": 3}}
+    recent = [{"date": "2026-08-01", "period": "2026-Q3", "recommendedIds": ["ai-agent"], "scores": scores}]
+    pending = build_model_calibration(recent, "2026-08-27", scores)
+    assert all(row["status"] == "积累中" for row in pending["horizons"])
+    mature = [{"date": "2026-01-01", "period": "2026-Q1", "recommendedIds": ["ai-agent", "missing"],
+               "scores": {"ai-agent": {"attention": 40, "validation": 50, "capacity": 60, "rank": 8},
+                          "missing": {"attention": 50, "validation": 50, "capacity": 50, "rank": 9}}}]
+    calibrated = build_model_calibration(mature, "2026-08-27", scores)
+    half_year = next(row for row in calibrated["horizons"] if row["days"] == 180)
+    assert half_year["status"] == "可评估"
+    assert half_year["evaluable"] == 1
+    assert half_year["hits"] == 1
+    assert half_year["hitRatePercent"] == 100.0
 

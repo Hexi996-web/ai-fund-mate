@@ -10,7 +10,11 @@ def test_agent_context_matches_published_status_and_core_pool():
     context = json.loads((ROOT / "public/agent_context.json").read_text(encoding="utf-8"))
     assert context["snapshotDate"] == status["snapshotDate"]
     assert context["generatedAt"] == status["generatedAt"]
-    assert len(context["workspaces"]["预研产品池"]["coreDirections"]) == 10
+    research = context["workspaces"]["预研产品池"]
+    assert context["schemaVersion"] == 2
+    assert len(research["coreDirections"]) == 10
+    assert all(item["lifecycleState"] for item in research["coreDirections"])
+    assert research["modelCalibration"]["modelVersion"] == "theme-lifecycle-calibration-v1"
     assert context["workspaces"]["市场分析"]["comparableProductCount"] > 1000
 
 

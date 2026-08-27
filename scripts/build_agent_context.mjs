@@ -22,6 +22,8 @@ const research = attention.recommendedIds.map((id, index) => {
     attention: round(evidence.attention?.score ?? evidence.attention?.compositeScore),
     productValidation: round(evidence.validation?.score),
     assetCapacity: round(evidence.capacity?.score),
+    lifecycleState: evidence.lifecycle?.state || null,
+    lifecycleReason: evidence.lifecycle?.reason || null,
     marketConclusion: theme.supply?.conclusion || null,
   }
 })
@@ -44,7 +46,7 @@ for (const product of products.products || []) {
 }
 
 const output = {
-  schemaVersion: 1,
+  schemaVersion: 2,
   generatedAt: status.generatedAt,
   snapshotDate: status.snapshotDate,
   workspaces: {
@@ -53,6 +55,12 @@ const output = {
       observationDays: attention.attentionObservationDays,
       reviewQuarter: attention.recommendationReviewQuarter,
       coreDirections: research,
+      modelCalibration: attention.modelCalibration ? {
+        modelVersion: attention.modelCalibration.modelVersion,
+        oldestForecastDate: attention.modelCalibration.oldestForecastDate,
+        quarterlyCohorts: attention.modelCalibration.quarterlyCohorts,
+        horizons: attention.modelCalibration.horizons.map(({ label, status, evaluable, hitRatePercent, inclusiveHitRatePercent }) => ({ label, status, evaluable, hitRatePercent, inclusiveHitRatePercent })),
+      } : null,
     },
     '市场分析': {
       productTotal: products.productTotal,

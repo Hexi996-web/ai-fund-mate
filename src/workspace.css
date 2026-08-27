@@ -4340,11 +4340,45 @@
 .quarter-snapshot ol { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 10px; margin: 0; padding: 0; list-style: none; }
 .quarter-snapshot li { display: grid; grid-template-columns: 22px 1fr; align-items: center; padding: 5px 0; border-top: 1px solid #e8ebf0; font-size: 10px; }
 .quarter-snapshot li i { color: #596ed6; font-style: normal; font-weight: 800; }
+.decision-history-grid { display: grid; grid-template-columns: 1.35fr .85fr; gap: 12px; margin-top: 12px; }
+.decision-history-grid > section { min-width: 0; padding: 17px; border: 1px solid #dfe5ef; border-radius: 10px; background: #fafbfc; }
+.state-history > header,
+.model-calibration > header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.state-history header strong,
+.model-calibration header strong { display: block; color: #202c43; font-size: 15px; }
+.state-history header small,
+.model-calibration header small { display: block; margin-top: 4px; color: #758198; font-size: 10px; }
+.state-history header > b { color: #3446d8; font-size: 14px; }
+.state-rail { display: grid; grid-template-columns: repeat(8, minmax(58px, 1fr)); gap: 2px; overflow-x: auto; margin: 16px 0 12px; padding-bottom: 3px; }
+.state-rail span { position: relative; min-width: 62px; padding: 9px 5px; background: #edf0f5; color: #778297; font-size: 10px; font-weight: 750; text-align: center; }
+.state-rail span:first-child { border-radius: 6px 0 0 6px; }
+.state-rail span:last-child { border-radius: 0 6px 6px 0; }
+.state-rail span.current { background: #4055d5; color: #fff; }
+.state-history ol { max-height: 214px; overflow-y: auto; margin: 0; padding: 0; list-style: none; }
+.state-history li { display: grid; grid-template-columns: 42px 74px 1fr; gap: 9px; align-items: start; padding: 9px 0; border-top: 1px solid #e3e7ee; color: #6e7b91; font-size: 10px; line-height: 1.45; }
+.state-history li time { color: #8792a5; }
+.state-history li b { color: #3446d8; font-size: 11px; }
+.state-history li.changed b::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 5px; border-radius: 50%; background: #4055d5; vertical-align: 1px; }
+.model-calibration > header > span { padding: 4px 8px; border-radius: 999px; background: #eef1f7; color: #637088; font-size: 10px; font-weight: 800; }
+.model-calibration nav { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin: 16px 0 13px; }
+.model-calibration nav button { min-height: 34px; border: 1px solid #d7deea; border-radius: 6px; background: #fff; color: #66738a; font-size: 11px; font-weight: 800; }
+.model-calibration nav button.active { border-color: #4055d5; background: #eef0ff; color: #3346ca; }
+.calibration-result { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+.calibration-result article { padding: 11px 8px; border-radius: 7px; background: #fff; text-align: center; }
+.calibration-result span,
+.calibration-result b { display: block; }
+.calibration-result span { color: #7a8699; font-size: 9px; }
+.calibration-result b { margin-top: 5px; color: #26354e; font-size: 18px; }
+.calibration-empty { display: grid; gap: 7px; min-height: 70px; align-content: center; padding: 13px; border-left: 3px solid #5265d8; background: #f2f4ff; }
+.calibration-empty b { color: #273657; font-size: 14px; }
+.calibration-empty span { color: #69778f; font-size: 10px; line-height: 1.55; }
+.model-calibration p { margin: 12px 0 0; color: #69778f; font-size: 10px; line-height: 1.55; }
 
 @media (max-width: 1050px) {
   .window-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .monitor-grid { grid-template-columns: 1fr 1fr; }
   .quarter-snapshot { grid-column: 1 / -1; }
+  .decision-history-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
   .decision-monitor { padding: 16px 14px; }
@@ -4355,6 +4389,9 @@
   .window-strip button { flex: 0 0 78%; scroll-snap-align: start; }
   .monitor-grid { grid-template-columns: 1fr; }
   .quarter-snapshot { grid-column: auto; }
+  .decision-history-grid { grid-template-columns: 1fr; }
+  .decision-history-grid > section { padding: 14px; }
+  .state-history li { grid-template-columns: 38px 68px 1fr; gap: 6px; }
 }
 
 /* Mobile workspace: prioritize readable decisions over desktop density. */

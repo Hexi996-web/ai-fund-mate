@@ -26,6 +26,7 @@ OUT = ROOT / "public" / "attention_pool_evidence.json"
 ATTENTION_HISTORY = ROOT / "public" / "social_attention_history.json"
 PRE_EVIDENCE = ROOT / "public" / "pre_research_evidence.json"
 FUND_PRODUCTS = ROOT / "public" / "fund_products.json"
+MODEL_VERSION = "theme-lifecycle-calibration-v1"
 
 
 def atomic_write_json(path: Path, payload: dict) -> None:
@@ -572,6 +573,96 @@ def update_ranking_history(previous_payload: dict, ranked_ids: list[str], recomm
     return history[-1095:]
 
 
+def lifecycle_state(item: dict, previous_scores: dict | None = None) -> dict:
+    """Classify a theme with observable evidence, keeping the state explainable."""
+    attention = float((item.get("attention") or {}).get("score") or 0)
+    validation = float((item.get("validation") or {}).get("score") or 0)
+    capacity = float((item.get("capacity") or {}).get("score") or 0)
+    market = item.get("validation") or {}
+    launches = int(market.get("launched12Months") or 0)
+    scale = float(market.get("currentScaleYi") or 0)
+    breadth = float(market.get("growthBreadthPercent") or 0)
+    crowded = launches >= 12 and scale >= 500
+    deltas = [] if not previous_scores else [
+        attention - float(previous_scores.get("attention") or 0),
+        validation - float(previous_scores.get("validation") or 0),
+        capacity - float(previous_scores.get("capacity") or 0),
+    ]
+    weakening = sum(delta <= -8 for delta in deltas) >= 2
+
+    if crowded:
+        state, reason = "拥挤观察", "同类产品近12个月集中新发且市场规模已较大"
+    elif weakening:
+        state, reason = "证据转弱", "至少两项核心证据较上一有效快照明显下降"
+    elif attention < 15 and validation < 25 and capacity < 35:
+        state, reason = "暂时退出", "注意力、产品需求和资产承载均未形成有效支撑"
+    elif attention >= 55 and validation >= 55 and capacity >= 55:
+        state, reason = "窗口开启", "注意力、产品需求与资产承载形成共振"
+    elif validation >= 50 and capacity >= 50 and attention >= 25:
+        state, reason = "窗口临近", "产品需求与资产承载已确认，等待注意力进一步扩散"
+    elif attention >= 35 and validation >= 35:
+        state, reason = "叙事验证", "公众注意力已出现，产品需求仍需持续验证"
+    elif validation >= 35 or capacity >= 50 or breadth >= 50:
+        state, reason = "提前预研", "产业或资产条件已出现，但社会注意力尚未充分形成"
+    else:
+        state, reason = "新线索", "当前仅形成早期信号，证据尚不足"
+    return {"state": state, "reason": reason}
+
+
+def build_model_calibration(history: list[dict], current_date: str, current_scores: dict) -> dict:
+    """Evaluate only genuinely matured quarterly cohorts; never fabricate backtests."""
+    today = datetime.fromisoformat(current_date).date()
+    first_by_period = {}
+    for row in sorted(history, key=lambda value: value.get("date", "")):
+        if row.get("period") and row.get("scores"):
+            first_by_period.setdefault(row["period"], row)
+
+    horizons = []
+    for days, label in ((90, "3个月"), (180, "半年"), (365, "一年")):
+        cohorts = []
+        for origin in first_by_period.values():
+            age = (today - datetime.fromisoformat(origin["date"]).date()).days
+            if age < days:
+                continue
+            results = []
+            for theme_id in origin.get("recommendedIds", []):
+                start = (origin.get("scores") or {}).get(theme_id)
+                end = current_scores.get(theme_id)
+                if not start or not end:
+                    results.append({"id": theme_id, "result": "数据不足"})
+                    continue
+                changes = [end[key] - start[key] for key in ("attention", "validation", "capacity")]
+                end_rank = int(end.get("rank") or 999)
+                improving = sum(delta >= 5 for delta in changes)
+                weakening = sum(delta <= -15 for delta in changes)
+                if end_rank <= 10 and sum(end[key] >= 50 for key in ("attention", "validation", "capacity")) >= 2:
+                    result = "命中"
+                elif end_rank <= 15 or improving >= 1:
+                    result = "部分命中"
+                elif weakening >= 2 or end_rank > 25:
+                    result = "证伪"
+                else:
+                    result = "未发生"
+                results.append({"id": theme_id, "result": result, "rank": end_rank, "changes": {
+                    "attention": round(changes[0], 2), "validation": round(changes[1], 2), "capacity": round(changes[2], 2),
+                }})
+            evaluable = [row for row in results if row["result"] != "数据不足"]
+            cohorts.append({"period": origin["period"], "originDate": origin["date"], "ageDays": age, "results": results,
+                            "evaluable": len(evaluable), "hits": sum(row["result"] == "命中" for row in evaluable),
+                            "partialHits": sum(row["result"] == "部分命中" for row in evaluable)})
+        evaluable = sum(row["evaluable"] for row in cohorts)
+        hits = sum(row["hits"] for row in cohorts)
+        partial = sum(row["partialHits"] for row in cohorts)
+        horizons.append({"days": days, "label": label, "status": "可评估" if evaluable else "积累中",
+                         "cohorts": cohorts, "evaluable": evaluable, "hits": hits, "partialHits": partial,
+                         "hitRatePercent": round(hits / evaluable * 100, 1) if evaluable else None,
+                         "inclusiveHitRatePercent": round((hits + partial * 0.5) / evaluable * 100, 1) if evaluable else None})
+    oldest = min((row.get("date") for row in first_by_period.values()), default=current_date)
+    return {"modelVersion": MODEL_VERSION, "asOf": current_date, "oldestForecastDate": oldest,
+            "quarterlyCohorts": len(first_by_period), "horizons": horizons,
+            "disclosure": "只评估到期的真实季度预测；部分命中按0.5计入综合有效率，数据不足不进入分母。"}
+
+
 def main() -> None:
     previous_payload = load_previous_payload()
     previous = load_previous()
@@ -625,17 +716,28 @@ def main() -> None:
     force_review = os.getenv("FORCE_CORE_REVIEW", "0") == "1"
     recommended_ids = previous_ids if len(previous_ids) == 10 and previous_quarter == quarter and not force_review else [item["id"] for item in ranked[:10]]
     today = date.today().isoformat()
+    previous_score_snapshot = next((row.get("scores") for row in reversed(previous_payload.get("rankingHistory", [])) if row.get("scores")), {})
     score_snapshot = {
         item["id"]: {
             "attention": round(item["attention"]["score"], 2),
             "validation": round(item["validation"]["score"], 2),
             "capacity": round(item["capacity"]["score"], 2),
+            "composite": round(item["attention"]["score"] * attention_weight + item["validation"]["score"] * validation_weight + item["capacity"]["score"] * capacity_weight, 2),
+            "rank": rank,
         }
-        for item in ranked
+        for rank, item in enumerate(ranked, 1)
     }
+    state_snapshot = {}
+    for item in ranked:
+        lifecycle = lifecycle_state(item, previous_score_snapshot.get(item["id"]))
+        item["lifecycle"] = lifecycle
+        state_snapshot[item["id"]] = lifecycle
     ranking_history = update_ranking_history(previous_payload, [item["id"] for item in ranked], recommended_ids, today, quarter, score_snapshot)
+    ranking_history[-1]["states"] = state_snapshot
+    ranking_history[-1]["modelVersion"] = MODEL_VERSION
+    model_calibration = build_model_calibration(ranking_history, today, score_snapshot)
     output = {
-        "schemaVersion": 2,
+        "schemaVersion": 3,
         "generatedAt": datetime.now().astimezone().isoformat(),
         "methodologyVersion": "cn-hotlists-gdelt-v1",
         "universeCount": 36,
@@ -645,6 +747,7 @@ def main() -> None:
         "recommendationReviewQuarter": quarter,
         "recommendationPolicy": "核心10原则上按季度重排；重大政策、技术或企业证伪事件可通过FORCE_CORE_REVIEW触发临时复核。",
         "rankingHistory": ranking_history,
+        "modelCalibration": model_calibration,
         "items": items,
         "attentionObservationDays": observed_days,
         "attentionMaturity": maturity,
