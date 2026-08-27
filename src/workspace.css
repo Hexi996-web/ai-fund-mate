@@ -1264,6 +1264,7 @@
 }
 .agent-launcher span { font-size: 16px; font-weight: 900; }
 .agent-launcher small { margin-top: 2px; color: #cdd5ff; font-size: 10px; }
+.agent-shell.is-open .agent-launcher { opacity: 0; pointer-events: none; }
 .agent-panel {
   position: fixed;
   z-index: 45;
@@ -1272,7 +1273,7 @@
   width: min(420px, calc(100vw - 32px));
   max-height: min(720px, calc(100vh - 110px));
   display: grid;
-  grid-template-rows: auto auto auto minmax(160px, 1fr) auto auto auto;
+  grid-template-rows: auto auto minmax(160px, 1fr) auto auto auto;
   overflow: hidden;
   border: 1px solid #d9e0eb;
   border-radius: 16px;
@@ -1280,6 +1281,7 @@
   color: #1c2940;
   box-shadow: 0 24px 65px rgba(20, 31, 66, .24);
 }
+.agent-panel.has-settings { grid-template-rows: auto auto auto minmax(160px, 1fr) auto auto auto; }
 .agent-panel > header { display: flex; justify-content: space-between; gap: 14px; padding: 17px 18px; background: #17213d; color: #fff; }
 .agent-panel > header small,
 .agent-panel > header strong,
@@ -1304,8 +1306,11 @@
 .agent-messages article.user small { text-align: right; }
 .agent-messages p { margin: 0; padding: 10px 12px; border-radius: 4px 12px 12px 12px; background: #eef1f7; color: #38465e; font-size: 12px; line-height: 1.65; white-space: pre-wrap; }
 .agent-messages article.user p { border-radius: 12px 4px 12px 12px; background: #3446d8; color: #fff; }
-.agent-starters { display: flex; gap: 6px; overflow-x: auto; padding: 0 16px 10px; }
-.agent-starters button { flex: none; padding: 7px 9px; border: 1px solid #dce2ed; border-radius: 999px; background: #fff; color: #4354bd; font-size: 10px; }
+.agent-starters { display: flex; align-items: center; gap: 6px; overflow-x: auto; padding: 0 16px 10px; }
+.agent-starters { scrollbar-width: none; }
+.agent-starters::-webkit-scrollbar { display: none; }
+.agent-starters button { flex: none; min-height: 32px; height: auto; padding: 7px 9px; border: 1px solid #dce2ed; border-radius: 999px; background: #fff; color: #4354bd; font-size: 10px; }
+.agent-starters button:disabled { opacity: .5; }
 .agent-error { margin: 0 16px 10px; padding: 9px 10px; border-radius: 7px; background: #fff0f0; color: #a33d45; font-size: 10px; line-height: 1.5; }
 .agent-panel form { display: grid; grid-template-columns: 1fr auto; gap: 8px; padding: 12px 14px; border-top: 1px solid #e1e6ee; }
 .agent-panel textarea { resize: none; padding: 9px 10px; border: 1px solid #cfd8e6; border-radius: 8px; color: #26344d; font: inherit; font-size: 12px; }

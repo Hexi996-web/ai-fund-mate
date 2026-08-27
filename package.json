@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/build_agent_context.mjs",
     "build": "vite build",
     "preview": "vite preview",
     "test:e2e": "playwright test"

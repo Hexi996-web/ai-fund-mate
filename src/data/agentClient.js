@@ -10,6 +10,19 @@ async function readJson(response) {
   return payload
 }
 
+export async function loadAgentBootstrap(signal) {
+  const [statusResult, contextResult, configResult] = await Promise.allSettled([
+    fetch('/data_status.json', { cache: 'no-store', signal }).then(readJson),
+    fetch('/agent_context.json', { cache: 'no-store', signal }).then(readJson),
+    fetch('/api/agent/chat', { cache: 'no-store', signal }).then(readJson),
+  ])
+  return {
+    dataStatus: statusResult.status === 'fulfilled' ? statusResult.value : null,
+    workspaceContext: contextResult.status === 'fulfilled' ? contextResult.value : null,
+    cloudConfig: configResult.status === 'fulfilled' ? configResult.value : { configured: false },
+  }
+}
+
 export async function sendAgentMessage({ provider, endpoint, model, messages, context, signal }) {
   if (provider === 'local') {
     const target = endpoint || DEFAULT_LOCAL_ENDPOINT
