@@ -3,6 +3,7 @@ import FundApp from './App.jsx'
 import { MarketForecastWorkspace } from './components/MarketForecastWorkspace.jsx'
 import { IssuanceInsight } from './features/issuance-insight/IssuanceInsight.jsx'
 import { PreResearchPool } from './components/PreResearchPool.jsx'
+import { AgentAssistant } from './components/AgentAssistant.jsx'
 import './workspace.css'
 
 const WORKSPACES = [
@@ -43,5 +44,6 @@ export default function WorkspaceApp() {
     {workspace === 'research' ? <PreResearchPool /> : null}
     {workspace === 'forecast' ? <MarketForecastWorkspace onOpenFundLibrary={openFundLibrary} /> : null}
     {workspace === 'funds' ? <FundApp initialQuery={fundContext.query} onQueryChange={rememberFundQuery} /> : null}
+    <AgentAssistant workspace={WORKSPACES.find((item) => item.id === workspace)?.label || workspace} />
   </>
 }

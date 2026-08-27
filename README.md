@@ -9,6 +9,14 @@
 | 发行洞察 | 新发、募集规模及成立后规模轨迹 | 每日自动更新 |
 | 预研产品池 | 36个社会注意力方向、动态核心10与产品空位 | 每日更新证据，季度调整母池 |
 
+## 产品经理 Agent
+
+网页右下角提供产品经理 Agent。它会携带当前工作区和数据日期，但不会直接修改数据或执行外部操作。
+
+- 云端模型：通过服务端 `/api/agent/chat` 统一接入任何兼容 OpenAI Chat Completions 的模型服务。Vercel 环境变量需设置 `AGENT_API_KEY`、`AGENT_MODEL`，可选设置 `AGENT_BASE_URL` 和 `AGENT_PROVIDER`。密钥不会进入浏览器代码。
+- 本地模型：在 Agent 的“模型设置”中切换至本地 Ollama，默认接口为 `http://127.0.0.1:11434/api/chat`，默认模型为 `qwen3:8b`。Ollama 需要已启动、已下载对应模型，并允许生产站点跨域访问。
+- 未配置云端模型时：云端接口明确返回“尚未配置”，用户仍可切换到本地模型；系统不会静默伪造回复。
+
 ## 生产入口
 
 - 前端入口：`src/workspace-main.jsx` → `src/WorkspaceApp.jsx`
