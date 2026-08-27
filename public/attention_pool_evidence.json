@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-08-27T14:53:42.735746+08:00",
+  "generatedAt": "2026-08-27T07:08:57.500186+00:00",
   "methodologyVersion": "cn-hotlists-gdelt-v1",
   "universeCount": 36,
   "mappedCount": 36,
@@ -293,9 +293,9 @@
         "defense-tech",
         "digital-health",
         "future-tech",
-        "mental-health",
         "recycling",
         "cybersecurity",
+        "mental-health",
         "low-altitude",
         "sports-outdoor",
         "inbound-consumption",
@@ -312,9 +312,9 @@
       "scores": {
         "hard-tech": {
           "attention": 0,
-          "validation": 95.0,
+          "validation": 94.9,
           "capacity": 95.0,
-          "composite": 90.25,
+          "composite": 90.18,
           "rank": 1
         },
         "resources": {
@@ -325,10 +325,10 @@
           "rank": 2
         },
         "biotech": {
-          "attention": 52.1,
+          "attention": 51.9,
           "validation": 88.6,
           "capacity": 75.1,
-          "composite": 82.83,
+          "composite": 82.82,
           "rank": 3
         },
         "power": {
@@ -347,9 +347,9 @@
         },
         "space": {
           "attention": 0,
-          "validation": 76.2,
+          "validation": 76.3,
           "capacity": 86.0,
-          "composite": 75.25,
+          "composite": 75.32,
           "rank": 6
         },
         "grid-storage": {
@@ -368,37 +368,37 @@
         },
         "industrial-software": {
           "attention": 0,
-          "validation": 73.6,
+          "validation": 73.8,
           "capacity": 69.7,
-          "composite": 68.78,
+          "composite": 68.91,
           "rank": 9
         },
         "longevity": {
           "attention": 0,
-          "validation": 71.5,
+          "validation": 71.4,
           "capacity": 67.9,
-          "composite": 66.87,
+          "composite": 66.81,
           "rank": 10
         },
         "embodied-ai": {
-          "attention": 57.9,
-          "validation": 56.4,
+          "attention": 57.8,
+          "validation": 56.3,
           "capacity": 87.8,
-          "composite": 65.65,
+          "composite": 65.58,
           "rank": 11
         },
         "creator-economy": {
-          "attention": 37.6,
+          "attention": 37.5,
           "validation": 64.6,
           "capacity": 60.7,
-          "composite": 62.11,
+          "composite": 62.1,
           "rank": 12
         },
         "service-robot": {
           "attention": 0,
-          "validation": 52.0,
+          "validation": 51.9,
           "capacity": 91.4,
-          "composite": 60.92,
+          "composite": 60.85,
           "rank": 13
         },
         "agri-tech": {
@@ -438,16 +438,16 @@
         },
         "defense-tech": {
           "attention": 0,
-          "validation": 39.6,
+          "validation": 39.4,
           "capacity": 84.2,
-          "composite": 50.66,
+          "composite": 50.53,
           "rank": 19
         },
         "digital-health": {
           "attention": 0,
           "validation": 52.3,
-          "capacity": 53.5,
-          "composite": 50.04,
+          "capacity": 51.7,
+          "composite": 49.51,
           "rank": 20
         },
         "future-tech": {
@@ -457,56 +457,46 @@
           "composite": 48.46,
           "rank": 21
         },
-        "mental-health": {
-          "attention": 0,
-          "validation": 49.7,
-          "capacity": 53.5,
-          "composite": 48.33,
-          "rank": 22
-        },
         "recycling": {
           "attention": 0,
           "validation": 51.7,
           "capacity": 48.1,
           "composite": 48.06,
-          "rank": 23
-        },
-        "recycling": {
-          "attention": 0,
-          "validation": 51.7,
-          "capacity": 48.1
+          "rank": 22
         },
         "cybersecurity": {
           "attention": 0,
           "validation": 47.0,
           "capacity": 57.1,
           "composite": 47.6,
-          "rank": 24
-        },
-        "low-altitude": {
-          "attention": 46.4,
-          "validation": 27.7,
-          "capacity": 76.9,
-          "composite": 43.02,
-          "rank": 25
+          "rank": 23
         },
         "mental-health": {
           "attention": 0,
-          "validation": 45.1,
-          "capacity": 44.4,
-          "composite": 42.64,
-          "rank": 26
+          "validation": 49.0,
+          "capacity": 51.7,
+          "composite": 47.34,
+          "rank": 24
+        },
+        "low-altitude": {
+          "attention": 46.2,
+          "validation": 27.7,
+          "capacity": 76.9,
+          "composite": 43.01,
+          "rank": 25
         },
         "sports-outdoor": {
           "attention": 0,
           "validation": 45.3,
-          "capacity": 44.4
+          "capacity": 44.4,
+          "composite": 42.77,
+          "rank": 26
         },
         "inbound-consumption": {
           "attention": 0,
-          "validation": 48.0,
+          "validation": 48.8,
           "capacity": 35.4,
-          "composite": 41.92,
+          "composite": 42.44,
           "rank": 27
         },
         "nuclear-energy": {
@@ -518,9 +508,9 @@
         },
         "new-food": {
           "attention": 0,
-          "validation": 47.8,
+          "validation": 48.2,
           "capacity": 31.8,
-          "composite": 40.73,
+          "composite": 41.0,
           "rank": 29
         },
         "water-security": {
@@ -560,9 +550,9 @@
         },
         "climate-adaptation": {
           "attention": 14.3,
-          "validation": 17.9,
+          "validation": 17.4,
           "capacity": 39.0,
-          "composite": 23.89,
+          "composite": 23.56,
           "rank": 35
         },
         "human-upskilling": {
@@ -658,15 +648,15 @@
           "state": "提前预研",
           "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
         },
-        "mental-health": {
-          "state": "提前预研",
-          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
-        },
         "recycling": {
           "state": "提前预研",
           "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
         },
         "cybersecurity": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
+        },
+        "mental-health": {
           "state": "提前预研",
           "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
         },
@@ -826,7 +816,7 @@
       },
       "capacity": {
         "score": 93.2,
-        "floatMarketCapYi": 127591.296,
+        "floatMarketCapYi": 127587.86304,
         "boardName": "人工智能",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -845,7 +835,7 @@
       "boardCode": "BK1184",
       "verified": true,
       "attention": {
-        "score": 57.9,
+        "score": 57.8,
         "statusLabel": "社会共振",
         "recent7Appearances": 19,
         "prior7Appearances": 0,
@@ -900,7 +890,7 @@
       },
       "capacity": {
         "score": 87.8,
-        "floatMarketCapYi": 54028.41344,
+        "floatMarketCapYi": 54047.5136,
         "boardName": "人形机器人",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -974,7 +964,7 @@
       },
       "capacity": {
         "score": 86.0,
-        "floatMarketCapYi": 51955.46624,
+        "floatMarketCapYi": 51965.11232,
         "boardName": "商业航天",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -1048,7 +1038,7 @@
       },
       "capacity": {
         "score": 73.3,
-        "floatMarketCapYi": 27394.1136,
+        "floatMarketCapYi": 27401.71056,
         "boardName": "电网概念",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -1122,7 +1112,7 @@
       },
       "capacity": {
         "score": 95.0,
-        "floatMarketCapYi": 144644.32128,
+        "floatMarketCapYi": 144664.5888,
         "boardName": "半导体概念",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -1141,7 +1131,7 @@
       "boardCode": "BK1106",
       "verified": true,
       "attention": {
-        "score": 52.1,
+        "score": 51.9,
         "statusLabel": "社会共振",
         "recent7Appearances": 13,
         "prior7Appearances": 0,
@@ -1196,7 +1186,7 @@
       },
       "capacity": {
         "score": 75.1,
-        "floatMarketCapYi": 31001.09296,
+        "floatMarketCapYi": 31024.19232,
         "boardName": "创新药",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -1270,7 +1260,7 @@
       },
       "capacity": {
         "score": 67.9,
-        "floatMarketCapYi": 22504.75472,
+        "floatMarketCapYi": 22505.23072,
         "boardName": "养老概念",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -1344,7 +1334,7 @@
       },
       "capacity": {
         "score": 42.6,
-        "floatMarketCapYi": 6395.76736,
+        "floatMarketCapYi": 6401.06208,
         "boardName": "新消费",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -1418,7 +1408,7 @@
       },
       "capacity": {
         "score": 89.6,
-        "floatMarketCapYi": 64863.25248,
+        "floatMarketCapYi": 64887.81568,
         "boardName": "新材料",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -1492,7 +1482,7 @@
       },
       "capacity": {
         "score": 71.5,
-        "floatMarketCapYi": 25292.6592,
+        "floatMarketCapYi": 25292.24608,
         "boardName": "量子科技",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -1566,7 +1556,7 @@
       },
       "capacity": {
         "score": 69.7,
-        "floatMarketCapYi": 25193.80368,
+        "floatMarketCapYi": 25190.13744,
         "boardName": "国产软件",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -1640,7 +1630,7 @@
       },
       "capacity": {
         "score": 80.6,
-        "floatMarketCapYi": 47163.4944,
+        "floatMarketCapYi": 47135.45984,
         "boardName": "云计算",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -1714,7 +1704,7 @@
       },
       "capacity": {
         "score": 57.1,
-        "floatMarketCapYi": 10165.83408,
+        "floatMarketCapYi": 10170.4056,
         "boardName": "数据安全",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -1788,7 +1778,7 @@
       },
       "capacity": {
         "score": 51.7,
-        "floatMarketCapYi": 9835.28304,
+        "floatMarketCapYi": 9846.0072,
         "boardName": "医疗服务",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -1862,7 +1852,7 @@
       },
       "capacity": {
         "score": 58.9,
-        "floatMarketCapYi": 12398.55088,
+        "floatMarketCapYi": 12408.048,
         "boardName": "合成生物",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -1936,7 +1926,7 @@
       },
       "capacity": {
         "score": 78.8,
-        "floatMarketCapYi": 40848.90672,
+        "floatMarketCapYi": 40868.43264,
         "boardName": "核能核电",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2010,7 +2000,7 @@
       },
       "capacity": {
         "score": 64.3,
-        "floatMarketCapYi": 19923.84816,
+        "floatMarketCapYi": 19924.91024,
         "boardName": "水利建设",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2029,17 +2019,17 @@
       "boardCode": "BK1166",
       "verified": true,
       "attention": {
-        "score": 46.4,
+        "score": 46.2,
         "statusLabel": "社会共振",
-        "recent7Appearances": 8,
+        "recent7Appearances": 7,
         "prior7Appearances": 0,
         "crossPlatformHits7d": 3,
         "activeDays7d": 2,
-        "recent30Appearances": 8,
+        "recent30Appearances": 7,
         "crossPlatformHits30d": 3,
         "activeDays30d": 2,
         "bestRank7d": 17,
-        "accelerationPercent": 1244.0,
+        "accelerationPercent": 1108.0,
         "observedDays": 3,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
@@ -2084,7 +2074,7 @@
       },
       "capacity": {
         "score": 76.9,
-        "floatMarketCapYi": 35376.8648,
+        "floatMarketCapYi": 35371.32336,
         "boardName": "低空经济",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2158,7 +2148,7 @@
       },
       "capacity": {
         "score": 82.4,
-        "floatMarketCapYi": 49321.35168,
+        "floatMarketCapYi": 49304.11776,
         "boardName": "车联网(车路云)",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2232,7 +2222,7 @@
       },
       "capacity": {
         "score": 49.9,
-        "floatMarketCapYi": 8540.87088,
+        "floatMarketCapYi": 8548.35088,
         "boardName": "减肥药",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2306,7 +2296,7 @@
       },
       "capacity": {
         "score": 39.0,
-        "floatMarketCapYi": 3662.54832,
+        "floatMarketCapYi": 3664.44512,
         "boardName": "地下管网",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2379,8 +2369,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 53.5,
-        "floatMarketCapYi": 9836.50368,
+        "score": 51.7,
+        "floatMarketCapYi": 9846.0072,
         "boardName": "医疗服务",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2453,8 +2443,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 53.5,
-        "floatMarketCapYi": 9836.50368,
+        "score": 51.7,
+        "floatMarketCapYi": 9846.0072,
         "boardName": "医疗服务",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2528,7 +2518,7 @@
       },
       "capacity": {
         "score": 37.2,
-        "floatMarketCapYi": 3562.9856,
+        "floatMarketCapYi": 3565.45824,
         "boardName": "宠物经济",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2602,7 +2592,7 @@
       },
       "capacity": {
         "score": 44.4,
-        "floatMarketCapYi": 6443.17744,
+        "floatMarketCapYi": 6446.05024,
         "boardName": "体育产业",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2676,7 +2666,7 @@
       },
       "capacity": {
         "score": 35.4,
-        "floatMarketCapYi": 2824.6016,
+        "floatMarketCapYi": 2827.11392,
         "boardName": "旅游酒店",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2750,7 +2740,7 @@
       },
       "capacity": {
         "score": 31.8,
-        "floatMarketCapYi": 392.22678,
+        "floatMarketCapYi": 392.49351,
         "boardName": "保健品",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2824,7 +2814,7 @@
       },
       "capacity": {
         "score": 48.1,
-        "floatMarketCapYi": 7455.66528,
+        "floatMarketCapYi": 7459.58304,
         "boardName": "垃圾分类",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2898,7 +2888,7 @@
       },
       "capacity": {
         "score": 62.5,
-        "floatMarketCapYi": 15948.16688,
+        "floatMarketCapYi": 15954.93328,
         "boardName": "抽水蓄能",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2972,7 +2962,7 @@
       },
       "capacity": {
         "score": 84.2,
-        "floatMarketCapYi": 50956.10624,
+        "floatMarketCapYi": 50950.9888,
         "boardName": "军工",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -3046,7 +3036,7 @@
       },
       "capacity": {
         "score": 46.2,
-        "floatMarketCapYi": 6704.6624,
+        "floatMarketCapYi": 6706.216,
         "boardName": "农业种植",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -3120,7 +3110,7 @@
       },
       "capacity": {
         "score": 66.1,
-        "floatMarketCapYi": 20013.51568,
+        "floatMarketCapYi": 19998.4632,
         "boardName": "保险Ⅱ",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -3194,7 +3184,7 @@
       },
       "capacity": {
         "score": 33.6,
-        "floatMarketCapYi": 779.34554,
+        "floatMarketCapYi": 777.86297,
         "boardName": "教育",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -3213,7 +3203,7 @@
       "boardCode": "BK0486",
       "verified": true,
       "attention": {
-        "score": 37.6,
+        "score": 37.5,
         "statusLabel": "加速扩散",
         "recent7Appearances": 6,
         "prior7Appearances": 0,
@@ -3268,7 +3258,7 @@
       },
       "capacity": {
         "score": 60.7,
-        "floatMarketCapYi": 12794.37504,
+        "floatMarketCapYi": 12797.97376,
         "boardName": "传媒",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -3342,7 +3332,7 @@
       },
       "capacity": {
         "score": 40.8,
-        "floatMarketCapYi": 3752.63232,
+        "floatMarketCapYi": 3751.89968,
         "boardName": "航海装备Ⅱ",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -3416,7 +3406,7 @@
       },
       "capacity": {
         "score": 91.4,
-        "floatMarketCapYi": 119522.21696,
+        "floatMarketCapYi": 119540.54912,
         "boardName": "机器人概念",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -3444,7 +3434,7 @@
     "capacity": 0.2923
   },
   "historyCoverage": {
-    "rawSamples": 21,
+    "rawSamples": 22,
     "daily": 3,
     "weekly": 1,
     "monthly": 1
