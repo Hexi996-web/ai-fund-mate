@@ -28,6 +28,8 @@ jobs:
       PRODUCTION_URL: ${{ vars.PRODUCTION_URL }}
     steps:
       - uses: actions/checkout@v7
+      - name: Sync latest main before generating data
+        run: git pull --rebase origin "$GITHUB_REF_NAME"
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
@@ -84,8 +86,12 @@ jobs:
           git add public/funds_active.json public/funds_excluded.json public/fund_products.json public/funds_grouping_review.json public/issuance_insights.json public/attention_pool_evidence.json public/social_attention_history.json public/theme_external_signals.json public/pre_research_evidence.json public/data_status.json
           git diff --cached --quiet || git commit -m "data: update active funds"
           for attempt in 1 2 3; do
-            git pull --rebase origin "$GITHUB_REF_NAME"
+            # During a rebase Git labels the replayed data commit as "theirs".
+            # The full refresh is newer than partial samplers, so keep its
+            # generated public snapshots if a same-file conflict occurs.
+            git pull --rebase -X theirs origin "$GITHUB_REF_NAME"
             git push && break
+            git rebase --abort 2>/dev/null || true
             test "$attempt" -eq 3 && exit 1
             sleep $((attempt * 5))
           done
