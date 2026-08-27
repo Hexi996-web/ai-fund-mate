@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-27T02:29:47.984025+00:00",
+  "generatedAt": "2026-08-27T03:11:58.598627+00:00",
   "methodologyVersion": "cn-hotlists-gdelt-v1",
   "universeCount": 36,
   "mappedCount": 36,
@@ -273,31 +273,31 @@
       ],
       "rankedIds": [
         "hard-tech",
-        "resources",
         "biotech",
+        "resources",
         "power",
         "ai-agent",
         "space",
         "grid-storage",
-        "ai-application",
         "industrial-software",
+        "ai-application",
         "longevity",
         "embodied-ai",
         "creator-economy",
-        "service-robot",
         "agri-tech",
+        "service-robot",
         "wealth-longevity",
         "autonomous-driving",
         "smart-healthcare",
         "experience",
-        "defense-tech",
         "digital-health",
+        "defense-tech",
+        "recycling",
         "mental-health",
         "future-tech",
-        "recycling",
         "cybersecurity",
-        "low-altitude",
         "sports-outdoor",
+        "low-altitude",
         "inbound-consumption",
         "nuclear-energy",
         "new-food",
@@ -312,48 +312,48 @@
       "scores": {
         "hard-tech": {
           "attention": 0,
-          "validation": 94.9,
+          "validation": 95.0,
           "capacity": 95.0
+        },
+        "biotech": {
+          "attention": 52.3,
+          "validation": 88.6,
+          "capacity": 77.7
         },
         "resources": {
           "attention": 0,
-          "validation": 86.9,
-          "capacity": 89.6
-        },
-        "biotech": {
-          "attention": 52.6,
-          "validation": 88.6,
-          "capacity": 75.1
+          "validation": 87.0,
+          "capacity": 88.5
         },
         "power": {
           "attention": 0,
-          "validation": 90.5,
-          "capacity": 73.3
+          "validation": 90.4,
+          "capacity": 75.5
         },
         "ai-agent": {
           "attention": 45.2,
           "validation": 76.8,
-          "capacity": 93.2
+          "capacity": 92.8
         },
         "space": {
           "attention": 0,
-          "validation": 76.1,
+          "validation": 76.2,
           "capacity": 86.0
         },
         "grid-storage": {
           "attention": 0,
           "validation": 84.1,
-          "capacity": 62.5
-        },
-        "ai-application": {
-          "attention": 0,
-          "validation": 69.1,
-          "capacity": 80.6
+          "capacity": 66.8
         },
         "industrial-software": {
           "attention": 0,
           "validation": 73.6,
-          "capacity": 69.7
+          "capacity": 73.3
+        },
+        "ai-application": {
+          "attention": 0,
+          "validation": 69.0,
+          "capacity": 82.0
         },
         "longevity": {
           "attention": 0,
@@ -361,134 +361,134 @@
           "capacity": 67.9
         },
         "embodied-ai": {
-          "attention": 58.2,
+          "attention": 58.0,
           "validation": 56.4,
-          "capacity": 87.8
+          "capacity": 86.3
         },
         "creator-economy": {
           "attention": 37.7,
-          "validation": 64.7,
-          "capacity": 60.7
-        },
-        "service-robot": {
-          "attention": 0,
-          "validation": 52.0,
-          "capacity": 91.4
+          "validation": 64.6,
+          "capacity": 64.7
         },
         "agri-tech": {
           "attention": 0,
           "validation": 71.2,
-          "capacity": 46.2
+          "capacity": 49.5
+        },
+        "service-robot": {
+          "attention": 0,
+          "validation": 52.0,
+          "capacity": 90.7
         },
         "wealth-longevity": {
           "attention": 0,
           "validation": 60.6,
-          "capacity": 66.1
+          "capacity": 71.2
         },
         "autonomous-driving": {
           "attention": 45.0,
-          "validation": 48.5,
+          "validation": 47.8,
           "capacity": 82.4
         },
         "smart-healthcare": {
           "attention": 0,
           "validation": 54.6,
-          "capacity": 51.7
+          "capacity": 60.3
         },
         "experience": {
           "attention": 0,
           "validation": 58.5,
-          "capacity": 42.6
-        },
-        "defense-tech": {
-          "attention": 0,
-          "validation": 38.8,
-          "capacity": 84.2
+          "capacity": 45.2
         },
         "digital-health": {
           "attention": 0,
           "validation": 52.3,
-          "capacity": 53.5
+          "capacity": 56.0
+        },
+        "defense-tech": {
+          "attention": 0,
+          "validation": 39.6,
+          "capacity": 84.2
+        },
+        "recycling": {
+          "attention": 0,
+          "validation": 51.7,
+          "capacity": 51.7
         },
         "mental-health": {
           "attention": 0,
           "validation": 49.7,
-          "capacity": 55.3
+          "capacity": 56.0
         },
         "future-tech": {
           "attention": 0,
           "validation": 41.9,
           "capacity": 71.5
         },
-        "recycling": {
-          "attention": 0,
-          "validation": 51.7,
-          "capacity": 48.1
-        },
         "cybersecurity": {
           "attention": 0,
           "validation": 47.0,
           "capacity": 57.1
         },
+        "sports-outdoor": {
+          "attention": 0,
+          "validation": 45.1,
+          "capacity": 47.3
+        },
         "low-altitude": {
-          "attention": 45.5,
+          "attention": 46.6,
           "validation": 27.7,
           "capacity": 76.9
         },
-        "sports-outdoor": {
-          "attention": 0,
-          "validation": 45.3,
-          "capacity": 44.4
-        },
         "inbound-consumption": {
           "attention": 0,
-          "validation": 48.1,
-          "capacity": 35.4
+          "validation": 48.0,
+          "capacity": 36.5
         },
         "nuclear-energy": {
           "attention": 0,
           "validation": 27.7,
-          "capacity": 78.8
+          "capacity": 79.8
         },
         "new-food": {
           "attention": 0,
           "validation": 47.8,
-          "capacity": 31.8
+          "capacity": 32.2
         },
         "water-security": {
           "attention": 0,
           "validation": 27.7,
-          "capacity": 64.3
+          "capacity": 69.0
         },
         "synthetic-biology": {
           "attention": 0,
           "validation": 27.7,
-          "capacity": 58.9
+          "capacity": 62.5
         },
         "obesity-care": {
           "attention": 0,
           "validation": 27.7,
-          "capacity": 49.9
+          "capacity": 53.8
         },
         "pet-economy": {
           "attention": 0,
           "validation": 27.7,
-          "capacity": 37.2
+          "capacity": 38.7
         },
         "ocean-economy": {
           "attention": 0,
           "validation": 19.1,
-          "capacity": 40.8
+          "capacity": 43.0
         },
         "climate-adaptation": {
           "attention": 14.3,
           "validation": 17.9,
-          "capacity": 39.0
+          "capacity": 40.8
         },
         "human-upskilling": {
           "attention": 0,
           "validation": 13.2,
-          "capacity": 33.6
+          "capacity": 34.3
         }
       }
     }
@@ -523,11 +523,11 @@
         "score": 76.8,
         "peerFunds": 124,
         "comparableFunds": 98,
-        "currentScaleYi": 1401.3,
-        "scaleNetIncreaseYi": 251.5,
-        "scaleGrowthPercent": 23.7,
+        "currentScaleYi": 1404.4,
+        "scaleNetIncreaseYi": 254.6,
+        "scaleGrowthPercent": 24.0,
         "launched12Months": 20,
-        "estimatedNetFlowYi": 299.3,
+        "estimatedNetFlowYi": 302.4,
         "flowComparableFunds": 98,
         "positiveFlowFunds": 68,
         "growthBreadthPercent": 68.4,
@@ -536,7 +536,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 15.0,
         "top3SharePercent": 27.6,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -554,8 +554,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 93.2,
-        "floatMarketCapYi": 125964.1216,
+        "score": 92.8,
+        "floatMarketCapYi": 126860.09088,
         "boardName": "人工智能",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -572,17 +572,17 @@
       "boardCode": "BK1184",
       "verified": true,
       "attention": {
-        "score": 58.2,
+        "score": 58.0,
         "statusLabel": "社会共振",
-        "recent7Appearances": 18,
+        "recent7Appearances": 19,
         "prior7Appearances": 0,
         "crossPlatformHits7d": 2,
         "activeDays7d": 3,
-        "recent30Appearances": 18,
+        "recent30Appearances": 19,
         "crossPlatformHits30d": 2,
         "activeDays30d": 3,
         "bestRank7d": 4,
-        "accelerationPercent": 3364.0,
+        "accelerationPercent": 3476.0,
         "observedDays": 3,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
@@ -595,20 +595,20 @@
         "score": 56.4,
         "peerFunds": 44,
         "comparableFunds": 39,
-        "currentScaleYi": 780.9,
-        "scaleNetIncreaseYi": -8.3,
-        "scaleGrowthPercent": -1.1,
+        "currentScaleYi": 785.4,
+        "scaleNetIncreaseYi": -3.7,
+        "scaleGrowthPercent": -0.5,
         "launched12Months": 5,
-        "estimatedNetFlowYi": 73.6,
+        "estimatedNetFlowYi": 78.1,
         "flowComparableFunds": 39,
         "positiveFlowFunds": 26,
         "growthBreadthPercent": 64.1,
         "positiveGrowthFunds": 25,
         "effectiveFunds": 34,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 22.7,
-        "top3SharePercent": 52.3,
-        "asOf": "2026-08-27 10:26:05",
+        "top1SharePercent": 22.8,
+        "top3SharePercent": 52.5,
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -618,7 +618,7 @@
           "absoluteScaleIncrease": 19.4,
           "scaleGrowthRate": 30.6,
           "growthBreadth": 64.1,
-          "concentrationBalance": 77.3,
+          "concentrationBalance": 77.2,
           "effectiveProducts": 63.9,
           "currentScale": 66.7,
           "newLaunches": 68.1
@@ -626,8 +626,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 87.8,
-        "floatMarketCapYi": 53252.8128,
+        "score": 86.3,
+        "floatMarketCapYi": 53651.88608,
         "boardName": "人形机器人",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -662,14 +662,14 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 76.1,
+        "score": 76.2,
         "peerFunds": 39,
         "comparableFunds": 35,
-        "currentScaleYi": 990.1,
-        "scaleNetIncreaseYi": 245.8,
-        "scaleGrowthPercent": 33.4,
+        "currentScaleYi": 994.5,
+        "scaleNetIncreaseYi": 250.2,
+        "scaleGrowthPercent": 34.0,
         "launched12Months": 5,
-        "estimatedNetFlowYi": 352.4,
+        "estimatedNetFlowYi": 356.8,
         "flowComparableFunds": 35,
         "positiveFlowFunds": 27,
         "growthBreadthPercent": 68.6,
@@ -678,7 +678,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 13.5,
         "top3SharePercent": 28.1,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -686,7 +686,7 @@
         "scoreComponents": {
           "estimatedNetFlow": 80.6,
           "absoluteScaleIncrease": 83.3,
-          "scaleGrowthRate": 75.0,
+          "scaleGrowthRate": 76.4,
           "growthBreadth": 68.6,
           "concentrationBalance": 86.5,
           "effectiveProducts": 66.7,
@@ -732,23 +732,23 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 90.5,
+        "score": 90.4,
         "peerFunds": 172,
         "comparableFunds": 123,
-        "currentScaleYi": 1963.7,
-        "scaleNetIncreaseYi": 784.6,
-        "scaleGrowthPercent": 74.4,
+        "currentScaleYi": 1966.5,
+        "scaleNetIncreaseYi": 787.3,
+        "scaleGrowthPercent": 74.7,
         "launched12Months": 28,
-        "estimatedNetFlowYi": 875.8,
+        "estimatedNetFlowYi": 878.6,
         "flowComparableFunds": 123,
         "positiveFlowFunds": 95,
         "growthBreadthPercent": 74.0,
         "positiveGrowthFunds": 91,
         "effectiveFunds": 118,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 10.4,
-        "top3SharePercent": 19.9,
-        "asOf": "2026-08-27 10:26:05",
+        "top1SharePercent": 10.5,
+        "top3SharePercent": 20.0,
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -756,9 +756,9 @@
         "scoreComponents": {
           "estimatedNetFlow": 97.2,
           "absoluteScaleIncrease": 97.2,
-          "scaleGrowthRate": 90.3,
+          "scaleGrowthRate": 88.9,
           "growthBreadth": 74.0,
-          "concentrationBalance": 89.6,
+          "concentrationBalance": 89.5,
           "effectiveProducts": 91.7,
           "currentScale": 88.9,
           "newLaunches": 90.3
@@ -766,8 +766,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 73.3,
-        "floatMarketCapYi": 27051.7448,
+        "score": 75.5,
+        "floatMarketCapYi": 27212.70208,
         "boardName": "电网概念",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -802,23 +802,23 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 94.9,
+        "score": 95.0,
         "peerFunds": 121,
         "comparableFunds": 98,
-        "currentScaleYi": 4877.4,
-        "scaleNetIncreaseYi": 3034.0,
-        "scaleGrowthPercent": 173.4,
+        "currentScaleYi": 4922.5,
+        "scaleNetIncreaseYi": 3079.1,
+        "scaleGrowthPercent": 176.0,
         "launched12Months": 15,
-        "estimatedNetFlowYi": 3450.6,
+        "estimatedNetFlowYi": 3495.8,
         "flowComparableFunds": 98,
         "positiveFlowFunds": 90,
-        "growthBreadthPercent": 93.9,
-        "positiveGrowthFunds": 92,
+        "growthBreadthPercent": 94.9,
+        "positiveGrowthFunds": 93,
         "effectiveFunds": 106,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 10.2,
-        "top3SharePercent": 28.3,
-        "asOf": "2026-08-27 10:26:05",
+        "top1SharePercent": 10.3,
+        "top3SharePercent": 28.4,
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -827,8 +827,8 @@
           "estimatedNetFlow": 100.0,
           "absoluteScaleIncrease": 100.0,
           "scaleGrowthRate": 100.0,
-          "growthBreadth": 93.9,
-          "concentrationBalance": 89.8,
+          "growthBreadth": 94.9,
+          "concentrationBalance": 89.7,
           "effectiveProducts": 80.6,
           "currentScale": 100.0,
           "newLaunches": 75.0
@@ -837,7 +837,7 @@
       },
       "capacity": {
         "score": 95.0,
-        "floatMarketCapYi": 141871.14496,
+        "floatMarketCapYi": 143698.67776,
         "boardName": "半导体概念",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -852,7 +852,7 @@
       "boardCode": "BK1106",
       "verified": true,
       "attention": {
-        "score": 52.6,
+        "score": 52.3,
         "statusLabel": "社会共振",
         "recent7Appearances": 13,
         "prior7Appearances": 0,
@@ -875,20 +875,20 @@
         "score": 88.6,
         "peerFunds": 176,
         "comparableFunds": 165,
-        "currentScaleYi": 2723.1,
-        "scaleNetIncreaseYi": 741.7,
-        "scaleGrowthPercent": 37.8,
+        "currentScaleYi": 2724.3,
+        "scaleNetIncreaseYi": 742.9,
+        "scaleGrowthPercent": 37.9,
         "launched12Months": 16,
-        "estimatedNetFlowYi": 741.6,
+        "estimatedNetFlowYi": 742.8,
         "flowComparableFunds": 165,
-        "positiveFlowFunds": 129,
+        "positiveFlowFunds": 130,
         "growthBreadthPercent": 80.6,
         "positiveGrowthFunds": 133,
         "effectiveFunds": 109,
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 9.6,
         "top3SharePercent": 24.7,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -906,8 +906,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 75.1,
-        "floatMarketCapYi": 30446.46192,
+        "score": 77.7,
+        "floatMarketCapYi": 30502.28512,
         "boardName": "创新药",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -945,7 +945,7 @@
         "score": 71.5,
         "peerFunds": 328,
         "comparableFunds": 325,
-        "currentScaleYi": 1165.2,
+        "currentScaleYi": 1165.1,
         "scaleNetIncreaseYi": 218.1,
         "scaleGrowthPercent": 23.0,
         "launched12Months": 4,
@@ -958,7 +958,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 22.9,
         "top3SharePercent": 27.4,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -1015,11 +1015,11 @@
         "score": 58.5,
         "peerFunds": 281,
         "comparableFunds": 251,
-        "currentScaleYi": 1365.0,
-        "scaleNetIncreaseYi": -82.0,
+        "currentScaleYi": 1365.5,
+        "scaleNetIncreaseYi": -81.4,
         "scaleGrowthPercent": -5.8,
         "launched12Months": 38,
-        "estimatedNetFlowYi": 80.3,
+        "estimatedNetFlowYi": 80.9,
         "flowComparableFunds": 251,
         "positiveFlowFunds": 144,
         "growthBreadthPercent": 47.0,
@@ -1028,7 +1028,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 11.2,
         "top3SharePercent": 23.8,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -1046,8 +1046,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 42.6,
-        "floatMarketCapYi": 6346.49328,
+        "score": 45.2,
+        "floatMarketCapYi": 6349.01008,
         "boardName": "新消费",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -1082,14 +1082,14 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 86.9,
+        "score": 87.0,
         "peerFunds": 129,
         "comparableFunds": 88,
-        "currentScaleYi": 1745.1,
-        "scaleNetIncreaseYi": 679.0,
-        "scaleGrowthPercent": 74.4,
+        "currentScaleYi": 1748.9,
+        "scaleNetIncreaseYi": 682.8,
+        "scaleGrowthPercent": 74.8,
         "launched12Months": 28,
-        "estimatedNetFlowYi": 719.7,
+        "estimatedNetFlowYi": 723.5,
         "flowComparableFunds": 88,
         "positiveFlowFunds": 74,
         "growthBreadthPercent": 84.1,
@@ -1098,7 +1098,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 14.9,
         "top3SharePercent": 26.0,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -1106,7 +1106,7 @@
         "scoreComponents": {
           "estimatedNetFlow": 91.7,
           "absoluteScaleIncrease": 91.7,
-          "scaleGrowthRate": 90.3,
+          "scaleGrowthRate": 91.7,
           "growthBreadth": 84.1,
           "concentrationBalance": 85.1,
           "effectiveProducts": 69.4,
@@ -1116,8 +1116,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 89.6,
-        "floatMarketCapYi": 63772.07552,
+        "score": 88.5,
+        "floatMarketCapYi": 64391.69536,
         "boardName": "新材料",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -1168,7 +1168,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 100.0,
         "top3SharePercent": 100.0,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -1225,11 +1225,11 @@
         "score": 73.6,
         "peerFunds": 38,
         "comparableFunds": 25,
-        "currentScaleYi": 262.6,
-        "scaleNetIncreaseYi": 114.7,
-        "scaleGrowthPercent": 94.2,
+        "currentScaleYi": 263.1,
+        "scaleNetIncreaseYi": 115.2,
+        "scaleGrowthPercent": 94.6,
         "launched12Months": 4,
-        "estimatedNetFlowYi": 144.5,
+        "estimatedNetFlowYi": 145.0,
         "flowComparableFunds": 25,
         "positiveFlowFunds": 23,
         "growthBreadthPercent": 92.0,
@@ -1237,8 +1237,8 @@
         "effectiveFunds": 23,
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 35.6,
-        "top3SharePercent": 63.2,
-        "asOf": "2026-08-27 10:26:05",
+        "top3SharePercent": 63.3,
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -1256,8 +1256,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 69.7,
-        "floatMarketCapYi": 24826.15184,
+        "score": 73.3,
+        "floatMarketCapYi": 24898.29584,
         "boardName": "国产软件",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -1292,23 +1292,23 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 69.1,
+        "score": 69.0,
         "peerFunds": 219,
         "comparableFunds": 169,
-        "currentScaleYi": 3366.7,
-        "scaleNetIncreaseYi": -127.5,
-        "scaleGrowthPercent": -3.8,
+        "currentScaleYi": 3372.5,
+        "scaleNetIncreaseYi": -121.7,
+        "scaleGrowthPercent": -3.6,
         "launched12Months": 31,
-        "estimatedNetFlowYi": 599.3,
+        "estimatedNetFlowYi": 605.1,
         "flowComparableFunds": 169,
         "positiveFlowFunds": 120,
-        "growthBreadthPercent": 65.1,
-        "positiveGrowthFunds": 110,
+        "growthBreadthPercent": 64.5,
+        "positiveGrowthFunds": 109,
         "effectiveFunds": 158,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 11.3,
+        "top1SharePercent": 11.4,
         "top3SharePercent": 29.9,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -1317,8 +1317,8 @@
           "estimatedNetFlow": 88.9,
           "absoluteScaleIncrease": 8.3,
           "scaleGrowthRate": 25.0,
-          "growthBreadth": 65.1,
-          "concentrationBalance": 88.7,
+          "growthBreadth": 64.5,
+          "concentrationBalance": 88.6,
           "effectiveProducts": 100.0,
           "currentScale": 97.2,
           "newLaunches": 94.4
@@ -1326,8 +1326,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 80.6,
-        "floatMarketCapYi": 46489.95072,
+        "score": 82.0,
+        "floatMarketCapYi": 46808.71168,
         "boardName": "云计算",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -1367,7 +1367,7 @@
         "comparableFunds": 3,
         "currentScaleYi": 3.8,
         "scaleNetIncreaseYi": 0.8,
-        "scaleGrowthPercent": 26.4,
+        "scaleGrowthPercent": 26.7,
         "launched12Months": 0,
         "estimatedNetFlowYi": 1.2,
         "flowComparableFunds": 3,
@@ -1376,9 +1376,9 @@
         "positiveGrowthFunds": 3,
         "effectiveFunds": 0,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 51.9,
+        "top1SharePercent": 51.8,
         "top3SharePercent": 100.0,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -1388,7 +1388,7 @@
           "absoluteScaleIncrease": 52.8,
           "scaleGrowthRate": 66.7,
           "growthBreadth": 100.0,
-          "concentrationBalance": 48.1,
+          "concentrationBalance": 48.2,
           "effectiveProducts": 12.5,
           "currentScale": 25.0,
           "newLaunches": 25.0
@@ -1448,7 +1448,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 84.8,
         "top3SharePercent": 94.0,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -1466,8 +1466,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 51.7,
-        "floatMarketCapYi": 9692.19216,
+        "score": 60.3,
+        "floatMarketCapYi": 9719.95152,
         "boardName": "医疗服务",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -1518,7 +1518,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 0,
         "top3SharePercent": 0,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -1536,8 +1536,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 58.9,
-        "floatMarketCapYi": 12234.31072,
+        "score": 62.5,
+        "floatMarketCapYi": 12247.17072,
         "boardName": "合成生物",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -1588,7 +1588,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 0,
         "top3SharePercent": 0,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -1606,8 +1606,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 78.8,
-        "floatMarketCapYi": 40470.78688,
+        "score": 79.8,
+        "floatMarketCapYi": 40633.66592,
         "boardName": "核能核电",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -1658,7 +1658,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 0,
         "top3SharePercent": 0,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -1676,8 +1676,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 64.3,
-        "floatMarketCapYi": 19824.01552,
+        "score": 69.0,
+        "floatMarketCapYi": 19835.8624,
         "boardName": "水利建设",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -1692,17 +1692,17 @@
       "boardCode": "BK1166",
       "verified": true,
       "attention": {
-        "score": 45.5,
+        "score": 46.6,
         "statusLabel": "社会共振",
-        "recent7Appearances": 5,
+        "recent7Appearances": 7,
         "prior7Appearances": 0,
-        "crossPlatformHits7d": 2,
+        "crossPlatformHits7d": 3,
         "activeDays7d": 2,
-        "recent30Appearances": 5,
-        "crossPlatformHits30d": 2,
+        "recent30Appearances": 7,
+        "crossPlatformHits30d": 3,
         "activeDays30d": 2,
         "bestRank7d": 17,
-        "accelerationPercent": 804.0,
+        "accelerationPercent": 1108.0,
         "observedDays": 3,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
@@ -1728,7 +1728,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 0,
         "top3SharePercent": 0,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -1782,14 +1782,14 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 48.5,
+        "score": 47.8,
         "peerFunds": 2,
         "comparableFunds": 2,
-        "currentScaleYi": 8.9,
-        "scaleNetIncreaseYi": 2.2,
-        "scaleGrowthPercent": 33.1,
+        "currentScaleYi": 8.7,
+        "scaleNetIncreaseYi": 2.1,
+        "scaleGrowthPercent": 31.0,
         "launched12Months": 0,
-        "estimatedNetFlowYi": 3.6,
+        "estimatedNetFlowYi": 3.5,
         "flowComparableFunds": 2,
         "positiveFlowFunds": 2,
         "growthBreadthPercent": 100.0,
@@ -1798,13 +1798,13 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 97.1,
         "top3SharePercent": 100.0,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 38.9,
+          "estimatedNetFlow": 36.1,
           "absoluteScaleIncrease": 58.3,
           "scaleGrowthRate": 72.2,
           "growthBreadth": 100.0,
@@ -1868,7 +1868,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 0,
         "top3SharePercent": 0,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -1886,8 +1886,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 49.9,
-        "floatMarketCapYi": 8384.05856,
+        "score": 53.8,
+        "floatMarketCapYi": 8408.49952,
         "boardName": "减肥药",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -1938,7 +1938,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 92.3,
         "top3SharePercent": 98.9,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -1956,8 +1956,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 39.0,
-        "floatMarketCapYi": 3649.67312,
+        "score": 40.8,
+        "floatMarketCapYi": 3656.57824,
         "boardName": "地下管网",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2008,7 +2008,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 88.4,
         "top3SharePercent": 97.7,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2026,8 +2026,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 53.5,
-        "floatMarketCapYi": 9694.66272,
+        "score": 56.0,
+        "floatMarketCapYi": 9718.1856,
         "boardName": "医疗服务",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2078,7 +2078,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 92.0,
         "top3SharePercent": 100.0,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2096,8 +2096,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 55.3,
-        "floatMarketCapYi": 9696.7168,
+        "score": 56.0,
+        "floatMarketCapYi": 9718.1856,
         "boardName": "医疗服务",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2148,7 +2148,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 0,
         "top3SharePercent": 0,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2166,8 +2166,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 37.2,
-        "floatMarketCapYi": 3543.05376,
+        "score": 38.7,
+        "floatMarketCapYi": 3545.06112,
         "boardName": "宠物经济",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2202,7 +2202,7 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 45.3,
+        "score": 45.1,
         "peerFunds": 3,
         "comparableFunds": 3,
         "currentScaleYi": 6.1,
@@ -2218,7 +2218,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 64.2,
         "top3SharePercent": 100.0,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2226,7 +2226,7 @@
         "scoreComponents": {
           "estimatedNetFlow": 33.3,
           "absoluteScaleIncrease": 55.6,
-          "scaleGrowthRate": 77.8,
+          "scaleGrowthRate": 76.4,
           "growthBreadth": 66.7,
           "concentrationBalance": 35.8,
           "effectiveProducts": 31.9,
@@ -2236,8 +2236,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 44.4,
-        "floatMarketCapYi": 6420.79872,
+        "score": 47.3,
+        "floatMarketCapYi": 6424.36832,
         "boardName": "体育产业",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2272,23 +2272,23 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 48.1,
+        "score": 48.0,
         "peerFunds": 262,
         "comparableFunds": 232,
-        "currentScaleYi": 1213.8,
-        "scaleNetIncreaseYi": -154.8,
+        "currentScaleYi": 1214.3,
+        "scaleNetIncreaseYi": -154.3,
         "scaleGrowthPercent": -11.6,
         "launched12Months": 38,
-        "estimatedNetFlowYi": 4.0,
+        "estimatedNetFlowYi": 4.5,
         "flowComparableFunds": 232,
         "positiveFlowFunds": 132,
         "growthBreadthPercent": 45.3,
         "positiveGrowthFunds": 105,
         "effectiveFunds": 102,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 12.6,
-        "top3SharePercent": 26.8,
-        "asOf": "2026-08-27 10:26:05",
+        "top1SharePercent": 12.5,
+        "top3SharePercent": 26.7,
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2296,9 +2296,9 @@
         "scoreComponents": {
           "estimatedNetFlow": 41.7,
           "absoluteScaleIncrease": 5.6,
-          "scaleGrowthRate": 11.1,
+          "scaleGrowthRate": 9.7,
           "growthBreadth": 45.3,
-          "concentrationBalance": 87.4,
+          "concentrationBalance": 87.5,
           "effectiveProducts": 77.8,
           "currentScale": 75.0,
           "newLaunches": 98.6
@@ -2306,8 +2306,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 35.4,
-        "floatMarketCapYi": 2820.24096,
+        "score": 36.5,
+        "floatMarketCapYi": 2823.17344,
         "boardName": "旅游酒店",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2345,8 +2345,8 @@
         "score": 47.8,
         "peerFunds": 27,
         "comparableFunds": 19,
-        "currentScaleYi": 204.4,
-        "scaleNetIncreaseYi": -3.4,
+        "currentScaleYi": 205.3,
+        "scaleNetIncreaseYi": -3.3,
         "scaleGrowthPercent": -1.7,
         "launched12Months": 3,
         "estimatedNetFlowYi": 26.6,
@@ -2356,9 +2356,9 @@
         "positiveGrowthFunds": 9,
         "effectiveFunds": 13,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 21.6,
-        "top3SharePercent": 62.4,
-        "asOf": "2026-08-27 10:26:05",
+        "top1SharePercent": 21.5,
+        "top3SharePercent": 62.1,
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2368,7 +2368,7 @@
           "absoluteScaleIncrease": 22.2,
           "scaleGrowthRate": 27.8,
           "growthBreadth": 47.4,
-          "concentrationBalance": 78.4,
+          "concentrationBalance": 78.5,
           "effectiveProducts": 47.2,
           "currentScale": 52.8,
           "newLaunches": 56.9
@@ -2376,8 +2376,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 31.8,
-        "floatMarketCapYi": 390.75503,
+        "score": 32.2,
+        "floatMarketCapYi": 391.37554,
         "boardName": "保健品",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2428,7 +2428,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 33.5,
         "top3SharePercent": 57.7,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2446,8 +2446,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 48.1,
-        "floatMarketCapYi": 7396.01232,
+        "score": 51.7,
+        "floatMarketCapYi": 7426.32208,
         "boardName": "垃圾分类",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2485,20 +2485,20 @@
         "score": 84.1,
         "peerFunds": 163,
         "comparableFunds": 117,
-        "currentScaleYi": 1509.4,
-        "scaleNetIncreaseYi": 390.8,
-        "scaleGrowthPercent": 38.8,
+        "currentScaleYi": 1510.4,
+        "scaleNetIncreaseYi": 391.8,
+        "scaleGrowthPercent": 38.9,
         "launched12Months": 25,
-        "estimatedNetFlowYi": 482.9,
+        "estimatedNetFlowYi": 483.9,
         "flowComparableFunds": 117,
         "positiveFlowFunds": 89,
         "growthBreadthPercent": 72.6,
         "positiveGrowthFunds": 85,
         "effectiveFunds": 111,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 6.6,
+        "top1SharePercent": 6.5,
         "top3SharePercent": 14.3,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2508,7 +2508,7 @@
           "absoluteScaleIncrease": 88.9,
           "scaleGrowthRate": 86.1,
           "growthBreadth": 72.6,
-          "concentrationBalance": 93.4,
+          "concentrationBalance": 93.5,
           "effectiveProducts": 86.1,
           "currentScale": 83.3,
           "newLaunches": 83.3
@@ -2516,8 +2516,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 62.5,
-        "floatMarketCapYi": 15829.04496,
+        "score": 66.8,
+        "floatMarketCapYi": 15873.82304,
         "boardName": "抽水蓄能",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2552,14 +2552,14 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 38.8,
+        "score": 39.6,
         "peerFunds": 21,
         "comparableFunds": 21,
-        "currentScaleYi": 573.1,
-        "scaleNetIncreaseYi": -75.9,
-        "scaleGrowthPercent": -11.7,
+        "currentScaleYi": 574.1,
+        "scaleNetIncreaseYi": -75.0,
+        "scaleGrowthPercent": -11.6,
         "launched12Months": 0,
-        "estimatedNetFlowYi": 3.1,
+        "estimatedNetFlowYi": 4.1,
         "flowComparableFunds": 21,
         "positiveFlowFunds": 11,
         "growthBreadthPercent": 38.1,
@@ -2567,16 +2567,16 @@
         "effectiveFunds": 21,
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 12.7,
-        "top3SharePercent": 37.5,
-        "asOf": "2026-08-27 10:26:05",
+        "top3SharePercent": 37.4,
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 36.1,
+          "estimatedNetFlow": 38.9,
           "absoluteScaleIncrease": 13.9,
-          "scaleGrowthRate": 8.3,
+          "scaleGrowthRate": 9.7,
           "growthBreadth": 38.1,
           "concentrationBalance": 87.3,
           "effectiveProducts": 52.8,
@@ -2587,7 +2587,7 @@
       },
       "capacity": {
         "score": 84.2,
-        "floatMarketCapYi": 50390.31552,
+        "floatMarketCapYi": 50640.32,
         "boardName": "军工",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2625,20 +2625,20 @@
         "score": 71.2,
         "peerFunds": 38,
         "comparableFunds": 25,
-        "currentScaleYi": 154.4,
-        "scaleNetIncreaseYi": 65.1,
-        "scaleGrowthPercent": 96.7,
+        "currentScaleYi": 154.0,
+        "scaleNetIncreaseYi": 64.7,
+        "scaleGrowthPercent": 96.0,
         "launched12Months": 3,
-        "estimatedNetFlowYi": 73.3,
+        "estimatedNetFlowYi": 72.8,
         "flowComparableFunds": 25,
         "positiveFlowFunds": 21,
         "growthBreadthPercent": 80.0,
         "positiveGrowthFunds": 20,
         "effectiveFunds": 25,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 11.7,
-        "top3SharePercent": 32.9,
-        "asOf": "2026-08-27 10:26:05",
+        "top1SharePercent": 11.9,
+        "top3SharePercent": 32.6,
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2648,7 +2648,7 @@
           "absoluteScaleIncrease": 75.0,
           "scaleGrowthRate": 97.2,
           "growthBreadth": 80.0,
-          "concentrationBalance": 88.3,
+          "concentrationBalance": 88.1,
           "effectiveProducts": 58.3,
           "currentScale": 47.2,
           "newLaunches": 56.9
@@ -2656,8 +2656,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 46.2,
-        "floatMarketCapYi": 6666.14256,
+        "score": 49.5,
+        "floatMarketCapYi": 6671.8424,
         "boardName": "农业种植",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2695,11 +2695,11 @@
         "score": 60.6,
         "peerFunds": 237,
         "comparableFunds": 236,
-        "currentScaleYi": 751.9,
-        "scaleNetIncreaseYi": 16.3,
+        "currentScaleYi": 752.0,
+        "scaleNetIncreaseYi": 16.5,
         "scaleGrowthPercent": 2.2,
         "launched12Months": 2,
-        "estimatedNetFlowYi": 49.2,
+        "estimatedNetFlowYi": 49.3,
         "flowComparableFunds": 236,
         "positiveFlowFunds": 106,
         "growthBreadthPercent": 41.5,
@@ -2708,7 +2708,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 18.3,
         "top3SharePercent": 26.5,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2726,8 +2726,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 66.1,
-        "floatMarketCapYi": 19856.67328,
+        "score": 71.2,
+        "floatMarketCapYi": 19855.08768,
         "boardName": "保险Ⅱ",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2767,7 +2767,7 @@
         "comparableFunds": 1,
         "currentScaleYi": 2.9,
         "scaleNetIncreaseYi": -0.8,
-        "scaleGrowthPercent": -22.5,
+        "scaleGrowthPercent": -22.6,
         "launched12Months": 0,
         "estimatedNetFlowYi": -0.3,
         "flowComparableFunds": 1,
@@ -2778,7 +2778,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 100.0,
         "top3SharePercent": 100.0,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2796,8 +2796,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 33.6,
-        "floatMarketCapYi": 766.28378,
+        "score": 34.3,
+        "floatMarketCapYi": 769.99713,
         "boardName": "教育",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2832,23 +2832,23 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 64.7,
+        "score": 64.6,
         "peerFunds": 178,
         "comparableFunds": 145,
-        "currentScaleYi": 3262.0,
-        "scaleNetIncreaseYi": -235.8,
-        "scaleGrowthPercent": -6.9,
+        "currentScaleYi": 3267.5,
+        "scaleNetIncreaseYi": -230.3,
+        "scaleGrowthPercent": -6.8,
         "launched12Months": 27,
-        "estimatedNetFlowYi": 510.1,
+        "estimatedNetFlowYi": 515.6,
         "flowComparableFunds": 145,
         "positiveFlowFunds": 96,
-        "growthBreadthPercent": 58.6,
-        "positiveGrowthFunds": 85,
+        "growthBreadthPercent": 57.9,
+        "positiveGrowthFunds": 84,
         "effectiveFunds": 133,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 11.7,
-        "top3SharePercent": 30.8,
-        "asOf": "2026-08-27 10:26:05",
+        "top1SharePercent": 11.8,
+        "top3SharePercent": 30.9,
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2857,8 +2857,8 @@
           "estimatedNetFlow": 86.1,
           "absoluteScaleIncrease": 2.8,
           "scaleGrowthRate": 16.7,
-          "growthBreadth": 58.6,
-          "concentrationBalance": 88.3,
+          "growthBreadth": 57.9,
+          "concentrationBalance": 88.2,
           "effectiveProducts": 97.2,
           "currentScale": 94.4,
           "newLaunches": 86.1
@@ -2866,8 +2866,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 60.7,
-        "floatMarketCapYi": 12702.15824,
+        "score": 64.7,
+        "floatMarketCapYi": 12729.71376,
         "boardName": "传媒",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2918,7 +2918,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 84.2,
         "top3SharePercent": 100.0,
-        "asOf": "2026-08-27 10:26:05",
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2936,8 +2936,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 40.8,
-        "floatMarketCapYi": 3717.48288,
+        "score": 43.0,
+        "floatMarketCapYi": 3721.64544,
         "boardName": "航海装备Ⅱ",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -2975,11 +2975,11 @@
         "score": 52.0,
         "peerFunds": 53,
         "comparableFunds": 42,
-        "currentScaleYi": 729.2,
-        "scaleNetIncreaseYi": -36.6,
-        "scaleGrowthPercent": -4.9,
+        "currentScaleYi": 733.8,
+        "scaleNetIncreaseYi": -32.1,
+        "scaleGrowthPercent": -4.2,
         "launched12Months": 6,
-        "estimatedNetFlowYi": 50.7,
+        "estimatedNetFlowYi": 55.3,
         "flowComparableFunds": 42,
         "positiveFlowFunds": 26,
         "growthBreadthPercent": 57.1,
@@ -2987,8 +2987,8 @@
         "effectiveFunds": 31,
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 24.4,
-        "top3SharePercent": 56.0,
-        "asOf": "2026-08-27 10:26:05",
+        "top3SharePercent": 56.2,
+        "asOf": "2026-08-27 11:04:04",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -3006,8 +3006,8 @@
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
       "capacity": {
-        "score": 91.4,
-        "floatMarketCapYi": 118128.33792,
+        "score": 90.7,
+        "floatMarketCapYi": 118821.93152,
         "boardName": "机器人概念",
         "asOf": "2026-08-27",
         "source": "东方财富公开板块行情",
@@ -3031,7 +3031,7 @@
     "capacity": 0.2923
   },
   "historyCoverage": {
-    "rawSamples": 19,
+    "rawSamples": 20,
     "daily": 3,
     "weekly": 1,
     "monthly": 1
