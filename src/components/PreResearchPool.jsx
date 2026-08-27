@@ -589,7 +589,7 @@ function EvidenceDrawer({ layer, item, updateTime, onClose }) {
   );
 }
 
-export function PreResearchPool() {
+export function PreResearchPool({ agentCommand, onContextChange }) {
   const [payload, setPayload] = useState({
     products: [],
     updateTime: "加载中",
@@ -691,6 +691,17 @@ export function PreResearchPool() {
   }, [attention.recommendedIds, payload]);
   const active = ranked.find((item) => item.id === selected) || ranked[0];
   const activeEvidence = active ? evidenceById.get(active.id) : null;
+  useEffect(() => {
+    if (agentCommand?.type !== 'focus-theme') return;
+    const target = ranked.find((item) => item.id === agentCommand.themeId || item.name === agentCommand.themeName);
+    if (!target) return;
+    setSelected(target.id);
+    requestAnimationFrame(() => document.querySelector('.decision-detail')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  }, [agentCommand, ranked]);
+  useEffect(() => {
+    if (!active) return;
+    onContextChange?.({ selectedTheme: { id: active.id, name: active.name, rank: ranked.indexOf(active) + 1, marketState: active.market.state, peerCount: active.market.count, newFunds12m: active.market.launched12.length, scaleNetIncreaseYi: Number(active.market.scaleIncrease.toFixed(1)) }, drawer, evidenceLayer });
+  }, [active, drawer, evidenceLayer, onContextChange, ranked]);
   const drawerFunds = useMemo(() => {
     if (!active) return [];
     const base =

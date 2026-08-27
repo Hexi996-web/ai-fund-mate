@@ -1306,6 +1306,8 @@
 .agent-messages article.user small { text-align: right; }
 .agent-messages p { margin: 0; padding: 10px 12px; border-radius: 4px 12px 12px 12px; background: #eef1f7; color: #38465e; font-size: 12px; line-height: 1.65; white-space: pre-wrap; }
 .agent-messages article.user p { border-radius: 12px 4px 12px 12px; background: #3446d8; color: #fff; }
+.agent-sources { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+.agent-sources a { padding: 4px 7px; border: 1px solid #dce3ef; border-radius: 999px; background: #fff; color: #4054bd; font-size: 9px; text-decoration: none; }
 .agent-starters { display: flex; align-items: center; gap: 6px; overflow-x: auto; padding: 0 16px 10px; }
 .agent-starters { scrollbar-width: none; }
 .agent-starters::-webkit-scrollbar { display: none; }

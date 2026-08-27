@@ -15,8 +15,10 @@ test('opens the product-manager agent and sends workspace context through the un
   expect(starterBox.height).toBeLessThan(50)
   await panel.getByRole('button', { name: '解释当前产品窗口' }).click()
   await expect(panel.getByText('当前窗口需要同时检查注意力与产品供给。')).toBeVisible()
+  await expect(panel.getByRole('link', { name: /注意力母池/ })).toBeVisible()
   expect(capturedBody.context.workspace).toBe('预研产品池')
   expect(capturedBody.context.workspaceData.coreDirections).toHaveLength(10)
+  expect(capturedBody.context.pageContext.selectedTheme.name).toBeTruthy()
   expect(capturedBody.messages.at(-1).content).toBe('解释当前产品窗口')
 })
 
@@ -30,6 +32,35 @@ test('keeps local model configuration in the browser and exposes no API key fiel
   await expect(panel.getByLabel('模型名称')).toHaveValue('qwen3:8b')
   await expect(panel.getByText('本地模式不会上传对话')).toBeVisible()
   await expect(panel.getByLabel(/API.*密钥/i)).toHaveCount(0)
+})
+
+test('supports read-only tool calls from a local Ollama-compatible model', async ({ page }) => {
+  await page.route('http://127.0.0.1:11434/api/chat', (route) => route.fulfill({ json: { model: 'qwen3:8b', message: { tool_calls: [{ function: { name: 'switch_workspace', arguments: { workspace: '行情预测' } } }] } } }))
+  await page.goto('/')
+  await page.getByRole('button', { name: /Agent\s*产品经理助手/ }).click()
+  const panel = page.getByRole('complementary', { name: '产品经理Agent' })
+  await expect(panel.getByText('已同步')).toBeVisible()
+  await panel.getByRole('button', { name: '模型设置' }).click()
+  await panel.getByLabel('模型来源').selectOption('local')
+  await panel.getByPlaceholder('询问产品方向、趋势或数据依据…').fill('打开行情预测')
+  await panel.getByRole('button', { name: '发送' }).click()
+  await expect(panel.getByText(/已执行页面操作：切换工作板块/)).toBeVisible()
+  await expect(page.getByRole('heading', { name: '行情预测' })).toBeVisible()
+})
+
+test('executes only a whitelisted read-only page action returned by the model', async ({ page }) => {
+  await page.route('**/api/agent/chat', async (route) => {
+    if (route.request().method() === 'GET') return route.fulfill({ json: { configured: true, model: 'test-model' } })
+    return route.fulfill({ json: { content: '已经为你定位该方向。', actions: [{ name: 'focus_research_theme', label: '定位预研方向', arguments: { themeId: 'industrial-software' } }], sources: [{ label: '注意力母池', href: '/attention_pool_evidence.json' }] } })
+  })
+  await page.goto('/')
+  await page.getByRole('button', { name: /Agent\s*产品经理助手/ }).click()
+  const panel = page.getByRole('complementary', { name: '产品经理Agent' })
+  await expect(panel.getByText('已同步')).toBeVisible()
+  await panel.getByPlaceholder('询问产品方向、趋势或数据依据…').fill('打开工业软件方向')
+  await panel.getByRole('button', { name: '发送' }).click()
+  await expect(panel.getByText(/已执行页面操作：定位预研方向/)).toBeVisible()
+  await expect(page.getByRole('heading', { name: '工业软件与自主生产系统' })).toBeVisible()
 })
 
 test('aborts an in-flight request when the conversation is cleared', async ({ page }) => {

@@ -52,7 +52,7 @@ function EmptyState({ onReset }) {
   )
 }
 
-export default function App({ initialQuery = '', onQueryChange, establishedWindow = null }) {
+export default function App({ initialQuery = '', onQueryChange, establishedWindow = null, agentCommand, onContextChange }) {
   const [products, setProducts] = useState([])
   const [shareTotal, setShareTotal] = useState(0)
   const [expandedIds, setExpandedIds] = useState(() => new Set())
@@ -177,6 +177,17 @@ export default function App({ initialQuery = '', onQueryChange, establishedWindo
   }), [debouncedQuery, effectiveSortMode, scopedProducts, selectedCategory])
   const selectedProducts = selection.products
   const displayedProducts = selectedProducts.slice(0, INITIAL_RENDER_LIMIT)
+
+  useEffect(() => {
+    if (agentCommand?.type !== 'fund-filters') return
+    if (typeof agentCommand.query === 'string') setQuery(agentCommand.query)
+    if (typeof agentCommand.category === 'string') setSelectedCategory(agentCommand.category)
+    if (SORT_MODES.has(agentCommand.sortMode)) setSortMode(agentCommand.sortMode)
+    requestAnimationFrame(() => document.querySelector('.fund-controls')?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
+  }, [agentCommand])
+  useEffect(() => {
+    onContextChange?.({ query: debouncedQuery, category: selectedCategory, sortMode: effectiveSortMode, matchedProducts: selectedProducts.length, dataDate, establishedWindow })
+  }, [dataDate, debouncedQuery, effectiveSortMode, establishedWindow, onContextChange, selectedCategory, selectedProducts.length])
 
   useEffect(() => {
     if (selection.matchedShareCodes.size === 0) return

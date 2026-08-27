@@ -6,7 +6,7 @@ import { ReportScope } from './ReportScope.jsx'
 const pct = (value) => Number.isFinite(value) ? `${value >= 0 ? '+' : ''}${value.toFixed(2)}%` : '—'
 const scale = (value) => Number.isFinite(value) ? `${value >= 0 ? '+' : ''}${value.toFixed(1)} 亿元` : '—'
 
-export function MarketForecastWorkspace({ onOpenFundLibrary }) {
+export function MarketForecastWorkspace({ onOpenFundLibrary, agentCommand, onContextChange }) {
   const [forecast, setForecast] = useState(null)
   const [loadError, setLoadError] = useState('')
   const [reloadKey, setReloadKey] = useState(0)
@@ -53,6 +53,18 @@ export function MarketForecastWorkspace({ onOpenFundLibrary }) {
   }, [loadedUpdateTime])
 
   const selected = forecast?.rows.find((row) => row.id === selectedId) ?? forecast?.rows[0]
+  useEffect(() => {
+    if (agentCommand?.type !== 'forecast-category' || !forecast) return
+    const target = forecast.rows.find((row) => row.id === agentCommand.categoryId || row.name === agentCommand.categoryName)
+    if (target) {
+      setSelectedId(target.id)
+      requestAnimationFrame(() => document.querySelector('.forecast-table')?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
+    }
+  }, [agentCommand, forecast])
+  useEffect(() => {
+    if (!selected || !forecast) return
+    onContextChange?.({ selectedCategory: { id: selected.id, name: selected.name, judgement: selected.judgement, navMedian: selected.navMedian, scaleNetIncrease: selected.scaleNetIncrease, drawdownMedian: selected.drawdownMedian }, sort, dataDate: forecast.dataDate })
+  }, [forecast, onContextChange, selected, sort])
   const funds = useMemo(() => [...(selected?.funds ?? [])].sort((left, right) => {
     const field = sort === 'scale' ? 'scaleNetIncreaseYi' : sort === 'drawdown' ? 'maxDrawdownPercent' : 'navGrowthPercent'
     const a = Number.isFinite(left[field]) ? left[field] : -Infinity
@@ -60,8 +72,8 @@ export function MarketForecastWorkspace({ onOpenFundLibrary }) {
     return b - a
   }).slice(0, 30), [selected, sort])
 
-  if (!forecast && loadError) return <main className="workspace-main forecast-workspace"><section className="empty-state" role="alert"><h2>行情预测加载失败</h2><p>{loadError}</p><button type="button" onClick={() => setReloadKey((value) => value + 1)}>重新加载</button></section></main>
-  if (!forecast) return <main className="workspace-main forecast-workspace"><p>正在生成每日行情预测…</p></main>
+  if (!forecast && loadError) return <main className="workspace-main forecast-workspace"><header className="forecast-heading"><div><h1>行情预测</h1><p>正在读取每日基金快照</p></div></header><section className="empty-state" role="alert"><h2>行情预测加载失败</h2><p>{loadError}</p><button type="button" onClick={() => setReloadKey((value) => value + 1)}>重新加载</button></section></main>
+  if (!forecast) return <main className="workspace-main forecast-workspace"><header className="forecast-heading"><div><h1>行情预测</h1><p>正在读取每日基金快照</p></div></header><p>正在生成每日行情预测…</p></main>
   const leaders = forecast.leaders
   const baseline = forecast.baseline
   const openForecastRow = (row) => {

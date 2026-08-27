@@ -5,7 +5,15 @@ const RATE_LIMIT = 12
 const requestBuckets = new Map()
 const SYSTEM_PROMPT = `你是AI Fund Mate中的公募基金产品经理Agent。你的服务对象是基金产品经理，而不是终端投资者。
 回答应聚焦产品方向预研、社会注意力变化、产业和企业验证、资产承载、同类产品供给及产品窗口。
-明确区分已知数据、推断和待验证事项；数据不足时不得编造。不要给出个股买卖建议。回答简洁、结构清楚。`
+明确区分已知数据、推断和待验证事项；数据不足时不得编造。引用数字时说明数据日期和口径。不要给出个股买卖建议。回答简洁、结构清楚。
+你可以调用白名单只读页面工具帮助用户定位信息，但不得修改数据、触发更新或执行外部操作。`
+const TOOLS = [
+  { type: 'function', function: { name: 'switch_workspace', description: '切换到指定工作板块', parameters: { type: 'object', properties: { workspace: { type: 'string', enum: ['预研产品池', '市场分析', '发行洞察', '行情预测'] } }, required: ['workspace'] } } },
+  { type: 'function', function: { name: 'focus_research_theme', description: '在预研产品池定位一个方向', parameters: { type: 'object', properties: { themeId: { type: 'string' }, themeName: { type: 'string' } } } } },
+  { type: 'function', function: { name: 'set_fund_filters', description: '在市场分析设置查询、分类或排序', parameters: { type: 'object', properties: { query: { type: 'string' }, category: { type: 'string' }, sortMode: { type: 'string', enum: ['scale-desc', 'scale-growth-desc', 'nav-growth-desc', 'drawdown-desc', 'date-desc'] } } } } },
+  { type: 'function', function: { name: 'focus_forecast_category', description: '在行情预测定位一个基金分类', parameters: { type: 'object', properties: { categoryId: { type: 'string' }, categoryName: { type: 'string' } } } } },
+]
+const ACTION_LABELS = { switch_workspace: '切换工作板块', focus_research_theme: '定位预研方向', set_fund_filters: '设置基金筛选', focus_forecast_category: '定位行情分类' }
 
 function reply(res, status, payload) {
   res.status(status).setHeader('Content-Type', 'application/json; charset=utf-8').end(JSON.stringify(payload))
@@ -44,12 +52,24 @@ export default async function handler(req, res) {
   if (!messages.length) return reply(res, 400, { error: '缺少有效对话内容' })
   const context = JSON.stringify(body.context || {}).slice(0, 4000)
   try {
-    const response = await fetch(`${baseUrl}/chat/completions`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` }, body: JSON.stringify({ model, temperature: 0.2, messages: [{ role: 'system', content: `${SYSTEM_PROMPT}\n当前页面上下文：${context}` }, ...messages] }), signal: AbortSignal.timeout(45000) })
-    const payload = await response.json().catch(() => ({}))
+    const requestBody = { model, temperature: 0.2, messages: [{ role: 'system', content: `${SYSTEM_PROMPT}\n当前页面上下文：${context}` }, ...messages], tools: TOOLS, tool_choice: 'auto' }
+    let response = await fetch(`${baseUrl}/chat/completions`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` }, body: JSON.stringify(requestBody), signal: AbortSignal.timeout(45000) })
+    let payload = await response.json().catch(() => ({}))
+    if (response.status === 400 && payload.error) {
+      const { tools, tool_choice, ...withoutTools } = requestBody
+      response = await fetch(`${baseUrl}/chat/completions`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` }, body: JSON.stringify(withoutTools), signal: AbortSignal.timeout(45000) })
+      payload = await response.json().catch(() => ({}))
+    }
     if (!response.ok) return reply(res, 502, { error: payload.error?.message || `上游模型请求失败（${response.status}）` })
-    const content = payload.choices?.[0]?.message?.content
+    const message = payload.choices?.[0]?.message
+    const actions = (message?.tool_calls || []).flatMap((call) => {
+      if (call.type !== 'function' || !ACTION_LABELS[call.function?.name]) return []
+      try { return [{ name: call.function.name, label: ACTION_LABELS[call.function.name], arguments: JSON.parse(call.function.arguments || '{}') }] } catch { return [] }
+    })
+    const content = message?.content || (actions.length ? '已根据你的要求定位页面内容。' : '')
     if (!content) return reply(res, 502, { error: '上游模型未返回有效文本' })
-    return reply(res, 200, { content, provider: process.env.AGENT_PROVIDER || 'openai-compatible', model })
+    const sources = Array.isArray(body.context?.sources) ? body.context.sources.slice(0, 4).filter((source) => typeof source?.label === 'string' && /^\/[a-z0-9_./-]+$/i.test(source?.href || '')) : []
+    return reply(res, 200, { content, actions, sources, provider: process.env.AGENT_PROVIDER || 'openai-compatible', model })
   } catch (error) {
     const message = error.name === 'TimeoutError' ? '模型响应超时，请稍后重试' : `模型服务暂时不可用：${error.message}`
     return reply(res, 502, { error: message })

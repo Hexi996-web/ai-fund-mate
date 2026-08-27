@@ -7,7 +7,7 @@ const WINDOWS = [
   { id: 'ytd', label: '本年至今', description: '仅展示本年1月1日至数据日期成立的基金产品' },
 ]
 
-export function IssuanceInsight() {
+export function IssuanceInsight({ agentCommand, onContextChange }) {
   const [windowId, setWindowId] = useState('quarter')
   const active = WINDOWS.find((window) => window.id === windowId)
 
@@ -19,7 +19,7 @@ export function IssuanceInsight() {
       {WINDOWS.map((window) => <button key={window.id} type="button" role="tab" aria-selected={windowId === window.id} className={windowId === window.id ? 'active' : ''} onClick={() => setWindowId(window.id)}><strong>{window.label}</strong><span>{window.description}</span></button>)}
     </div>
     <div role="tabpanel" aria-label={`${active.label}成立基金数据库`}>
-      <FundApp key={windowId} establishedWindow={windowId} />
+      <FundApp key={windowId} establishedWindow={windowId} agentCommand={agentCommand} onContextChange={(context) => onContextChange?.({ ...context, issuanceWindow: active.label })} />
     </div>
   </section>
 }
