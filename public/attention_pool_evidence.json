@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-08-28T21:33:18.434826+00:00",
+  "generatedAt": "2026-08-28T22:00:10.778519+00:00",
   "methodologyVersion": "cn-hotlists-gdelt-v1",
   "universeCount": 36,
   "mappedCount": 36,
@@ -739,24 +739,24 @@
         "longevity",
         "embodied-ai",
         "creator-economy",
-        "service-robot",
-        "agri-tech",
         "wealth-longevity",
+        "service-robot",
         "autonomous-driving",
-        "smart-healthcare",
+        "agri-tech",
         "experience",
-        "defense-tech",
-        "digital-health",
-        "recycling",
-        "future-tech",
         "cybersecurity",
-        "mental-health",
-        "low-altitude",
+        "future-tech",
+        "recycling",
+        "smart-healthcare",
         "sports-outdoor",
+        "defense-tech",
+        "low-altitude",
+        "digital-health",
         "inbound-consumption",
         "nuclear-energy",
         "new-food",
         "water-security",
+        "mental-health",
         "synthetic-biology",
         "obesity-care",
         "pet-economy",
@@ -767,58 +767,58 @@
       "scores": {
         "hard-tech": {
           "attention": 0,
-          "validation": 94.9,
+          "validation": 95.1,
           "capacity": 95.0,
-          "composite": 90.18,
+          "composite": 90.32,
           "rank": 1
         },
         "resources": {
           "attention": 0,
-          "validation": 87.0,
+          "validation": 87.9,
           "capacity": 89.6,
-          "composite": 83.41,
+          "composite": 84.0,
           "rank": 2
         },
         "biotech": {
           "attention": 48.3,
-          "validation": 88.6,
+          "validation": 86.9,
           "capacity": 75.1,
-          "composite": 82.64,
+          "composite": 81.52,
           "rank": 3
         },
         "power": {
           "attention": 0,
-          "validation": 90.4,
+          "validation": 90.1,
           "capacity": 73.3,
-          "composite": 80.88,
+          "composite": 80.68,
           "rank": 4
         },
         "ai-agent": {
           "attention": 41.9,
-          "validation": 76.8,
+          "validation": 76.7,
           "capacity": 93.2,
-          "composite": 79.85,
+          "composite": 79.78,
           "rank": 5
         },
         "space": {
           "attention": 0,
-          "validation": 76.3,
+          "validation": 75.7,
           "capacity": 86.0,
-          "composite": 75.32,
+          "composite": 74.93,
           "rank": 6
         },
         "grid-storage": {
           "attention": 0,
-          "validation": 84.1,
+          "validation": 83.8,
           "capacity": 62.5,
-          "composite": 73.58,
+          "composite": 73.38,
           "rank": 7
         },
         "industrial-software": {
           "attention": 0,
-          "validation": 73.8,
+          "validation": 73.5,
           "capacity": 71.5,
-          "composite": 69.44,
+          "composite": 69.24,
           "rank": 8
         },
         "ai-application": {
@@ -830,191 +830,191 @@
         },
         "longevity": {
           "attention": 0,
-          "validation": 71.4,
+          "validation": 73.1,
           "capacity": 67.9,
-          "composite": 66.81,
+          "composite": 67.92,
           "rank": 10
         },
         "embodied-ai": {
           "attention": 59.8,
-          "validation": 56.3,
+          "validation": 54.4,
           "capacity": 87.8,
-          "composite": 65.68,
+          "composite": 64.43,
           "rank": 11
         },
         "creator-economy": {
           "attention": 43.3,
-          "validation": 64.6,
+          "validation": 64.3,
           "capacity": 60.7,
-          "composite": 62.39,
+          "composite": 62.2,
           "rank": 12
-        },
-        "service-robot": {
-          "attention": 0,
-          "validation": 51.9,
-          "capacity": 91.4,
-          "composite": 60.85,
-          "rank": 13
-        },
-        "agri-tech": {
-          "attention": 0,
-          "validation": 71.2,
-          "capacity": 46.2,
-          "composite": 60.33,
-          "rank": 14
         },
         "wealth-longevity": {
           "attention": 0,
-          "validation": 60.6,
+          "validation": 64.8,
           "capacity": 64.3,
-          "composite": 58.65,
-          "rank": 15
+          "composite": 61.41,
+          "rank": 13
+        },
+        "service-robot": {
+          "attention": 0,
+          "validation": 51.2,
+          "capacity": 91.4,
+          "composite": 60.39,
+          "rank": 14
         },
         "autonomous-driving": {
           "attention": 41.5,
-          "validation": 47.8,
+          "validation": 51.4,
           "capacity": 82.4,
-          "composite": 57.6,
-          "rank": 16
+          "composite": 59.97,
+          "rank": 15
         },
-        "smart-healthcare": {
+        "agri-tech": {
           "attention": 0,
-          "validation": 54.6,
-          "capacity": 51.7,
-          "composite": 51.02,
-          "rank": 17
+          "validation": 70.2,
+          "capacity": 46.2,
+          "composite": 59.67,
+          "rank": 16
         },
         "experience": {
           "attention": 0,
           "validation": 58.5,
           "capacity": 42.6,
           "composite": 50.93,
-          "rank": 18
-        },
-        "defense-tech": {
-          "attention": 0,
-          "validation": 39.4,
-          "capacity": 84.2,
-          "composite": 50.53,
-          "rank": 19
-        },
-        "digital-health": {
-          "attention": 0,
-          "validation": 52.3,
-          "capacity": 51.7,
-          "composite": 49.51,
-          "rank": 20
-        },
-        "recycling": {
-          "attention": 0,
-          "validation": 51.7,
-          "capacity": 48.1,
-          "composite": 48.06,
-          "rank": 21
-        },
-        "future-tech": {
-          "attention": 0,
-          "validation": 41.9,
-          "capacity": 69.7,
-          "composite": 47.93,
-          "rank": 22
+          "rank": 17
         },
         "cybersecurity": {
           "attention": 0,
-          "validation": 47.0,
+          "validation": 52.0,
           "capacity": 57.1,
-          "composite": 47.6,
-          "rank": 23
+          "composite": 50.89,
+          "rank": 18
         },
-        "mental-health": {
+        "future-tech": {
           "attention": 0,
-          "validation": 49.0,
-          "capacity": 51.7,
-          "composite": 47.34,
-          "rank": 24
+          "validation": 46.0,
+          "capacity": 69.7,
+          "composite": 50.63,
+          "rank": 19
         },
-        "low-altitude": {
-          "attention": 49.9,
-          "validation": 27.7,
-          "capacity": 76.9,
-          "composite": 43.19,
-          "rank": 25
+        "recycling": {
+          "attention": 0,
+          "validation": 53.7,
+          "capacity": 48.1,
+          "composite": 49.38,
+          "rank": 20
+        },
+        "smart-healthcare": {
+          "attention": 0,
+          "validation": 46.9,
+          "capacity": 51.7,
+          "composite": 45.96,
+          "rank": 21
         },
         "sports-outdoor": {
           "attention": 0,
-          "validation": 45.3,
+          "validation": 48.9,
           "capacity": 44.4,
-          "composite": 42.77,
-          "rank": 26
+          "composite": 45.14,
+          "rank": 22
+        },
+        "defense-tech": {
+          "attention": 0,
+          "validation": 30.4,
+          "capacity": 84.2,
+          "composite": 44.61,
+          "rank": 23
+        },
+        "low-altitude": {
+          "attention": 49.9,
+          "validation": 29.0,
+          "capacity": 76.9,
+          "composite": 44.05,
+          "rank": 24
+        },
+        "digital-health": {
+          "attention": 0,
+          "validation": 43.2,
+          "capacity": 51.7,
+          "composite": 43.52,
+          "rank": 25
         },
         "inbound-consumption": {
           "attention": 0,
-          "validation": 48.8,
+          "validation": 50.2,
           "capacity": 35.4,
-          "composite": 42.44,
-          "rank": 27
+          "composite": 43.36,
+          "rank": 26
         },
         "nuclear-energy": {
           "attention": 0,
-          "validation": 27.7,
+          "validation": 29.0,
           "capacity": 78.8,
-          "composite": 41.25,
-          "rank": 28
+          "composite": 42.11,
+          "rank": 27
         },
         "new-food": {
           "attention": 0,
-          "validation": 48.2,
+          "validation": 47.7,
           "capacity": 31.8,
-          "composite": 41.0,
-          "rank": 29
+          "composite": 40.67,
+          "rank": 28
         },
         "water-security": {
           "attention": 0,
-          "validation": 27.7,
+          "validation": 29.0,
           "capacity": 66.1,
-          "composite": 37.54,
+          "composite": 38.39,
+          "rank": 29
+        },
+        "mental-health": {
+          "attention": 0,
+          "validation": 33.5,
+          "capacity": 51.7,
+          "composite": 37.15,
           "rank": 30
         },
         "synthetic-biology": {
           "attention": 0,
-          "validation": 27.7,
+          "validation": 29.0,
           "capacity": 58.9,
-          "composite": 35.44,
+          "composite": 36.29,
           "rank": 31
         },
         "obesity-care": {
           "attention": 0,
-          "validation": 27.7,
+          "validation": 29.0,
           "capacity": 49.9,
-          "composite": 32.8,
+          "composite": 33.66,
           "rank": 32
         },
         "pet-economy": {
           "attention": 0,
-          "validation": 27.7,
+          "validation": 29.0,
           "capacity": 37.2,
-          "composite": 29.09,
+          "composite": 29.95,
           "rank": 33
         },
         "ocean-economy": {
           "attention": 0,
-          "validation": 19.1,
+          "validation": 20.5,
           "capacity": 40.8,
-          "composite": 24.49,
+          "composite": 25.41,
           "rank": 34
         },
         "climate-adaptation": {
           "attention": 12.6,
-          "validation": 17.4,
+          "validation": 18.1,
           "capacity": 39.0,
-          "composite": 23.47,
+          "composite": 23.93,
           "rank": 35
         },
         "human-upskilling": {
           "attention": 0,
-          "validation": 13.2,
+          "validation": 14.4,
           "capacity": 33.6,
-          "composite": 18.5,
+          "composite": 19.29,
           "rank": 36
         }
       },
@@ -1060,30 +1060,26 @@
           "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
         },
         "embodied-ai": {
-          "state": "窗口开启",
-          "reason": "注意力、产品需求与资产承载形成共振"
+          "state": "窗口临近",
+          "reason": "产品需求与资产承载已确认，等待注意力进一步扩散"
         },
         "creator-economy": {
           "state": "拥挤观察",
           "reason": "同类产品近12个月集中新发且市场规模已较大"
         },
-        "service-robot": {
-          "state": "提前预研",
-          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
-        },
-        "agri-tech": {
-          "state": "提前预研",
-          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
-        },
         "wealth-longevity": {
           "state": "提前预研",
           "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
         },
-        "autonomous-driving": {
-          "state": "叙事验证",
-          "reason": "公众注意力已出现，产品需求仍需持续验证"
+        "service-robot": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
         },
-        "smart-healthcare": {
+        "autonomous-driving": {
+          "state": "窗口临近",
+          "reason": "产品需求与资产承载已确认，等待注意力进一步扩散"
+        },
+        "agri-tech": {
           "state": "提前预研",
           "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
         },
@@ -1091,15 +1087,7 @@
           "state": "拥挤观察",
           "reason": "同类产品近12个月集中新发且市场规模已较大"
         },
-        "defense-tech": {
-          "state": "提前预研",
-          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
-        },
-        "digital-health": {
-          "state": "提前预研",
-          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
-        },
-        "recycling": {
+        "cybersecurity": {
           "state": "提前预研",
           "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
         },
@@ -1107,11 +1095,19 @@
           "state": "提前预研",
           "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
         },
-        "cybersecurity": {
+        "recycling": {
           "state": "提前预研",
           "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
         },
-        "mental-health": {
+        "smart-healthcare": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
+        },
+        "sports-outdoor": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
+        },
+        "defense-tech": {
           "state": "提前预研",
           "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
         },
@@ -1119,7 +1115,7 @@
           "state": "提前预研",
           "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
         },
-        "sports-outdoor": {
+        "digital-health": {
           "state": "提前预研",
           "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
         },
@@ -1136,6 +1132,10 @@
           "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
         },
         "water-security": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
+        },
+        "mental-health": {
           "state": "提前预研",
           "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
         },
@@ -1236,23 +1236,23 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 76.8,
-        "peerFunds": 124,
+        "score": 76.7,
+        "peerFunds": 126,
         "comparableFunds": 98,
-        "currentScaleYi": 1409.8,
-        "scaleNetIncreaseYi": 260.1,
-        "scaleGrowthPercent": 24.5,
+        "currentScaleYi": 1419.0,
+        "scaleNetIncreaseYi": 268.1,
+        "scaleGrowthPercent": 25.3,
         "launched12Months": 20,
-        "estimatedNetFlowYi": 307.9,
+        "estimatedNetFlowYi": 289.9,
         "flowComparableFunds": 98,
-        "positiveFlowFunds": 69,
+        "positiveFlowFunds": 68,
         "growthBreadthPercent": 68.4,
         "positiveGrowthFunds": 67,
         "effectiveFunds": 93,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 15.0,
-        "top3SharePercent": 27.5,
-        "asOf": "2026-08-27 13:31:19",
+        "top1SharePercent": 14.8,
+        "top3SharePercent": 27.4,
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -1262,8 +1262,8 @@
           "absoluteScaleIncrease": 86.1,
           "scaleGrowthRate": 61.1,
           "growthBreadth": 68.4,
-          "concentrationBalance": 85.0,
-          "effectiveProducts": 75.0,
+          "concentrationBalance": 85.2,
+          "effectiveProducts": 73.6,
           "currentScale": 80.6,
           "newLaunches": 80.6
         },
@@ -1278,7 +1278,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -1310,35 +1312,35 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 56.3,
+        "score": 54.4,
         "peerFunds": 44,
         "comparableFunds": 39,
-        "currentScaleYi": 782.1,
-        "scaleNetIncreaseYi": -7.1,
-        "scaleGrowthPercent": -0.9,
+        "currentScaleYi": 778.1,
+        "scaleNetIncreaseYi": -11.0,
+        "scaleGrowthPercent": -1.4,
         "launched12Months": 5,
-        "estimatedNetFlowYi": 74.8,
+        "estimatedNetFlowYi": 66.6,
         "flowComparableFunds": 39,
         "positiveFlowFunds": 26,
         "growthBreadthPercent": 64.1,
         "positiveGrowthFunds": 25,
         "effectiveFunds": 34,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 22.8,
-        "top3SharePercent": 52.4,
-        "asOf": "2026-08-27 13:31:19",
+        "top1SharePercent": 22.7,
+        "top3SharePercent": 52.1,
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 66.7,
+          "estimatedNetFlow": 61.1,
           "absoluteScaleIncrease": 19.4,
-          "scaleGrowthRate": 30.6,
+          "scaleGrowthRate": 27.8,
           "growthBreadth": 64.1,
-          "concentrationBalance": 77.2,
+          "concentrationBalance": 77.3,
           "effectiveProducts": 63.9,
-          "currentScale": 66.7,
+          "currentScale": 63.9,
           "newLaunches": 65.3
         },
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
@@ -1352,10 +1354,12 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
-        "state": "窗口开启",
-        "reason": "注意力、产品需求与资产承载形成共振"
+        "state": "窗口临近",
+        "reason": "产品需求与资产承载已确认，等待注意力进一步扩散"
       }
     },
     {
@@ -1384,33 +1388,33 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 76.3,
-        "peerFunds": 39,
-        "comparableFunds": 35,
-        "currentScaleYi": 988.4,
-        "scaleNetIncreaseYi": 244.0,
-        "scaleGrowthPercent": 33.1,
+        "score": 75.7,
+        "peerFunds": 42,
+        "comparableFunds": 37,
+        "currentScaleYi": 1002.8,
+        "scaleNetIncreaseYi": 237.6,
+        "scaleGrowthPercent": 31.4,
         "launched12Months": 6,
-        "estimatedNetFlowYi": 350.6,
-        "flowComparableFunds": 35,
-        "positiveFlowFunds": 27,
-        "growthBreadthPercent": 68.6,
-        "positiveGrowthFunds": 24,
-        "effectiveFunds": 38,
+        "estimatedNetFlowYi": 335.2,
+        "flowComparableFunds": 37,
+        "positiveFlowFunds": 28,
+        "growthBreadthPercent": 67.6,
+        "positiveGrowthFunds": 25,
+        "effectiveFunds": 39,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 13.2,
-        "top3SharePercent": 27.8,
-        "asOf": "2026-08-27 13:31:19",
+        "top1SharePercent": 12.7,
+        "top3SharePercent": 27.6,
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
           "estimatedNetFlow": 80.6,
-          "absoluteScaleIncrease": 83.3,
+          "absoluteScaleIncrease": 80.6,
           "scaleGrowthRate": 75.0,
-          "growthBreadth": 68.6,
-          "concentrationBalance": 86.8,
+          "growthBreadth": 67.6,
+          "concentrationBalance": 87.3,
           "effectiveProducts": 66.7,
           "currentScale": 69.4,
           "newLaunches": 70.8
@@ -1426,7 +1430,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -1458,23 +1464,23 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 90.4,
-        "peerFunds": 172,
+        "score": 90.1,
+        "peerFunds": 174,
         "comparableFunds": 123,
-        "currentScaleYi": 1966.2,
-        "scaleNetIncreaseYi": 787.1,
-        "scaleGrowthPercent": 74.6,
-        "launched12Months": 28,
-        "estimatedNetFlowYi": 878.3,
+        "currentScaleYi": 1941.3,
+        "scaleNetIncreaseYi": 760.3,
+        "scaleGrowthPercent": 72.1,
+        "launched12Months": 30,
+        "estimatedNetFlowYi": 851.5,
         "flowComparableFunds": 123,
-        "positiveFlowFunds": 95,
-        "growthBreadthPercent": 74.0,
-        "positiveGrowthFunds": 91,
-        "effectiveFunds": 118,
+        "positiveFlowFunds": 93,
+        "growthBreadthPercent": 73.2,
+        "positiveGrowthFunds": 90,
+        "effectiveFunds": 119,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 10.5,
+        "top1SharePercent": 10.4,
         "top3SharePercent": 20.0,
-        "asOf": "2026-08-27 13:31:19",
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -1482,12 +1488,12 @@
         "scoreComponents": {
           "estimatedNetFlow": 97.2,
           "absoluteScaleIncrease": 97.2,
-          "scaleGrowthRate": 88.9,
-          "growthBreadth": 74.0,
-          "concentrationBalance": 89.5,
+          "scaleGrowthRate": 86.1,
+          "growthBreadth": 73.2,
+          "concentrationBalance": 89.6,
           "effectiveProducts": 91.7,
           "currentScale": 88.9,
-          "newLaunches": 90.3
+          "newLaunches": 91.7
         },
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
@@ -1500,7 +1506,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -1532,23 +1540,23 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 94.9,
+        "score": 95.1,
         "peerFunds": 121,
         "comparableFunds": 98,
-        "currentScaleYi": 4920.3,
-        "scaleNetIncreaseYi": 3076.9,
-        "scaleGrowthPercent": 175.9,
-        "launched12Months": 15,
-        "estimatedNetFlowYi": 3493.6,
+        "currentScaleYi": 4907.3,
+        "scaleNetIncreaseYi": 3060.4,
+        "scaleGrowthPercent": 174.9,
+        "launched12Months": 16,
+        "estimatedNetFlowYi": 3453.5,
         "flowComparableFunds": 98,
-        "positiveFlowFunds": 90,
-        "growthBreadthPercent": 93.9,
-        "positiveGrowthFunds": 92,
-        "effectiveFunds": 106,
+        "positiveFlowFunds": 89,
+        "growthBreadthPercent": 94.9,
+        "positiveGrowthFunds": 93,
+        "effectiveFunds": 107,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 10.3,
-        "top3SharePercent": 28.4,
-        "asOf": "2026-08-27 13:31:19",
+        "top1SharePercent": 10.1,
+        "top3SharePercent": 28.0,
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -1557,11 +1565,11 @@
           "estimatedNetFlow": 100.0,
           "absoluteScaleIncrease": 100.0,
           "scaleGrowthRate": 100.0,
-          "growthBreadth": 93.9,
-          "concentrationBalance": 89.7,
+          "growthBreadth": 94.9,
+          "concentrationBalance": 89.9,
           "effectiveProducts": 80.6,
           "currentScale": 100.0,
-          "newLaunches": 75.0
+          "newLaunches": 76.4
         },
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
@@ -1574,7 +1582,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -1606,36 +1616,36 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 88.6,
+        "score": 86.9,
         "peerFunds": 176,
-        "comparableFunds": 165,
-        "currentScaleYi": 2735.0,
-        "scaleNetIncreaseYi": 753.7,
-        "scaleGrowthPercent": 38.4,
+        "comparableFunds": 167,
+        "currentScaleYi": 2702.7,
+        "scaleNetIncreaseYi": 709.5,
+        "scaleGrowthPercent": 35.9,
         "launched12Months": 16,
-        "estimatedNetFlowYi": 753.6,
-        "flowComparableFunds": 165,
-        "positiveFlowFunds": 130,
-        "growthBreadthPercent": 80.6,
-        "positiveGrowthFunds": 133,
-        "effectiveFunds": 109,
+        "estimatedNetFlowYi": 717.8,
+        "flowComparableFunds": 167,
+        "positiveFlowFunds": 132,
+        "growthBreadthPercent": 78.4,
+        "positiveGrowthFunds": 131,
+        "effectiveFunds": 110,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 9.6,
-        "top3SharePercent": 24.9,
-        "asOf": "2026-08-27 13:31:19",
+        "top1SharePercent": 9.4,
+        "top3SharePercent": 24.5,
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 94.4,
-          "absoluteScaleIncrease": 94.4,
-          "scaleGrowthRate": 83.3,
-          "growthBreadth": 80.6,
-          "concentrationBalance": 90.4,
+          "estimatedNetFlow": 91.7,
+          "absoluteScaleIncrease": 91.7,
+          "scaleGrowthRate": 80.6,
+          "growthBreadth": 78.4,
+          "concentrationBalance": 90.6,
           "effectiveProducts": 83.3,
           "currentScale": 91.7,
-          "newLaunches": 77.8
+          "newLaunches": 76.4
         },
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
@@ -1648,7 +1658,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -1680,36 +1692,36 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 71.4,
+        "score": 73.1,
         "peerFunds": 328,
         "comparableFunds": 325,
-        "currentScaleYi": 1165.2,
-        "scaleNetIncreaseYi": 218.1,
-        "scaleGrowthPercent": 23.0,
+        "currentScaleYi": 1202.9,
+        "scaleNetIncreaseYi": 255.9,
+        "scaleGrowthPercent": 27.0,
         "launched12Months": 4,
-        "estimatedNetFlowYi": 186.5,
+        "estimatedNetFlowYi": 226.6,
         "flowComparableFunds": 325,
-        "positiveFlowFunds": 160,
-        "growthBreadthPercent": 48.9,
-        "positiveGrowthFunds": 159,
-        "effectiveFunds": 127,
+        "positiveFlowFunds": 167,
+        "growthBreadthPercent": 51.7,
+        "positiveGrowthFunds": 168,
+        "effectiveFunds": 133,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 22.9,
-        "top3SharePercent": 27.4,
-        "asOf": "2026-08-27 13:31:19",
+        "top1SharePercent": 22.0,
+        "top3SharePercent": 27.1,
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
           "estimatedNetFlow": 75.0,
-          "absoluteScaleIncrease": 80.6,
-          "scaleGrowthRate": 58.3,
-          "growthBreadth": 48.9,
-          "concentrationBalance": 77.1,
-          "effectiveProducts": 94.4,
+          "absoluteScaleIncrease": 83.3,
+          "scaleGrowthRate": 63.9,
+          "growthBreadth": 51.7,
+          "concentrationBalance": 78.0,
+          "effectiveProducts": 97.2,
           "currentScale": 72.2,
-          "newLaunches": 61.1
+          "newLaunches": 59.7
         },
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
@@ -1722,7 +1734,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -1756,21 +1770,21 @@
       "validation": {
         "score": 58.5,
         "peerFunds": 281,
-        "comparableFunds": 251,
-        "currentScaleYi": 1366.8,
-        "scaleNetIncreaseYi": -80.2,
-        "scaleGrowthPercent": -5.7,
+        "comparableFunds": 250,
+        "currentScaleYi": 1371.9,
+        "scaleNetIncreaseYi": -74.3,
+        "scaleGrowthPercent": -5.3,
         "launched12Months": 38,
-        "estimatedNetFlowYi": 82.1,
-        "flowComparableFunds": 251,
-        "positiveFlowFunds": 144,
-        "growthBreadthPercent": 47.0,
+        "estimatedNetFlowYi": 83.9,
+        "flowComparableFunds": 250,
+        "positiveFlowFunds": 143,
+        "growthBreadthPercent": 47.2,
         "positiveGrowthFunds": 118,
-        "effectiveFunds": 114,
+        "effectiveFunds": 113,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 11.2,
+        "top1SharePercent": 11.3,
         "top3SharePercent": 23.8,
-        "asOf": "2026-08-27 13:31:19",
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -1779,8 +1793,8 @@
           "estimatedNetFlow": 69.4,
           "absoluteScaleIncrease": 11.1,
           "scaleGrowthRate": 19.4,
-          "growthBreadth": 47.0,
-          "concentrationBalance": 88.8,
+          "growthBreadth": 47.2,
+          "concentrationBalance": 88.7,
           "effectiveProducts": 88.9,
           "currentScale": 77.8,
           "newLaunches": 98.6
@@ -1796,7 +1810,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -1828,36 +1844,36 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 87.0,
-        "peerFunds": 129,
+        "score": 87.9,
+        "peerFunds": 130,
         "comparableFunds": 88,
-        "currentScaleYi": 1748.1,
-        "scaleNetIncreaseYi": 682.0,
-        "scaleGrowthPercent": 74.7,
+        "currentScaleYi": 1794.6,
+        "scaleNetIncreaseYi": 728.0,
+        "scaleGrowthPercent": 79.7,
         "launched12Months": 28,
-        "estimatedNetFlowYi": 722.7,
+        "estimatedNetFlowYi": 752.9,
         "flowComparableFunds": 88,
-        "positiveFlowFunds": 74,
-        "growthBreadthPercent": 84.1,
-        "positiveGrowthFunds": 74,
+        "positiveFlowFunds": 72,
+        "growthBreadthPercent": 85.2,
+        "positiveGrowthFunds": 75,
         "effectiveFunds": 84,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 14.9,
+        "top1SharePercent": 15.2,
         "top3SharePercent": 26.0,
-        "asOf": "2026-08-27 13:31:19",
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 91.7,
-          "absoluteScaleIncrease": 91.7,
-          "scaleGrowthRate": 91.7,
-          "growthBreadth": 84.1,
-          "concentrationBalance": 85.1,
+          "estimatedNetFlow": 94.4,
+          "absoluteScaleIncrease": 94.4,
+          "scaleGrowthRate": 88.9,
+          "growthBreadth": 85.2,
+          "concentrationBalance": 84.8,
           "effectiveProducts": 69.4,
           "currentScale": 86.1,
-          "newLaunches": 90.3
+          "newLaunches": 88.9
         },
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
@@ -1870,7 +1886,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -1902,14 +1920,14 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 41.9,
+        "score": 46.0,
         "peerFunds": 1,
         "comparableFunds": 1,
-        "currentScaleYi": 0.4,
-        "scaleNetIncreaseYi": 0.1,
-        "scaleGrowthPercent": 35.0,
+        "currentScaleYi": 0.6,
+        "scaleNetIncreaseYi": 0.3,
+        "scaleGrowthPercent": 118.3,
         "launched12Months": 0,
-        "estimatedNetFlowYi": 0.1,
+        "estimatedNetFlowYi": 0.3,
         "flowComparableFunds": 1,
         "positiveFlowFunds": 1,
         "growthBreadthPercent": 100.0,
@@ -1918,18 +1936,18 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 100.0,
         "top3SharePercent": 100.0,
-        "asOf": "2026-08-27 13:31:19",
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 27.8,
-          "absoluteScaleIncrease": 50.0,
-          "scaleGrowthRate": 80.6,
+          "estimatedNetFlow": 36.1,
+          "absoluteScaleIncrease": 52.8,
+          "scaleGrowthRate": 97.2,
           "growthBreadth": 100.0,
           "concentrationBalance": 0.0,
-          "effectiveProducts": 12.5,
+          "effectiveProducts": 11.1,
           "currentScale": 19.4,
           "newLaunches": 25.0
         },
@@ -1944,7 +1962,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -1976,14 +1996,14 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 73.8,
+        "score": 73.5,
         "peerFunds": 38,
         "comparableFunds": 25,
-        "currentScaleYi": 264.4,
-        "scaleNetIncreaseYi": 116.6,
-        "scaleGrowthPercent": 95.8,
+        "currentScaleYi": 268.3,
+        "scaleNetIncreaseYi": 120.4,
+        "scaleGrowthPercent": 98.9,
         "launched12Months": 5,
-        "estimatedNetFlowYi": 146.4,
+        "estimatedNetFlowYi": 147.6,
         "flowComparableFunds": 25,
         "positiveFlowFunds": 23,
         "growthBreadthPercent": 92.0,
@@ -1991,8 +2011,8 @@
         "effectiveFunds": 23,
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 35.8,
-        "top3SharePercent": 63.3,
-        "asOf": "2026-08-27 13:31:19",
+        "top3SharePercent": 63.4,
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2000,7 +2020,7 @@
         "scoreComponents": {
           "estimatedNetFlow": 72.2,
           "absoluteScaleIncrease": 77.8,
-          "scaleGrowthRate": 94.4,
+          "scaleGrowthRate": 91.7,
           "growthBreadth": 92.0,
           "concentrationBalance": 64.2,
           "effectiveProducts": 55.6,
@@ -2018,7 +2038,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2051,22 +2073,22 @@
       },
       "validation": {
         "score": 69.0,
-        "peerFunds": 219,
+        "peerFunds": 221,
         "comparableFunds": 169,
-        "currentScaleYi": 3376.8,
-        "scaleNetIncreaseYi": -117.3,
-        "scaleGrowthPercent": -3.5,
+        "currentScaleYi": 3403.7,
+        "scaleNetIncreaseYi": -91.7,
+        "scaleGrowthPercent": -2.7,
         "launched12Months": 32,
-        "estimatedNetFlowYi": 609.4,
+        "estimatedNetFlowYi": 607.3,
         "flowComparableFunds": 169,
         "positiveFlowFunds": 121,
         "growthBreadthPercent": 64.5,
         "positiveGrowthFunds": 109,
-        "effectiveFunds": 158,
+        "effectiveFunds": 157,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 11.3,
-        "top3SharePercent": 29.8,
-        "asOf": "2026-08-27 13:31:19",
+        "top1SharePercent": 11.2,
+        "top3SharePercent": 29.7,
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2076,7 +2098,7 @@
           "absoluteScaleIncrease": 8.3,
           "scaleGrowthRate": 25.0,
           "growthBreadth": 64.5,
-          "concentrationBalance": 88.7,
+          "concentrationBalance": 88.8,
           "effectiveProducts": 100.0,
           "currentScale": 97.2,
           "newLaunches": 94.4
@@ -2092,7 +2114,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -2124,34 +2148,34 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 47.0,
+        "score": 52.0,
         "peerFunds": 3,
         "comparableFunds": 3,
         "currentScaleYi": 3.8,
         "scaleNetIncreaseYi": 0.8,
-        "scaleGrowthPercent": 26.3,
+        "scaleGrowthPercent": 28.1,
         "launched12Months": 0,
         "estimatedNetFlowYi": 1.2,
         "flowComparableFunds": 3,
         "positiveFlowFunds": 3,
         "growthBreadthPercent": 100.0,
         "positiveGrowthFunds": 3,
-        "effectiveFunds": 0,
+        "effectiveFunds": 1,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 52.0,
+        "top1SharePercent": 52.4,
         "top3SharePercent": 100.0,
-        "asOf": "2026-08-27 13:31:19",
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 30.6,
-          "absoluteScaleIncrease": 52.8,
+          "estimatedNetFlow": 41.7,
+          "absoluteScaleIncrease": 55.6,
           "scaleGrowthRate": 66.7,
           "growthBreadth": 100.0,
-          "concentrationBalance": 48.0,
-          "effectiveProducts": 12.5,
+          "concentrationBalance": 47.6,
+          "effectiveProducts": 30.6,
           "currentScale": 25.0,
           "newLaunches": 25.0
         },
@@ -2166,7 +2190,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2198,34 +2224,34 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 54.6,
+        "score": 46.9,
         "peerFunds": 5,
         "comparableFunds": 5,
-        "currentScaleYi": 34.7,
-        "scaleNetIncreaseYi": 7.4,
-        "scaleGrowthPercent": 26.9,
+        "currentScaleYi": 28.9,
+        "scaleNetIncreaseYi": 1.6,
+        "scaleGrowthPercent": 5.7,
         "launched12Months": 0,
-        "estimatedNetFlowYi": 6.5,
+        "estimatedNetFlowYi": 0.7,
         "flowComparableFunds": 5,
-        "positiveFlowFunds": 5,
-        "growthBreadthPercent": 100.0,
-        "positiveGrowthFunds": 5,
+        "positiveFlowFunds": 4,
+        "growthBreadthPercent": 80.0,
+        "positiveGrowthFunds": 4,
         "effectiveFunds": 1,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 84.8,
-        "top3SharePercent": 94.0,
-        "asOf": "2026-08-27 13:31:19",
+        "top1SharePercent": 81.9,
+        "top3SharePercent": 92.9,
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 50.0,
-          "absoluteScaleIncrease": 66.7,
-          "scaleGrowthRate": 69.4,
-          "growthBreadth": 100.0,
-          "concentrationBalance": 15.2,
-          "effectiveProducts": 31.9,
+          "estimatedNetFlow": 38.9,
+          "absoluteScaleIncrease": 62.5,
+          "scaleGrowthRate": 55.6,
+          "growthBreadth": 80.0,
+          "concentrationBalance": 18.1,
+          "effectiveProducts": 30.6,
           "currentScale": 41.7,
           "newLaunches": 25.0
         },
@@ -2240,7 +2266,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2272,7 +2300,7 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 27.7,
+        "score": 29.0,
         "peerFunds": 0,
         "comparableFunds": 0,
         "currentScaleYi": 0,
@@ -2288,18 +2316,18 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 0,
         "top3SharePercent": 0,
-        "asOf": "2026-08-27 13:31:19",
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 16.7,
+          "estimatedNetFlow": 22.2,
           "absoluteScaleIncrease": 40.3,
           "scaleGrowthRate": 40.3,
           "growthBreadth": 0.0,
           "concentrationBalance": 100.0,
-          "effectiveProducts": 12.5,
+          "effectiveProducts": 11.1,
           "currentScale": 9.7,
           "newLaunches": 25.0
         },
@@ -2314,7 +2342,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2346,7 +2376,7 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 27.7,
+        "score": 29.0,
         "peerFunds": 0,
         "comparableFunds": 0,
         "currentScaleYi": 0,
@@ -2362,18 +2392,18 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 0,
         "top3SharePercent": 0,
-        "asOf": "2026-08-27 13:31:19",
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 16.7,
+          "estimatedNetFlow": 22.2,
           "absoluteScaleIncrease": 40.3,
           "scaleGrowthRate": 40.3,
           "growthBreadth": 0.0,
           "concentrationBalance": 100.0,
-          "effectiveProducts": 12.5,
+          "effectiveProducts": 11.1,
           "currentScale": 9.7,
           "newLaunches": 25.0
         },
@@ -2388,7 +2418,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2420,7 +2452,7 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 27.7,
+        "score": 29.0,
         "peerFunds": 0,
         "comparableFunds": 0,
         "currentScaleYi": 0,
@@ -2436,18 +2468,18 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 0,
         "top3SharePercent": 0,
-        "asOf": "2026-08-27 13:31:19",
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 16.7,
+          "estimatedNetFlow": 22.2,
           "absoluteScaleIncrease": 40.3,
           "scaleGrowthRate": 40.3,
           "growthBreadth": 0.0,
           "concentrationBalance": 100.0,
-          "effectiveProducts": 12.5,
+          "effectiveProducts": 11.1,
           "currentScale": 9.7,
           "newLaunches": 25.0
         },
@@ -2462,7 +2494,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2484,7 +2518,7 @@
         "crossPlatformHits30d": 3,
         "activeDays30d": 3,
         "bestRank7d": 17,
-        "accelerationPercent": 1220.0,
+        "accelerationPercent": 1196.0,
         "observedDays": 4,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
@@ -2494,7 +2528,7 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 27.7,
+        "score": 29.0,
         "peerFunds": 0,
         "comparableFunds": 0,
         "currentScaleYi": 0,
@@ -2510,18 +2544,18 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 0,
         "top3SharePercent": 0,
-        "asOf": "2026-08-27 13:31:19",
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 16.7,
+          "estimatedNetFlow": 22.2,
           "absoluteScaleIncrease": 40.3,
           "scaleGrowthRate": 40.3,
           "growthBreadth": 0.0,
           "concentrationBalance": 100.0,
-          "effectiveProducts": 12.5,
+          "effectiveProducts": 11.1,
           "currentScale": 9.7,
           "newLaunches": 25.0
         },
@@ -2536,7 +2570,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2568,34 +2604,34 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 47.8,
+        "score": 51.4,
         "peerFunds": 2,
         "comparableFunds": 2,
-        "currentScaleYi": 8.8,
-        "scaleNetIncreaseYi": 2.1,
-        "scaleGrowthPercent": 32.2,
+        "currentScaleYi": 8.6,
+        "scaleNetIncreaseYi": 1.9,
+        "scaleGrowthPercent": 29.3,
         "launched12Months": 0,
-        "estimatedNetFlowYi": 3.6,
+        "estimatedNetFlowYi": 3.3,
         "flowComparableFunds": 2,
         "positiveFlowFunds": 2,
         "growthBreadthPercent": 100.0,
         "positiveGrowthFunds": 2,
         "effectiveFunds": 1,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 97.1,
+        "top1SharePercent": 97.0,
         "top3SharePercent": 100.0,
-        "asOf": "2026-08-27 13:31:19",
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 36.1,
-          "absoluteScaleIncrease": 58.3,
-          "scaleGrowthRate": 72.2,
+          "estimatedNetFlow": 47.2,
+          "absoluteScaleIncrease": 66.7,
+          "scaleGrowthRate": 69.4,
           "growthBreadth": 100.0,
-          "concentrationBalance": 2.9,
-          "effectiveProducts": 31.9,
+          "concentrationBalance": 3.0,
+          "effectiveProducts": 30.6,
           "currentScale": 30.6,
           "newLaunches": 25.0
         },
@@ -2610,10 +2646,12 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
-        "state": "叙事验证",
-        "reason": "公众注意力已出现，产品需求仍需持续验证"
+        "state": "窗口临近",
+        "reason": "产品需求与资产承载已确认，等待注意力进一步扩散"
       }
     },
     {
@@ -2642,7 +2680,7 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 27.7,
+        "score": 29.0,
         "peerFunds": 0,
         "comparableFunds": 0,
         "currentScaleYi": 0,
@@ -2658,18 +2696,18 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 0,
         "top3SharePercent": 0,
-        "asOf": "2026-08-27 13:31:19",
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 16.7,
+          "estimatedNetFlow": 22.2,
           "absoluteScaleIncrease": 40.3,
           "scaleGrowthRate": 40.3,
           "growthBreadth": 0.0,
           "concentrationBalance": 100.0,
-          "effectiveProducts": 12.5,
+          "effectiveProducts": 11.1,
           "currentScale": 9.7,
           "newLaunches": 25.0
         },
@@ -2684,7 +2722,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "新线索",
         "reason": "当前仅形成早期信号，证据尚不足"
@@ -2716,12 +2756,12 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 17.4,
+        "score": 18.1,
         "peerFunds": 4,
         "comparableFunds": 3,
         "currentScaleYi": 41.5,
-        "scaleNetIncreaseYi": -3.1,
-        "scaleGrowthPercent": -7.2,
+        "scaleNetIncreaseYi": -3.0,
+        "scaleGrowthPercent": -7.1,
         "launched12Months": 1,
         "estimatedNetFlowYi": -3.2,
         "flowComparableFunds": 3,
@@ -2730,19 +2770,19 @@
         "positiveGrowthFunds": 0,
         "effectiveFunds": 2,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 92.3,
-        "top3SharePercent": 98.9,
-        "asOf": "2026-08-27 13:31:19",
+        "top1SharePercent": 92.2,
+        "top3SharePercent": 98.8,
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 2.8,
+          "estimatedNetFlow": 5.6,
           "absoluteScaleIncrease": 22.2,
           "scaleGrowthRate": 13.9,
           "growthBreadth": 0.0,
-          "concentrationBalance": 7.7,
+          "concentrationBalance": 7.8,
           "effectiveProducts": 43.1,
           "currentScale": 44.4,
           "newLaunches": 50.0
@@ -2758,7 +2798,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "新线索",
         "reason": "当前仅形成早期信号，证据尚不足"
@@ -2790,34 +2832,34 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 52.3,
+        "score": 43.2,
         "peerFunds": 4,
         "comparableFunds": 4,
-        "currentScaleYi": 33.3,
-        "scaleNetIncreaseYi": 6.7,
-        "scaleGrowthPercent": 24.9,
+        "currentScaleYi": 27.5,
+        "scaleNetIncreaseYi": 0.9,
+        "scaleGrowthPercent": 3.2,
         "launched12Months": 0,
-        "estimatedNetFlowYi": 5.8,
+        "estimatedNetFlowYi": 0.1,
         "flowComparableFunds": 4,
-        "positiveFlowFunds": 4,
-        "growthBreadthPercent": 100.0,
-        "positiveGrowthFunds": 4,
+        "positiveFlowFunds": 3,
+        "growthBreadthPercent": 75.0,
+        "positiveGrowthFunds": 3,
         "effectiveFunds": 1,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 88.4,
-        "top3SharePercent": 97.7,
-        "asOf": "2026-08-27 13:31:19",
+        "top1SharePercent": 86.1,
+        "top3SharePercent": 97.3,
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 47.2,
-          "absoluteScaleIncrease": 63.9,
-          "scaleGrowthRate": 63.9,
-          "growthBreadth": 100.0,
-          "concentrationBalance": 11.6,
-          "effectiveProducts": 31.9,
+          "estimatedNetFlow": 33.3,
+          "absoluteScaleIncrease": 58.3,
+          "scaleGrowthRate": 52.8,
+          "growthBreadth": 75.0,
+          "concentrationBalance": 13.9,
+          "effectiveProducts": 30.6,
           "currentScale": 38.9,
           "newLaunches": 25.0
         },
@@ -2832,7 +2874,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2864,34 +2908,34 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 49.0,
+        "score": 33.5,
         "peerFunds": 3,
         "comparableFunds": 3,
-        "currentScaleYi": 32.0,
-        "scaleNetIncreaseYi": 6.0,
-        "scaleGrowthPercent": 22.9,
+        "currentScaleYi": 26.2,
+        "scaleNetIncreaseYi": 0.2,
+        "scaleGrowthPercent": 0.7,
         "launched12Months": 0,
-        "estimatedNetFlowYi": 5.1,
+        "estimatedNetFlowYi": -0.7,
         "flowComparableFunds": 3,
-        "positiveFlowFunds": 3,
-        "growthBreadthPercent": 100.0,
-        "positiveGrowthFunds": 3,
+        "positiveFlowFunds": 2,
+        "growthBreadthPercent": 66.7,
+        "positiveGrowthFunds": 2,
         "effectiveFunds": 1,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 92.0,
+        "top1SharePercent": 90.4,
         "top3SharePercent": 100.0,
-        "asOf": "2026-08-27 13:31:19",
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 41.7,
-          "absoluteScaleIncrease": 61.1,
-          "scaleGrowthRate": 55.6,
-          "growthBreadth": 100.0,
-          "concentrationBalance": 8.0,
-          "effectiveProducts": 31.9,
+          "estimatedNetFlow": 8.3,
+          "absoluteScaleIncrease": 50.0,
+          "scaleGrowthRate": 50.0,
+          "growthBreadth": 66.7,
+          "concentrationBalance": 9.6,
+          "effectiveProducts": 30.6,
           "currentScale": 36.1,
           "newLaunches": 25.0
         },
@@ -2906,7 +2950,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2938,7 +2984,7 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 27.7,
+        "score": 29.0,
         "peerFunds": 0,
         "comparableFunds": 0,
         "currentScaleYi": 0,
@@ -2954,18 +3000,18 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 0,
         "top3SharePercent": 0,
-        "asOf": "2026-08-27 13:31:19",
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 16.7,
+          "estimatedNetFlow": 22.2,
           "absoluteScaleIncrease": 40.3,
           "scaleGrowthRate": 40.3,
           "growthBreadth": 0.0,
           "concentrationBalance": 100.0,
-          "effectiveProducts": 12.5,
+          "effectiveProducts": 11.1,
           "currentScale": 9.7,
           "newLaunches": 25.0
         },
@@ -2980,7 +3026,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "新线索",
         "reason": "当前仅形成早期信号，证据尚不足"
@@ -3012,12 +3060,12 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 45.3,
+        "score": 48.9,
         "peerFunds": 3,
         "comparableFunds": 3,
-        "currentScaleYi": 6.1,
-        "scaleNetIncreaseYi": 1.5,
-        "scaleGrowthPercent": 34.0,
+        "currentScaleYi": 6.2,
+        "scaleNetIncreaseYi": 1.6,
+        "scaleGrowthPercent": 35.3,
         "launched12Months": 0,
         "estimatedNetFlowYi": 2.5,
         "flowComparableFunds": 3,
@@ -3026,20 +3074,20 @@
         "positiveGrowthFunds": 2,
         "effectiveFunds": 1,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 64.2,
+        "top1SharePercent": 64.1,
         "top3SharePercent": 100.0,
-        "asOf": "2026-08-27 13:31:19",
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 33.3,
-          "absoluteScaleIncrease": 55.6,
+          "estimatedNetFlow": 44.4,
+          "absoluteScaleIncrease": 62.5,
           "scaleGrowthRate": 77.8,
           "growthBreadth": 66.7,
-          "concentrationBalance": 35.8,
-          "effectiveProducts": 31.9,
+          "concentrationBalance": 35.9,
+          "effectiveProducts": 30.6,
           "currentScale": 27.8,
           "newLaunches": 25.0
         },
@@ -3054,7 +3102,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -3086,33 +3136,33 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 48.8,
+        "score": 50.2,
         "peerFunds": 262,
-        "comparableFunds": 232,
-        "currentScaleYi": 1215.3,
-        "scaleNetIncreaseYi": -153.3,
-        "scaleGrowthPercent": -11.5,
+        "comparableFunds": 231,
+        "currentScaleYi": 1218.7,
+        "scaleNetIncreaseYi": -149.2,
+        "scaleGrowthPercent": -11.2,
         "launched12Months": 38,
-        "estimatedNetFlowYi": 5.5,
-        "flowComparableFunds": 232,
-        "positiveFlowFunds": 132,
-        "growthBreadthPercent": 45.3,
+        "estimatedNetFlowYi": 6.4,
+        "flowComparableFunds": 231,
+        "positiveFlowFunds": 130,
+        "growthBreadthPercent": 45.5,
         "positiveGrowthFunds": 105,
-        "effectiveFunds": 102,
+        "effectiveFunds": 101,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 12.6,
+        "top1SharePercent": 12.7,
         "top3SharePercent": 26.8,
-        "asOf": "2026-08-27 13:31:19",
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 44.4,
+          "estimatedNetFlow": 50.0,
           "absoluteScaleIncrease": 5.6,
           "scaleGrowthRate": 11.1,
-          "growthBreadth": 45.3,
-          "concentrationBalance": 87.4,
+          "growthBreadth": 45.5,
+          "concentrationBalance": 87.3,
           "effectiveProducts": 77.8,
           "currentScale": 75.0,
           "newLaunches": 98.6
@@ -3128,7 +3178,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -3160,14 +3212,14 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 48.2,
-        "peerFunds": 27,
+        "score": 47.7,
+        "peerFunds": 28,
         "comparableFunds": 19,
-        "currentScaleYi": 204.9,
-        "scaleNetIncreaseYi": -2.8,
-        "scaleGrowthPercent": -1.5,
-        "launched12Months": 3,
-        "estimatedNetFlowYi": 27.1,
+        "currentScaleYi": 206.4,
+        "scaleNetIncreaseYi": -1.4,
+        "scaleGrowthPercent": -0.7,
+        "launched12Months": 4,
+        "estimatedNetFlowYi": 27.6,
         "flowComparableFunds": 19,
         "positiveFlowFunds": 10,
         "growthBreadthPercent": 47.4,
@@ -3175,21 +3227,21 @@
         "effectiveFunds": 13,
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 21.5,
-        "top3SharePercent": 62.4,
-        "asOf": "2026-08-27 13:31:19",
+        "top3SharePercent": 62.5,
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 55.6,
+          "estimatedNetFlow": 52.8,
           "absoluteScaleIncrease": 25.0,
-          "scaleGrowthRate": 27.8,
+          "scaleGrowthRate": 30.6,
           "growthBreadth": 47.4,
           "concentrationBalance": 78.5,
           "effectiveProducts": 47.2,
-          "currentScale": 52.8,
-          "newLaunches": 56.9
+          "currentScale": 50.0,
+          "newLaunches": 59.7
         },
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
@@ -3202,7 +3254,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -3234,35 +3288,35 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 51.7,
+        "score": 53.7,
         "peerFunds": 20,
         "comparableFunds": 20,
-        "currentScaleYi": 202.6,
-        "scaleNetIncreaseYi": 23.1,
-        "scaleGrowthPercent": 12.9,
+        "currentScaleYi": 235.2,
+        "scaleNetIncreaseYi": 55.7,
+        "scaleGrowthPercent": 31.1,
         "launched12Months": 0,
-        "estimatedNetFlowYi": 10.7,
+        "estimatedNetFlowYi": 42.4,
         "flowComparableFunds": 20,
         "positiveFlowFunds": 6,
         "growthBreadthPercent": 30.0,
         "positiveGrowthFunds": 6,
         "effectiveFunds": 14,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 33.5,
-        "top3SharePercent": 57.7,
-        "asOf": "2026-08-27 13:31:19",
+        "top1SharePercent": 42.5,
+        "top3SharePercent": 63.5,
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 52.8,
+          "estimatedNetFlow": 55.6,
           "absoluteScaleIncrease": 72.2,
-          "scaleGrowthRate": 52.8,
+          "scaleGrowthRate": 72.2,
           "growthBreadth": 30.0,
-          "concentrationBalance": 66.5,
+          "concentrationBalance": 57.5,
           "effectiveProducts": 50.0,
-          "currentScale": 50.0,
+          "currentScale": 52.8,
           "newLaunches": 25.0
         },
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
@@ -3276,7 +3330,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -3308,23 +3364,23 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 84.1,
-        "peerFunds": 163,
+        "score": 83.8,
+        "peerFunds": 165,
         "comparableFunds": 117,
-        "currentScaleYi": 1510.5,
-        "scaleNetIncreaseYi": 391.9,
-        "scaleGrowthPercent": 38.9,
-        "launched12Months": 25,
-        "estimatedNetFlowYi": 484.0,
+        "currentScaleYi": 1493.2,
+        "scaleNetIncreaseYi": 372.7,
+        "scaleGrowthPercent": 37.0,
+        "launched12Months": 27,
+        "estimatedNetFlowYi": 464.6,
         "flowComparableFunds": 117,
-        "positiveFlowFunds": 89,
-        "growthBreadthPercent": 72.6,
-        "positiveGrowthFunds": 85,
-        "effectiveFunds": 111,
+        "positiveFlowFunds": 87,
+        "growthBreadthPercent": 71.8,
+        "positiveGrowthFunds": 84,
+        "effectiveFunds": 112,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 6.6,
-        "top3SharePercent": 14.3,
-        "asOf": "2026-08-27 13:31:19",
+        "top1SharePercent": 6.7,
+        "top3SharePercent": 14.5,
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -3332,12 +3388,12 @@
         "scoreComponents": {
           "estimatedNetFlow": 83.3,
           "absoluteScaleIncrease": 88.9,
-          "scaleGrowthRate": 86.1,
-          "growthBreadth": 72.6,
-          "concentrationBalance": 93.4,
+          "scaleGrowthRate": 83.3,
+          "growthBreadth": 71.8,
+          "concentrationBalance": 93.3,
           "effectiveProducts": 86.1,
           "currentScale": 83.3,
-          "newLaunches": 83.3
+          "newLaunches": 84.7
         },
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
@@ -3350,7 +3406,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -3382,33 +3440,33 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 39.4,
+        "score": 30.4,
         "peerFunds": 21,
         "comparableFunds": 21,
-        "currentScaleYi": 574.0,
-        "scaleNetIncreaseYi": -75.1,
-        "scaleGrowthPercent": -11.6,
+        "currentScaleYi": 575.8,
+        "scaleNetIncreaseYi": -73.2,
+        "scaleGrowthPercent": -11.3,
         "launched12Months": 0,
-        "estimatedNetFlowYi": 4.0,
+        "estimatedNetFlowYi": -7.4,
         "flowComparableFunds": 21,
         "positiveFlowFunds": 11,
         "growthBreadthPercent": 38.1,
         "positiveGrowthFunds": 8,
         "effectiveFunds": 21,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 12.7,
-        "top3SharePercent": 37.4,
-        "asOf": "2026-08-27 13:31:19",
+        "top1SharePercent": 13.2,
+        "top3SharePercent": 37.3,
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 38.9,
+          "estimatedNetFlow": 2.8,
           "absoluteScaleIncrease": 13.9,
           "scaleGrowthRate": 8.3,
           "growthBreadth": 38.1,
-          "concentrationBalance": 87.3,
+          "concentrationBalance": 86.8,
           "effectiveProducts": 52.8,
           "currentScale": 58.3,
           "newLaunches": 25.0
@@ -3424,7 +3482,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -3456,23 +3516,23 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 71.2,
+        "score": 70.2,
         "peerFunds": 38,
         "comparableFunds": 25,
-        "currentScaleYi": 154.9,
-        "scaleNetIncreaseYi": 65.6,
-        "scaleGrowthPercent": 97.4,
+        "currentScaleYi": 157.0,
+        "scaleNetIncreaseYi": 67.7,
+        "scaleGrowthPercent": 100.5,
         "launched12Months": 3,
-        "estimatedNetFlowYi": 73.7,
+        "estimatedNetFlowYi": 74.3,
         "flowComparableFunds": 25,
         "positiveFlowFunds": 21,
-        "growthBreadthPercent": 80.0,
-        "positiveGrowthFunds": 20,
-        "effectiveFunds": 25,
+        "growthBreadthPercent": 76.0,
+        "positiveGrowthFunds": 19,
+        "effectiveFunds": 24,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 11.8,
-        "top3SharePercent": 33.0,
-        "asOf": "2026-08-27 13:31:19",
+        "top1SharePercent": 12.0,
+        "top3SharePercent": 33.5,
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -3480,12 +3540,12 @@
         "scoreComponents": {
           "estimatedNetFlow": 63.9,
           "absoluteScaleIncrease": 75.0,
-          "scaleGrowthRate": 97.2,
-          "growthBreadth": 80.0,
-          "concentrationBalance": 88.2,
+          "scaleGrowthRate": 94.4,
+          "growthBreadth": 76.0,
+          "concentrationBalance": 88.0,
           "effectiveProducts": 58.3,
           "currentScale": 47.2,
-          "newLaunches": 56.9
+          "newLaunches": 55.6
         },
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
@@ -3498,7 +3558,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -3530,35 +3592,35 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 60.6,
+        "score": 64.8,
         "peerFunds": 237,
         "comparableFunds": 236,
-        "currentScaleYi": 752.4,
-        "scaleNetIncreaseYi": 16.9,
-        "scaleGrowthPercent": 2.3,
+        "currentScaleYi": 779.5,
+        "scaleNetIncreaseYi": 44.0,
+        "scaleGrowthPercent": 6.0,
         "launched12Months": 2,
-        "estimatedNetFlowYi": 49.7,
+        "estimatedNetFlowYi": 75.5,
         "flowComparableFunds": 236,
-        "positiveFlowFunds": 106,
-        "growthBreadthPercent": 41.5,
-        "positiveGrowthFunds": 98,
-        "effectiveFunds": 87,
+        "positiveFlowFunds": 113,
+        "growthBreadthPercent": 46.2,
+        "positiveGrowthFunds": 109,
+        "effectiveFunds": 93,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 18.3,
-        "top3SharePercent": 26.6,
-        "asOf": "2026-08-27 13:31:19",
+        "top1SharePercent": 17.2,
+        "top3SharePercent": 25.1,
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 58.3,
+          "estimatedNetFlow": 66.7,
           "absoluteScaleIncrease": 69.4,
-          "scaleGrowthRate": 50.0,
-          "growthBreadth": 41.5,
-          "concentrationBalance": 81.7,
-          "effectiveProducts": 72.2,
-          "currentScale": 63.9,
+          "scaleGrowthRate": 58.3,
+          "growthBreadth": 46.2,
+          "concentrationBalance": 82.8,
+          "effectiveProducts": 73.6,
+          "currentScale": 66.7,
           "newLaunches": 52.8
         },
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
@@ -3572,7 +3634,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -3604,14 +3668,14 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 13.2,
+        "score": 14.4,
         "peerFunds": 1,
         "comparableFunds": 1,
         "currentScaleYi": 2.9,
         "scaleNetIncreaseYi": -0.8,
-        "scaleGrowthPercent": -22.5,
+        "scaleGrowthPercent": -21.5,
         "launched12Months": 0,
-        "estimatedNetFlowYi": -0.3,
+        "estimatedNetFlowYi": -0.2,
         "flowComparableFunds": 1,
         "positiveFlowFunds": 0,
         "growthBreadthPercent": 0.0,
@@ -3620,18 +3684,18 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 100.0,
         "top3SharePercent": 100.0,
-        "asOf": "2026-08-27 13:31:19",
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 5.6,
+          "estimatedNetFlow": 11.1,
           "absoluteScaleIncrease": 30.6,
           "scaleGrowthRate": 5.6,
           "growthBreadth": 0.0,
           "concentrationBalance": 0.0,
-          "effectiveProducts": 31.9,
+          "effectiveProducts": 30.6,
           "currentScale": 22.2,
           "newLaunches": 25.0
         },
@@ -3646,7 +3710,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "暂时退出",
         "reason": "注意力、产品需求和资产承载均未形成有效支撑"
@@ -3678,23 +3744,23 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 64.6,
-        "peerFunds": 178,
+        "score": 64.3,
+        "peerFunds": 180,
         "comparableFunds": 145,
-        "currentScaleYi": 3271.8,
-        "scaleNetIncreaseYi": -226.1,
-        "scaleGrowthPercent": -6.7,
+        "currentScaleYi": 3296.4,
+        "scaleNetIncreaseYi": -202.6,
+        "scaleGrowthPercent": -6.0,
         "launched12Months": 27,
-        "estimatedNetFlowYi": 519.9,
+        "estimatedNetFlowYi": 518.3,
         "flowComparableFunds": 145,
-        "positiveFlowFunds": 97,
+        "positiveFlowFunds": 98,
         "growthBreadthPercent": 57.9,
         "positiveGrowthFunds": 84,
-        "effectiveFunds": 133,
+        "effectiveFunds": 132,
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 11.6,
-        "top3SharePercent": 30.8,
-        "asOf": "2026-08-27 13:31:19",
+        "top3SharePercent": 30.7,
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -3705,9 +3771,9 @@
           "scaleGrowthRate": 16.7,
           "growthBreadth": 57.9,
           "concentrationBalance": 88.4,
-          "effectiveProducts": 97.2,
+          "effectiveProducts": 94.4,
           "currentScale": 94.4,
-          "newLaunches": 86.1
+          "newLaunches": 84.7
         },
         "scoreMethod": "净流入代理25%＋规模净增加额15%＋增长率10%＋增长广度15%＋集中度10%＋有效产品数10%＋当前规模10%＋近12月新发5%"
       },
@@ -3720,7 +3786,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -3752,12 +3820,12 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 19.1,
+        "score": 20.5,
         "peerFunds": 2,
         "comparableFunds": 1,
-        "currentScaleYi": 20.5,
-        "scaleNetIncreaseYi": -1.2,
-        "scaleGrowthPercent": -26.7,
+        "currentScaleYi": 20.6,
+        "scaleNetIncreaseYi": -1.1,
+        "scaleGrowthPercent": -25.2,
         "launched12Months": 0,
         "estimatedNetFlowYi": 0.0,
         "flowComparableFunds": 1,
@@ -3766,19 +3834,19 @@
         "positiveGrowthFunds": 0,
         "effectiveFunds": 2,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 84.2,
+        "top1SharePercent": 83.9,
         "top3SharePercent": 100.0,
-        "asOf": "2026-08-27 13:31:19",
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 16.7,
+          "estimatedNetFlow": 22.2,
           "absoluteScaleIncrease": 27.8,
           "scaleGrowthRate": 2.8,
           "growthBreadth": 0.0,
-          "concentrationBalance": 15.8,
+          "concentrationBalance": 16.1,
           "effectiveProducts": 43.1,
           "currentScale": 33.3,
           "newLaunches": 25.0
@@ -3794,7 +3862,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "新线索",
         "reason": "当前仅形成早期信号，证据尚不足"
@@ -3826,33 +3896,33 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 51.9,
+        "score": 51.2,
         "peerFunds": 53,
         "comparableFunds": 42,
-        "currentScaleYi": 730.9,
-        "scaleNetIncreaseYi": -35.0,
-        "scaleGrowthPercent": -4.6,
+        "currentScaleYi": 726.5,
+        "scaleNetIncreaseYi": -39.3,
+        "scaleGrowthPercent": -5.2,
         "launched12Months": 6,
-        "estimatedNetFlowYi": 52.4,
+        "estimatedNetFlowYi": 43.9,
         "flowComparableFunds": 42,
-        "positiveFlowFunds": 26,
+        "positiveFlowFunds": 25,
         "growthBreadthPercent": 57.1,
         "positiveGrowthFunds": 24,
         "effectiveFunds": 31,
         "effectiveScaleThresholdYi": 2,
-        "top1SharePercent": 24.4,
-        "top3SharePercent": 56.1,
-        "asOf": "2026-08-27 13:31:19",
+        "top1SharePercent": 24.3,
+        "top3SharePercent": 55.8,
+        "asOf": "2026-08-29 05:53:57",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
-          "estimatedNetFlow": 61.1,
+          "estimatedNetFlow": 58.3,
           "absoluteScaleIncrease": 16.7,
           "scaleGrowthRate": 22.2,
           "growthBreadth": 57.1,
-          "concentrationBalance": 75.6,
+          "concentrationBalance": 75.7,
           "effectiveProducts": 61.1,
           "currentScale": 61.1,
           "newLaunches": 70.8
@@ -3868,7 +3938,9 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [],
+      "errors": [
+        "gdelt: SSLError"
+      ],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
