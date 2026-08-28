@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-08-28T22:00:10.778519+00:00",
+  "generatedAt": "2026-08-28T22:33:03.665192+00:00",
   "methodologyVersion": "cn-hotlists-gdelt-v1",
   "universeCount": 36,
   "mappedCount": 36,
@@ -780,7 +780,7 @@
           "rank": 2
         },
         "biotech": {
-          "attention": 48.3,
+          "attention": 48.2,
           "validation": 86.9,
           "capacity": 75.1,
           "composite": 81.52,
@@ -843,10 +843,10 @@
           "rank": 11
         },
         "creator-economy": {
-          "attention": 43.3,
+          "attention": 43.2,
           "validation": 64.3,
           "capacity": 60.7,
-          "composite": 62.2,
+          "composite": 62.19,
           "rank": 12
         },
         "wealth-longevity": {
@@ -864,10 +864,10 @@
           "rank": 14
         },
         "autonomous-driving": {
-          "attention": 41.5,
+          "attention": 41.4,
           "validation": 51.4,
           "capacity": 82.4,
-          "composite": 59.97,
+          "composite": 59.96,
           "rank": 15
         },
         "agri-tech": {
@@ -927,10 +927,10 @@
           "rank": 23
         },
         "low-altitude": {
-          "attention": 49.9,
+          "attention": 49.8,
           "validation": 29.0,
           "capacity": 76.9,
-          "composite": 44.05,
+          "composite": 44.04,
           "rank": 24
         },
         "digital-health": {
@@ -1278,9 +1278,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -1294,15 +1292,15 @@
       "attention": {
         "score": 59.8,
         "statusLabel": "社会共振",
-        "recent7Appearances": 20,
+        "recent7Appearances": 21,
         "prior7Appearances": 0,
         "crossPlatformHits7d": 2,
         "activeDays7d": 4,
-        "recent30Appearances": 20,
+        "recent30Appearances": 21,
         "crossPlatformHits30d": 2,
         "activeDays30d": 4,
         "bestRank7d": 4,
-        "accelerationPercent": 3852.0,
+        "accelerationPercent": 4228.0,
         "observedDays": 4,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
@@ -1354,9 +1352,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "窗口临近",
         "reason": "产品需求与资产承载已确认，等待注意力进一步扩散"
@@ -1430,9 +1426,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -1506,9 +1500,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -1582,9 +1574,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -1596,7 +1586,7 @@
       "boardCode": "BK1106",
       "verified": true,
       "attention": {
-        "score": 48.3,
+        "score": 48.2,
         "statusLabel": "社会共振",
         "recent7Appearances": 13,
         "prior7Appearances": 0,
@@ -1658,9 +1648,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -1734,9 +1722,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -1810,9 +1796,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -1886,9 +1870,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -1962,9 +1944,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2038,9 +2018,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2114,9 +2092,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -2190,9 +2166,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2266,9 +2240,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2342,9 +2314,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2418,9 +2388,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2494,9 +2462,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2508,17 +2474,17 @@
       "boardCode": "BK1166",
       "verified": true,
       "attention": {
-        "score": 49.9,
+        "score": 49.8,
         "statusLabel": "社会共振",
-        "recent7Appearances": 8,
+        "recent7Appearances": 9,
         "prior7Appearances": 0,
         "crossPlatformHits7d": 3,
         "activeDays7d": 3,
-        "recent30Appearances": 8,
+        "recent30Appearances": 9,
         "crossPlatformHits30d": 3,
         "activeDays30d": 3,
         "bestRank7d": 17,
-        "accelerationPercent": 1196.0,
+        "accelerationPercent": 1308.0,
         "observedDays": 4,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
@@ -2570,9 +2536,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2584,7 +2548,7 @@
       "boardCode": "BK0920",
       "verified": true,
       "attention": {
-        "score": 41.5,
+        "score": 41.4,
         "statusLabel": "加速扩散",
         "recent7Appearances": 12,
         "prior7Appearances": 0,
@@ -2646,9 +2610,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "窗口临近",
         "reason": "产品需求与资产承载已确认，等待注意力进一步扩散"
@@ -2722,9 +2684,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "新线索",
         "reason": "当前仅形成早期信号，证据尚不足"
@@ -2798,9 +2758,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "新线索",
         "reason": "当前仅形成早期信号，证据尚不足"
@@ -2874,9 +2832,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2950,9 +2906,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -3026,9 +2980,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "新线索",
         "reason": "当前仅形成早期信号，证据尚不足"
@@ -3102,9 +3054,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -3178,9 +3128,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -3254,9 +3202,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -3330,9 +3276,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -3406,9 +3350,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -3482,9 +3424,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -3558,9 +3498,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -3634,9 +3572,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -3710,9 +3646,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "暂时退出",
         "reason": "注意力、产品需求和资产承载均未形成有效支撑"
@@ -3724,17 +3658,17 @@
       "boardCode": "BK0486",
       "verified": true,
       "attention": {
-        "score": 43.3,
+        "score": 43.2,
         "statusLabel": "加速扩散",
-        "recent7Appearances": 7,
+        "recent7Appearances": 8,
         "prior7Appearances": 0,
         "crossPlatformHits7d": 1,
         "activeDays7d": 2,
-        "recent30Appearances": 7,
+        "recent30Appearances": 8,
         "crossPlatformHits30d": 1,
         "activeDays30d": 2,
         "bestRank7d": 8,
-        "accelerationPercent": 1556.0,
+        "accelerationPercent": 1900.0,
         "observedDays": 4,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
@@ -3786,9 +3720,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -3862,9 +3794,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "新线索",
         "reason": "当前仅形成早期信号，证据尚不足"
@@ -3938,9 +3868,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: SSLError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -3961,7 +3889,7 @@
     "capacity": 0.2923
   },
   "historyCoverage": {
-    "rawSamples": 23,
+    "rawSamples": 24,
     "daily": 4,
     "weekly": 1,
     "monthly": 1
