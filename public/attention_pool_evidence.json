@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-08-29T21:10:41.920822+00:00",
+  "generatedAt": "2026-08-29T22:05:33.971635+00:00",
   "methodologyVersion": "cn-hotlists-gdelt-v1",
   "universeCount": 36,
   "mappedCount": 36,
@@ -1242,7 +1242,7 @@
           "rank": 3
         },
         "biotech": {
-          "attention": 44.8,
+          "attention": 44.7,
           "validation": 86.3,
           "capacity": 75.1,
           "composite": 80.95,
@@ -1264,9 +1264,9 @@
         },
         "space": {
           "attention": 0,
-          "validation": 74.8,
+          "validation": 75.2,
           "capacity": 86.0,
-          "composite": 74.33,
+          "composite": 74.6,
           "rank": 7
         },
         "grid-storage": {
@@ -1292,9 +1292,9 @@
         },
         "longevity": {
           "attention": 15.1,
-          "validation": 72.9,
+          "validation": 72.5,
           "capacity": 67.9,
-          "composite": 68.55,
+          "composite": 68.29,
           "rank": 11
         },
         "embodied-ai": {
@@ -1382,7 +1382,7 @@
           "rank": 23
         },
         "low-altitude": {
-          "attention": 56.4,
+          "attention": 56.3,
           "validation": 28.3,
           "capacity": 76.9,
           "composite": 43.91,
@@ -1707,7 +1707,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 16.5,
         "top3SharePercent": 34.7,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -1749,15 +1749,15 @@
       "attention": {
         "score": 61.2,
         "statusLabel": "社会共振",
-        "recent7Appearances": 27,
+        "recent7Appearances": 28,
         "prior7Appearances": 0,
         "crossPlatformHits7d": 2,
         "activeDays7d": 5,
-        "recent30Appearances": 27,
+        "recent30Appearances": 28,
         "crossPlatformHits30d": 2,
         "activeDays30d": 5,
         "bestRank7d": 4,
-        "accelerationPercent": 5764.0,
+        "accelerationPercent": 5956.0,
         "observedDays": 5,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
@@ -1783,7 +1783,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 22.7,
         "top3SharePercent": 52.2,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -1810,7 +1810,7 @@
         "status": "真实公开数据"
       },
       "errors": [
-        "gdelt: JSONDecodeError"
+        "gdelt: ConnectTimeout"
       ],
       "lifecycle": {
         "state": "窗口临近",
@@ -1843,30 +1843,30 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 74.8,
+        "score": 75.2,
         "peerFunds": 42,
         "comparableFunds": 37,
-        "currentScaleYi": 1001.3,
-        "scaleNetIncreaseYi": 236.1,
-        "scaleGrowthPercent": 31.2,
+        "currentScaleYi": 1002.8,
+        "scaleNetIncreaseYi": 237.5,
+        "scaleGrowthPercent": 31.4,
         "launched12Months": 6,
-        "estimatedNetFlowYi": 333.7,
+        "estimatedNetFlowYi": 335.2,
         "flowComparableFunds": 37,
         "positiveFlowFunds": 27,
         "growthBreadthPercent": 67.6,
         "positiveGrowthFunds": 25,
-        "effectiveFunds": 39,
+        "effectiveFunds": 40,
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 12.7,
         "top3SharePercent": 27.6,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
           "estimatedNetFlow": 77.8,
-          "absoluteScaleIncrease": 80.6,
+          "absoluteScaleIncrease": 83.3,
           "scaleGrowthRate": 72.2,
           "growthBreadth": 67.6,
           "concentrationBalance": 87.3,
@@ -1935,7 +1935,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 10.4,
         "top3SharePercent": 20.0,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -1962,7 +1962,7 @@
         "status": "真实公开数据"
       },
       "errors": [
-        "gdelt: ReadTimeout"
+        "gdelt: JSONDecodeError"
       ],
       "lifecycle": {
         "state": "拥挤观察",
@@ -2011,7 +2011,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 10.1,
         "top3SharePercent": 28.0,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2038,7 +2038,7 @@
         "status": "真实公开数据"
       },
       "errors": [
-        "gdelt: ReadTimeout"
+        "gdelt: JSONDecodeError"
       ],
       "lifecycle": {
         "state": "拥挤观察",
@@ -2051,7 +2051,7 @@
       "boardCode": "BK1106",
       "verified": true,
       "attention": {
-        "score": 44.8,
+        "score": 44.7,
         "statusLabel": "社会共振",
         "recent7Appearances": 13,
         "prior7Appearances": 0,
@@ -2087,7 +2087,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 9.4,
         "top3SharePercent": 24.5,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2114,7 +2114,7 @@
         "status": "真实公开数据"
       },
       "errors": [
-        "gdelt: ReadTimeout"
+        "gdelt: ConnectTimeout"
       ],
       "lifecycle": {
         "state": "拥挤观察",
@@ -2147,12 +2147,12 @@
         "note": "热榜确认公众注意力是否破圈；未上榜不等于没有关注。历史窗口按实际积累的有效观测日计算。"
       },
       "validation": {
-        "score": 72.9,
+        "score": 72.5,
         "peerFunds": 328,
         "comparableFunds": 325,
-        "currentScaleYi": 1183.3,
+        "currentScaleYi": 1183.2,
         "scaleNetIncreaseYi": 236.2,
-        "scaleGrowthPercent": 25.0,
+        "scaleGrowthPercent": 24.9,
         "launched12Months": 4,
         "estimatedNetFlowYi": 207.0,
         "flowComparableFunds": 325,
@@ -2163,14 +2163,14 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 22.3,
         "top3SharePercent": 26.3,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
         "note": "同时衡量规模净增加绝对额、增长率、净流入代理、增长广度、有效产品数和集中度；规模变化不直接等同净申购。",
         "scoreComponents": {
           "estimatedNetFlow": 75.0,
-          "absoluteScaleIncrease": 83.3,
+          "absoluteScaleIncrease": 80.6,
           "scaleGrowthRate": 63.9,
           "growthBreadth": 52.3,
           "concentrationBalance": 77.7,
@@ -2190,7 +2190,7 @@
         "status": "真实公开数据"
       },
       "errors": [
-        "gdelt: JSONDecodeError"
+        "gdelt: HTTPError"
       ],
       "lifecycle": {
         "state": "提前预研",
@@ -2239,7 +2239,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 11.4,
         "top3SharePercent": 24.0,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2265,9 +2265,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: ReadTimeout"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -2315,7 +2313,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 15.4,
         "top3SharePercent": 26.5,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2341,9 +2339,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: JSONDecodeError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -2391,7 +2387,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 100.0,
         "top3SharePercent": 100.0,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2417,9 +2413,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: ConnectTimeout"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2467,7 +2461,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 35.8,
         "top3SharePercent": 63.4,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2493,9 +2487,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: ReadTimeout"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2543,7 +2535,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 10.4,
         "top3SharePercent": 28.2,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2569,9 +2561,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: ConnectTimeout"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -2619,7 +2609,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 52.4,
         "top3SharePercent": 100.0,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2645,9 +2635,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: JSONDecodeError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2695,7 +2683,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 81.9,
         "top3SharePercent": 92.9,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2721,9 +2709,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: ConnectTimeout"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2771,7 +2757,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 0,
         "top3SharePercent": 0,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2797,9 +2783,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: ConnectTimeout"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2847,7 +2831,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 0,
         "top3SharePercent": 0,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2873,9 +2857,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: HTTPError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2923,7 +2905,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 0,
         "top3SharePercent": 0,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -2961,7 +2943,7 @@
       "boardCode": "BK1166",
       "verified": true,
       "attention": {
-        "score": 56.4,
+        "score": 56.3,
         "statusLabel": "社会共振",
         "recent7Appearances": 17,
         "prior7Appearances": 0,
@@ -2997,7 +2979,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 0,
         "top3SharePercent": 0,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -3071,7 +3053,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 97.0,
         "top3SharePercent": 100.0,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -3145,7 +3127,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 0,
         "top3SharePercent": 0,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -3219,7 +3201,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 92.2,
         "top3SharePercent": 98.8,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -3293,7 +3275,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 86.1,
         "top3SharePercent": 97.3,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -3367,7 +3349,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 90.4,
         "top3SharePercent": 100.0,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -3441,7 +3423,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 0,
         "top3SharePercent": 0,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -3515,7 +3497,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 64.1,
         "top3SharePercent": 100.0,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -3589,7 +3571,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 12.8,
         "top3SharePercent": 27.0,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -3663,7 +3645,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 21.5,
         "top3SharePercent": 62.5,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -3737,7 +3719,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 33.9,
         "top3SharePercent": 58.1,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -3811,7 +3793,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 6.7,
         "top3SharePercent": 14.5,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -3885,7 +3867,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 13.3,
         "top3SharePercent": 38.4,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -3959,7 +3941,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 12.0,
         "top3SharePercent": 33.5,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -4024,7 +4006,7 @@
         "scaleNetIncreaseYi": 43.0,
         "scaleGrowthPercent": 5.8,
         "launched12Months": 2,
-        "estimatedNetFlowYi": 74.6,
+        "estimatedNetFlowYi": 74.5,
         "flowComparableFunds": 236,
         "positiveFlowFunds": 114,
         "growthBreadthPercent": 46.6,
@@ -4033,7 +4015,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 17.2,
         "top3SharePercent": 25.2,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -4107,7 +4089,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 100.0,
         "top3SharePercent": 100.0,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -4181,7 +4163,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 10.8,
         "top3SharePercent": 29.1,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -4255,7 +4237,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 83.9,
         "top3SharePercent": 100.0,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -4329,7 +4311,7 @@
         "effectiveScaleThresholdYi": 2,
         "top1SharePercent": 24.3,
         "top3SharePercent": 55.8,
-        "asOf": "2026-08-30 04:51:52",
+        "asOf": "2026-08-30 05:57:51",
         "source": "AI Fund Mate全市场公开基金快照",
         "sourceUrl": "/fund_products.json",
         "status": "真实公开数据",
@@ -4376,7 +4358,7 @@
     "capacity": 0.2923
   },
   "historyCoverage": {
-    "rawSamples": 36,
+    "rawSamples": 37,
     "daily": 5,
     "weekly": 1,
     "monthly": 1
