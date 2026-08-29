@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-08-29T22:05:33.971635+00:00",
+  "generatedAt": "2026-08-29T22:37:19.937966+00:00",
   "methodologyVersion": "cn-hotlists-gdelt-v1",
   "universeCount": 36,
   "mappedCount": 36,
@@ -1242,10 +1242,10 @@
           "rank": 3
         },
         "biotech": {
-          "attention": 44.7,
+          "attention": 44.6,
           "validation": 86.3,
           "capacity": 75.1,
-          "composite": 80.95,
+          "composite": 80.94,
           "rank": 4
         },
         "power": {
@@ -1298,7 +1298,7 @@
           "rank": 11
         },
         "embodied-ai": {
-          "attention": 61.2,
+          "attention": 61.1,
           "validation": 53.0,
           "capacity": 87.8,
           "composite": 63.58,
@@ -1382,10 +1382,10 @@
           "rank": 23
         },
         "low-altitude": {
-          "attention": 56.3,
+          "attention": 56.2,
           "validation": 28.3,
           "capacity": 76.9,
-          "composite": 43.91,
+          "composite": 43.9,
           "rank": 24
         },
         "digital-health": {
@@ -1733,9 +1733,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: JSONDecodeError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -1747,17 +1745,17 @@
       "boardCode": "BK1184",
       "verified": true,
       "attention": {
-        "score": 61.2,
+        "score": 61.1,
         "statusLabel": "社会共振",
-        "recent7Appearances": 28,
+        "recent7Appearances": 29,
         "prior7Appearances": 0,
         "crossPlatformHits7d": 2,
         "activeDays7d": 5,
-        "recent30Appearances": 28,
+        "recent30Appearances": 29,
         "crossPlatformHits30d": 2,
         "activeDays30d": 5,
         "bestRank7d": 4,
-        "accelerationPercent": 5956.0,
+        "accelerationPercent": 6116.0,
         "observedDays": 5,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
@@ -1809,9 +1807,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: ConnectTimeout"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "窗口临近",
         "reason": "产品需求与资产承载已确认，等待注意力进一步扩散"
@@ -1885,9 +1881,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: JSONDecodeError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -1961,9 +1955,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: JSONDecodeError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -2037,9 +2029,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: JSONDecodeError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -2051,7 +2041,7 @@
       "boardCode": "BK1106",
       "verified": true,
       "attention": {
-        "score": 44.7,
+        "score": 44.6,
         "statusLabel": "社会共振",
         "recent7Appearances": 13,
         "prior7Appearances": 0,
@@ -2113,9 +2103,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: ConnectTimeout"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -2189,9 +2177,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: HTTPError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2943,7 +2929,7 @@
       "boardCode": "BK1166",
       "verified": true,
       "attention": {
-        "score": 56.3,
+        "score": 56.2,
         "statusLabel": "社会共振",
         "recent7Appearances": 17,
         "prior7Appearances": 0,
@@ -4358,7 +4344,7 @@
     "capacity": 0.2923
   },
   "historyCoverage": {
-    "rawSamples": 37,
+    "rawSamples": 38,
     "daily": 5,
     "weekly": 1,
     "monthly": 1
