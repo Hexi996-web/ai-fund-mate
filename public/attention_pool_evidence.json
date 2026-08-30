@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-08-30T22:03:51.018896+00:00",
+  "generatedAt": "2026-08-30T22:36:14.253967+00:00",
   "methodologyVersion": "cn-hotlists-gdelt-v1",
   "universeCount": 36,
   "mappedCount": 36,
@@ -2188,9 +2188,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: JSONDecodeError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -2264,9 +2262,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: JSONDecodeError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "窗口临近",
         "reason": "产品需求与资产承载已确认，等待注意力进一步扩散"
@@ -2340,9 +2336,7 @@
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: HTTPError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
