@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react'
 import { FUND_CATEGORIES } from './FundControls.jsx'
 import { ReportScope } from './ReportScope.jsx'
 import { getFundCategories } from '../data/fundModel.js'
+import { useDynamicAnalysis } from '../data/dynamicAnalysis.js'
+import { DynamicAnalysisPanel } from './DynamicAnalysisPanel.jsx'
 
 const valid = (value) => Number.isFinite(value)
 const number = (value, digits = 2) => valid(value)
@@ -22,6 +24,11 @@ const rank = (products, field, direction = 'desc') => products.filter((product) 
 
 function LinkValue({ children, onClick }) {
   return <button className="summary-link" type="button" onClick={onClick}>{children}</button>
+}
+
+const CATEGORY_ICONS = { '股票型':'↗', '指数型':'▦', '混合型':'◒', '债券型':'▥', '货币型':'¥', 'QDII':'◎', 'FOF':'◇', '商品':'◆', 'REITs':'⌂' }
+function CategoryIcon({ category }) {
+  return <span className="category-brief__icon" aria-hidden="true">{CATEGORY_ICONS[category] || category?.slice(0, 1) || '•'}</span>
 }
 
 const categoryJudgement = (stats) => {
@@ -152,6 +159,21 @@ export function DailyProductSummary({ products, dataDate, establishedWindow, sco
   const cumulativeDescription = isIssuance
     ? `规模净增额从成立日起计算；净值增长与最大回撤仅纳入成立后7天内开始记录、且已积累至少7天的非货币产品；“近三个月/本年至今”限定成立日期`
     : `规模净增额、净值增长、最大回撤统计至${dataDate || '当前数据日'}；存量产品从年初计算，本年新成立产品从成立日起计算`
+  const dynamicFacts = useMemo(() => ({
+    scope: isIssuance ? sampleLabel : '全部存续基金', productCount: products.length,
+    comparableScaleCount: analysis.comparableNetCount, scaleNetIncreaseYi: analysis.netTotal,
+    positiveScaleBreadthPercent: analysis.netBreadth, returnMedianPercent: analysis.navMedian,
+    positiveReturnBreadthPercent: analysis.navBreadth, drawdownMedianPercent: analysis.drawdownMedian,
+    categoryRanking: analysis.categoriesByNet.map(({ category, count, netTotal, netBreadth, navMedian, drawdownMedian }) => ({ category, count, netTotal, netBreadth, navMedian, drawdownMedian })),
+  }), [analysis, isIssuance, products.length, sampleLabel])
+  const dynamicFallback = useMemo(() => ({
+    headline: isIssuance ? '新发供给与资金承接仍需同步验证' : '市场呈结构性分化，头部资金集中度是关键变量',
+    overallJudgment: topCategory?.netTotal > 0 ? `${topCategory.category}当前规模净增额居前，但需要结合${percent(topCategory.netBreadth)}的正增长广度判断是否属于类别全面扩张。` : '当前尚未形成明确的类别级正向规模增量，产品规划应优先验证真实资金承接。',
+    changeAttribution: [flowConcentrated ? '规模增量主要由少数头部产品贡献，类别总量改善不等同于资金全面扩散。' : '资金增量在产品间相对分散，类别扩散质量较好。', returnBroad ? '正收益覆盖率与收益中位数同步改善。' : '收益表现仍集中于局部产品，持有人体验分化。'],
+    risks: ['规模口径存在披露时滞，不能将规模变化直接等同当日申赎。', '冠军产品表现不能代替类别中位数和回撤水平。'],
+    nextActions: ['跟踪领先类别的规模正增长广度能否连续改善。', '复核收益领先产品的回撤和同质化供给压力。'],
+  }), [flowConcentrated, isIssuance, returnBroad, topCategory])
+  const dynamicAnalysis = useDynamicAnalysis({ analysisKey: isIssuance ? 'issuance-forecast' : 'market-structure', dataDate, facts: dynamicFacts, fallback: dynamicFallback })
 
   return <section className="daily-product-summary" aria-labelledby="daily-summary-title">
     <div className="daily-summary__header"><div><h2 id="daily-summary-title">{summaryTitle}</h2><p>统计截止：{dataDate || '待更新'}</p></div><span className="freshness-status"><i />数据已更新</span></div>
@@ -160,6 +182,7 @@ export function DailyProductSummary({ products, dataDate, establishedWindow, sco
       { term: '累计指标', description: cumulativeDescription },
       { term: '当日快照', description: `单位净值和当前规模采用截至${dataDate || '当前数据日'}的最近可得数据，并非仅指当日发生的增量` },
     ]} />
+    <DynamicAnalysisPanel analysis={dynamicAnalysis} title={isIssuance ? '发行预测动态研判' : '市场结构动态研判'} />
 
     <div className="summary-section">
       <h3>市场现状：</h3>
@@ -211,11 +234,11 @@ export function DailyProductSummary({ products, dataDate, establishedWindow, sco
 
     {expanded ? <div className="summary-section category-analysis">
       <h3>按基金类型分区解读：</h3>
-      {analysis.categoryStats.map((stats) => <article className="category-brief" key={stats.category}>
-        <h4>{categoryLink(stats)}</h4>
-        <p className="category-brief__metrics">{metricLeader(stats, 'scaleNetIncreaseYi', '规模净增额区内领先的是', (value) => `净增${yi(value)}`)}；{metricLeader(stats, 'scaleGrowthPercent', '规模增长率区内领先的是', (value) => `增长${percent(value)}`)}；{metricLeader(stats, 'navGrowthPercent', '净值增长区内领先的是', (value) => `收益${percent(value)}`)}；{metricLeader(stats, 'maxDrawdownPercent', '最大回撤区内最靠前的是', (value) => `回撤${percent(value)}`)}。</p>
+      <div className="category-brief-grid">{analysis.categoryStats.map((stats) => <article className="category-brief" key={stats.category}>
+        <header><CategoryIcon category={stats.category}/><div><h4>{categoryLink(stats)}</h4><small>{stats.count}只产品 · 规模净增{yi(stats.netTotal)}</small></div></header>
+        <ul className="category-brief__metrics"><li><b>规模净增</b><span>{metricLeader(stats, 'scaleNetIncreaseYi', '', (value) => `净增${yi(value)}`)}</span></li><li><b>规模增速</b><span>{metricLeader(stats, 'scaleGrowthPercent', '', (value) => `增长${percent(value)}`)}</span></li><li><b>净值增长</b><span>{metricLeader(stats, 'navGrowthPercent', '', (value) => `收益${percent(value)}`)}</span></li><li><b>回撤观察</b><span>{metricLeader(stats, 'maxDrawdownPercent', '', (value) => `回撤${percent(value)}`)}</span></li></ul>
         <p className="category-brief__take">{categorySummary(stats)}</p>
-      </article>)}
+      </article>)}</div>
       <h3>结论：</h3>
       <p><strong>配置端：</strong>{topCategory?.netTotal > 0 ? `${topCategory.category}是当前资金承接主方向，但需结合${percent(topCategory.netBreadth)}的流入广度判断持续性。` : '暂无单一类别形成强资金承接，配置仍以分散和流动性管理为主。'}</p>
       <p><strong>产品端：</strong>{flowConcentrated ? '头部五只贡献度偏高，新发产品应强调差异化指数、期限或策略暴露，避免复制存量头部。' : '资金扩散较均衡，可从正增长广度较高且收益中枢为正的类别筛选新增供给。'}</p>

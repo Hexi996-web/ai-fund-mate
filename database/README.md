@@ -15,6 +15,7 @@
 2. `fund_products`、`fund_shares`、`research_themes` 保存低频变化的主体数据。
 3. `*_daily_*` 表保存不可丢失的每日观测与版本化指标。
 4. `strategy_*` 表保存可复现的策略定义、运行参数、每日结果和持仓。
+5. `analysis_reports` 保存按数据日期、事实哈希和提示词版本生成的模型或人工简报，避免重复调用模型并支持历史比较。
 
 重要时间字段：
 
@@ -31,6 +32,7 @@ psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f database/migrations/001_create_histor
 psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f database/migrations/002_create_read_models.sql
 psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f database/migrations/003_create_application_roles.sql
 psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f database/migrations/004_store_attention_raw_history.sql
+psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f database/migrations/005_create_analysis_reports.sql
 ```
 
 生产环境必须使用连接池地址；迁移任务可使用数据库的直接连接地址。

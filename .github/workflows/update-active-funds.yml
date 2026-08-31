@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
     inputs:
       verify_only:
-        description: "只检查已发布快照和四个线上板块，不重新抓取基金数据"
+        description: "只检查已发布快照和三个线上板块，不重新抓取基金数据"
         required: false
         default: false
         type: boolean
@@ -144,7 +144,7 @@ jobs:
       - name: Install interface verifier dependencies
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_only == true }}
         run: npm ci
-      - name: Verify all four production interfaces
+      - name: Verify all three production interfaces
         env:
           EXPECTED_DATE: ${{ steps.snapshot.outputs.date }}
         run: |

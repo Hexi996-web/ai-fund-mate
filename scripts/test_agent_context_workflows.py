@@ -15,7 +15,7 @@ def test_agent_context_matches_published_status_and_core_pool():
     assert len(research["coreDirections"]) == 10
     assert all(item["lifecycleState"] for item in research["coreDirections"])
     assert research["modelCalibration"]["modelVersion"] == "theme-lifecycle-calibration-v1"
-    assert context["workspaces"]["市场分析"]["comparableProductCount"] > 1000
+    assert context["workspaces"]["公募基金简报"]["comparableProductCount"] > 1000
 
 
 def test_every_data_writer_rebuilds_and_commits_agent_context():

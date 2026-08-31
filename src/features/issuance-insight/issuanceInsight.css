@@ -26,6 +26,8 @@
   gap: 12px;
   margin-top: 22px;
 }
+.issuance-window-tabs.public-fund-scope-tabs { grid-template-columns: repeat(3,minmax(0,1fr)); }
+.public-fund-scope-tabs button { min-height: 86px; }
 
 .issuance-window-tabs button {
   display: flex;
