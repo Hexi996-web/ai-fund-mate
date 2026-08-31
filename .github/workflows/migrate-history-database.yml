@@ -50,7 +50,7 @@ jobs:
           import os
           import psycopg
           url = os.environ.get("HISTORY_DATABASE_URL") or os.environ.get("SUPABASE_DB_URL")
-          with psycopg.connect(url) as connection, connection.cursor() as cursor:
+          with psycopg.connect(url, options="-c search_path=history,public") as connection, connection.cursor() as cursor:
               cursor.execute("select status, data_date from pipeline_runs order by started_at desc limit 1")
               status, data_date = cursor.fetchone()
               assert status == "succeeded", (status, data_date)

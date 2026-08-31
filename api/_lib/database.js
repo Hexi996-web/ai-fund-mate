@@ -16,6 +16,7 @@ export function getPool() {
       idleTimeoutMillis: 10_000,
       connectionTimeoutMillis: 8_000,
       ssl: process.env.DATABASE_SSL === 'disable' ? false : { rejectUnauthorized: false },
+      options: '-c search_path=history,public',
     })
   }
   return pool

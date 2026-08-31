@@ -127,7 +127,7 @@ def main():
     except ImportError: print("请先安装 requirements-data.txt", file=sys.stderr); return 2
     digest = hashlib.sha256("".join(hashes.values()).encode()).hexdigest()[:16]; run_date = max(dates.values())
     run_key = f"daily-snapshots:{run_date}:{digest}"
-    with psycopg.connect(database_url) as connection:
+    with psycopg.connect(database_url, options="-c search_path=history,public") as connection:
         with connection.cursor() as cursor:
             cursor.execute("""insert into pipeline_runs (run_key,pipeline_name,data_date,status,source_commit)
               values (%s,'daily-snapshots',%s,'running',%s) on conflict (run_key) do update set
