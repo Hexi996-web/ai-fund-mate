@@ -77,7 +77,7 @@ def main():
           source = excluded.source,
           collected_at = now()
     """
-    with psycopg.connect(database_url) as connection:
+    with psycopg.connect(database_url, prepare_threshold=None) as connection:
         with connection.cursor() as cursor:
             cursor.executemany(sql, rows)
             cursor.executemany("""

@@ -47,7 +47,9 @@ def apply(directory: Path, dry_run: bool = False) -> list[dict[str, str]]:
     if not url:
         raise RuntimeError("缺少 HISTORY_DATABASE_URL、DATABASE_URL 或 SUPABASE_DB_URL")
     import psycopg
-    with psycopg.connect(url) as connection:
+    # Supabase transaction poolers can reuse a server session across clients;
+    # disabling named prepared statements avoids name collisions.
+    with psycopg.connect(url, prepare_threshold=None) as connection:
         with connection.cursor() as cursor:
             cursor.execute("""create table if not exists public.history_schema_migrations (
               version text primary key, migration_name text not null, checksum text not null,

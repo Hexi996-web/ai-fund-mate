@@ -27,7 +27,7 @@ def main() -> int:
     social = json.loads(social_path.read_text(encoding="utf-8"))
     attention = json.loads(attention_path.read_text(encoding="utf-8"))
 
-    with psycopg.connect(url, options="-c search_path=history,public", row_factory=dict_row) as connection:
+    with psycopg.connect(url, options="-c search_path=history,public", row_factory=dict_row, prepare_threshold=None) as connection:
         with connection.cursor() as cursor:
             cursor.execute("""select captured_at,sources,errors from attention_raw_samples
               where captured_at >= now() - interval '90 days' order by captured_at""")
