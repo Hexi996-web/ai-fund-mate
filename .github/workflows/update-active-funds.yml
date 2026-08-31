@@ -94,6 +94,18 @@ jobs:
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: python scripts/store_fund_scale_snapshots.py
+      - name: Accumulate normalized history platform data
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.verify_only != true }}
+        env:
+          DATABASE_URL: ${{ secrets.HISTORY_DATABASE_URL }}
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        shell: bash
+        run: |
+          if [ -z "$DATABASE_URL" ] && [ -z "$SUPABASE_DB_URL" ]; then
+            echo "历史数据库未配置，保留现有 JSON 发布流程"
+            exit 0
+          fi
+          python -m scripts.history.import_daily_snapshots --source-dir public
       - name: Commit updated data
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.verify_only != true }}
         run: |
