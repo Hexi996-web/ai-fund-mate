@@ -37,23 +37,30 @@ def apply(directory: Path, dry_run: bool = False) -> list[dict[str, str]]:
     import psycopg
     with psycopg.connect(url, autocommit=True) as connection:
         with connection.cursor() as cursor:
-            cursor.execute("""create table if not exists public.history_schema_migrations (
-              version text primary key, migration_name text not null, checksum text not null,
-              applied_at timestamptz not null default now())""")
-            cursor.execute("select version, checksum from public.history_schema_migrations")
-            applied = dict(cursor.fetchall())
-            for migration, item in zip(migrations, plan):
-                previous = applied.get(item["version"])
-                if previous and previous != item["checksum"]:
-                    raise RuntimeError(f"迁移 {item['version']} 的校验和与数据库记录不一致")
-                if previous:
-                    item["status"] = "already_applied"
-                    continue
-                cursor.execute(migration.read_text(encoding="utf-8"))
-                cursor.execute("""insert into public.history_schema_migrations
-                  (version, migration_name, checksum) values (%s, %s, %s)""",
-                  (item["version"], item["name"], item["checksum"]))
-                item["status"] = "applied"
+            cursor.execute("select pg_advisory_lock(hashtext('ai_fund_mate_history_migrations'))")
+            try:
+                cursor.execute("""create table if not exists public.history_schema_migrations (
+                  version text primary key, migration_name text not null, checksum text not null,
+                  applied_at timestamptz not null default now())""")
+                cursor.execute("select version, checksum from public.history_schema_migrations")
+                applied = dict(cursor.fetchall())
+                for migration, item in zip(migrations, plan):
+                    previous = applied.get(item["version"])
+                    if previous and previous != item["checksum"]:
+                        raise RuntimeError(f"迁移 {item['version']} 的校验和与数据库记录不一致")
+                    if previous:
+                        item["status"] = "already_applied"
+                        continue
+                    cursor.execute(migration.read_text(encoding="utf-8"))
+                    cursor.execute("""insert into public.history_schema_migrations
+                      (version, migration_name, checksum) values (%s, %s, %s)""",
+                      (item["version"], item["name"], item["checksum"]))
+                    item["status"] = "applied"
+            except Exception:
+                cursor.execute("rollback")
+                raise
+            finally:
+                cursor.execute("select pg_advisory_unlock(hashtext('ai_fund_mate_history_migrations'))")
     return plan
 
 

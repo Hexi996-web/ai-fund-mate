@@ -35,6 +35,8 @@ psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f database/migrations/003_create_applic
 
 也可以在 GitHub Actions 手动运行 **Migrate history database**：输入 `MIGRATE` 后，工作流会校验迁移文件、执行尚未应用的迁移、导入当前快照并验证记录数。迁移执行器将每个文件的 SHA-256 写入 `history_schema_migrations`；已执行的迁移不得原地修改，应新增下一个编号文件。
 
+日常运行不需要手动迁移。每日 **Update active fund data** 会在历史导入前自动执行迁移检查：新迁移自动应用，已执行迁移自动跳过，校验和不一致则停止写入并保留旧数据。数据库 advisory lock 防止每日任务与恢复任务同时迁移。手动工作流仅用于首次即时启动或故障恢复。
+
 ## 4. 首次导入与每日导入
 
 不连接数据库的结构检查：

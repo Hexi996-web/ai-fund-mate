@@ -35,3 +35,5 @@ psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f database/migrations/003_create_applic
 为自动化写入账号授予 `history_pipeline_writer`，为 API 登录账号授予 `history_api_reader`。
 
 也可执行 `python -m scripts.history.apply_migrations`。该命令使用 `history_schema_migrations` 记录迁移版本及校验和，支持安全重复运行。
+
+每日数据工作流会自动先运行该迁移命令，再累计当天快照；正常情况下无需人工操作。
