@@ -84,7 +84,7 @@ function buildPoolBrief(ranked,horizon,rankingHistory=[]) {
   const dataDate=top[0]?.proof?.capacity?.asOf||String(top[0]?.proof?.validation?.asOf||'—').slice(0,10)
   return {...definition,dataDate,total:top.length,positiveScale,crowded,attentionReady,growthMedian,scaleLeaderText,scaleLeaders,crowdedDirections,entered,exited,previousDate:previousHistory?.date,rankingCount:rankingHistory.length,metrics:[
     {id:'scale',label:'规模净增最快',items:scaleLeaders.map(({name,proof})=>({name,value:signedYi(Number(proof.validation.scaleNetIncreaseYi))})),detail:`按各方向同类产品当前规模减去2025年末同口径规模排序。当前前三为：${scaleLeaderText}。主题之间可能包含重叠产品，规模变化不等同净申购。`},
-    {id:'crowding',label:'拥挤观察方向',items:crowdedDirections.map(({name,proof})=>({name,value:`近12月新发 ${proof.validation.launched12Months||0}只`})),detail:`当前期限 Top 10 中共有 ${crowded} 个拥挤观察方向：${crowdedDirections.map(({name})=>name).join('、')}。判断同时考虑同类产品数量、近12个月新发和当前规模。`},
+    {id:'crowding',label:'拥挤观察方向',items:crowdedDirections.map(({id,name,proof})=>({id,name,value:`近12月新发 ${proof.validation.launched12Months||0}只`})),detail:`当前期限 Top 10 中共有 ${crowded} 个拥挤观察方向：${crowdedDirections.map(({name})=>name).join('、')}。判断同时考虑同类产品数量、近12个月新发和当前规模。点击新发数量可查看具体基金。`},
     {id:'turnover',label:'Top 10 本期变化',entered,exited,detail:`与${previousHistory?.date||'上一有效快照'}的综合模型 Top 10 比较：新进入 ${entered.map(({name})=>name).join('、')||'无'}；退出 ${exited.map(({name})=>name).join('、')||'无'}。升降幅与归因可在方向详情的判断与证据链中查看。`},
   ]}
 }
@@ -97,7 +97,7 @@ function RankMove({delta}) {
   return <span className={`rank-move rank-move--${direction}`} title={delta?`较上一有效快照综合排名${delta>0?'上升':'下降'}，幅度与归因见方向详情`:'较上一有效快照综合排名持平'} aria-label={delta?`综合排名${delta>0?'上升':'下降'}`:'综合排名持平'}><svg viewBox="0 0 16 16" aria-hidden="true">{direction==='up'?<path d="M8 13V3m0 0L4.5 6.5M8 3l3.5 3.5"/>:direction==='down'?<path d="M8 3v10m0 0 3.5-3.5M8 13 4.5 9.5"/>:<path d="M3 8h10"/>}</svg></span>
 }
 
-export function ResearchHorizonBrief({ snapshot,onOpen,evidenceItems=[],externalItems=[] }) {
+export function ResearchHorizonBrief({ snapshot,onOpen,onOpenNewFunds,evidenceItems=[],externalItems=[] }) {
   const [horizon,setHorizon]=useState('quarter')
   const [detail,setDetail]=useState('')
   const ranked=useMemo(()=>buildRankedDirections(snapshot,horizon,evidenceItems,externalItems),[snapshot,horizon,evidenceItems,externalItems])
@@ -124,7 +124,7 @@ export function ResearchHorizonBrief({ snapshot,onOpen,evidenceItems=[],external
         <div className="horizon-memo__heading"><div><strong>{brief.label} · 产品池整体判断</strong><span>数据截至 {brief.dataDate}</span></div><em>排行历史 {brief.rankingCount} 期</em></div>
         <section className="horizon-memo__stance"><div><small>整体策略</small><strong>{brief.stance}</strong></div><p>{brief.conclusion}</p></section>
         <div className="horizon-memo__change"><small>排行变化</small><strong>较 {brief.previousDate||'上一期'}</strong><span>新进：{brief.entered.map(({name})=>name).join('、')||'无'}；退出：{brief.exited.map(({name})=>name).join('、')||'无'}。升降幅与归因见方向详情证据链。</span></div>
-        <div className="horizon-metrics">{brief.metrics.map((item)=><button type="button" className={detail===item.id?'active':''} aria-pressed={detail===item.id} onClick={()=>setDetail(detail===item.id?'':item.id)} key={item.id}><span>{item.label}</span>{item.items?<div className="horizon-metric-list">{item.items.map((row,index)=><small key={row.name}><i>{index+1}</i><b>{row.name}</b><em>{row.value}</em></small>)}</div>:<><strong>新进 {item.entered.length} · 退出 {item.exited.length}</strong><small>新进：{item.entered.map(({name})=>name).join('、')||'无'}<br/>退出：{item.exited.map(({name})=>name).join('、')||'无'}</small></>}<Chevron/></button>)}</div>
+        <div className="horizon-metrics">{brief.metrics.map((item)=><button type="button" className={detail===item.id?'active':''} aria-pressed={detail===item.id} onClick={()=>setDetail(detail===item.id?'':item.id)} key={item.id}><span>{item.label}</span>{item.items?<div className="horizon-metric-list">{item.items.map((row,index)=><small key={row.name}><i>{index+1}</i><b>{row.name}</b><em className={row.id?'is-link':''} role={row.id?'button':undefined} tabIndex={row.id?0:undefined} onClick={row.id?(event)=>{event.stopPropagation();onOpenNewFunds?.(row.id)}:undefined} onKeyDown={row.id?(event)=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();onOpenNewFunds?.(row.id)}}:undefined}>{row.value}</em></small>)}</div>:<small>新进：{item.entered.map(({name})=>name).join('、')||'无'}<br/>退出：{item.exited.map(({name})=>name).join('、')||'无'}</small>}<Chevron/></button>)}</div>
         {selectedMetric?<div className="horizon-detail" role="status"><strong>{selectedMetric.label} · 数据说明</strong><p>{selectedMetric.detail}</p><button type="button" onClick={()=>setDetail('')}>收起</button></div>:null}
         {detail==='evidence'?<div className="horizon-detail" role="status"><strong>本期证据链</strong><p>当前结论同时使用公开基金快照、双平台社会注意力、企业公开经营数据与板块资产容量。每项指标均保留来源、日期与计算口径。</p><button type="button" onClick={()=>setDetail('')}>收起</button></div>:null}
         {detail==='history'?<div className="horizon-detail" role="status"><strong>历史对比</strong><p>当前排行使用已保存的每日快照计算新进、退出与升降方向；完整数据库快照仍在持续积累，趋势判断会随有效样本增加而增强。</p><button type="button" onClick={()=>setDetail('')}>收起</button></div>:null}

@@ -817,6 +817,10 @@ export function PreResearchPool({ agentCommand, onContextChange }) {
         externalItems={externalSignals.items || []}
         productIds={ranked.map((item) => item.id)}
         onOpen={openTheme}
+        onOpenNewFunds={(id) => {
+          setDrawer("12m");
+          openTheme(id);
+        }}
       />
       <AttentionHeatmap
         focusId={detailId}

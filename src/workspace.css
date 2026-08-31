@@ -4881,6 +4881,14 @@
   font-weight: 800;
 }
 .horizon-metrics button:nth-child(2) .horizon-metric-list em { color: #bd7412; }
+.horizon-metric-list em.is-link {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.horizon-metric-list em.is-link:hover,
+.horizon-metric-list em.is-link:focus-visible { color: #344bd9; outline: none; }
 .rank-move,
 .rank-move svg { display: block; width: 16px; height: 16px; }
 .rank-move svg { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
