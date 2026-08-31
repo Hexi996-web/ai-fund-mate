@@ -5,8 +5,9 @@
 ## 目录约定
 
 - `migrations/`：按编号顺序执行、提交到 Git 的 PostgreSQL 迁移。
-- 原始每日 JSON 继续由 `public/` 生成，并应另行归档到对象存储。
+- `public/` 只保留当前页面快照和少量故障回退历史，完整历史不再随 Git 累计。
 - 标准化历史数据由 `scripts/history/import_daily_snapshots.py` 导入。
+- 注意力原始样本保存在 `attention_raw_samples`，页面历史通过 `/api/history/research` 按需读取。
 
 ## 数据层次
 
@@ -29,6 +30,7 @@
 psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f database/migrations/001_create_history_platform.sql
 psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f database/migrations/002_create_read_models.sql
 psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f database/migrations/003_create_application_roles.sql
+psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f database/migrations/004_store_attention_raw_history.sql
 ```
 
 生产环境必须使用连接池地址；迁移任务可使用数据库的直接连接地址。
@@ -37,3 +39,14 @@ psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f database/migrations/003_create_applic
 也可执行 `python -m scripts.history.apply_migrations`。该命令使用 `history_schema_migrations` 记录迁移版本及校验和，支持安全重复运行。
 
 每日数据工作流会自动先运行该迁移命令，再累计当天快照；正常情况下无需人工操作。
+
+## 自动历史闭环
+
+定时任务按固定顺序执行：
+
+1. `hydrate_public_history.py` 从 PostgreSQL 恢复计算需要的历史。
+2. 数据脚本生成新的完整快照。
+3. `import_daily_snapshots.py` 将完整历史和当天观测幂等写入数据库。
+4. `compact_public_history.py` 将 GitHub 内公开文件压缩为当前日原始样本、7 日日序列和最近两期排名。
+
+数据库不可用时不会执行压缩，仓库内回退数据会继续保留，避免历史链路故障影响页面当前功能。
