@@ -7,6 +7,236 @@
   box-shadow: 0 5px 18px rgba(30, 48, 82, 0.08);
   backdrop-filter: blur(12px);
 }
+
+/* Horizon brief: ranked directions on the left, whole-pool judgement on the right. */
+.horizon-list {
+  align-content: start;
+}
+.horizon-list__title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 4px 6px;
+}
+.horizon-list__title strong { font-size: 14px; }
+.horizon-list > button {
+  grid-template-columns: 34px minmax(0, 1fr) 18px;
+  min-height: 62px;
+  padding: 13px 14px;
+}
+.horizon-list > button span strong { margin: 0; line-height: 1.4; }
+.horizon-list > button b,
+.horizon-list > button b svg { width: 16px; height: 16px; }
+.horizon-list > p {
+  margin: 3px 4px 0;
+  color: #aebbd8;
+  font-size: 11px;
+  line-height: 1.55;
+}
+.horizon-memo {
+  position: relative;
+  padding: 22px;
+  overflow: hidden;
+}
+.horizon-analysis.horizon-memo > div span,
+.horizon-analysis.horizon-memo > div strong { display: initial; }
+.horizon-memo__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #e3e7ef;
+}
+.horizon-memo__heading > div {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.horizon-memo__heading > div strong { color: #132348; font-size: 20px; }
+.horizon-memo__heading > div span { color: #748099; font-size: 11px; }
+.horizon-analysis .horizon-memo__heading > em {
+  margin: 0;
+  border-radius: 4px;
+  background: #f3f5f8;
+  color: #6f7b91;
+  font-size: 10px;
+}
+.horizon-analysis > section.horizon-memo__stance {
+  display: grid;
+  grid-template-columns: minmax(190px, .75fr) minmax(260px, 1.25fr);
+  align-items: center;
+  gap: 18px;
+  margin-top: 15px;
+  padding: 14px 16px;
+  border: 1px solid #f1d49d;
+  border-left: 4px solid #d89421;
+  border-radius: 7px;
+  background: #fff9ed;
+}
+.horizon-memo__stance div small,
+.horizon-memo__stance div strong { display: block; }
+.horizon-memo__stance div small { color: #9b6a1b; font-size: 10px; font-weight: 800; }
+.horizon-memo__stance div strong { margin-top: 4px; color: #17264b; font-size: 17px; }
+.horizon-analysis .horizon-memo__stance p {
+  margin: 0;
+  color: #56627a;
+  font-size: 12px;
+  line-height: 1.65;
+}
+.horizon-memo__change {
+  display: grid;
+  grid-template-columns: 68px 112px 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border: 1px solid #e4e8ef;
+  border-top: 0;
+  border-radius: 0 0 7px 7px;
+  background: #f8f9fb;
+}
+.horizon-memo__change small { color: #758096; font-size: 10px; font-weight: 800; }
+.horizon-memo__change strong { color: #33415d; font-size: 11px; }
+.horizon-memo__change span { color: #7a8497; font-size: 10px; line-height: 1.45; }
+.horizon-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 14px;
+  border: 1px solid #dfe4ec;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.horizon-metrics button {
+  position: relative;
+  min-width: 0;
+  padding: 12px 26px 12px 12px;
+  border: 0;
+  border-right: 1px solid #e3e7ee;
+  background: #fff;
+  color: #162548;
+  text-align: left;
+}
+.horizon-metrics button:last-child { border-right: 0; }
+.horizon-metrics button:hover,
+.horizon-metrics button.active { background: #f4f6ff; }
+.horizon-metrics span,
+.horizon-metrics strong,
+.horizon-metrics small { display: block; }
+.horizon-metrics span { color: #67738b; font-size: 10px; }
+.horizon-metrics strong { margin: 5px 0 4px; font-size: 18px; }
+.horizon-metrics small { color: #8a94a6; font-size: 9px; line-height: 1.4; }
+.horizon-metrics svg {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  width: 14px;
+  height: 14px;
+  color: #7583a2;
+  transform: translateY(-50%);
+}
+.horizon-detail {
+  position: relative;
+  margin-top: 8px;
+  padding: 11px 68px 11px 13px;
+  border-left: 3px solid #4259d9;
+  background: #f1f4ff;
+}
+.horizon-detail > strong { color: #263f9f; font-size: 11px; }
+.horizon-detail > p { margin: 4px 0 0; color: #59667f; font-size: 10px; line-height: 1.55; }
+.horizon-detail > button { position: absolute; top: 11px; right: 12px; border: 0; background: transparent; color: #4057d2; font-size: 10px; }
+.horizon-briefing-rows { margin-top: 13px; border-top: 1px solid #e3e7ee; }
+.horizon-briefing-rows details { border-bottom: 1px solid #e3e7ee; }
+.horizon-briefing-rows summary {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 4px;
+  cursor: pointer;
+  list-style: none;
+}
+.horizon-briefing-rows summary::-webkit-details-marker { display: none; }
+.horizon-briefing-rows summary > b {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border-radius: 5px;
+  background: #233a82;
+  color: #fff;
+  font-size: 10px;
+}
+.horizon-briefing-rows summary > strong { color: #1c2d54; font-size: 12px; }
+.horizon-briefing-rows summary > span { color: #4059d4; font-size: 10px; }
+.horizon-row-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 0 4px 11px 41px;
+}
+.horizon-row-grid p {
+  margin: 0;
+  padding: 0 11px;
+  border-right: 1px solid #e5e8ee;
+  color: #657087;
+  font-size: 10px;
+  line-height: 1.55;
+}
+.horizon-row-grid p:first-child { padding-left: 0; }
+.horizon-row-grid p:last-child { border-right: 0; }
+.horizon-row-grid p b { display: block; margin-bottom: 3px; color: #263858; font-size: 10px; }
+.horizon-row-grid p em { float: right; font-style: normal; font-weight: 800; }
+.horizon-row-grid .is-met { color: #17865c; }
+.horizon-row-grid .is-watch { color: #cf8613; }
+.horizon-row-grid .is-unmet { color: #c84a46; }
+.horizon-memo footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 14px;
+}
+.horizon-memo footer > div { display: flex; gap: 8px; }
+.horizon-memo footer button {
+  min-height: 34px;
+  padding: 8px 12px;
+  border: 1px solid #aebaf1;
+  border-radius: 6px;
+  background: #fff;
+  color: #344bc9;
+  font-size: 10px;
+  font-weight: 800;
+}
+.horizon-memo footer button.primary { border-color: #344bd9; background: #344bd9; color: #fff; }
+.horizon-memo footer button.method { display: inline-flex; align-items: center; gap: 4px; border-color: transparent; }
+.horizon-memo footer button.method svg { width: 13px; height: 13px; }
+
+@media (max-width: 1180px) {
+  .horizon-body { grid-template-columns: minmax(250px, .65fr) minmax(0, 1.35fr); }
+  .horizon-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .horizon-metrics button:nth-child(2) { border-right: 0; }
+  .horizon-metrics button:nth-child(-n+2) { border-bottom: 1px solid #e3e7ee; }
+  .horizon-analysis > section.horizon-memo__stance { grid-template-columns: 1fr; gap: 7px; }
+}
+@media (max-width: 920px) {
+  .horizon-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .horizon-list__title,
+  .horizon-list > p { grid-column: 1 / -1; }
+  .horizon-list > button { grid-template-columns: 26px minmax(0, 1fr) 16px; }
+}
+@media (max-width: 640px) {
+  .horizon-list { grid-template-columns: 1fr; }
+  .horizon-memo { padding: 15px; }
+  .horizon-memo__heading,
+  .horizon-memo__heading > div { align-items: flex-start; flex-direction: column; gap: 5px; }
+  .horizon-memo__change { grid-template-columns: 1fr; }
+  .horizon-metrics { grid-template-columns: 1fr; }
+  .horizon-metrics button { border-right: 0; border-bottom: 1px solid #e3e7ee; }
+  .horizon-metrics button:last-child { border-bottom: 0; }
+  .horizon-row-grid { grid-template-columns: 1fr; gap: 9px; padding-left: 41px; }
+  .horizon-row-grid p { padding: 0; border-right: 0; }
+  .horizon-memo footer,
+  .horizon-memo footer > div { align-items: stretch; flex-direction: column; }
+}
 .workspace-nav__inner {
   width: min(1400px, calc(100% - 48px));
   min-height: 82px;
@@ -4494,7 +4724,7 @@
     border-bottom: 1px solid #e5e9f0;
   }
 
-  .attention-section {
+.attention-section {
     padding: 17px 14px;
     border-radius: 11px;
   }
@@ -4598,4 +4828,135 @@
   .forecast-actions { align-items: stretch; flex-direction: column; }
   .forecast-actions select,
   .forecast-actions button { min-height: 44px; }
+}
+
+/* Final responsive overrides for the horizon-level memo. */
+.horizon-body {
+  grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+}
+.horizon-list > button {
+  min-height: 48px;
+  padding-block: 10px;
+}
+.horizon-memo { padding: 22px; }
+.horizon-metrics strong { overflow-wrap: anywhere; }
+.horizon-analysis.horizon-memo .horizon-memo__change strong { font-size: 11px; line-height: 1.4; }
+.horizon-metrics { grid-template-columns: 1.05fr 1.15fr .8fr; }
+.horizon-metrics button:nth-child(2) { border-right: 1px solid #e3e7ee; }
+.horizon-metrics button:nth-child(-n+2) { border-bottom: 0; }
+.horizon-metric-list {
+  display: grid;
+  gap: 4px;
+  margin-top: 7px;
+}
+.horizon-metric-list small {
+  display: grid;
+  grid-template-columns: 15px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 5px;
+  color: #526078;
+  font-size: 9px;
+}
+.horizon-metric-list i {
+  display: grid;
+  width: 14px;
+  height: 14px;
+  place-items: center;
+  border-radius: 3px;
+  background: #edf1ff;
+  color: #4057cd;
+  font-style: normal;
+  font-weight: 800;
+}
+.horizon-metric-list b {
+  overflow: hidden;
+  color: #263654;
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.horizon-metric-list em {
+  color: #17865c;
+  font-style: normal;
+  font-weight: 800;
+}
+.horizon-metrics button:nth-child(2) .horizon-metric-list em { color: #bd7412; }
+.horizon-metric-list em.is-link {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.horizon-metric-list em.is-link:hover,
+.horizon-metric-list em.is-link:focus-visible { color: #344bd9; outline: none; }
+.rank-move,
+.rank-move svg { display: block; width: 16px; height: 16px; }
+.rank-move svg { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.rank-move--up { color: #45c58a; }
+.rank-move--down { color: #f06e66; }
+.rank-move--flat { color: #8391ad; }
+@media (max-width: 1100px) {
+  .horizon-body { grid-template-columns: 1fr; }
+  .horizon-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .horizon-list__title,
+  .horizon-list > p { grid-column: 1 / -1; }
+}
+@media (max-width: 760px) {
+  .horizon-list { grid-template-columns: 1fr; }
+  .horizon-metrics { grid-template-columns: 1fr; }
+  .horizon-metrics button { border-right: 0; border-bottom: 1px solid #e3e7ee; }
+  .horizon-row-grid { grid-template-columns: 1fr; gap: 9px; }
+  .horizon-row-grid p { padding: 0; border-right: 0; }
+}
+@media (max-width: 520px) {
+  .horizon-metrics { grid-template-columns: 1fr; }
+  .horizon-memo { padding: 15px; }
+}
+
+/* Comfortable reading scale for the pre-research workspace. */
+.research-pool .decision-hero p { font-size: 15px; }
+.research-pool .research-data-date small { font-size: 12px; }
+.research-pool .research-data-date strong { font-size: 16px; }
+.research-pool .horizon-brief > header p { font-size: 15px; line-height: 1.65; }
+.research-pool .horizon-brief nav button { min-height: 42px; font-size: 15px; }
+.research-pool .horizon-list__title strong { font-size: 15px; }
+.research-pool .horizon-list > button { min-height: 54px; }
+.research-pool .horizon-list i { font-size: 12px; }
+.research-pool .horizon-list span strong { font-size: 15px; line-height: 1.45; }
+.research-pool .horizon-list > p { font-size: 12px; line-height: 1.6; }
+.research-pool .horizon-memo__heading > div strong { font-size: 22px; line-height: 1.35; }
+.research-pool .horizon-memo__heading > div span,
+.research-pool .horizon-analysis .horizon-memo__heading > em { font-size: 12px; }
+.research-pool .horizon-memo__stance div small { font-size: 12px; }
+.research-pool .horizon-memo__stance div strong { font-size: 18px; line-height: 1.45; }
+.research-pool .horizon-analysis .horizon-memo__stance p { font-size: 14px; line-height: 1.75; }
+.research-pool .horizon-memo__change small,
+.research-pool .horizon-analysis.horizon-memo .horizon-memo__change strong { font-size: 12px; }
+.research-pool .horizon-memo__change span { font-size: 12px; line-height: 1.6; }
+.research-pool .horizon-metrics > button > span { font-size: 12px; font-weight: 750; }
+.research-pool .horizon-metrics > button > strong { font-size: 18px; }
+.research-pool .horizon-metrics > button > small { font-size: 11px; line-height: 1.55; }
+.research-pool .horizon-metric-list { gap: 7px; margin-top: 10px; }
+.research-pool .horizon-metric-list small { grid-template-columns: 18px minmax(0, 1fr) auto; gap: 7px; font-size: 11px; }
+.research-pool .horizon-metric-list i { width: 17px; height: 17px; font-size: 10px; }
+.research-pool .horizon-detail > strong { font-size: 13px; }
+.research-pool .horizon-detail > p { font-size: 12px; line-height: 1.65; }
+.research-pool .horizon-detail > button { font-size: 12px; }
+.research-pool .horizon-briefing-rows summary > strong { font-size: 14px; }
+.research-pool .horizon-briefing-rows summary > span { font-size: 12px; }
+.research-pool .horizon-row-grid p,
+.research-pool .horizon-row-grid p b { font-size: 12px; line-height: 1.65; }
+.research-pool .horizon-memo footer button { min-height: 40px; padding: 9px 14px; font-size: 12px; }
+.research-pool .attention-head p,
+.research-pool .attention-toolbar button,
+.research-pool .attention-toolbar label,
+.research-pool .attention-legend { font-size: 13px; }
+.research-pool .attention-card strong { font-size: 15px; line-height: 1.45; }
+.research-pool .attention-card small,
+.research-pool .attention-card span { font-size: 12px; line-height: 1.55; }
+
+@media (max-width: 760px) {
+  .research-pool .horizon-brief > header h2 { font-size: 29px; }
+  .research-pool .horizon-memo__heading > div strong { font-size: 21px; }
+  .research-pool .horizon-list span strong { font-size: 15px; }
 }

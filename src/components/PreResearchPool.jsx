@@ -5,7 +5,7 @@ import { ATTENTION_POOL, CORE_ATTENTION_IDS } from "../data/attentionPool.js";
 import { AttentionHeatmap } from "./AttentionHeatmap.jsx";
 import { ResearchHorizonBrief } from "./ResearchHorizonBrief.jsx";
 import { ThemeDecisionCockpit } from "./ThemeDecisionCockpit.jsx";
-import { ProductDecisionMonitor, windowState } from "./ProductDecisionMonitor.jsx";
+import { windowState } from "./ProductDecisionMonitor.jsx";
 
 const yi = (value) =>
   Number.isFinite(value) ? `${value.toFixed(1)}亿元` : "—";
@@ -207,25 +207,6 @@ function MetricButton({ label, value, onClick }) {
       <strong>{value}</strong>
       <span>查看依据 →</span>
     </button>
-  );
-}
-
-function ChangeBar({ value }) {
-  const width = Math.min(
-    100,
-    Math.max(6, Math.log10(Math.abs(value || 0) + 1) * 32),
-  );
-  return (
-    <span
-      className="change-visual"
-      title="同口径可比基金当前规模减去2025年末披露规模"
-    >
-      <i
-        className={value >= 0 ? "up" : "down"}
-        style={{ width: `${width}%` }}
-      />
-      <b>{signedYi(value)}</b>
-    </span>
   );
 }
 
@@ -836,6 +817,10 @@ export function PreResearchPool({ agentCommand, onContextChange }) {
         externalItems={externalSignals.items || []}
         productIds={ranked.map((item) => item.id)}
         onOpen={openTheme}
+        onOpenNewFunds={(id) => {
+          setDrawer("12m");
+          openTheme(id);
+        }}
       />
       <AttentionHeatmap
         focusId={detailId}
@@ -844,202 +829,6 @@ export function PreResearchPool({ agentCommand, onContextChange }) {
         snapshot={attention}
         onSelectCore={openTheme}
       />
-      <ProductDecisionMonitor
-        ranked={ranked}
-        attention={attention}
-        attentionHistory={attentionHistory}
-        attentionById={attentionById}
-        selectedId={active?.id}
-        onSelect={openTheme}
-      />
-      <section className="decision-layout">
-        <div className="decision-ranking">
-          <div className="decision-ranking__head">
-            <span>核心池序位 / 产品方向</span>
-            <span>近12月新发</span>
-            <span>较2025年末净增加</span>
-            <span>产品结论</span>
-          </div>
-          {ranked.map((item, index) => (
-            <button
-              type="button"
-              className={active?.id === item.id ? "active" : ""}
-              onClick={() => openTheme(item.id)}
-              key={item.id}
-            >
-              <i>{String(index + 1).padStart(2, "0")}</i>
-              <span>
-                <strong>{item.name}</strong>
-                <small>{item.definition}</small>
-              </span>
-              <em>{item.market.launched12.length}只</em>
-              <ChangeBar value={item.market.scaleIncrease} />
-              <b className={`market-${item.market.state} window-${windowState(item, attentionById.get(item.id)).tone}`}>
-                {windowState(item, attentionById.get(item.id)).label}
-              </b>
-            </button>
-          ))}
-        </div>
-        {active && (
-          <section className="decision-detail">
-            <div className="decision-detail__title">
-              <div>
-                <small>当前研究对象</small>
-                <h2>{active.name}</h2>
-              </div>
-              <span>核心池序位 {ranked.indexOf(active) + 1}</span>
-            </div>
-            {activeEvidence ? (
-              <>
-                <ThemeDecisionCockpit
-                  item={active}
-                  proof={(attention.items || []).find((item) => item.id === active.id)}
-                  evidence={activeEvidence}
-                  attentionHistory={attentionHistory}
-                  rankingHistory={attention.rankingHistory || []}
-                  externalSignals={(externalSignals.items || []).find((item) => item.id === active.id)}
-                />
-                <h3>产品方向可行性</h3>
-                <div className="evidence-four evidence-three">
-                  <button
-                    type="button"
-                    onClick={() => setEvidenceLayer("structure")}
-                  >
-                    <small>产业需求是否成立</small>
-                    <strong>{activeEvidence.structure.signal}</strong>
-                    <span>
-                      {activeEvidence.structure.history?.length >= 4
-                        ? `${activeEvidence.structure.metric} · ${activeEvidence.structure.history.length}期真实数据`
-                        : activeEvidence.structure.accessStatus ||
-                          (PUBLIC_STRUCTURE_PENDING.has(active.id)
-                            ? "公开数据可接入，尚未自动化"
-                            : "无稳定统一免费序列")}
-                    </span>
-                    <em>
-                      {activeEvidence.structure.history?.length >= 4
-                        ? "查看产业趋势 →"
-                        : "查看关键动态 →"}
-                    </em>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setEvidenceLayer("enterprise")}
-                  >
-                    <small>龙头企业是否兑现</small>
-                    <strong>
-                      收入{pct(activeEvidence.enterprise.revenueGrowthMedian)} ·
-                      利润{pct(activeEvidence.enterprise.profitGrowthMedian)}
-                    </strong>
-                    <span>
-                      前十大公司财报 ·{" "}
-                      {activeEvidence.enterprise.history?.length || 0}个报告期
-                    </span>
-                    <em>查看财报结论 →</em>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setEvidenceLayer("assets")}
-                  >
-                    <small>资产池能否支撑产品</small>
-                    <strong>
-                      {activeEvidence.assets.constituentCount}只 ·{" "}
-                      {yi(activeEvidence.assets.floatMarketCapYi)}
-                    </strong>
-                    <span>
-                      日成交{yi(activeEvidence.assets.dailyTurnoverYi)} · 前十
-                      {pct(activeEvidence.assets.top10SharePercent)}
-                    </span>
-                    <em>查看容量和公司名单 →</em>
-                    <i
-                      style={{
-                        width: `${Math.min(100, activeEvidence.assets.top10SharePercent || 0)}%`,
-                      }}
-                    />
-                  </button>
-                </div>
-                <p className="evidence-source">
-                  真实产业趋势 {evidence.structureDataCount || 0}/36 ·
-                  企业财报历史 {evidence.enterpriseDataCount || 0}/36 ·
-                  当前资产池 {evidence.assetDataCount || 0}/36 · 快照{" "}
-                  {evidence.updateTime}
-                </p>
-              </>
-            ) : null}
-            <h3>产品空位判断</h3>
-            <div className="decision-metrics">
-              <MetricButton
-                label="同类基金"
-                value={`${active.market.count}只`}
-                onClick={() => setDrawer("all")}
-              />
-              <MetricButton
-                label="近12个月新发"
-                value={`${active.market.launched12.length}只 · ${active.market.supplyState}`}
-                onClick={() => setDrawer("12m")}
-              />
-              <MetricButton
-                label="近90天新发"
-                value={`${active.market.launched90.length}只`}
-                onClick={() => setDrawer("90d")}
-              />
-              <MetricButton
-                label={`基准规模（${active.market.baselineScaleDate}）`}
-                value={yi(active.market.baselineTotal)}
-                onClick={() => setDrawer("scale")}
-              />
-              <MetricButton
-                label={`最新可得规模（截至${active.market.currentScaleDate}）`}
-                value={yi(active.market.total)}
-                onClick={() => setDrawer("scale")}
-              />
-              <MetricButton
-                label={`较${active.market.baselineScaleDate}规模净增加`}
-                value={`${signedYi(active.market.scaleIncrease)} · ${active.market.scaleState}`}
-                onClick={() => setDrawer("scale")}
-              />
-              <MetricButton
-                label="头部产品占比"
-                value={pct(active.market.topShare)}
-                onClick={() => setDrawer("top1")}
-              />
-              <MetricButton
-                label="前三产品占比"
-                value={pct(active.market.top3Share)}
-                onClick={() => setDrawer("top3")}
-              />
-              <MetricButton
-                label="市场结论"
-                value={active.market.state}
-                onClick={() => setDrawer("state")}
-              />
-            </div>
-            <div className="scale-definitions">
-              <p>
-                <strong>基准规模 · {active.market.baselineScaleDate}</strong>
-                可比产品在基准日的披露规模合计；缺少基准数据的产品不计入。
-              </p>
-              <p>
-                <strong>
-                  最新可得规模 · 截至{active.market.currentScaleDate}
-                </strong>
-                同类产品各自最近有效规模的合计，包含基准日后新成立的产品；ETF可按交易数据估算，非ETF以最新公开披露为准，因此不等同盘中实时规模。
-              </p>
-              <p>
-                <strong>
-                  规模净增加 · 较{active.market.baselineScaleDate}
-                </strong>
-                仅对同时拥有基准与当前规模的产品计算“当前－基准”并汇总；当前可比样本{" "}
-                {active.market.comparableCount}/{active.market.count}
-                只，避免把新基金全部规模误算成增长。
-              </p>
-            </div>
-            <p className="metric-note">
-              滚动新发以快照日为基准。名称关键词：{active.keywords.join(" / ")}
-              。
-            </p>
-          </section>
-        )}
-      </section>
       {drawer && active && (
         <>
           <button
