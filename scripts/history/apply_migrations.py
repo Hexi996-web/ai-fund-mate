@@ -19,7 +19,19 @@ def discover_migrations(directory: Path) -> list[Path]:
 
 
 def migration_checksum(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    # Git may materialize SQL as CRLF on Windows and LF in CI.  Hash the
+    # canonical text so the same migration keeps one checksum everywhere.
+    canonical = path.read_text(encoding="utf-8").replace("\r\n", "\n")
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+
+def transactional_sql(path: Path) -> str:
+    """Remove the repository migration wrapper so code and ledger commit together."""
+    sql = path.read_text(encoding="utf-8").strip()
+    match = re.fullmatch(r"begin\s*;(?P<body>.*)commit\s*;", sql, flags=re.IGNORECASE | re.DOTALL)
+    if not match:
+        raise ValueError(f"迁移必须使用单一 begin/commit 包装：{path.name}")
+    return match.group("body").strip()
 
 
 def database_url() -> str | None:
@@ -35,13 +47,14 @@ def apply(directory: Path, dry_run: bool = False) -> list[dict[str, str]]:
     if not url:
         raise RuntimeError("缺少 HISTORY_DATABASE_URL、DATABASE_URL 或 SUPABASE_DB_URL")
     import psycopg
-    with psycopg.connect(url, autocommit=True) as connection:
+    with psycopg.connect(url) as connection:
         with connection.cursor() as cursor:
+            cursor.execute("""create table if not exists public.history_schema_migrations (
+              version text primary key, migration_name text not null, checksum text not null,
+              applied_at timestamptz not null default now())""")
+            connection.commit()
             cursor.execute("select pg_advisory_lock(hashtext('ai_fund_mate_history_migrations'))")
             try:
-                cursor.execute("""create table if not exists public.history_schema_migrations (
-                  version text primary key, migration_name text not null, checksum text not null,
-                  applied_at timestamptz not null default now())""")
                 cursor.execute("select version, checksum from public.history_schema_migrations")
                 applied = dict(cursor.fetchall())
                 for migration, item in zip(migrations, plan):
@@ -51,16 +64,18 @@ def apply(directory: Path, dry_run: bool = False) -> list[dict[str, str]]:
                     if previous:
                         item["status"] = "already_applied"
                         continue
-                    cursor.execute(migration.read_text(encoding="utf-8"))
+                    cursor.execute(transactional_sql(migration))
                     cursor.execute("""insert into public.history_schema_migrations
                       (version, migration_name, checksum) values (%s, %s, %s)""",
                       (item["version"], item["name"], item["checksum"]))
+                    connection.commit()
                     item["status"] = "applied"
             except Exception:
-                cursor.execute("rollback")
+                connection.rollback()
                 raise
             finally:
                 cursor.execute("select pg_advisory_unlock(hashtext('ai_fund_mate_history_migrations'))")
+                connection.commit()
     return plan
 
 

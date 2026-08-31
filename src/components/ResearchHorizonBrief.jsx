@@ -106,7 +106,11 @@ export function ResearchHorizonBrief({ snapshot,onOpen,onOpenNewFunds,evidenceIt
   const selectedMetric=brief.metrics.find((item)=>item.id===detail)
 
   const exportBrief=()=>{
-    const lines=[`${brief.label} · 产品池整体判断`,`数据截至 ${brief.dataDate}`,brief.stance,brief.conclusion,'',...brief.metrics.map((item)=>`${item.label}：${item.value}（${item.context}）`),'',`动作建议：${brief.action}`,'注：仅供产品预研，不构成投资建议。']
+    const metricLines=brief.metrics.flatMap((item)=>{
+      if(item.items?.length)return [`${item.label}：`,...item.items.map((row,index)=>`  ${index+1}. ${row.name}：${row.value}`)]
+      return [`${item.label}：新进 ${item.entered.map(({name})=>name).join('、')||'无'}；退出 ${item.exited.map(({name})=>name).join('、')||'无'}`]
+    })
+    const lines=[`${brief.label} · 产品池整体判断`,`数据截至 ${brief.dataDate}`,`整体策略：${brief.stance}`,brief.conclusion,'',...metricLines,'',`动作建议：${brief.action}`,'注：仅供产品预研，不构成投资建议。']
     const blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'})
     const url=URL.createObjectURL(blob),link=document.createElement('a')
     link.href=url;link.download=`AI-Fund-Mate-${brief.label}-产品池简报.txt`;link.click();URL.revokeObjectURL(url)

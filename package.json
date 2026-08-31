@@ -8,16 +8,18 @@
     "prebuild": "node scripts/build_agent_context.mjs",
     "build": "vite build",
     "preview": "vite preview",
-    "test:e2e": "playwright test"
+    "test": "node --test src/data/*.test.js",
+    "test:e2e": "playwright test",
+    "test:all": "npm test && npm run test:e2e"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "latest",
     "pg": "^8.16.3",
     "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "vite": "latest"
+    "react-dom": "18.3.1"
   },
   "devDependencies": {
-    "@playwright/test": "^1.62.1"
+    "@playwright/test": "^1.62.1",
+    "@vitejs/plugin-react": "latest",
+    "vite": "latest"
   }
 }
