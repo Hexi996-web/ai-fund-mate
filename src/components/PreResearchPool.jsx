@@ -5,7 +5,7 @@ import { ATTENTION_POOL, CORE_ATTENTION_IDS } from "../data/attentionPool.js";
 import { AttentionHeatmap } from "./AttentionHeatmap.jsx";
 import { ResearchHorizonBrief } from "./ResearchHorizonBrief.jsx";
 import { ThemeDecisionCockpit } from "./ThemeDecisionCockpit.jsx";
-import { windowState } from "./ProductDecisionMonitor.jsx";
+import { windowState } from "../data/productWindow.js";
 
 const yi = (value) =>
   Number.isFinite(value) ? `${value.toFixed(1)}亿元` : "—";
