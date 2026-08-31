@@ -12,7 +12,7 @@ try {
   page.on('console', (message) => { if (message.type() === 'error') errors.push(message.text()) })
   await page.goto(`${baseURL}?verify=${Date.now()}`, { waitUntil: 'networkidle', timeout: 60_000 })
 
-  await page.getByRole('heading', { name: '季度预研产品池' }).waitFor()
+  await page.getByRole('heading', { name: '核心预研产品池' }).waitFor()
   await page.locator('.research-data-date').getByText(expectedDate).waitFor()
   const brief = page.getByRole('region', { name: '前瞻产品方向简报' })
   await brief.waitFor()

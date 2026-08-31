@@ -23,7 +23,7 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 50
+    timeout-minutes: 75
     env:
       PRODUCTION_URL: ${{ vars.PRODUCTION_URL }}
     steps:
@@ -65,6 +65,7 @@ jobs:
           python -m pytest scripts/test_update_issuance_insights.py -q
           python -m pytest scripts/test_validate_published_freshness.py -q
           python -m pytest scripts/test_agent_context_workflows.py -q
+          python -m pytest scripts/test_verify_deployed_snapshot.py -q
           python scripts/validate_published_freshness.py public/funds_active.json --field updateTime --max-age-hours 12 --min-items funds=1000
           python scripts/validate_published_freshness.py public/fund_products.json --field updateTime --max-age-hours 12 --min-items products=1000
           python scripts/validate_published_freshness.py public/issuance_insights.json --field generatedAt --max-age-hours 12
@@ -101,7 +102,7 @@ jobs:
       - name: Wait for Vercel to publish the same daily snapshot
         env:
           EXPECTED_DATE: ${{ steps.snapshot.outputs.date }}
-        run: python scripts/verify_deployed_snapshot.py --base-url "$PRODUCTION_URL" --expected-date "$EXPECTED_DATE" --timeout-seconds 600
+        run: python scripts/verify_deployed_snapshot.py --base-url "$PRODUCTION_URL" --expected-date "$EXPECTED_DATE" --timeout-seconds 600 --attention-max-age-hours 4
       - name: Verify all four production interfaces
         env:
           EXPECTED_DATE: ${{ steps.snapshot.outputs.date }}

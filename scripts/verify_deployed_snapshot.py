@@ -5,7 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import time
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from urllib.parse import urljoin
 from urllib.request import Request, urlopen
 
@@ -25,7 +25,35 @@ def _date(value: object) -> str | None:
         return value[:10] if len(value) >= 10 else None
 
 
-def wait_for_deployment(base_url: str, expected_date: str, timeout_seconds: int) -> None:
+def _timestamp(value: object) -> datetime | None:
+    if not isinstance(value, str):
+        return None
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
+def _attention_is_fresh(value: object, max_age_hours: float, now: datetime | None = None) -> bool:
+    generated_at = _timestamp(value)
+    if generated_at is None:
+        return False
+    reference = now or datetime.now(timezone.utc)
+    if reference.tzinfo is None:
+        reference = reference.replace(tzinfo=timezone.utc)
+    age = reference.astimezone(timezone.utc) - generated_at
+    return timedelta(minutes=-15) <= age <= timedelta(hours=max_age_hours)
+
+
+def wait_for_deployment(
+    base_url: str,
+    expected_date: str,
+    timeout_seconds: int,
+    attention_max_age_hours: float = 4,
+) -> None:
     deadline = time.monotonic() + timeout_seconds
     last_observed: dict[str, str | None] = {}
     while time.monotonic() < deadline:
@@ -37,11 +65,16 @@ def wait_for_deployment(base_url: str, expected_date: str, timeout_seconds: int)
             last_observed = {
                 "fund_products": _date(products.get("updateTime")),
                 "issuance_insights": _date(issuance.get("dataDate")),
-                "attention_pool": _date(attention.get("generatedAt")),
                 "data_status": _date(status.get("snapshotDate")),
+                "attention_generated_at": attention.get("generatedAt"),
             }
             attention_complete = attention.get("verifiedCount") == 36 and len(attention.get("recommendedIds") or []) == 10
-            if all(value == expected_date for value in last_observed.values()) and attention_complete:
+            daily_snapshots_match = all(
+                last_observed[key] == expected_date
+                for key in ("fund_products", "issuance_insights", "data_status")
+            )
+            attention_fresh = _attention_is_fresh(attention.get("generatedAt"), attention_max_age_hours)
+            if daily_snapshots_match and attention_complete and attention_fresh:
                 print(f"Production snapshots are current: {last_observed}")
                 return
         except (OSError, ValueError, json.JSONDecodeError) as error:
@@ -55,8 +88,14 @@ def main() -> int:
     parser.add_argument("--base-url", required=True)
     parser.add_argument("--expected-date", required=True)
     parser.add_argument("--timeout-seconds", type=int, default=600)
+    parser.add_argument("--attention-max-age-hours", type=float, default=4)
     args = parser.parse_args()
-    wait_for_deployment(args.base_url, args.expected_date, args.timeout_seconds)
+    wait_for_deployment(
+        args.base_url,
+        args.expected_date,
+        args.timeout_seconds,
+        args.attention_max_age_hours,
+    )
     return 0
 
 
