@@ -1,5 +1,8 @@
 begin;
 
+create schema if not exists history;
+set local search_path = history, public;
+
 create table if not exists pipeline_runs (
   id bigint generated always as identity primary key,
   run_key text not null unique,

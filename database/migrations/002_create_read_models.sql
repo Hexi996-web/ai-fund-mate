@@ -1,5 +1,7 @@
 begin;
 
+set local search_path = history, public;
+
 create or replace view latest_fund_share_observations as
 select distinct on (observation.fund_code)
   observation.*
