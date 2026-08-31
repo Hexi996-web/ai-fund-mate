@@ -33,3 +33,5 @@ psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f database/migrations/003_create_applic
 
 生产环境必须使用连接池地址；迁移任务可使用数据库的直接连接地址。
 为自动化写入账号授予 `history_pipeline_writer`，为 API 登录账号授予 `history_api_reader`。
+
+也可执行 `python -m scripts.history.apply_migrations`。该命令使用 `history_schema_migrations` 记录迁移版本及校验和，支持安全重复运行。

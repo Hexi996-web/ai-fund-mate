@@ -33,6 +33,8 @@ psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f database/migrations/003_create_applic
 
 迁移使用数据库直接连接地址；Vercel API 使用事务连接池地址。生产写入账号加入 `history_pipeline_writer`，只读 API 账号加入 `history_api_reader`，两者不要共用密码。
 
+也可以在 GitHub Actions 手动运行 **Migrate history database**：输入 `MIGRATE` 后，工作流会校验迁移文件、执行尚未应用的迁移、导入当前快照并验证记录数。迁移执行器将每个文件的 SHA-256 写入 `history_schema_migrations`；已执行的迁移不得原地修改，应新增下一个编号文件。
+
 ## 4. 首次导入与每日导入
 
 不连接数据库的结构检查：

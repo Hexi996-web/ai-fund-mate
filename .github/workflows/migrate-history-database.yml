@@ -1,0 +1,62 @@
+name: Migrate history database
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: "输入 MIGRATE 执行历史数据库迁移"
+        required: true
+        type: string
+      import_current_snapshots:
+        description: "迁移后导入当前 public JSON 快照"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: history-database-migration
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    if: ${{ inputs.confirmation == 'MIGRATE' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      HISTORY_DATABASE_URL: ${{ secrets.HISTORY_DATABASE_URL }}
+      SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-data.txt
+      - name: Install database driver
+        run: pip install "psycopg[binary]>=3.2,<4"
+      - name: Verify migration plan
+        run: python -m scripts.history.apply_migrations --dry-run
+      - name: Apply PostgreSQL migrations
+        run: python -m scripts.history.apply_migrations
+      - name: Import current snapshots
+        if: ${{ inputs.import_current_snapshots }}
+        run: python -m scripts.history.import_daily_snapshots --source-dir public
+      - name: Verify imported history
+        run: |
+          python - <<'PY'
+          import os
+          import psycopg
+          url = os.environ.get("HISTORY_DATABASE_URL") or os.environ.get("SUPABASE_DB_URL")
+          with psycopg.connect(url) as connection, connection.cursor() as cursor:
+              cursor.execute("select status, data_date from pipeline_runs order by started_at desc limit 1")
+              status, data_date = cursor.fetchone()
+              assert status == "succeeded", (status, data_date)
+              cursor.execute("select count(*) from fund_share_daily_observations")
+              assert cursor.fetchone()[0] > 1000
+              cursor.execute("select count(*) from theme_daily_signals")
+              assert cursor.fetchone()[0] >= 36
+              print(f"verified snapshot {data_date}")
+          PY
