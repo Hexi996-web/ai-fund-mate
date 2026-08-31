@@ -33,6 +33,15 @@ jobs:
           node-version: "22"
       - name: Install data dependencies
         run: pip install -r requirements-data.txt
+      - name: Restore accumulated history from PostgreSQL
+        env:
+          DATABASE_URL: ${{ secrets.HISTORY_DATABASE_URL }}
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          if [ -n "$DATABASE_URL" ] || [ -n "$SUPABASE_DB_URL" ]; then
+            python -m scripts.history.apply_migrations
+            python -m scripts.history.hydrate_public_history
+          fi
       - name: Update attention observations
         env:
           GDELT_ENABLED: "0"
@@ -45,6 +54,17 @@ jobs:
           python scripts/validate_published_freshness.py public/attention_pool_evidence.json --field generatedAt --max-age-hours 4 --min-items items=36
           python scripts/validate_published_freshness.py public/data_status.json --field generatedAt --max-age-hours 4
           python scripts/validate_published_freshness.py public/agent_context.json --field generatedAt --max-age-hours 4
+      - name: Persist full history and compact the public fallback
+        env:
+          DATABASE_URL: ${{ secrets.HISTORY_DATABASE_URL }}
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          if [ -n "$DATABASE_URL" ] || [ -n "$SUPABASE_DB_URL" ]; then
+            python -m scripts.history.import_daily_snapshots --source-dir public
+            python -m scripts.history.compact_public_history
+            python scripts/publish_data_status.py
+            node scripts/build_agent_context.mjs
+          fi
       - name: Commit attention history
         run: |
           git config user.name "github-actions[bot]"

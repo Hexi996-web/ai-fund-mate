@@ -27,3 +27,10 @@ test('history status reports an unconfigured database safely', async () => {
   expect(response.statusCode).toBe(200)
   expect(response.payload.configured).toBe(false)
 })
+
+test('research history endpoint rejects an invalid theme before database access', async () => {
+  const handler = (await import('../api/history/research.js')).default
+  const response = responseRecorder()
+  await handler({ method: 'GET', query: { themeId: '../unsafe' } }, response)
+  expect(response.statusCode).toBe(400)
+})

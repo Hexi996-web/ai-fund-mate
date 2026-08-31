@@ -3,8 +3,9 @@ import argparse, gzip, hashlib, json, os, shutil, sys
 from pathlib import Path
 
 from scripts.history.snapshot_models import (
-    attention_daily_rows, dataset_row_count, infer_snapshot_date, product_metric_rows,
-    product_rows, share_observation_rows, share_rows, theme_rows, theme_signal_rows,
+    attention_daily_rows, attention_raw_rows, dataset_row_count, historical_theme_signal_rows,
+    infer_snapshot_date, product_metric_rows, product_rows, share_observation_rows, share_rows,
+    theme_rows, theme_signal_rows,
 )
 
 DATASETS = ("fund_products", "funds_active", "attention_pool_evidence", "pre_research_evidence",
@@ -108,6 +109,23 @@ def import_themes(cursor, payloads, refs):
       appearances=excluded.appearances,resonance=excluded.resonance,best_rank=excluded.best_rank,sample_count=excluded.sample_count,
       source_updated_at=excluded.source_updated_at,ingested_at=now(),snapshot_id=excluded.snapshot_id""",
       attention_daily_rows(history, history_snapshot))
+    insert_batches(cursor, """insert into attention_raw_samples (captured_at,sources,errors)
+      values (%s,%s,%s) on conflict (captured_at) do update set
+      sources=excluded.sources,errors=excluded.errors,ingested_at=now()""",
+      attention_raw_rows(history), {1, 2})
+    insert_batches(cursor, """insert into theme_daily_signals
+      (theme_id,data_date,methodology_version,attention_score,validation_score,capacity_score,composite_score,rank,lifecycle_state,evidence)
+      values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+      on conflict (theme_id,data_date,methodology_version) do update set
+      attention_score=coalesce(excluded.attention_score,theme_daily_signals.attention_score),
+      validation_score=coalesce(excluded.validation_score,theme_daily_signals.validation_score),
+      capacity_score=coalesce(excluded.capacity_score,theme_daily_signals.capacity_score),
+      composite_score=coalesce(excluded.composite_score,theme_daily_signals.composite_score),
+      rank=coalesce(excluded.rank,theme_daily_signals.rank),
+      lifecycle_state=coalesce(excluded.lifecycle_state,theme_daily_signals.lifecycle_state),
+      evidence=theme_daily_signals.evidence,
+      ingested_at=now()""",
+      historical_theme_signal_rows(attention), {9})
 
 
 def main():

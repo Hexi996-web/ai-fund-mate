@@ -48,6 +48,16 @@ jobs:
       - name: Install data dependencies
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.verify_only != true }}
         run: pip install -r requirements-data.txt
+      - name: Restore accumulated history from PostgreSQL
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.verify_only != true }}
+        env:
+          DATABASE_URL: ${{ secrets.HISTORY_DATABASE_URL }}
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          if [ -n "$DATABASE_URL" ] || [ -n "$SUPABASE_DB_URL" ]; then
+            python -m scripts.history.apply_migrations
+            python -m scripts.history.hydrate_public_history
+          fi
       - name: Build active fund dataset
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.verify_only != true }}
         run: |
@@ -107,6 +117,9 @@ jobs:
           fi
           python -m scripts.history.apply_migrations
           python -m scripts.history.import_daily_snapshots --source-dir public
+          python -m scripts.history.compact_public_history
+          python scripts/publish_data_status.py
+          node scripts/build_agent_context.mjs
       - name: Commit updated data
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.verify_only != true }}
         run: |

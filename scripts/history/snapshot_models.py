@@ -126,3 +126,31 @@ def attention_daily_rows(payload, snapshot_id):
             rows.append((theme_id, day, integer_or_none(values.get("appearances")), integer_or_none(values.get("resonance")),
                          integer_or_none(values.get("bestRank")), integer_or_none(item.get("samples")), updated, snapshot_id))
     return rows
+
+
+def attention_raw_rows(payload):
+    rows = []
+    for item in payload.get("snapshots", []):
+        captured_at = parse_timestamp(item.get("capturedAt"))
+        if captured_at:
+            rows.append((captured_at, item.get("sources") or {}, item.get("errors") or []))
+    return rows
+
+
+def historical_theme_signal_rows(payload):
+    rows = []
+    for snapshot in payload.get("rankingHistory", []):
+        day = parse_date(snapshot.get("date"))
+        if not day:
+            continue
+        ranks = {theme_id: rank for rank, theme_id in enumerate(snapshot.get("rankedIds") or [], 1)}
+        theme_ids = set(ranks) | set((snapshot.get("scores") or {}).keys()) | set((snapshot.get("states") or {}).keys())
+        for theme_id in theme_ids:
+            scores = (snapshot.get("scores") or {}).get(theme_id) or {}
+            state = (snapshot.get("states") or {}).get(theme_id) or {}
+            values = [decimal_or_none(scores.get(key)) for key in ("attention", "validation", "capacity")]
+            available = [value for value in values if value is not None]
+            rows.append((theme_id, day, str(snapshot.get("modelVersion") or "v1"), *values,
+                         sum(available) / len(available) if available else None, ranks.get(theme_id),
+                         state.get("state") or state.get("label"), state))
+    return rows

@@ -6,6 +6,7 @@ import { AttentionHeatmap } from "./AttentionHeatmap.jsx";
 import { ResearchHorizonBrief } from "./ResearchHorizonBrief.jsx";
 import { ThemeDecisionCockpit } from "./ThemeDecisionCockpit.jsx";
 import { windowState } from "../data/productWindow.js";
+import { fetchResearchHistory, mergeThemeAttention } from "../data/researchHistory.js";
 
 const yi = (value) =>
   Number.isFinite(value) ? `${value.toFixed(1)}亿元` : "—";
@@ -632,6 +633,7 @@ export function PreResearchPool({ agentCommand, onContextChange }) {
     recommendedIds: CORE_ATTENTION_IDS,
   });
   const [attentionHistory, setAttentionHistory] = useState({ daily: [] });
+  const [themeHistory, setThemeHistory] = useState(null);
   const [externalSignals, setExternalSignals] = useState({ items: [] });
   const [selected, setSelected] = useState("");
   const [drawer, setDrawer] = useState("");
@@ -676,6 +678,17 @@ export function PreResearchPool({ agentCommand, onContextChange }) {
       .catch(() => {});
     return () => controller.abort();
   }, [reloadKey]);
+  useEffect(() => {
+    if (!detailId) {
+      setThemeHistory(null);
+      return undefined;
+    }
+    const controller = new AbortController();
+    fetchResearchHistory(detailId, { signal: controller.signal })
+      .then((history) => setThemeHistory(mergeThemeAttention(attentionHistory, detailId, history?.attention)))
+      .catch((error) => { if (error.name !== "AbortError") setThemeHistory(null); });
+    return () => controller.abort();
+  }, [detailId, attentionHistory]);
   useEffect(() => {
     const checkForUpdate = () =>
       fetchDataStatus(fetch)
@@ -793,7 +806,7 @@ export function PreResearchPool({ agentCommand, onContextChange }) {
           proof={attentionById.get(active.id)}
           evidence={activeEvidence}
           evidenceSummary={evidence}
-          attentionHistory={attentionHistory}
+          attentionHistory={themeHistory || attentionHistory}
           rankingHistory={attention.rankingHistory || []}
           externalSignals={(externalSignals.items || []).find((item) => item.id === active.id)}
           onBack={closeTheme}
