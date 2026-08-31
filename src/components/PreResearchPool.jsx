@@ -5,7 +5,7 @@ import { ATTENTION_POOL, CORE_ATTENTION_IDS } from "../data/attentionPool.js";
 import { AttentionHeatmap } from "./AttentionHeatmap.jsx";
 import { ResearchHorizonBrief } from "./ResearchHorizonBrief.jsx";
 import { ThemeDecisionCockpit } from "./ThemeDecisionCockpit.jsx";
-import { ProductDecisionMonitor, windowState } from "./ProductDecisionMonitor.jsx";
+import { windowState } from "./ProductDecisionMonitor.jsx";
 
 const yi = (value) =>
   Number.isFinite(value) ? `${value.toFixed(1)}亿元` : "—";
@@ -824,14 +824,6 @@ export function PreResearchPool({ agentCommand, onContextChange }) {
         productIds={ranked.map((item) => item.id)}
         snapshot={attention}
         onSelectCore={openTheme}
-      />
-      <ProductDecisionMonitor
-        ranked={ranked}
-        attention={attention}
-        attentionHistory={attentionHistory}
-        attentionById={attentionById}
-        selectedId={active?.id}
-        onSelect={openTheme}
       />
       {drawer && active && (
         <>

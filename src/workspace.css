@@ -4840,6 +4840,53 @@
 }
 .horizon-memo { padding: 22px; }
 .horizon-metrics strong { overflow-wrap: anywhere; }
+.horizon-analysis.horizon-memo .horizon-memo__change strong { font-size: 11px; line-height: 1.4; }
+.horizon-metrics { grid-template-columns: 1.05fr 1.15fr .8fr; }
+.horizon-metrics button:nth-child(2) { border-right: 1px solid #e3e7ee; }
+.horizon-metrics button:nth-child(-n+2) { border-bottom: 0; }
+.horizon-metric-list {
+  display: grid;
+  gap: 4px;
+  margin-top: 7px;
+}
+.horizon-metric-list small {
+  display: grid;
+  grid-template-columns: 15px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 5px;
+  color: #526078;
+  font-size: 9px;
+}
+.horizon-metric-list i {
+  display: grid;
+  width: 14px;
+  height: 14px;
+  place-items: center;
+  border-radius: 3px;
+  background: #edf1ff;
+  color: #4057cd;
+  font-style: normal;
+  font-weight: 800;
+}
+.horizon-metric-list b {
+  overflow: hidden;
+  color: #263654;
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.horizon-metric-list em {
+  color: #17865c;
+  font-style: normal;
+  font-weight: 800;
+}
+.horizon-metrics button:nth-child(2) .horizon-metric-list em { color: #bd7412; }
+.rank-move,
+.rank-move svg { display: block; width: 16px; height: 16px; }
+.rank-move svg { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.rank-move--up { color: #45c58a; }
+.rank-move--down { color: #f06e66; }
+.rank-move--flat { color: #8391ad; }
 @media (max-width: 1100px) {
   .horizon-body { grid-template-columns: 1fr; }
   .horizon-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -4848,7 +4895,8 @@
 }
 @media (max-width: 760px) {
   .horizon-list { grid-template-columns: 1fr; }
-  .horizon-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .horizon-metrics { grid-template-columns: 1fr; }
+  .horizon-metrics button { border-right: 0; border-bottom: 1px solid #e3e7ee; }
   .horizon-row-grid { grid-template-columns: 1fr; gap: 9px; }
   .horizon-row-grid p { padding: 0; border-right: 0; }
 }
