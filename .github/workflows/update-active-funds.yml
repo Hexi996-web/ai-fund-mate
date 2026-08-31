@@ -10,6 +10,12 @@ on:
     # 北京时间每天 07:03 最终补跑，给部署与线上验收预留完整窗口。
     - cron: "3 23 * * *"
   workflow_dispatch:
+    inputs:
+      verify_only:
+        description: "只检查已发布快照和四个线上板块，不重新抓取基金数据"
+        required: false
+        default: false
+        type: boolean
 
 concurrency:
   # Serialize every workflow that writes files under public/.  In particular,
@@ -40,8 +46,10 @@ jobs:
           node-version: "22"
           cache: npm
       - name: Install data dependencies
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.verify_only != true }}
         run: pip install -r requirements-data.txt
       - name: Build active fund dataset
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.verify_only != true }}
         run: |
           python scripts/update_active_funds.py
           python scripts/backfill_2026_fund_metrics.py --missing-baseline-only --workers 24 --min-coverage 0.50
@@ -51,13 +59,14 @@ jobs:
           python scripts/update_three_layer_evidence.py
           python scripts/publish_data_status.py
           node scripts/build_agent_context.mjs
-      - name: Read generated snapshot date
+      - name: Read expected snapshot date
         id: snapshot
         shell: bash
         run: |
           snapshot_date="$(python -c "import json; print(json.load(open('public/fund_products.json', encoding='utf-8'))['updateTime'][:10])")"
           echo "date=$snapshot_date" >> "$GITHUB_OUTPUT"
       - name: Validate fund datasets
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.verify_only != true }}
         run: |
           python -m pytest scripts/test_fund_product_model.py scripts/test_update_active_funds.py -q
           python -m pytest scripts/test_update_attention_pool.py -q
@@ -76,14 +85,17 @@ jobs:
           python scripts/validate_published_freshness.py public/data_status.json --field generatedAt --max-age-hours 12
           python scripts/validate_published_freshness.py public/agent_context.json --field generatedAt --max-age-hours 12
       - name: Verify frontend build against the generated snapshots
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.verify_only != true }}
         run: |
           npm ci
           npm run build
       - name: Store daily fund scale history
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.verify_only != true }}
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: python scripts/store_fund_scale_snapshots.py
       - name: Commit updated data
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.verify_only != true }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -103,6 +115,9 @@ jobs:
         env:
           EXPECTED_DATE: ${{ steps.snapshot.outputs.date }}
         run: python scripts/verify_deployed_snapshot.py --base-url "$PRODUCTION_URL" --expected-date "$EXPECTED_DATE" --timeout-seconds 600 --attention-max-age-hours 4
+      - name: Install interface verifier dependencies
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_only == true }}
+        run: npm ci
       - name: Verify all four production interfaces
         env:
           EXPECTED_DATE: ${{ steps.snapshot.outputs.date }}
