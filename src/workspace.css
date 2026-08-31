@@ -4912,3 +4912,51 @@
   .horizon-metrics { grid-template-columns: 1fr; }
   .horizon-memo { padding: 15px; }
 }
+
+/* Comfortable reading scale for the pre-research workspace. */
+.research-pool .decision-hero p { font-size: 15px; }
+.research-pool .research-data-date small { font-size: 12px; }
+.research-pool .research-data-date strong { font-size: 16px; }
+.research-pool .horizon-brief > header p { font-size: 15px; line-height: 1.65; }
+.research-pool .horizon-brief nav button { min-height: 42px; font-size: 15px; }
+.research-pool .horizon-list__title strong { font-size: 15px; }
+.research-pool .horizon-list > button { min-height: 54px; }
+.research-pool .horizon-list i { font-size: 12px; }
+.research-pool .horizon-list span strong { font-size: 15px; line-height: 1.45; }
+.research-pool .horizon-list > p { font-size: 12px; line-height: 1.6; }
+.research-pool .horizon-memo__heading > div strong { font-size: 22px; line-height: 1.35; }
+.research-pool .horizon-memo__heading > div span,
+.research-pool .horizon-analysis .horizon-memo__heading > em { font-size: 12px; }
+.research-pool .horizon-memo__stance div small { font-size: 12px; }
+.research-pool .horizon-memo__stance div strong { font-size: 18px; line-height: 1.45; }
+.research-pool .horizon-analysis .horizon-memo__stance p { font-size: 14px; line-height: 1.75; }
+.research-pool .horizon-memo__change small,
+.research-pool .horizon-analysis.horizon-memo .horizon-memo__change strong { font-size: 12px; }
+.research-pool .horizon-memo__change span { font-size: 12px; line-height: 1.6; }
+.research-pool .horizon-metrics > button > span { font-size: 12px; font-weight: 750; }
+.research-pool .horizon-metrics > button > strong { font-size: 18px; }
+.research-pool .horizon-metrics > button > small { font-size: 11px; line-height: 1.55; }
+.research-pool .horizon-metric-list { gap: 7px; margin-top: 10px; }
+.research-pool .horizon-metric-list small { grid-template-columns: 18px minmax(0, 1fr) auto; gap: 7px; font-size: 11px; }
+.research-pool .horizon-metric-list i { width: 17px; height: 17px; font-size: 10px; }
+.research-pool .horizon-detail > strong { font-size: 13px; }
+.research-pool .horizon-detail > p { font-size: 12px; line-height: 1.65; }
+.research-pool .horizon-detail > button { font-size: 12px; }
+.research-pool .horizon-briefing-rows summary > strong { font-size: 14px; }
+.research-pool .horizon-briefing-rows summary > span { font-size: 12px; }
+.research-pool .horizon-row-grid p,
+.research-pool .horizon-row-grid p b { font-size: 12px; line-height: 1.65; }
+.research-pool .horizon-memo footer button { min-height: 40px; padding: 9px 14px; font-size: 12px; }
+.research-pool .attention-head p,
+.research-pool .attention-toolbar button,
+.research-pool .attention-toolbar label,
+.research-pool .attention-legend { font-size: 13px; }
+.research-pool .attention-card strong { font-size: 15px; line-height: 1.45; }
+.research-pool .attention-card small,
+.research-pool .attention-card span { font-size: 12px; line-height: 1.55; }
+
+@media (max-width: 760px) {
+  .research-pool .horizon-brief > header h2 { font-size: 29px; }
+  .research-pool .horizon-memo__heading > div strong { font-size: 21px; }
+  .research-pool .horizon-list span strong { font-size: 15px; }
+}
