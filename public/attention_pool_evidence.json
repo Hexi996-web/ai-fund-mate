@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-08-30T23:34:23.329247+00:00",
+  "generatedAt": "2026-08-31T00:30:27.946881+00:00",
   "methodologyVersion": "cn-hotlists-gdelt-v1",
   "universeCount": 36,
   "mappedCount": 36,
@@ -2075,11 +2075,466 @@
         }
       },
       "modelVersion": "theme-lifecycle-calibration-v1"
+    },
+    {
+      "date": "2026-08-31",
+      "period": "2026-Q3",
+      "recommendedIds": [
+        "biotech",
+        "ai-agent",
+        "hard-tech",
+        "resources",
+        "creator-economy",
+        "embodied-ai",
+        "power",
+        "grid-storage",
+        "industrial-software",
+        "ai-application"
+      ],
+      "rankedIds": [
+        "hard-tech",
+        "ai-agent",
+        "biotech",
+        "resources",
+        "power",
+        "ai-application",
+        "creator-economy",
+        "space",
+        "grid-storage",
+        "industrial-software",
+        "longevity",
+        "embodied-ai",
+        "autonomous-driving",
+        "wealth-longevity",
+        "service-robot",
+        "agri-tech",
+        "cybersecurity",
+        "experience",
+        "future-tech",
+        "recycling",
+        "low-altitude",
+        "smart-healthcare",
+        "sports-outdoor",
+        "defense-tech",
+        "digital-health",
+        "nuclear-energy",
+        "new-food",
+        "water-security",
+        "mental-health",
+        "inbound-consumption",
+        "synthetic-biology",
+        "obesity-care",
+        "pet-economy",
+        "ocean-economy",
+        "climate-adaptation",
+        "human-upskilling"
+      ],
+      "scores": {
+        "hard-tech": {
+          "attention": 0,
+          "validation": 95.1,
+          "capacity": 95.0,
+          "composite": 85.56,
+          "rank": 1
+        },
+        "ai-agent": {
+          "attention": 48.8,
+          "validation": 81.2,
+          "capacity": 93.2,
+          "composite": 81.28,
+          "rank": 2
+        },
+        "biotech": {
+          "attention": 46.6,
+          "validation": 86.3,
+          "capacity": 75.1,
+          "composite": 79.23,
+          "rank": 3
+        },
+        "resources": {
+          "attention": 0,
+          "validation": 85.5,
+          "capacity": 89.6,
+          "composite": 78.09,
+          "rank": 4
+        },
+        "power": {
+          "attention": 0,
+          "validation": 89.7,
+          "capacity": 73.3,
+          "composite": 76.19,
+          "rank": 5
+        },
+        "ai-application": {
+          "attention": 0,
+          "validation": 84.3,
+          "capacity": 80.6,
+          "composite": 74.85,
+          "rank": 6
+        },
+        "creator-economy": {
+          "attention": 48.4,
+          "validation": 79.1,
+          "capacity": 60.7,
+          "composite": 70.93,
+          "rank": 7
+        },
+        "space": {
+          "attention": 0,
+          "validation": 75.2,
+          "capacity": 86.0,
+          "composite": 70.67,
+          "rank": 8
+        },
+        "grid-storage": {
+          "attention": 0,
+          "validation": 82.3,
+          "capacity": 62.5,
+          "composite": 68.59,
+          "rank": 9
+        },
+        "industrial-software": {
+          "attention": 0,
+          "validation": 73.3,
+          "capacity": 71.5,
+          "composite": 65.47,
+          "rank": 10
+        },
+        "longevity": {
+          "attention": 14.0,
+          "validation": 72.5,
+          "capacity": 67.9,
+          "composite": 65.38,
+          "rank": 11
+        },
+        "embodied-ai": {
+          "attention": 60.0,
+          "validation": 53.0,
+          "capacity": 87.8,
+          "composite": 63.34,
+          "rank": 12
+        },
+        "autonomous-driving": {
+          "attention": 44.9,
+          "validation": 51.3,
+          "capacity": 82.4,
+          "composite": 59.27,
+          "rank": 13
+        },
+        "wealth-longevity": {
+          "attention": 0,
+          "validation": 64.3,
+          "capacity": 64.3,
+          "composite": 57.87,
+          "rank": 14
+        },
+        "service-robot": {
+          "attention": 0,
+          "validation": 50.1,
+          "capacity": 91.4,
+          "composite": 56.53,
+          "rank": 15
+        },
+        "agri-tech": {
+          "attention": 0,
+          "validation": 70.1,
+          "capacity": 46.2,
+          "composite": 56.47,
+          "rank": 16
+        },
+        "cybersecurity": {
+          "attention": 0,
+          "validation": 51.8,
+          "capacity": 57.1,
+          "composite": 48.09,
+          "rank": 17
+        },
+        "experience": {
+          "attention": 0,
+          "validation": 57.1,
+          "capacity": 42.6,
+          "composite": 47.37,
+          "rank": 18
+        },
+        "future-tech": {
+          "attention": 0,
+          "validation": 43.7,
+          "capacity": 69.7,
+          "composite": 46.53,
+          "rank": 19
+        },
+        "recycling": {
+          "attention": 0,
+          "validation": 51.2,
+          "capacity": 48.1,
+          "composite": 45.22,
+          "rank": 20
+        },
+        "low-altitude": {
+          "attention": 61.1,
+          "validation": 28.3,
+          "capacity": 76.9,
+          "composite": 45.04,
+          "rank": 21
+        },
+        "smart-healthcare": {
+          "attention": 0,
+          "validation": 46.8,
+          "capacity": 51.7,
+          "composite": 43.48,
+          "rank": 22
+        },
+        "sports-outdoor": {
+          "attention": 0,
+          "validation": 48.5,
+          "capacity": 44.4,
+          "composite": 42.51,
+          "rank": 23
+        },
+        "defense-tech": {
+          "attention": 0,
+          "validation": 29.8,
+          "capacity": 84.2,
+          "composite": 41.88,
+          "rank": 24
+        },
+        "digital-health": {
+          "attention": 0,
+          "validation": 43.1,
+          "capacity": 51.7,
+          "composite": 41.17,
+          "rank": 25
+        },
+        "nuclear-energy": {
+          "attention": 0,
+          "validation": 28.3,
+          "capacity": 78.8,
+          "composite": 39.45,
+          "rank": 26
+        },
+        "new-food": {
+          "attention": 0,
+          "validation": 47.3,
+          "capacity": 31.8,
+          "composite": 38.28,
+          "rank": 27
+        },
+        "water-security": {
+          "attention": 0,
+          "validation": 28.3,
+          "capacity": 66.1,
+          "composite": 35.94,
+          "rank": 28
+        },
+        "mental-health": {
+          "attention": 0,
+          "validation": 33.2,
+          "capacity": 51.7,
+          "composite": 35.0,
+          "rank": 29
+        },
+        "inbound-consumption": {
+          "attention": 0,
+          "validation": 39.0,
+          "capacity": 35.4,
+          "composite": 34.1,
+          "rank": 30
+        },
+        "synthetic-biology": {
+          "attention": 0,
+          "validation": 28.3,
+          "capacity": 58.9,
+          "composite": 33.94,
+          "rank": 31
+        },
+        "obesity-care": {
+          "attention": 0,
+          "validation": 28.3,
+          "capacity": 49.9,
+          "composite": 31.45,
+          "rank": 32
+        },
+        "pet-economy": {
+          "attention": 0,
+          "validation": 28.3,
+          "capacity": 37.2,
+          "composite": 27.93,
+          "rank": 33
+        },
+        "ocean-economy": {
+          "attention": 0,
+          "validation": 20.4,
+          "capacity": 40.8,
+          "composite": 24.01,
+          "rank": 34
+        },
+        "climate-adaptation": {
+          "attention": 10.5,
+          "validation": 17.3,
+          "capacity": 39.0,
+          "composite": 22.63,
+          "rank": 35
+        },
+        "human-upskilling": {
+          "attention": 0,
+          "validation": 14.3,
+          "capacity": 33.6,
+          "composite": 18.21,
+          "rank": 36
+        }
+      },
+      "states": {
+        "hard-tech": {
+          "state": "拥挤观察",
+          "reason": "同类产品近12个月集中新发且市场规模已较大"
+        },
+        "ai-agent": {
+          "state": "拥挤观察",
+          "reason": "同类产品近12个月集中新发且市场规模已较大"
+        },
+        "biotech": {
+          "state": "拥挤观察",
+          "reason": "同类产品近12个月集中新发且市场规模已较大"
+        },
+        "resources": {
+          "state": "拥挤观察",
+          "reason": "同类产品近12个月集中新发且市场规模已较大"
+        },
+        "power": {
+          "state": "拥挤观察",
+          "reason": "同类产品近12个月集中新发且市场规模已较大"
+        },
+        "ai-application": {
+          "state": "拥挤观察",
+          "reason": "同类产品近12个月集中新发且市场规模已较大"
+        },
+        "creator-economy": {
+          "state": "拥挤观察",
+          "reason": "同类产品近12个月集中新发且市场规模已较大"
+        },
+        "space": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
+        },
+        "grid-storage": {
+          "state": "拥挤观察",
+          "reason": "同类产品近12个月集中新发且市场规模已较大"
+        },
+        "industrial-software": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
+        },
+        "longevity": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
+        },
+        "embodied-ai": {
+          "state": "窗口临近",
+          "reason": "产品需求与资产承载已确认，等待注意力进一步扩散"
+        },
+        "autonomous-driving": {
+          "state": "窗口临近",
+          "reason": "产品需求与资产承载已确认，等待注意力进一步扩散"
+        },
+        "wealth-longevity": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
+        },
+        "service-robot": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
+        },
+        "agri-tech": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
+        },
+        "cybersecurity": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
+        },
+        "experience": {
+          "state": "拥挤观察",
+          "reason": "同类产品近12个月集中新发且市场规模已较大"
+        },
+        "future-tech": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
+        },
+        "recycling": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
+        },
+        "low-altitude": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
+        },
+        "smart-healthcare": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
+        },
+        "sports-outdoor": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
+        },
+        "defense-tech": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
+        },
+        "digital-health": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
+        },
+        "nuclear-energy": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
+        },
+        "new-food": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
+        },
+        "water-security": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
+        },
+        "mental-health": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
+        },
+        "inbound-consumption": {
+          "state": "拥挤观察",
+          "reason": "同类产品近12个月集中新发且市场规模已较大"
+        },
+        "synthetic-biology": {
+          "state": "提前预研",
+          "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
+        },
+        "obesity-care": {
+          "state": "新线索",
+          "reason": "当前仅形成早期信号，证据尚不足"
+        },
+        "pet-economy": {
+          "state": "新线索",
+          "reason": "当前仅形成早期信号，证据尚不足"
+        },
+        "ocean-economy": {
+          "state": "新线索",
+          "reason": "当前仅形成早期信号，证据尚不足"
+        },
+        "climate-adaptation": {
+          "state": "新线索",
+          "reason": "当前仅形成早期信号，证据尚不足"
+        },
+        "human-upskilling": {
+          "state": "暂时退出",
+          "reason": "注意力、产品需求和资产承载均未形成有效支撑"
+        }
+      },
+      "modelVersion": "theme-lifecycle-calibration-v1"
     }
   ],
   "modelCalibration": {
     "modelVersion": "theme-lifecycle-calibration-v1",
-    "asOf": "2026-08-30",
+    "asOf": "2026-08-31",
     "oldestForecastDate": "2026-08-26",
     "quarterlyCohorts": 1,
     "horizons": [
@@ -2126,18 +2581,18 @@
       "boardCode": "BK0800",
       "verified": true,
       "attention": {
-        "score": 45.2,
+        "score": 48.8,
         "statusLabel": "加速扩散",
-        "recent7Appearances": 13,
+        "recent7Appearances": 14,
         "prior7Appearances": 0,
         "crossPlatformHits7d": 0,
-        "activeDays7d": 3,
-        "recent30Appearances": 13,
+        "activeDays7d": 4,
+        "recent30Appearances": 14,
         "crossPlatformHits30d": 0,
-        "activeDays30d": 3,
+        "activeDays30d": 4,
         "bestRank7d": 5,
-        "accelerationPercent": 3036.0,
-        "observedDays": 6,
+        "accelerationPercent": 3220.0,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -2183,14 +2638,12 @@
         "score": 93.2,
         "floatMarketCapYi": 126964.27008,
         "boardName": "人工智能",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: ConnectTimeout"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -2202,7 +2655,7 @@
       "boardCode": "BK1184",
       "verified": true,
       "attention": {
-        "score": 62.9,
+        "score": 60.0,
         "statusLabel": "社会共振",
         "recent7Appearances": 36,
         "prior7Appearances": 0,
@@ -2213,7 +2666,7 @@
         "activeDays30d": 6,
         "bestRank7d": 4,
         "accelerationPercent": 7244.0,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -2259,14 +2712,12 @@
         "score": 87.8,
         "floatMarketCapYi": 53400.79616,
         "boardName": "人形机器人",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: JSONDecodeError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "窗口临近",
         "reason": "产品需求与资产承载已确认，等待注意力进一步扩散"
@@ -2289,7 +2740,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -2335,14 +2786,12 @@
         "score": 86.0,
         "floatMarketCapYi": 51728.3072,
         "boardName": "商业航天",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: JSONDecodeError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2365,7 +2814,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -2411,14 +2860,12 @@
         "score": 73.3,
         "floatMarketCapYi": 27183.85648,
         "boardName": "电网概念",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: ReadTimeout"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -2441,7 +2888,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -2487,14 +2934,12 @@
         "score": 95.0,
         "floatMarketCapYi": 142427.88864,
         "boardName": "半导体概念",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: JSONDecodeError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -2506,7 +2951,7 @@
       "boardCode": "BK1106",
       "verified": true,
       "attention": {
-        "score": 48.1,
+        "score": 46.6,
         "statusLabel": "社会共振",
         "recent7Appearances": 16,
         "prior7Appearances": 0,
@@ -2517,7 +2962,7 @@
         "activeDays30d": 3,
         "bestRank7d": 2,
         "accelerationPercent": 4812.0,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -2563,14 +3008,12 @@
         "score": 75.1,
         "floatMarketCapYi": 30619.52608,
         "boardName": "创新药",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: ConnectTimeout"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -2582,7 +3025,7 @@
       "boardCode": "BK0653",
       "verified": true,
       "attention": {
-        "score": 14.5,
+        "score": 14.0,
         "statusLabel": "开始扩散",
         "recent7Appearances": 3,
         "prior7Appearances": 0,
@@ -2593,7 +3036,7 @@
         "activeDays30d": 1,
         "bestRank7d": 41,
         "accelerationPercent": 20.0,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -2639,14 +3082,12 @@
         "score": 67.9,
         "floatMarketCapYi": 22517.31136,
         "boardName": "养老概念",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: ConnectTimeout"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2669,7 +3110,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -2715,14 +3156,12 @@
         "score": 42.6,
         "floatMarketCapYi": 6399.61888,
         "boardName": "新消费",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: ConnectTimeout"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -2745,7 +3184,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -2791,14 +3230,12 @@
         "score": 89.6,
         "floatMarketCapYi": 64728.62976,
         "boardName": "新材料",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: JSONDecodeError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -2821,7 +3258,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -2867,14 +3304,12 @@
         "score": 69.7,
         "floatMarketCapYi": 25065.78912,
         "boardName": "量子科技",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: JSONDecodeError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2897,7 +3332,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -2943,14 +3378,12 @@
         "score": 71.5,
         "floatMarketCapYi": 25218.7544,
         "boardName": "国产软件",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: ConnectTimeout"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -2973,7 +3406,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -3019,14 +3452,12 @@
         "score": 80.6,
         "floatMarketCapYi": 46985.62816,
         "boardName": "云计算",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: ConnectTimeout"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "拥挤观察",
         "reason": "同类产品近12个月集中新发且市场规模已较大"
@@ -3049,7 +3480,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -3095,14 +3526,12 @@
         "score": 57.1,
         "floatMarketCapYi": 10154.58,
         "boardName": "数据安全",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: JSONDecodeError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -3125,7 +3554,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -3171,14 +3600,12 @@
         "score": 51.7,
         "floatMarketCapYi": 9631.78432,
         "boardName": "医疗服务",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: JSONDecodeError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -3201,7 +3628,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -3247,14 +3674,12 @@
         "score": 58.9,
         "floatMarketCapYi": 12343.392,
         "boardName": "合成生物",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: JSONDecodeError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -3277,7 +3702,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -3323,14 +3748,12 @@
         "score": 78.8,
         "floatMarketCapYi": 40745.74848,
         "boardName": "核能核电",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: JSONDecodeError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -3353,7 +3776,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -3399,14 +3822,12 @@
         "score": 66.1,
         "floatMarketCapYi": 19927.72256,
         "boardName": "水利建设",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: JSONDecodeError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -3418,18 +3839,18 @@
       "boardCode": "BK1166",
       "verified": true,
       "attention": {
-        "score": 58.5,
+        "score": 61.1,
         "statusLabel": "社会共振",
-        "recent7Appearances": 27,
+        "recent7Appearances": 28,
         "prior7Appearances": 0,
         "crossPlatformHits7d": 3,
-        "activeDays7d": 5,
-        "recent30Appearances": 27,
+        "activeDays7d": 6,
+        "recent30Appearances": 28,
         "crossPlatformHits30d": 3,
-        "activeDays30d": 5,
+        "activeDays30d": 6,
         "bestRank7d": 2,
-        "accelerationPercent": 6412.0,
-        "observedDays": 6,
+        "accelerationPercent": 6796.0,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -3475,14 +3896,12 @@
         "score": 76.9,
         "floatMarketCapYi": 35289.25408,
         "boardName": "低空经济",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: JSONDecodeError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -3494,7 +3913,7 @@
       "boardCode": "BK0920",
       "verified": true,
       "attention": {
-        "score": 46.3,
+        "score": 44.9,
         "statusLabel": "加速扩散",
         "recent7Appearances": 17,
         "prior7Appearances": 0,
@@ -3505,7 +3924,7 @@
         "activeDays30d": 3,
         "bestRank7d": 3,
         "accelerationPercent": 3260.0,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -3551,14 +3970,12 @@
         "score": 82.4,
         "floatMarketCapYi": 49359.63392,
         "boardName": "车联网(车路云)",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: JSONDecodeError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "窗口临近",
         "reason": "产品需求与资产承载已确认，等待注意力进一步扩散"
@@ -3581,7 +3998,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -3627,14 +4044,12 @@
         "score": 49.9,
         "floatMarketCapYi": 8464.85616,
         "boardName": "减肥药",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: ReadTimeout"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "新线索",
         "reason": "当前仅形成早期信号，证据尚不足"
@@ -3646,7 +4061,7 @@
       "boardCode": "BK1058",
       "verified": true,
       "attention": {
-        "score": 11.0,
+        "score": 10.5,
         "statusLabel": "开始扩散",
         "recent7Appearances": 2,
         "prior7Appearances": 0,
@@ -3657,7 +4072,7 @@
         "activeDays30d": 1,
         "bestRank7d": 46,
         "accelerationPercent": -20.0,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -3703,14 +4118,12 @@
         "score": 39.0,
         "floatMarketCapYi": 3663.21168,
         "boardName": "地下管网",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: JSONDecodeError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "新线索",
         "reason": "当前仅形成早期信号，证据尚不足"
@@ -3733,7 +4146,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -3779,14 +4192,12 @@
         "score": 51.7,
         "floatMarketCapYi": 9631.78432,
         "boardName": "医疗服务",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: ConnectTimeout"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -3809,7 +4220,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -3855,14 +4266,12 @@
         "score": 51.7,
         "floatMarketCapYi": 9631.78432,
         "boardName": "医疗服务",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
       },
-      "errors": [
-        "gdelt: HTTPError"
-      ],
+      "errors": [],
       "lifecycle": {
         "state": "提前预研",
         "reason": "产业或资产条件已出现，但社会注意力尚未充分形成"
@@ -3885,7 +4294,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -3931,7 +4340,7 @@
         "score": 37.2,
         "floatMarketCapYi": 3575.09312,
         "boardName": "宠物经济",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
@@ -3959,7 +4368,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -4005,7 +4414,7 @@
         "score": 44.4,
         "floatMarketCapYi": 6436.2424,
         "boardName": "体育产业",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
@@ -4033,7 +4442,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -4079,7 +4488,7 @@
         "score": 35.4,
         "floatMarketCapYi": 2850.77776,
         "boardName": "旅游酒店",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
@@ -4107,7 +4516,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -4153,7 +4562,7 @@
         "score": 31.8,
         "floatMarketCapYi": 393.65789,
         "boardName": "保健品",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
@@ -4181,7 +4590,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -4227,7 +4636,7 @@
         "score": 48.1,
         "floatMarketCapYi": 7473.17936,
         "boardName": "垃圾分类",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
@@ -4255,7 +4664,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -4301,7 +4710,7 @@
         "score": 62.5,
         "floatMarketCapYi": 15902.65216,
         "boardName": "抽水蓄能",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
@@ -4329,7 +4738,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -4375,7 +4784,7 @@
         "score": 84.2,
         "floatMarketCapYi": 50890.48064,
         "boardName": "军工",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
@@ -4403,7 +4812,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -4449,7 +4858,7 @@
         "score": 46.2,
         "floatMarketCapYi": 6778.28816,
         "boardName": "农业种植",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
@@ -4477,7 +4886,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -4523,7 +4932,7 @@
         "score": 64.3,
         "floatMarketCapYi": 19879.11344,
         "boardName": "保险Ⅱ",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
@@ -4551,7 +4960,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -4597,7 +5006,7 @@
         "score": 33.6,
         "floatMarketCapYi": 784.96762,
         "boardName": "教育",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
@@ -4614,7 +5023,7 @@
       "boardCode": "BK0486",
       "verified": true,
       "attention": {
-        "score": 50.3,
+        "score": 48.4,
         "statusLabel": "加速扩散",
         "recent7Appearances": 13,
         "prior7Appearances": 0,
@@ -4625,7 +5034,7 @@
         "activeDays30d": 4,
         "bestRank7d": 8,
         "accelerationPercent": 2828.0,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -4671,7 +5080,7 @@
         "score": 60.7,
         "floatMarketCapYi": 12835.38432,
         "boardName": "传媒",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
@@ -4699,7 +5108,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -4745,7 +5154,7 @@
         "score": 40.8,
         "floatMarketCapYi": 3777.07824,
         "boardName": "航海装备Ⅱ",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
@@ -4773,7 +5182,7 @@
         "activeDays30d": 0,
         "bestRank7d": null,
         "accelerationPercent": -100,
-        "observedDays": 6,
+        "observedDays": 7,
         "mediaAgenda": null,
         "source": "百度热搜 × 头条热榜",
         "sourceUrl": "https://top.baidu.com/board?tab=realtime",
@@ -4819,7 +5228,7 @@
         "score": 91.4,
         "floatMarketCapYi": 118502.35392,
         "boardName": "机器人概念",
-        "asOf": "2026-08-30",
+        "asOf": "2026-08-31",
         "source": "东方财富公开板块行情",
         "sourceUrl": "https://push2delay.eastmoney.com/api/qt/stock/get",
         "status": "真实公开数据"
@@ -4831,23 +5240,23 @@
       }
     }
   ],
-  "attentionObservationDays": 6,
+  "attentionObservationDays": 7,
   "attentionMaturity": {
-    "observedDays": 6,
-    "tier": "当日异动",
-    "effectiveWeight": 0.05,
+    "observedDays": 7,
+    "tier": "短期扩散",
+    "effectiveWeight": 0.1,
     "targetDays": 90,
     "sampleAdequate": false
   },
   "rankingWeights": {
-    "attention": 0.05,
-    "validation": 0.6577,
-    "capacity": 0.2923
+    "attention": 0.1,
+    "validation": 0.6231,
+    "capacity": 0.2769
   },
   "historyCoverage": {
-    "rawSamples": 52,
-    "daily": 6,
-    "weekly": 1,
+    "rawSamples": 53,
+    "daily": 7,
+    "weekly": 2,
     "monthly": 1
   },
   "attentionSources": [
