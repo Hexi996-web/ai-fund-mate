@@ -4933,3 +4933,45 @@
   .research-pool .horizon-memo__heading > div strong { font-size: 21px; }
   .research-pool .horizon-list span strong { font-size: 15px; }
 }
+
+/* Give the opportunity/attention map enough room for the full 36-theme universe. */
+@media (min-width: 1151px) {
+  .research-pool .attention-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: 640px auto auto !important;
+    gap: 16px 0;
+  }
+  .research-pool .attention-canvas {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    min-width: 0;
+    height: 640px;
+  }
+  .research-pool .attention-pending {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .research-pool .attention-detail {
+    grid-column: 1 !important;
+    grid-row: 3 !important;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .research-pool .attention-axis-x {
+    display: none;
+  }
+  .research-pool .attention-dot span {
+    max-width: 170px;
+    font-size: 11px !important;
+  }
+}
+
+@media (min-width: 761px) and (max-width: 1150px) {
+  .research-pool .attention-grid {
+    grid-template-rows: 540px auto auto !important;
+  }
+  .research-pool .attention-canvas {
+    height: 540px;
+  }
+}
