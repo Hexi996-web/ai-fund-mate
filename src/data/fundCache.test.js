@@ -28,18 +28,19 @@ class MemoryStorage {
   }
 }
 
-const CACHE_KEY = 'ai-fund-mate:fund-products:v4'
+const CACHE_KEY = 'ai-fund-mate:fund-products:v5'
 const OLD_CACHE_KEY = 'ai-fund-mate:funds:v3'
 const today = '2026-08-10'
 const yesterday = '2026-08-09'
 const fetchedAt = 1786320000000
 const cachedProducts = [{ productId: 'p1', shareCount: 1, shares: [{ code: '000001' }] }]
-const cacheInput = { date: today, dataDate: '2026-08-08', fetchedAt, source: 'products', products: cachedProducts, productTotal: 1, shareTotal: 1 }
+const cacheInput = { date: today, dataDate: '2026-08-08', updateTime: '2026-08-10 07:30:00', fetchedAt, source: 'products', products: cachedProducts, productTotal: 1, shareTotal: 1 }
 
 const storedCache = (overrides = {}) => ({
-  schemaVersion: 4,
+  schemaVersion: 5,
   date: today,
   dataDate: '2026-08-08',
+  updateTime: '2026-08-10 07:30:00',
   fetchedAt,
   source: 'products',
   products: cachedProducts,
@@ -58,7 +59,7 @@ test('reuses a complete valid v3 cache written today', () => {
 test('invalidates an old v3 cache that does not contain dataDate', () => {
   const storage = new MemoryStorage()
   storage.setItem(CACHE_KEY, JSON.stringify({
-    schemaVersion: 4,
+    schemaVersion: 5,
     date: today,
     fetchedAt,
     source: 'products',
@@ -86,7 +87,7 @@ test('preserves an explicitly unavailable snapshot data date', () => {
 test('rejects incomplete v3 caches without fetchedAt', () => {
   const storage = new MemoryStorage()
   storage.setItem(CACHE_KEY, JSON.stringify({
-    schemaVersion: 4,
+    schemaVersion: 5,
     date: today,
     source: 'products',
     products: cachedProducts,

@@ -6,6 +6,7 @@ const shares = [
 ]
 
 const productPayload = {
+  dataDate: '2026-08-12',
   updateTime: '2026-08-13 19:00:00',
   productTotal: 1,
   shareTotal: 2,

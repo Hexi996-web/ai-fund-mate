@@ -8,7 +8,7 @@ import {
   readStaleFundCache,
   writeFundCache,
 } from './data/fundCache.js'
-import { fetchFundProductPayload, getPayloadDataDate } from './data/fundData.js'
+import { fetchFundProductPayload, getPayloadDataDate, getPayloadUpdateTime } from './data/fundData.js'
 import { DATA_STATUS_POLL_MS, fetchDataStatus } from './data/dataStatus.js'
 import { fallbackProductsFromShares, normalizeProducts, selectProducts } from './data/fundProductModel.js'
 import './App.css'
@@ -59,6 +59,7 @@ export default function App({ initialQuery = '', onQueryChange, establishedWindo
   const [status, setStatus] = useState('loading')
   const [error, setError] = useState('')
   const [dataDate, setDataDate] = useState('')
+  const [updateTime, setUpdateTime] = useState('')
   const [source, setSource] = useState('')
   const [isStaleCache, setIsStaleCache] = useState(false)
   const [query, setQuery] = useState(initialQuery)
@@ -92,6 +93,8 @@ export default function App({ initialQuery = '', onQueryChange, establishedWindo
       setProducts(availableCache.products)
       setShareTotal(availableCache.shareTotal)
       setDataDate(availableCache.dataDate)
+      setUpdateTime(availableCache.updateTime)
+      updateTimeRef.current = availableCache.updateTime
       setSource(availableCache.source)
       setIsStaleCache(availableCache !== cached)
       setStatus('ready')
@@ -102,19 +105,23 @@ export default function App({ initialQuery = '', onQueryChange, establishedWindo
         const { payload, source: nextSource } = await fetchFundProductPayload(fetch, { signal: controller.signal })
         const normalized = nextSource === 'products' ? normalizeProducts(payload) : fallbackProductsFromShares(payload)
         const nextDataDate = getPayloadDataDate(payload)
+        const nextUpdateTime = getPayloadUpdateTime(payload)
+        if (!nextDataDate || !nextUpdateTime) throw new Error('基金快照缺少独立的数据日期或更新时间')
         if (normalized.length === 0) throw new Error('接口未返回有效基金数据')
 
         setProducts(normalized)
         const nextShareTotal = normalized.reduce((sum, product) => sum + product.shareCount, 0)
         setShareTotal(nextShareTotal)
         setDataDate(nextDataDate)
-        updateTimeRef.current = payload.updateTime ?? ''
+        setUpdateTime(nextUpdateTime)
+        updateTimeRef.current = nextUpdateTime
         setSource(nextSource)
         setIsStaleCache(false)
         setStatus('ready')
         writeFundCache(window.localStorage, {
           date: today,
           dataDate: nextDataDate,
+          updateTime: nextUpdateTime,
           fetchedAt: Date.now(),
           source: nextSource,
           products: normalized,
@@ -238,6 +245,7 @@ export default function App({ initialQuery = '', onQueryChange, establishedWindo
       <main className="content">
         <div className="meta-row">
           <p>数据日期：<strong>{dataDate || '--'}</strong></p>
+          <p>更新时间：<strong>{updateTime || '--'}</strong></p>
           {status === 'ready' ? <p><strong>基金产品 {scopedProducts.length.toLocaleString('zh-CN')} 只｜基金份额 {scopedShareTotal.toLocaleString('zh-CN')} 个</strong></p> : null}
         </div>
 

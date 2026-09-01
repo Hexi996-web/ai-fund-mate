@@ -146,10 +146,10 @@ test('throws the fallback request error when the simple source fails', async () 
 
   await assert.rejects(() => fetchFundPayload(fetchImpl), /503/)
 })
-test('extracts the truthful snapshot date from either supported update field', () => {
-  assert.equal(getPayloadDataDate({ updateTime: '2026-08-10 14:13:11' }), '2026-08-10')
-  assert.equal(getPayloadDataDate({ update_time: '2026-08-09T23:00:00+08:00' }), '2026-08-09')
-  assert.equal(getPayloadDataDate({ updateTime: 'not-a-date' }), null)
+test('extracts data date without confusing it with update time', () => {
+  assert.equal(getPayloadDataDate({ dataDate: '2026-08-08', updateTime: '2026-08-10 14:13:11' }), '2026-08-08')
+  assert.equal(getPayloadDataDate({ snapshotDate: '2026-08-09' }), '2026-08-09')
+  assert.equal(getPayloadDataDate({ updateTime: '2026-08-10 14:13:11' }), null)
   assert.equal(getPayloadDataDate({}), null)
 })
 test('prefers the product dataset when it is available', async () => {

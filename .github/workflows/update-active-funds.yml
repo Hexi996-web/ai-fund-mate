@@ -73,8 +73,14 @@ jobs:
         id: snapshot
         shell: bash
         run: |
-          snapshot_date="$(python -c "import json; print(json.load(open('public/fund_products.json', encoding='utf-8'))['updateTime'][:10])")"
-          echo "date=$snapshot_date" >> "$GITHUB_OUTPUT"
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          products = json.load(open('public/fund_products.json', encoding='utf-8'))
+          issuance = json.load(open('public/issuance_insights.json', encoding='utf-8'))
+          print(f"date={products['dataDate']}")
+          print(f"update_time={products['updateTime']}")
+          print(f"issuance_date={issuance['dataDate']}")
+          PY
       - name: Validate fund datasets
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.verify_only != true }}
         run: |
@@ -137,16 +143,19 @@ jobs:
             test "$attempt" -eq 3 && exit 1
             sleep $((attempt * 5))
           done
-      - name: Wait for Vercel to publish the same daily snapshot
+      - name: Wait for production to publish the same daily snapshot
         env:
           EXPECTED_DATE: ${{ steps.snapshot.outputs.date }}
-        run: python scripts/verify_deployed_snapshot.py --base-url "$PRODUCTION_URL" --expected-date "$EXPECTED_DATE" --timeout-seconds 600 --attention-max-age-hours 4
+          EXPECTED_UPDATE_TIME: ${{ steps.snapshot.outputs.update_time }}
+          EXPECTED_ISSUANCE_DATE: ${{ steps.snapshot.outputs.issuance_date }}
+        run: python scripts/verify_deployed_snapshot.py --base-url "$PRODUCTION_URL" --expected-date "$EXPECTED_DATE" --expected-update-time "$EXPECTED_UPDATE_TIME" --expected-issuance-date "$EXPECTED_ISSUANCE_DATE" --timeout-seconds 600 --attention-max-age-hours 4
       - name: Install interface verifier dependencies
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_only == true }}
         run: npm ci
       - name: Verify all three production interfaces
         env:
           EXPECTED_DATE: ${{ steps.snapshot.outputs.date }}
+          EXPECTED_UPDATE_TIME: ${{ steps.snapshot.outputs.update_time }}
         run: |
           npx playwright install --with-deps chromium
           node scripts/verify_deployed_interface.mjs

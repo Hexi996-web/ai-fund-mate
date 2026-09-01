@@ -26,12 +26,16 @@ def test_daily_snapshot_accepts_independently_fresh_attention(monkeypatch) -> No
 
     def fake_json(url: str) -> dict:
         if "fund_products" in url:
-            return {"updateTime": "2026-08-31 08:00:00"}
+            return {"dataDate": "2026-08-30", "updateTime": "2026-08-31 08:00:00"}
         if "issuance_insights" in url:
             return {"dataDate": "2026-08-31"}
         if "attention_pool" in url:
             return {"generatedAt": generated_at, "verifiedCount": 36, "recommendedIds": list(range(10))}
-        return {"snapshotDate": "2026-08-31"}
+        return {"dataDate": "2026-08-30", "productsUpdateTime": "2026-08-31 08:00:00"}
 
     monkeypatch.setattr(verifier, "_json", fake_json)
-    verifier.wait_for_deployment("https://example.test", "2026-08-31", 1, 4)
+    verifier.wait_for_deployment(
+        "https://example.test", "2026-08-30", 1, 4,
+        expected_update_time="2026-08-31 08:00:00",
+        expected_issuance_date="2026-08-31",
+    )

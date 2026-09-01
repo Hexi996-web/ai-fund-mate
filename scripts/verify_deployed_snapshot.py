@@ -53,6 +53,8 @@ def wait_for_deployment(
     expected_date: str,
     timeout_seconds: int,
     attention_max_age_hours: float = 4,
+    expected_update_time: str | None = None,
+    expected_issuance_date: str | None = None,
 ) -> None:
     deadline = time.monotonic() + timeout_seconds
     last_observed: dict[str, str | None] = {}
@@ -63,15 +65,22 @@ def wait_for_deployment(
             attention = _json(urljoin(base_url.rstrip("/") + "/", "attention_pool_evidence.json"))
             status = _json(urljoin(base_url.rstrip("/") + "/", "data_status.json"))
             last_observed = {
-                "fund_products": _date(products.get("updateTime")),
+                "fund_products_data_date": _date(products.get("dataDate")),
+                "fund_products_update_time": products.get("updateTime"),
                 "issuance_insights": _date(issuance.get("dataDate")),
-                "data_status": _date(status.get("snapshotDate")),
+                "data_status_data_date": _date(status.get("dataDate") or status.get("snapshotDate")),
+                "data_status_update_time": status.get("productsUpdateTime"),
                 "attention_generated_at": attention.get("generatedAt"),
             }
             attention_complete = attention.get("verifiedCount") == 36 and len(attention.get("recommendedIds") or []) == 10
-            daily_snapshots_match = all(
-                last_observed[key] == expected_date
-                for key in ("fund_products", "issuance_insights", "data_status")
+            daily_snapshots_match = (
+                last_observed["fund_products_data_date"] == expected_date
+                and last_observed["data_status_data_date"] == expected_date
+                and (expected_update_time is None or (
+                    last_observed["fund_products_update_time"] == expected_update_time
+                    and last_observed["data_status_update_time"] == expected_update_time
+                ))
+                and (expected_issuance_date is None or last_observed["issuance_insights"] == expected_issuance_date)
             )
             attention_fresh = _attention_is_fresh(attention.get("generatedAt"), attention_max_age_hours)
             if daily_snapshots_match and attention_complete and attention_fresh:
@@ -87,6 +96,8 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--base-url", required=True)
     parser.add_argument("--expected-date", required=True)
+    parser.add_argument("--expected-update-time")
+    parser.add_argument("--expected-issuance-date")
     parser.add_argument("--timeout-seconds", type=int, default=600)
     parser.add_argument("--attention-max-age-hours", type=float, default=4)
     args = parser.parse_args()
@@ -95,6 +106,8 @@ def main() -> int:
         args.expected_date,
         args.timeout_seconds,
         args.attention_max_age_hours,
+        args.expected_update_time,
+        args.expected_issuance_date,
     )
     return 0
 

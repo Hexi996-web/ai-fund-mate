@@ -2,8 +2,8 @@
 from __future__ import annotations
 
 import json
-import os
 from pathlib import Path
+from .database_url import database_url
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -15,7 +15,7 @@ def atomic_write(path: Path, payload: dict) -> None:
 
 
 def main() -> int:
-    url = os.getenv("HISTORY_DATABASE_URL") or os.getenv("DATABASE_URL") or os.getenv("SUPABASE_DB_URL")
+    url = database_url()
     if not url:
         print("历史数据库未配置，使用仓库内回退历史")
         return 0

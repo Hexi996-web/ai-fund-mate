@@ -2,7 +2,8 @@ import { chromium } from '@playwright/test'
 
 const baseURL = process.env.PRODUCTION_URL
 const expectedDate = process.env.EXPECTED_DATE
-if (!baseURL || !expectedDate) throw new Error('PRODUCTION_URL and EXPECTED_DATE are required')
+const expectedUpdateTime = process.env.EXPECTED_UPDATE_TIME
+if (!baseURL || !expectedDate || !expectedUpdateTime) throw new Error('PRODUCTION_URL, EXPECTED_DATE and EXPECTED_UPDATE_TIME are required')
 
 const browser = await chromium.launch({ headless: true })
 try {
@@ -25,14 +26,14 @@ try {
   await page.getByText('母池36个方向全部展示').waitFor()
   if (await page.locator('.attention-dot').count() !== 36) throw new Error('attention heatmap did not render all 36 verified themes')
   if (await page.locator('.attention-dot.is-core').count() !== 10) throw new Error('attention heatmap did not render exactly 10 core themes')
-  await page.getByRole('heading', { name: '产品方向可行性' }).waitFor()
-  await page.getByRole('heading', { name: '产品空位判断' }).waitFor()
+  await page.getByRole('heading', { name: '产品经理前瞻简报' }).waitFor()
 
   await page.getByRole('button', { name: '公募基金简报' }).click()
   await page.getByRole('heading', { name: '公募基金简报' }).waitFor()
   await page.getByRole('heading', { name: '全市场公募基金摘要' }).waitFor()
   await page.getByText(`统计截止：${expectedDate}`).waitFor()
   await page.getByText(`数据日期：${expectedDate}`).waitFor()
+  await page.getByText(`更新时间：${expectedUpdateTime}`).waitFor()
 
   await page.getByRole('button', { name: '行情预测' }).click()
   await page.getByRole('heading', { name: '行情预测' }).waitFor()

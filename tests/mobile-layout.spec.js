@@ -55,7 +55,7 @@ const routeActiveFunds = async (page) => {
   await page.route('**/funds_active.json', (route) => route.fulfill({
     status: 200,
     contentType: 'application/json',
-    body: JSON.stringify({ updateTime: '2026-08-10 14:13:11', funds: activeFunds }),
+    body: JSON.stringify({ dataDate: '2026-08-08', updateTime: '2026-08-10 14:13:11', funds: activeFunds }),
   }))
 }
 
@@ -78,7 +78,8 @@ test('mobile fund flow stays compact and persists the selected view', async ({ p
   await page.reload()
   await openFundLibrary(page)
   await expect(page).toHaveTitle('AI虚拟产品经理')
-  await expect(page.locator('.meta-row').first()).toContainText('数据日期：2026-08-10')
+  await expect(page.locator('.meta-row').first()).toContainText('数据日期：2026-08-08')
+  await expect(page.locator('.meta-row').first()).toContainText('更新时间：2026-08-10 14:13:11')
   await expect(page.locator('.fund-product-table tbody > tr:not(.fund-product-share-detail)')).toHaveCount(activeFunds.length)
   await expect(page.locator('vite-error-overlay, nextjs-portal, #webpack-dev-server-client-overlay')).toHaveCount(0)
   await expect(page.getByRole('button', { name: '卡片', exact: true })).toHaveCount(0)
@@ -166,7 +167,7 @@ test('snapshot data date is truthful and date sorting disappears when all real d
   await page.route('**/funds_active.json', (route) => route.fulfill({
     status: 200,
     contentType: 'application/json',
-    body: JSON.stringify({ update_time: '2026-08-07T18:30:00+08:00', funds: noDateFunds }),
+    body: JSON.stringify({ dataDate: '2026-08-06', update_time: '2026-08-07T18:30:00+08:00', funds: noDateFunds }),
   }))
 
   await clearStorage(page)
@@ -177,7 +178,8 @@ test('snapshot data date is truthful and date sorting disappears when all real d
   await page.reload()
   await openFundLibrary(page)
 
-  await expect(page.locator('.meta-row').first()).toContainText('数据日期：2026-08-07')
+  await expect(page.locator('.meta-row').first()).toContainText('数据日期：2026-08-06')
+  await expect(page.locator('.meta-row').first()).toContainText('更新时间：2026-08-07T18:30:00+08:00')
   await expect(page.getByLabel('基金排序方式')).toHaveValue('scale-desc')
   await expect(page.getByLabel('基金排序方式').locator('option[value="date-desc"]')).toHaveCount(0)
   await expect(page.getByLabel('基金排序方式').locator('option[value="date-asc"]')).toHaveCount(0)
@@ -188,6 +190,7 @@ test('active-share fallback warns and renders unavailable real fields explicitly
     status: 200,
     contentType: 'application/json',
     body: JSON.stringify({
+      dataDate: '2026-08-05',
       updateTime: '2026-08-06 15:00:00',
       funds: [{ code: '123456', name: '降级消费股票', type: '股票型' }],
     }),
@@ -196,7 +199,8 @@ test('active-share fallback warns and renders unavailable real fields explicitly
   await clearStorage(page)
   await page.reload()
   await openFundLibrary(page)
-  await expect(page.locator('.meta-row').first()).toContainText('数据日期：2026-08-06')
+  await expect(page.locator('.meta-row').first()).toContainText('数据日期：2026-08-05')
+  await expect(page.locator('.meta-row').first()).toContainText('更新时间：2026-08-06 15:00:00')
   await expect(page.locator('.fund-product-table tbody > tr')).toHaveCount(1)
   await expect(page.locator('.fund-product-table tbody > tr')).toContainText('123456')
   await expect(page.locator('.cache-warning')).toContainText('降级数据源')

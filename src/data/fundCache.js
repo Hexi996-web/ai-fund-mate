@@ -1,6 +1,6 @@
-export const FUND_CACHE_KEY = 'ai-fund-mate:fund-products:v4'
+export const FUND_CACHE_KEY = 'ai-fund-mate:fund-products:v5'
 export const LEGACY_FUND_CACHE_KEY = 'ai-fund-mate:funds:v3'
-export const SCHEMA_VERSION = 4
+export const SCHEMA_VERSION = 5
 
 const preferenceKey = (key) => `ai-fund-mate:preference:${key}`
 
@@ -27,6 +27,7 @@ const isValidCache = (value) => (
   value?.schemaVersion === SCHEMA_VERSION
   && typeof value.date === 'string' && value.date.length > 0
   && Object.hasOwn(value, 'dataDate') && isValidDataDate(value.dataDate)
+  && typeof value.updateTime === 'string' && value.updateTime.length > 0
   && Number.isFinite(value.fetchedAt) && value.fetchedAt > 0
   && (value.source === 'products' || value.source === 'active-shares')
   && validProductTotals(value)
@@ -69,6 +70,7 @@ export const writeFundCache = (storage, value) => {
     schemaVersion: SCHEMA_VERSION,
     date: value.date,
     dataDate: value.dataDate,
+    updateTime: value.updateTime,
     fetchedAt: value.fetchedAt,
     source: value.source,
     products: value.products,

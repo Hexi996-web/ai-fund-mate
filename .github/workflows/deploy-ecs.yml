@@ -1,0 +1,46 @@
+name: Deploy production to Aliyun ECS
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-ecs-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - name: Build and test
+        run: |
+          npm ci
+          npm test
+          npm run build
+      - name: Prepare release archive
+        run: tar -czf /tmp/ai-fund-mate-release.tar.gz --exclude=node_modules --exclude=.git .
+      - name: Configure SSH
+        env:
+          ECS_SSH_PRIVATE_KEY: ${{ secrets.ECS_SSH_PRIVATE_KEY }}
+          ECS_HOST_KEY: ${{ secrets.ECS_HOST_KEY }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$ECS_SSH_PRIVATE_KEY" > ~/.ssh/ai-fund-mate
+          chmod 600 ~/.ssh/ai-fund-mate
+          printf '%s\n' "$ECS_HOST_KEY" > ~/.ssh/known_hosts
+      - name: Upload and activate release
+        env:
+          ECS_HOST: ${{ vars.ECS_HOST }}
+          ECS_USER: ${{ vars.ECS_USER }}
+        run: |
+          scp -i ~/.ssh/ai-fund-mate /tmp/ai-fund-mate-release.tar.gz "$ECS_USER@$ECS_HOST:/tmp/ai-fund-mate-release.tar.gz"
+          ssh -i ~/.ssh/ai-fund-mate "$ECS_USER@$ECS_HOST" "GITHUB_SHA=$GITHUB_SHA bash -s" < scripts/deploy_ecs.sh
+      - name: Verify public domain
+        run: curl --fail --retry 6 --retry-delay 5 https://chanpin.becoming.fund/healthz

@@ -35,7 +35,7 @@ const judgement = (row) => {
 
 export function buildMarketForecast(payload) {
   const products = payload?.products ?? []
-  const dataDate = payload?.dataDate ?? payload?.updateTime?.slice(0, 10) ?? '--'
+  const dataDate = payload?.dataDate ?? '--'
   const rows = DEFINITIONS.map((definition) => {
     const funds = products.filter(definition.test)
     const returnFunds = funds.filter((product) => comparableReturn(product, dataDate))

@@ -3,10 +3,10 @@ from __future__ import annotations
 
 import argparse
 import hashlib
-import os
 import re
 import sys
 from pathlib import Path
+from .database_url import database_url
 
 MIGRATION_PATTERN = re.compile(r"^[0-9]{3}_[a-z0-9_]+\.sql$")
 
@@ -34,18 +34,12 @@ def transactional_sql(path: Path) -> str:
     return match.group("body").strip()
 
 
-def database_url() -> str | None:
-    return os.getenv("HISTORY_DATABASE_URL") or os.getenv("DATABASE_URL") or os.getenv("SUPABASE_DB_URL")
-
-
 def apply(directory: Path, dry_run: bool = False) -> list[dict[str, str]]:
     migrations = discover_migrations(directory)
     plan = [{"version": path.stem.split("_", 1)[0], "name": path.name, "checksum": migration_checksum(path)} for path in migrations]
     if dry_run:
         return plan
-    url = database_url()
-    if not url:
-        raise RuntimeError("缺少 HISTORY_DATABASE_URL、DATABASE_URL 或 SUPABASE_DB_URL")
+    url = database_url(required=True)
     import psycopg
     # Supabase transaction poolers can reuse a server session across clients;
     # disabling named prepared statements avoids name collisions.
