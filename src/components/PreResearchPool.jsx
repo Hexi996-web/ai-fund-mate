@@ -311,6 +311,7 @@ function DemandEvidence({ structure, rows, yoy, access, catalysts }) {
         <div><span>{observation.role}</span><strong>{observation.name}</strong><small>数据日期 {observation.latestDate}</small></div>
         <dl><div><dt>同比</dt><dd>{signedPct(observation.yoyPercent)}</dd></div><div><dt>有效权重</dt><dd>{pct(observation.effectiveWeightPercent)}</dd></div><div><dt>指数贡献</dt><dd>{signedPoints(observation.contributionPoints)}</dd></div></dl>
         <p>{observation.interpretation}</p>
+        {observation.cadence ? <small>更新频率 {observation.cadence === "monthly" ? "月度" : observation.cadence === "quarterly" ? "季度" : "年度"}{observation.nextCheckAt ? ` · 下次检查 ${observation.nextCheckAt}` : ""}</small> : null}
       </article>)}
       {rows.length >= 2 ? <><MiniTrend rows={rows} field="value" unit={structure.unit} /><p className="evidence-principle">{structure.metric}最新同比{signedPct(yoy)}；该序列仅作为辅助供给证据。</p></> : null}
     </section> : <div className="evidence-empty"><b>{access}</b><h3>核心指标正在接入</h3><p>当前没有足以代表整个方向需求的连续数据，综合指数保持中性，不使用股价或单一新闻替代真实需求。</p></div>}

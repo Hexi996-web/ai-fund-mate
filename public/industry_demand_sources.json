@@ -1,0 +1,1248 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-09-01T14:40:17.624568+08:00",
+  "sources": [
+    {
+      "id": "power-electricity-monthly",
+      "themeId": "power",
+      "metricName": "全社会用电量",
+      "role": "渗透与采用",
+      "baseWeightPercent": 35,
+      "cadence": "monthly",
+      "expectedLagDays": 45,
+      "sourceName": "国家统计局口径／AKShare全社会用电分类接口",
+      "sourceUrl": "https://data.stats.gov.cn/",
+      "status": "active",
+      "lastCheckedAt": "2026-09-01T14:40:13.674173+08:00",
+      "latestDataDate": "2026-07",
+      "nextCheckAt": "2026-09-15",
+      "observations": [
+        {
+          "dataDate": "2015-09",
+          "value": 413440000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 0.9,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2015-10",
+          "value": 458350000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 0.77,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2015-11",
+          "value": 504930000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 0.75,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2015-12",
+          "value": 555000000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 0.48,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2016-02",
+          "value": 87620000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 3.64,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2016-03",
+          "value": 135240000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 4.83,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2016-04",
+          "value": 180930000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 4.49,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2016-05",
+          "value": 228240000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 4.27,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2016-06",
+          "value": 277590000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 4.26,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2016-07",
+          "value": 332890000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 5.12,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2016-08",
+          "value": 389200000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 5.82,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2016-09",
+          "value": 438850000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 6.15,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2016-10",
+          "value": 487760000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 6.42,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2016-11",
+          "value": 538470000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 6.64,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2016-12",
+          "value": 591980000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 6.66,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2017-02",
+          "value": 93560000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 6.78,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2017-03",
+          "value": 144610000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 6.93,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2017-04",
+          "value": 193090000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 6.72,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2017-05",
+          "value": 242630000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 6.3,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2017-06",
+          "value": 295080000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 6.3,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2017-07",
+          "value": 355780000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 6.88,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2017-08",
+          "value": 415710000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 6.81,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2017-09",
+          "value": 468880000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 6.84,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2017-10",
+          "value": 520180000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 6.65,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2017-11",
+          "value": 573310000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 6.47,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2017-12",
+          "value": 630770000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 6.55,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2018-02",
+          "value": 105520000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 12.78,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2018-03",
+          "value": 158780000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 9.8,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2018-04",
+          "value": 210940000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 9.24,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2018-05",
+          "value": 266280000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 9.75,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2018-06",
+          "value": 322910000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 9.43,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2018-07",
+          "value": 387750000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 8.99,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2018-08",
+          "value": 452960000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 8.96,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2018-09",
+          "value": 510610000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 8.9,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2018-10",
+          "value": 565520000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 8.72,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2018-11",
+          "value": 621990000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 8.49,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2018-12",
+          "value": 684490000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 8.52,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2019-02",
+          "value": 110630000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 4.84,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2019-03",
+          "value": 167950000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 5.78,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2019-04",
+          "value": 223290000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 5.85,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2019-05",
+          "value": 279930000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 5.13,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2019-06",
+          "value": 339800000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 5.23,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2019-07",
+          "value": 406520000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 4.84,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2019-08",
+          "value": 474220000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 4.69,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2019-09",
+          "value": 534420000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 4.66,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2019-10",
+          "value": 592320000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 4.74,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2019-11",
+          "value": 651440000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 4.73,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2019-12",
+          "value": 722550000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 5.56,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2020-02",
+          "value": 102030000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": -7.77,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2020-03",
+          "value": 156980000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": -6.53,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2020-04",
+          "value": 212700000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": -4.74,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2020-05",
+          "value": 271970000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": -2.84,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2020-06",
+          "value": 335470000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": -1.27,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2020-07",
+          "value": 403810000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": -0.67,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2020-08",
+          "value": 476760000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 0.54,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2020-09",
+          "value": 541340000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 1.29,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2020-10",
+          "value": 603060000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 1.81,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2020-11",
+          "value": 667720000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 2.5,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2020-12",
+          "value": 751100000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 3.95,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2021-02",
+          "value": 125880000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 23.38,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2021-03",
+          "value": 192190000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 22.43,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2021-04",
+          "value": 255810000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 20.27,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2021-05",
+          "value": 323050000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 18.78,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2021-06",
+          "value": 393390000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 17.27,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2021-07",
+          "value": 470970000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 16.63,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2021-08",
+          "value": 547040000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 14.74,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2021-09",
+          "value": 616510000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 13.89,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2021-10",
+          "value": 682540000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 13.18,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2021-11",
+          "value": 749720000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 12.28,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2021-12",
+          "value": 831280000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 10.68,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2022-02",
+          "value": 134670000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 6.98,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2022-03",
+          "value": 204230000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 6.26,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2022-04",
+          "value": 268090000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 4.8,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2022-05",
+          "value": 335260000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 3.78,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2022-06",
+          "value": 409970000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 4.21,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2022-07",
+          "value": 493030000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 4.68,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2022-08",
+          "value": 578390000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 5.73,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2022-09",
+          "value": 649310000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 5.32,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2022-10",
+          "value": 717600000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 5.14,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2022-11",
+          "value": 785880000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 4.82,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2022-12",
+          "value": 863720000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 3.9,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2023-02",
+          "value": 138340000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 2.73,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2023-03",
+          "value": 212030000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 3.82,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2023-04",
+          "value": 281030000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 4.83,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2023-05",
+          "value": 353250000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 5.37,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2023-06",
+          "value": 430760000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 5.07,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2023-07",
+          "value": 519650000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 5.4,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2023-08",
+          "value": 608260000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 5.16,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2023-09",
+          "value": 686370000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 5.71,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2023-10",
+          "value": 760590000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 5.99,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2023-11",
+          "value": 836780000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 6.48,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2023-12",
+          "value": 922410000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 6.8,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2024-02",
+          "value": 153160000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 10.71,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2024-03",
+          "value": 233730000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 10.23,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2024-04",
+          "value": 307720000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 9.5,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2024-05",
+          "value": 383700000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 8.62,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2024-06",
+          "value": 465750000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 8.12,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2024-07",
+          "value": 559710000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 7.71,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2024-08",
+          "value": 656190000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 7.88,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2024-09",
+          "value": 740940000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 7.95,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2024-10",
+          "value": 818360000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 7.6,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2024-11",
+          "value": 896860000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 7.18,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2024-12",
+          "value": 985210000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 6.81,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2025-02",
+          "value": 155640000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 1.62,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2025-03",
+          "value": 238460000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 2.02,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2025-04",
+          "value": 315660000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 2.58,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2025-05",
+          "value": 396650000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 3.38,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2025-06",
+          "value": 484180000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 3.96,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2025-07",
+          "value": 586630000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 4.81,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2025-08",
+          "value": 687880000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 4.83,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2025-09",
+          "value": 776750000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 4.83,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2025-10",
+          "value": 862460000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 5.39,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2025-11",
+          "value": 946020000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 5.48,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2025-12",
+          "value": 1036820000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 5.24,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2026-02",
+          "value": 165460000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 6.31,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2026-03",
+          "value": 251410000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 5.43,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2026-04",
+          "value": 333450000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 5.64,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2026-05",
+          "value": 420180000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 5.93,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2026-06",
+          "value": 509990000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 5.33,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        },
+        {
+          "dataDate": "2026-07",
+          "value": 613990000.0,
+          "unit": "万千瓦时",
+          "yoyPercent": 4.66,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:13.674173+08:00"
+        }
+      ]
+    },
+    {
+      "id": "inbound-tourism-fx-annual",
+      "themeId": "inbound-consumption",
+      "metricName": "入境游客消费",
+      "role": "核心需求结果",
+      "baseWeightPercent": 45,
+      "cadence": "annual",
+      "expectedLagDays": 120,
+      "sourceName": "国家统计局口径／AKShare国际旅游外汇收入接口",
+      "sourceUrl": "https://data.stats.gov.cn/",
+      "status": "active",
+      "lastCheckedAt": "2026-09-01T14:40:15.948004+08:00",
+      "latestDataDate": "2025",
+      "nextCheckAt": "2026-10-01",
+      "observations": [
+        {
+          "dataDate": "1992",
+          "value": 3947.0,
+          "unit": "万美元",
+          "yoyPercent": null,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "1993",
+          "value": 4683.0,
+          "unit": "万美元",
+          "yoyPercent": 18.65,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "1994",
+          "value": 7323.0,
+          "unit": "万美元",
+          "yoyPercent": 56.37,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "1995",
+          "value": 8733.0,
+          "unit": "万美元",
+          "yoyPercent": 19.25,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "1996",
+          "value": 669.0,
+          "unit": "万美元",
+          "yoyPercent": -92.34,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "1997",
+          "value": 892.0,
+          "unit": "万美元",
+          "yoyPercent": 33.33,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "1998",
+          "value": 1239.0,
+          "unit": "万美元",
+          "yoyPercent": 38.9,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "1999",
+          "value": 1063.0,
+          "unit": "万美元",
+          "yoyPercent": -14.21,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "2000",
+          "value": 1404.0,
+          "unit": "万美元",
+          "yoyPercent": 32.08,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "2001",
+          "value": 5005.0,
+          "unit": "万美元",
+          "yoyPercent": 256.48,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "2002",
+          "value": 5260.0,
+          "unit": "万美元",
+          "yoyPercent": 5.09,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "2003",
+          "value": 4438.0,
+          "unit": "万美元",
+          "yoyPercent": -15.63,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "2004",
+          "value": 6688.0,
+          "unit": "万美元",
+          "yoyPercent": 50.7,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "2005",
+          "value": 8294.0,
+          "unit": "万美元",
+          "yoyPercent": 24.01,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "2006",
+          "value": 7376.0,
+          "unit": "万美元",
+          "yoyPercent": -11.07,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "2007",
+          "value": 4683.0,
+          "unit": "万美元",
+          "yoyPercent": -36.51,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "2008",
+          "value": 3560.0,
+          "unit": "万美元",
+          "yoyPercent": -23.98,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "2009",
+          "value": 3491.0,
+          "unit": "万美元",
+          "yoyPercent": -1.94,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "2010",
+          "value": 4015.0,
+          "unit": "万美元",
+          "yoyPercent": 15.01,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "2011",
+          "value": 4141.0,
+          "unit": "万美元",
+          "yoyPercent": 3.14,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "2012",
+          "value": 4067.76,
+          "unit": "万美元",
+          "yoyPercent": -1.77,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "2013",
+          "value": 4001.14,
+          "unit": "万美元",
+          "yoyPercent": -1.64,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "2014",
+          "value": 4577.0,
+          "unit": "万美元",
+          "yoyPercent": 14.39,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "2015",
+          "value": 11860.0,
+          "unit": "万美元",
+          "yoyPercent": 159.12,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "2016",
+          "value": 11800.0,
+          "unit": "万美元",
+          "yoyPercent": -0.51,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "2017",
+          "value": 12364.0,
+          "unit": "万美元",
+          "yoyPercent": 4.78,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "2018",
+          "value": 11454.26,
+          "unit": "万美元",
+          "yoyPercent": -7.36,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "2019",
+          "value": 10189.0,
+          "unit": "万美元",
+          "yoyPercent": -11.05,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "2023",
+          "value": 52960.0,
+          "unit": "万美元",
+          "yoyPercent": null,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "2024",
+          "value": 94240.0,
+          "unit": "万美元",
+          "yoyPercent": 77.95,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        },
+        {
+          "dataDate": "2025",
+          "value": 131135.0,
+          "unit": "万美元",
+          "yoyPercent": 39.15,
+          "publishedAt": null,
+          "collectedAt": "2026-09-01T14:40:15.948004+08:00"
+        }
+      ]
+    }
+  ]
+}
