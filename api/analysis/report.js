@@ -59,6 +59,14 @@ function config(req) {
 }
 
 async function findCached(pool, analysisKey, dataDate, factsHash, promptVersion, modelConfigured) {
+  // Model analysis is a daily close product. Return the first successful model
+  // report for this data date even if intraday hot-list facts have changed.
+  if (modelConfigured) {
+    const daily = await pool.query(`select report, source, provider, model, created_at
+      from analysis_reports where analysis_key=$1 and data_date=$2 and prompt_version=$3 and source='model'
+      order by created_at asc limit 1`, [analysisKey, dataDate, promptVersion])
+    if (daily.rows[0]) return daily.rows[0]
+  }
   const result = await pool.query(`select report, source, provider, model, created_at
     from analysis_reports where analysis_key=$1 and data_date=$2 and facts_hash=$3 and prompt_version=$4
       and ($5::boolean=false or source='model')
