@@ -11,7 +11,7 @@ export const SOURCE_FUNDS_URL =
   'https://LST-Serendipity.github.io/fund-data-api/funds_simple.json'
 
 export const getPayloadDataDate = (payload) => {
-  const value = payload?.updateTime ?? payload?.update_time
+  const value = payload?.dataDate ?? payload?.snapshotDate
   if (value === null || value === undefined) return null
   const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(value).trim())
   if (!match) return null
@@ -22,6 +22,11 @@ export const getPayloadDataDate = (payload) => {
     && parsed.getUTCDate() === day
     ? match[0]
     : null
+}
+
+export const getPayloadUpdateTime = (payload) => {
+  const value = payload?.updateTime ?? payload?.update_time
+  return typeof value === 'string' && value.trim() ? value.trim() : null
 }
 
 const requestJson = async (fetchImpl, url, options) => {

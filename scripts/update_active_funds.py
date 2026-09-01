@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import re
+from collections import Counter
 from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Any
@@ -296,31 +297,44 @@ def enrich_product_metrics(products, previous_products, snapshot_date=None):
     return products
 
 
-def build_output_payloads(active_funds, excluded_funds, update_time, previous_products=None):
+def infer_data_date(funds, fallback=None):
+    dates = [str(fund.get("lastNetValueDate") or "")[:10] for fund in funds]
+    dates = [value for value in dates if parse_date(value)]
+    if not dates:
+        return fallback or shanghai_today()
+    counts = Counter(dates)
+    return parse_date(max(counts, key=lambda value: (counts[value], value)))
+
+
+def build_output_payloads(active_funds, excluded_funds, update_time, previous_products=None, data_date=None):
+    data_date = data_date or infer_data_date(active_funds)
     products, audit = build_products(active_funds)
-    products = enrich_product_metrics(products, previous_products or [])
+    products = enrich_product_metrics(products, previous_products or [], data_date)
     enhanced_shares = [share for product in products for share in product["shares"]]
     enhanced_shares.sort(key=lambda share: share["code"])
     return {
         "funds_active.json": {
+            "dataDate": data_date.isoformat(),
             "updateTime": update_time,
             "staleThresholdDays": STALE_DAYS,
             "total": len(enhanced_shares),
             "funds": enhanced_shares,
         },
         "funds_excluded.json": {
+            "dataDate": data_date.isoformat(),
             "updateTime": update_time,
             "total": len(excluded_funds),
             "funds": excluded_funds,
         },
         "fund_products.json": {
+            "dataDate": data_date.isoformat(),
             "updateTime": update_time,
             "productTotal": len(products),
             "shareTotal": len(enhanced_shares),
             "groupingVersion": "v1",
             "products": products,
         },
-        "funds_grouping_review.json": {"updateTime": update_time, **audit},
+        "funds_grouping_review.json": {"dataDate": data_date.isoformat(), "updateTime": update_time, **audit},
     }
 
 
@@ -461,13 +475,15 @@ def main() -> None:
             "operationStatus": operation_status,
         })
 
-    active_funds = enrich_daily_scale(active_funds, scale_rows)
+    data_date = infer_data_date(active_funds)
+    active_funds = enrich_daily_scale(active_funds, scale_rows, data_date)
     now = datetime.now(SHANGHAI).strftime("%Y-%m-%d %H:%M:%S")
     payloads = build_output_payloads(
         active_funds,
         excluded_funds,
         now,
         previous_products_payload.get("products", []),
+        data_date,
     )
     write_output_payloads(payloads)
     print(

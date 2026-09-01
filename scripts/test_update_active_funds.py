@@ -2,7 +2,7 @@ import unittest
 from datetime import date, timedelta
 from pathlib import Path
 
-from update_active_funds import build_output_payloads, classify_fund, enrich_daily_scale, enrich_product_metrics, extract_last_net_value_date
+from update_active_funds import build_output_payloads, classify_fund, enrich_daily_scale, enrich_product_metrics, extract_last_net_value_date, infer_data_date
 from store_fund_scale_snapshots import issuance_baseline_rows, product_scale_history_rows, snapshot_rows
 
 
@@ -223,19 +223,29 @@ class ProductOutputPayloadTests(unittest.TestCase):
             {"code": "000001", "name": "示例基金A", "type": "混合型", "netValue": 1.0},
             {"code": "000002", "name": "示例基金C", "type": "混合型", "netValue": 1.1},
         ]
-        payloads = build_output_payloads(active, [], "2026-08-13 19:00:00")
+        payloads = build_output_payloads(active, [], "2026-08-13 19:00:00", data_date=date(2026, 8, 12))
         shares = payloads["funds_active.json"]
         products = payloads["fund_products.json"]
         review = payloads["funds_grouping_review.json"]
         self.assertEqual(shares["total"], 2)
         self.assertEqual(products["shareTotal"], 2)
         self.assertEqual(products["productTotal"], 1)
+        self.assertEqual(products["dataDate"], "2026-08-12")
+        self.assertEqual(products["updateTime"], "2026-08-13 19:00:00")
         self.assertEqual(review["shareTotal"], 2)
         self.assertEqual(products["products"][0]["shareCount"], 2)
         for fund in shares["funds"]:
             for field in ("productId", "productName", "shareClass", "groupingConfidence", "groupingRule"):
                 self.assertIn(field, fund)
             self.assertIn("netValue", fund)
+
+    def test_data_date_uses_dominant_market_observation_not_generation_day(self):
+        funds = [
+            {"lastNetValueDate": "2026-08-31"},
+            {"lastNetValueDate": "2026-08-31"},
+            {"lastNetValueDate": "2026-09-01"},
+        ]
+        self.assertEqual(infer_data_date(funds), date(2026, 8, 31))
 
     def test_workflow_validates_and_commits_product_outputs(self):
         workflow = (Path(__file__).resolve().parents[1] / ".github/workflows/update-active-funds.yml").read_text(encoding="utf-8")

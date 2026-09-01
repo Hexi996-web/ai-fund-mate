@@ -1,0 +1,23 @@
+[Unit]
+Description=AI Fund Mate full-stack application
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=admin
+Group=admin
+WorkingDirectory=/opt/ai-fund-mate/current
+EnvironmentFile=/opt/ai-fund-mate/shared/app.env
+Environment=NODE_ENV=production
+Environment=HOST=127.0.0.1
+Environment=PORT=8800
+ExecStart=/usr/bin/node server/server.mjs
+Restart=always
+RestartSec=5
+TimeoutStopSec=20
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

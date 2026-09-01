@@ -100,7 +100,7 @@ export function MarketForecastWorkspace({ onOpenFundLibrary, agentCommand, onCon
   return <main className="workspace-main forecast-workspace">
     <header className="forecast-heading">
       <div><h1>行情预测</h1><p>以全市场公募基金的净值、回撤与规模变化为观测信号；数据日期 {forecast.dataDate}</p></div>
-      <span>每日自动更新</span>
+      <span>更新时间 {loadedUpdateTime || '待更新'}</span>
     </header>
 
     <ReportScope label="行情预测数据口径" items={[

@@ -91,7 +91,7 @@ function MiniTrend({ rows, field, unit = "", delta = false }) {
   );
 }
 
-function marketMetrics(item, products, updateTime) {
+function marketMetrics(item, products, dataDate) {
   const peers = products.filter((product) =>
     item.keywords.some((word) =>
       product.productName?.toLowerCase().includes(word.toLowerCase()),
@@ -133,7 +133,7 @@ function marketMetrics(item, products, updateTime) {
     : null;
   const top = scales[0] ?? 0;
   const top3 = scales.slice(0, 3).reduce((sum, value) => sum + value, 0);
-  const asOf = new Date(String(updateTime || "").replace(" ", "T"));
+  const asOf = new Date(`${dataDate || ""}T00:00:00`);
   const cutoff12 = new Date(asOf);
   cutoff12.setFullYear(cutoff12.getFullYear() - 1);
   const cutoff90 = new Date(asOf);
@@ -626,6 +626,7 @@ function ThemeResearchPage({ item, coreRank, proof, evidence, evidenceSummary, a
 export function PreResearchPool({ agentCommand, onContextChange }) {
   const [payload, setPayload] = useState({
     products: [],
+    dataDate: "加载中",
     updateTime: "加载中",
   });
   const [evidence, setEvidence] = useState({ items: [], updateTime: "加载中" });
@@ -641,31 +642,25 @@ export function PreResearchPool({ agentCommand, onContextChange }) {
   const [peerSort, setPeerSort] = useState("current");
   const [detailId, setDetailId] = useState(() => new URLSearchParams(window.location.search).get("theme") || "");
   const [reloadKey, setReloadKey] = useState(0);
+  const [loadError, setLoadError] = useState("");
   const dataVersionRef = useRef("");
   const returnScrollRef = useRef(0);
   useEffect(() => {
     const controller = new AbortController();
+    let activeRequest = true;
+    const timeout = window.setTimeout(() => controller.abort(), 20_000);
+    const fetchJson = (url, label) => fetch(url, { signal: controller.signal, cache: "no-store" })
+      .then((response) => {
+        if (!response.ok) throw new Error(`${label}请求失败（${response.status}）`);
+        return response.json();
+      });
+    setLoadError("");
     Promise.all([
-      fetch("/fund_products.json", {
-        signal: controller.signal,
-        cache: "no-store",
-      }).then((r) => r.json()),
-      fetch("/pre_research_evidence.json", {
-        signal: controller.signal,
-        cache: "no-store",
-      }).then((r) => r.json()),
-      fetch("/attention_pool_evidence.json", {
-        signal: controller.signal,
-        cache: "no-store",
-      }).then((r) => r.json()),
-      fetch("/social_attention_history.json", {
-        signal: controller.signal,
-        cache: "no-store",
-      }).then((r) => r.json()),
-      fetch("/theme_external_signals.json", {
-        signal: controller.signal,
-        cache: "no-store",
-      }).then((r) => r.json()),
+      fetchJson("/fund_products.json", "基金产品数据"),
+      fetchJson("/pre_research_evidence.json", "预研证据数据"),
+      fetchJson("/attention_pool_evidence.json", "注意力数据"),
+      fetchJson("/social_attention_history.json", "注意力历史数据"),
+      fetchJson("/theme_external_signals.json", "外部信号数据"),
     ])
       .then(([funds, proof, attentionProof, attentionHistoryProof, externalProof]) => {
         setPayload(funds);
@@ -675,8 +670,13 @@ export function PreResearchPool({ agentCommand, onContextChange }) {
         setExternalSignals(externalProof);
         dataVersionRef.current = `${funds.updateTime || ""}|${proof.updateTime || ""}|${attentionProof.generatedAt || ""}|${externalProof.generatedAt || ""}`;
       })
-      .catch(() => {});
-    return () => controller.abort();
+      .catch((error) => {
+        if (!activeRequest) return;
+        if (error?.name === "AbortError") setLoadError("预研产品池数据请求超时，请重新加载。");
+        else setLoadError(error?.message || "预研产品池数据加载失败。");
+      })
+      .finally(() => window.clearTimeout(timeout));
+    return () => { activeRequest = false; window.clearTimeout(timeout); controller.abort(); };
   }, [reloadKey]);
   useEffect(() => {
     if (!detailId) {
@@ -719,7 +719,7 @@ export function PreResearchPool({ agentCommand, onContextChange }) {
   );
   const universe = useMemo(() => RESEARCH_UNIVERSE.map((item) => ({
     ...item,
-    market: marketMetrics(item, payload.products || [], payload.updateTime),
+    market: marketMetrics(item, payload.products || [], payload.dataDate),
   })), [payload]);
   const ranked = useMemo(() => {
     const priority = { 产品缺失: 4, 存在空位: 3, 继续观察: 2, 供给过剩: 1 };
@@ -821,9 +821,11 @@ export function PreResearchPool({ agentCommand, onContextChange }) {
         </div>
         <div className="research-data-date">
           <small>数据日期</small>
-          <strong>{String(payload.updateTime || "—").slice(0, 10)}</strong>
+          <strong>{payload.dataDate || "—"}</strong>
+          <small>更新于 {payload.updateTime || "—"}</small>
         </div>
       </header>
+      {loadError ? <section className="empty-state" role="alert"><h2>预研产品池加载失败</h2><p>{loadError}</p><button type="button" onClick={() => setReloadKey((value) => value + 1)}>重新加载</button></section> : null}
       <ResearchHorizonBrief
         snapshot={attention}
         evidenceItems={evidence.items || []}
@@ -866,7 +868,7 @@ export function PreResearchPool({ agentCommand, onContextChange }) {
                     }[drawer]
                   }
                 </h2>
-                <p>数据快照 {payload.updateTime}</p>
+                <p>数据日期 {payload.dataDate || "—"} · 更新时间 {payload.updateTime || "—"}</p>
               </div>
               <div className="peer-head-actions">
                 {drawer !== "state" ? (

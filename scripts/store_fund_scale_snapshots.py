@@ -43,7 +43,8 @@ def product_scale_history_rows(payload):
 
 
 def main():
-    database_url = os.environ.get("SUPABASE_DB_URL")
+    from history.database_url import database_url as resolve_database_url
+    database_url = resolve_database_url()
     if not database_url:
         print("SUPABASE_DB_URL 未配置，跳过历史快照写入")
         return

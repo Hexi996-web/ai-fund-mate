@@ -28,6 +28,22 @@ test('history status reports an unconfigured database safely', async () => {
   expect(response.payload.configured).toBe(false)
 })
 
+test('history status rejects Supabase direct and transaction-pooler URLs', async () => {
+  const original = process.env.DATABASE_URL
+  for (const url of [
+    'postgresql://postgres:secret@db.project.supabase.co:5432/postgres',
+    'postgresql://postgres.project:secret@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres',
+  ]) {
+    process.env.DATABASE_URL = url
+    const response = responseRecorder()
+    await statusHandler({ method: 'GET', query: {} }, response)
+    expect(response.payload.configured).toBe(false)
+    expect(response.payload.configurationIssue).toBe('DATABASE_SESSION_POOLER_REQUIRED')
+  }
+  if (original) process.env.DATABASE_URL = original
+  else delete process.env.DATABASE_URL
+})
+
 test('research history endpoint rejects an invalid theme before database access', async () => {
   const handler = (await import('../api/history/research.js')).default
   const response = responseRecorder()

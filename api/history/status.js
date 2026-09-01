@@ -1,8 +1,8 @@
-import { databaseConfigured, getPool, publicDatabaseError, reply } from '../_lib/database.js'
+import { databaseConfigurationIssue, databaseConfigured, getPool, publicDatabaseError, reply } from '../_lib/database.js'
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') return reply(res, 405, { error: '仅支持 GET' })
-  if (!databaseConfigured()) return reply(res, 200, { configured: false, latestRun: null, datasets: [] })
+  if (!databaseConfigured()) return reply(res, 200, { configured: false, configurationIssue: databaseConfigurationIssue(), latestRun: null, datasets: [] })
   try {
     const [runResult, snapshotResult] = await Promise.all([
       getPool().query(`select run_key, data_date, status, started_at, completed_at, metadata

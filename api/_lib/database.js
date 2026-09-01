@@ -3,12 +3,25 @@ import pg from 'pg'
 const { Pool } = pg
 let pool
 
+export function databaseConfigurationIssue() {
+  const value = process.env.DATABASE_URL
+  if (!value) return 'DATABASE_NOT_CONFIGURED'
+  try {
+    const url = new URL(value)
+    const sessionPooler = url.hostname.endsWith('.pooler.supabase.com') && (url.port || '5432') === '5432'
+    return sessionPooler ? null : 'DATABASE_SESSION_POOLER_REQUIRED'
+  } catch {
+    return 'DATABASE_URL_INVALID'
+  }
+}
+
 export function databaseConfigured() {
-  return Boolean(process.env.DATABASE_URL)
+  return databaseConfigurationIssue() === null
 }
 
 export function getPool() {
-  if (!databaseConfigured()) throw new Error('DATABASE_NOT_CONFIGURED')
+  const issue = databaseConfigurationIssue()
+  if (issue) throw new Error(issue)
   if (!pool) {
     pool = new Pool({
       connectionString: process.env.DATABASE_URL,
@@ -41,7 +54,8 @@ export function boundedInteger(value, fallback, maximum) {
 
 export function publicDatabaseError(error) {
   console.error('History API database error', error)
-  return error?.message === 'DATABASE_NOT_CONFIGURED'
-    ? { status: 503, payload: { error: '历史数据库尚未配置', code: 'DATABASE_NOT_CONFIGURED' } }
-    : { status: 500, payload: { error: '历史数据暂时不可用', code: 'DATABASE_QUERY_FAILED' } }
+  if (error?.message === 'DATABASE_NOT_CONFIGURED') return { status: 503, payload: { error: '历史数据库尚未配置', code: error.message } }
+  if (error?.message === 'DATABASE_SESSION_POOLER_REQUIRED') return { status: 503, payload: { error: '数据库必须配置 Supabase IPv4 Session pooler（端口 5432）', code: error.message } }
+  if (error?.message === 'DATABASE_URL_INVALID') return { status: 503, payload: { error: '数据库连接地址格式无效', code: error.message } }
+  return { status: 500, payload: { error: '历史数据暂时不可用', code: 'DATABASE_QUERY_FAILED' } }
 }

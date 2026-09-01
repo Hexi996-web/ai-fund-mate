@@ -139,8 +139,9 @@ def main():
         payloads[name], hashes[name] = load(path); dates[name] = infer_snapshot_date(name, payloads[name])
     summary = {name: {"date": str(dates[name]), "rows": dataset_row_count(name, payloads[name])} for name in DATASETS}
     if args.dry_run: print(json.dumps(summary, ensure_ascii=False, indent=2)); return 0
-    database_url = os.getenv("DATABASE_URL") or os.getenv("SUPABASE_DB_URL")
-    if not database_url: print("缺少 DATABASE_URL 或 SUPABASE_DB_URL", file=sys.stderr); return 2
+    from .database_url import database_url as resolve_database_url
+    try: database_url = resolve_database_url(required=True)
+    except RuntimeError as error: print(str(error), file=sys.stderr); return 2
     try: import psycopg
     except ImportError: print("请先安装 requirements-data.txt", file=sys.stderr); return 2
     digest = hashlib.sha256("".join(hashes.values()).encode()).hexdigest()[:16]; run_date = max(dates.values())

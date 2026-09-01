@@ -21,8 +21,9 @@ def main() -> int:
     evidence = json.loads((PUBLIC / "pre_research_evidence.json").read_text(encoding="utf-8"))
     external = json.loads((PUBLIC / "theme_external_signals.json").read_text(encoding="utf-8"))
     payload = {
-        "schemaVersion": 1,
-        "snapshotDate": str(products["updateTime"])[:10],
+        "schemaVersion": 2,
+        "dataDate": products["dataDate"],
+        "snapshotDate": products["dataDate"],
         "productsUpdateTime": products["updateTime"],
         "issuanceDataDate": issuance["dataDate"],
         "attentionGeneratedAt": attention["generatedAt"],
