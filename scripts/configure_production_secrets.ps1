@@ -26,8 +26,10 @@ try {
   }
   if (-not (Test-Path -LiteralPath $SshKey)) { throw "SSH key not found: $SshKey" }
 
-  $databaseUrl | gh secret set SUPABASE_DB_URL
+  $databaseUrl | gh secret set SUPABASE_DB_URL --repo Hexi996-web/ai-fund-mate
+  if ($LASTEXITCODE -ne 0) { throw 'Failed to update GitHub secret SUPABASE_DB_URL.' }
   "$zhipuKey`n$databaseUrl" | ssh -T -i $SshKey "$ServerUser@$ServerHost" '/home/admin/configure-ai-fund-mate-secrets.sh'
+  if ($LASTEXITCODE -ne 0) { throw 'Failed to update production server secrets.' }
   Write-Host 'Production secrets updated in GitHub Actions and on the server.'
 } finally {
   $zhipuKey = $null
