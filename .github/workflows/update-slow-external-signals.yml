@@ -1,0 +1,50 @@
+name: Update slow external signals
+
+on:
+  schedule:
+    # Monday 03:37 Beijing time. These sources do not justify daily full-history requests.
+    - cron: "37 19 * * 0"
+  workflow_dispatch:
+
+concurrency:
+  group: public-data-writes
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-data.txt
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+      - name: Install data dependencies
+        run: pip install -r requirements-data.txt
+      - name: Incrementally update long-horizon signals
+        run: |
+          python -m scripts.update_theme_external_signals
+          python scripts/publish_data_status.py
+          node scripts/build_agent_context.mjs
+          python -m pytest scripts/test_update_theme_external_signals.py -q
+          python scripts/validate_published_freshness.py public/theme_external_signals.json --field generatedAt --max-age-hours 2 --min-items items=36
+      - name: Commit changed snapshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/theme_external_signals.json public/data_status.json public/agent_context.json
+          git diff --cached --quiet && exit 0
+          git commit -m "data: update slow external signals"
+          for attempt in 1 2 3; do
+            git pull --rebase origin "$GITHUB_REF_NAME" && git push && exit 0
+            test "$attempt" -eq 3 && exit 1
+            sleep $((attempt * 5))
+          done
