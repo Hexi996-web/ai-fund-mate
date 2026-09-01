@@ -77,6 +77,51 @@ STRUCTURE_SERIES = {
     "agri-tech": ("https://s.askci.com/data/industry/a02091y/", "大型拖拉机月产量", "台"),
 }
 
+CORE_DEMAND_WEIGHTS = (45, 35, 20)
+
+
+def same_month_yoy(rows: list[dict]) -> float | None:
+    if not rows or not rows[-1].get("date"):
+        return None
+    latest = rows[-1]
+    year, month = latest["date"].split("-")
+    base = next((row for row in rows if row.get("date") == f"{int(year) - 1}-{month}"), None)
+    current_value, base_value = number(latest.get("value")), number((base or {}).get("value"))
+    return (current_value / base_value - 1) * 100 if base_value else None
+
+
+def demand_assessment(contract: tuple, structure: dict) -> dict:
+    """Keep missing demand evidence neutral and cap any single supply proxy."""
+    core_indicators = [
+        {"name": metric, "role": role, "baseWeightPercent": weight, "status": "待接入"}
+        for metric, role, weight in zip(contract[1], ("核心需求结果", "渗透与采用", "供需与约束"), CORE_DEMAND_WEIGHTS)
+    ]
+    observations = []
+    rows = structure.get("history") or []
+    yoy = same_month_yoy(rows)
+    if len(rows) >= 4 and yoy is not None:
+        # Existing production series are useful corroboration, but cannot confirm broad demand alone.
+        continuity = min(1, len(rows) / 12)
+        source_factor = .60 if "中商产业数据库" in (structure.get("source") or "") else .80
+        effective_weight = 15 * continuity * source_factor
+        signal_score = 50 + 50 * math.tanh(yoy / 25)
+        contribution = effective_weight / 100 * (signal_score - 50)
+        observations.append({
+            "name": structure.get("metric"), "role": "辅助供给代理", "latestDate": rows[-1].get("date"),
+            "latestValue": rows[-1].get("value"), "unit": structure.get("unit"), "yoyPercent": round(yoy, 1),
+            "baseWeightPercent": 15, "effectiveWeightPercent": round(effective_weight, 1),
+            "signalScore": round(signal_score, 1), "contributionPoints": round(contribution, 1),
+            "source": structure.get("source"), "sourceUrl": structure.get("sourceUrl"),
+            "interpretation": "仅反映供给活动，不能单独确认整个方向的终端需求。",
+        })
+    score = round(max(0, min(100, 50 + sum(item["contributionPoints"] for item in observations))), 1)
+    label = "核心需求增强" if score >= 70 else "需求温和改善" if score >= 58 else "需求待验证" if score >= 42 else "需求边际弱化" if score >= 30 else "核心需求收缩"
+    return {
+        "version": "multi-signal-demand-v1", "title": contract[0], "score": score, "label": label,
+        "coreIndicators": core_indicators, "observations": observations,
+        "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。",
+    }
+
 PUBLIC_SERIES_PENDING = {
     "space", "power", "biotech", "longevity", "experience", "resources",
     "industrial-software", "cybersecurity", "smart-healthcare", "water-security",
@@ -294,9 +339,9 @@ def build_item(theme_id: str, query: str, board: str, capacity: dict) -> dict:
     return {
         "id": theme_id,
         "structure": {"signal": contract[0], "metrics": contract[1], "source": contract[2],
-                      **structure_series,
+                      **structure_series, "demandAssessment": demand_assessment(contract, structure_series),
                       "historyPoints": len(structure_series.get("history") or []),
-                      "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。"},
+                      "note": "核心需求使用多指标合同；单一产量或供给指标只作为低权重辅助证据。"},
         "enterprise": {"sampleCompanies": len(top), "reportedCompanies": len(reports),
                        "coveragePercent": round(sum(number(row.get("f21")) for row in top) / total_float * 100, 1) if total_float else 0,
                        "reportDate": latest_date,
@@ -373,7 +418,9 @@ def main() -> None:
             if structure["history"]:
                 structure.update({key: old_structure.get(key) for key in ("metric", "unit", "source", "sourceUrl", "status") if old_structure.get(key)})
         structure["historyPoints"] = len(structure.get("history") or [])
-    output = {"schemaVersion": 2, "updateTime": now, "methodologyVersion": "three-layer-36-v1",
+        contract = STRUCTURE_CONTRACTS[item["id"]]
+        structure["demandAssessment"] = demand_assessment(contract, structure)
+    output = {"schemaVersion": 3, "updateTime": now, "methodologyVersion": "multi-signal-demand-36-v1",
               "universeCount": 36, "coveredCount": sum(not item.get("error") for item in items),
               "enterpriseDataCount": sum(len((item.get("enterprise") or {}).get("history") or []) >= 4 for item in items),
               "assetDataCount": sum(len((item.get("assets") or {}).get("topConstituents") or []) == min(10, (item.get("assets") or {}).get("constituentCount") or 0) for item in items),

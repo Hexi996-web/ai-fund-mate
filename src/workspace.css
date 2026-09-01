@@ -4290,6 +4290,31 @@
   font-size: 18px;
   line-height: 1.55;
 }
+.demand-answer span { display: block; margin-top: 7px; color: #61708a; font-size: 13px; }
+.demand-contract,
+.demand-observations { margin-top: 18px; padding: 20px; border: 1px solid #e1e6ef; border-radius: 10px; background: #fff; }
+.demand-contract > header,
+.demand-observations > header { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+.demand-contract > header small,
+.demand-observations > header small { color: #76839a; }
+.demand-contract > div { display: grid; gap: 8px; }
+.demand-contract article { display: grid; grid-template-columns: minmax(0,1fr) 56px 72px; align-items: center; gap: 12px; padding: 12px; border-radius: 8px; background: #f6f8fc; }
+.demand-contract article span small,
+.demand-contract article span strong { display: block; }
+.demand-contract article span small { margin-bottom: 3px; color: #65748c; font-size: 11px; }
+.demand-contract article b { color: #3048c9; text-align: right; }
+.demand-contract article em { color: #a56c12; font-size: 12px; font-style: normal; text-align: right; }
+.demand-contract > p { margin: 12px 0 0; color: #6d798e; font-size: 12px; line-height: 1.6; }
+.demand-observations > article { padding: 14px; border-left: 3px solid #d7a037; background: #fffaf0; }
+.demand-observations > article > div strong,
+.demand-observations > article > div small { display: block; }
+.demand-observations > article > div span { color: #a16b13; font-size: 11px; font-weight: 800; }
+.demand-observations > article > div small { margin-top: 3px; color: #78849a; }
+.demand-observations dl { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; margin: 12px 0; }
+.demand-observations dl div { padding: 9px; background: #fff; }
+.demand-observations dt { color: #778398; font-size: 11px; }
+.demand-observations dd { margin: 3px 0 0; color: #263858; font-weight: 800; }
+.demand-observations article p { margin: 0; color: #5c687c; font-size: 12px; }
 .evidence-empty {
   margin-top: 20px;
   padding: 24px;
@@ -4319,6 +4344,11 @@
   border-radius: 7px;
   background: #fff;
   font-size: 14px;
+}
+@media (max-width: 680px) {
+  .demand-contract article { grid-template-columns: minmax(0,1fr) 48px; }
+  .demand-contract article em { grid-column: 1 / -1; text-align: left; }
+  .demand-observations dl { grid-template-columns: 1fr; }
 }
 .trend-result {
   display: flex;
