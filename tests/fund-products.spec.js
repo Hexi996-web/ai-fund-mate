@@ -17,7 +17,7 @@ const openLibrary = async (page) => {
   await page.goto('/')
   await page.evaluate(() => window.localStorage.clear())
   await page.reload()
-  await page.getByRole('button', { name: '市场分析', exact: true }).click()
+  await page.getByRole('button', { name: '公募基金简报', exact: true }).click()
   await page.locator('.result-count').waitFor()
 }
 

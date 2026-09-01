@@ -22,27 +22,28 @@ test.beforeEach(async ({ page }) => {
   } }))
 })
 
-test('shows only newly established funds in quarter and year-to-date databases', async ({ page }) => {
+test('switches the public-fund brief between all, quarter and year-to-date scopes', async ({ page }) => {
   await page.goto('/')
-  await page.getByRole('button', { name: '发行洞察', exact: true }).click()
-  await expect(page.getByRole('button', { name: '发行洞察', exact: true })).toHaveAttribute('aria-current', 'page')
-  await expect(page.getByRole('heading', { name: '发行洞察' })).toBeVisible()
-  await expect(page.getByRole('tab', { name: /近三个月/ })).toHaveAttribute('aria-selected', 'true')
+  await page.getByRole('button', { name: '公募基金简报', exact: true }).click()
+  await expect(page.getByRole('heading', { name: '公募基金简报' })).toBeVisible()
+  await expect(page.getByRole('tab', { name: /全市场公募基金/ })).toHaveAttribute('aria-selected', 'true')
+  await page.getByRole('tab', { name: /近三个月以来发行/ }).click()
   await expect(page.locator('.meta-row')).toContainText('基金产品 2 只')
   await expect(page.locator('.active-scope')).toContainText('2026-05-20—2026-08-20')
   await expect(page.locator('.fund-product-table tbody > tr:not(.fund-product-share-detail)')).toHaveCount(2)
   await expect(page.locator('body')).not.toContainText('上年成立指数')
 
-  await page.getByRole('tab', { name: /本年至今/ }).click()
+  await page.getByRole('tab', { name: /本年以来发行/ }).click()
   await expect(page.locator('.meta-row')).toContainText('基金产品 3 只')
   await expect(page.locator('.active-scope')).toContainText('2026-01-01—2026-08-20')
   await expect(page.locator('body')).toContainText('二月成立混合')
   await expect(page.locator('body')).not.toContainText('上年成立指数')
 })
 
-test('reuses market-analysis categories, five sorts, and current-scale default', async ({ page }) => {
+test('reuses categories, five sorts, and current-scale default for issuance scopes', async ({ page }) => {
   await page.goto('/')
-  await page.getByRole('button', { name: '发行洞察', exact: true }).click()
+  await page.getByRole('button', { name: '公募基金简报', exact: true }).click()
+  await page.getByRole('tab', { name: /近三个月以来发行/ }).click()
   const sort = page.getByLabel('基金排序方式')
   await expect(sort).toHaveValue('scale-desc')
   expect(await sort.locator('option').evaluateAll((options) => options.map((option) => option.value))).toEqual([
@@ -56,6 +57,6 @@ test('reuses market-analysis categories, five sorts, and current-scale default',
 test('keeps the requested top-level workspace order', async ({ page }) => {
   await page.goto('/')
   await expect(page.locator('.workspace-nav button').allTextContents()).resolves.toEqual([
-    '预研产品池', '市场分析', '发行洞察', '行情预测',
+    '预研产品池', '公募基金简报', '行情预测',
   ])
 })

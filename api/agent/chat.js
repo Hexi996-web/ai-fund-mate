@@ -3,14 +3,15 @@ const MAX_BODY_BYTES = 90_000
 const RATE_WINDOW_MS = 60_000
 const RATE_LIMIT = 12
 const requestBuckets = new Map()
-const SYSTEM_PROMPT = `你是AI Fund Mate中的公募基金产品经理Agent。你的服务对象是基金产品经理，而不是终端投资者。
-回答应聚焦产品方向预研、社会注意力变化、产业和企业验证、资产承载、同类产品供给及产品窗口。
+const ALLOWED_BASE_URLS = new Map([['https://open.bigmodel.cn/api/paas/v4','zhipu'],['https://api.moonshot.cn/v1','kimi'],['https://api.deepseek.com','deepseek'],['https://api.openai.com/v1','openai']])
+const SYSTEM_PROMPT = `你是AI Fund Mate中的公募基金简报助手。你的服务对象是基金产品经理，而不是终端投资者。
+回答应结合当前公募基金简报、预研产品池、行情综合研判及历史上下文，聚焦数据解释、跨板块比较、证据链和下一步跟踪。
 明确区分已知数据、推断和待验证事项；数据不足时不得编造。引用数字时说明数据日期和口径。不要给出个股买卖建议。回答简洁、结构清楚。
 你可以调用白名单只读页面工具帮助用户定位信息，但不得修改数据、触发更新或执行外部操作。`
 const TOOLS = [
-  { type: 'function', function: { name: 'switch_workspace', description: '切换到指定工作板块', parameters: { type: 'object', properties: { workspace: { type: 'string', enum: ['预研产品池', '市场分析', '发行洞察', '行情预测'] } }, required: ['workspace'] } } },
+  { type: 'function', function: { name: 'switch_workspace', description: '切换到指定工作板块', parameters: { type: 'object', properties: { workspace: { type: 'string', enum: ['预研产品池', '公募基金简报', '行情预测'] } }, required: ['workspace'] } } },
   { type: 'function', function: { name: 'focus_research_theme', description: '在预研产品池定位一个方向', parameters: { type: 'object', properties: { themeId: { type: 'string' }, themeName: { type: 'string' } } } } },
-  { type: 'function', function: { name: 'set_fund_filters', description: '在市场分析设置查询、分类或排序', parameters: { type: 'object', properties: { query: { type: 'string' }, category: { type: 'string' }, sortMode: { type: 'string', enum: ['scale-desc', 'scale-growth-desc', 'nav-growth-desc', 'drawdown-desc', 'date-desc'] } } } } },
+  { type: 'function', function: { name: 'set_fund_filters', description: '在公募基金简报设置查询、分类或排序', parameters: { type: 'object', properties: { query: { type: 'string' }, category: { type: 'string' }, sortMode: { type: 'string', enum: ['scale-desc', 'scale-growth-desc', 'nav-growth-desc', 'drawdown-desc', 'date-desc'] } } } } },
   { type: 'function', function: { name: 'focus_forecast_category', description: '在行情预测定位一个基金分类', parameters: { type: 'object', properties: { categoryId: { type: 'string' }, categoryName: { type: 'string' } } } } },
 ]
 const ACTION_LABELS = { switch_workspace: '切换工作板块', focus_research_theme: '定位预研方向', set_fund_filters: '设置基金筛选', focus_forecast_category: '定位行情分类' }
@@ -34,13 +35,18 @@ function isRateLimited(req) {
 }
 
 export default async function handler(req, res) {
-  if (req.method === 'GET') return reply(res, 200, { configured: Boolean(process.env.AGENT_API_KEY && process.env.AGENT_MODEL), provider: process.env.AGENT_PROVIDER || 'openai-compatible', model: process.env.AGENT_MODEL || null })
+  if (req.method === 'GET') return reply(res, 200, { configured: Boolean((process.env.ANALYSIS_API_KEY && process.env.ANALYSIS_MODEL) || (process.env.AGENT_API_KEY && process.env.AGENT_MODEL)), provider: process.env.ANALYSIS_PROVIDER || process.env.AGENT_PROVIDER || 'openai-compatible', model: process.env.ANALYSIS_MODEL || process.env.AGENT_MODEL || null })
   if (req.method !== 'POST') return reply(res, 405, { error: '仅支持GET和POST' })
   if (isRateLimited(req)) return reply(res, 429, { error: '请求过于频繁，请稍后再试' })
-  const apiKey = process.env.AGENT_API_KEY
-  const baseUrl = (process.env.AGENT_BASE_URL || 'https://api.openai.com/v1').replace(/\/$/, '')
-  const model = process.env.AGENT_MODEL
-  if (!apiKey || !model) return reply(res, 503, { error: '云端模型尚未配置。可在Vercel设置AGENT_API_KEY、AGENT_MODEL和可选的AGENT_BASE_URL，或在Agent设置中切换本地Ollama。', code: 'MODEL_NOT_CONFIGURED' })
+  const sessionBaseUrl = String(req.headers['x-analysis-base-url'] || '').replace(/\/$/, '')
+  const sessionModel = String(req.headers['x-analysis-model'] || '')
+  const sessionKey = String(req.headers['x-analysis-api-key'] || '')
+  const sessionValid = sessionKey && ALLOWED_BASE_URLS.has(sessionBaseUrl) && /^[a-zA-Z0-9._:-]{1,100}$/.test(sessionModel)
+  const apiKey = sessionValid ? sessionKey.slice(0,500) : (process.env.ANALYSIS_API_KEY || process.env.AGENT_API_KEY)
+  const baseUrl = sessionValid ? sessionBaseUrl : (process.env.ANALYSIS_BASE_URL || process.env.AGENT_BASE_URL || 'https://api.openai.com/v1').replace(/\/$/, '')
+  const model = sessionValid ? sessionModel : (process.env.ANALYSIS_MODEL || process.env.AGENT_MODEL)
+  const provider = sessionValid ? ALLOWED_BASE_URLS.get(sessionBaseUrl) : (process.env.ANALYSIS_PROVIDER || process.env.AGENT_PROVIDER || 'openai-compatible')
+  if (!apiKey || !model) return reply(res, 503, { error: '尚未配置分析模型。请打开右下角“简报助手”的模型设置，填写智谱等模型信息。', code: 'MODEL_NOT_CONFIGURED' })
   let body
   try {
     body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {})
@@ -69,7 +75,7 @@ export default async function handler(req, res) {
     const content = message?.content || (actions.length ? '已根据你的要求定位页面内容。' : '')
     if (!content) return reply(res, 502, { error: '上游模型未返回有效文本' })
     const sources = Array.isArray(body.context?.sources) ? body.context.sources.slice(0, 4).filter((source) => typeof source?.label === 'string' && /^\/[a-z0-9_./-]+$/i.test(source?.href || '')) : []
-    return reply(res, 200, { content, actions, sources, provider: process.env.AGENT_PROVIDER || 'openai-compatible', model })
+    return reply(res, 200, { content, actions, sources, provider, model })
   } catch (error) {
     const message = error.name === 'TimeoutError' ? '模型响应超时，请稍后重试' : `模型服务暂时不可用：${error.message}`
     return reply(res, 502, { error: message })

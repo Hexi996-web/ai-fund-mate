@@ -16,6 +16,12 @@
 网页右下角提供产品经理 Agent。它会携带当前工作区和数据日期，但不会直接修改数据或执行外部操作。
 
 - 云端模型：通过服务端 `/api/agent/chat` 统一接入任何兼容 OpenAI Chat Completions 的模型服务。Vercel 环境变量需设置 `AGENT_API_KEY`、`AGENT_MODEL`，可选设置 `AGENT_BASE_URL` 和 `AGENT_PROVIDER`。密钥不会进入浏览器代码。
+
+### 动态分析报告
+
+预研产品池、市场结构、发行预测和行情判断通过 `/api/analysis/report` 使用统一报告结构。接口兼容 Kimi、DeepSeek、OpenAI 等 OpenAI-compatible 服务，配置 `ANALYSIS_PROVIDER`、`ANALYSIS_API_KEY`、`ANALYSIS_MODEL` 与 `ANALYSIS_BASE_URL` 即可切换供应商。报告按分析类型、数据日期、事实哈希和提示词版本缓存在 PostgreSQL；没有配置模型时自动使用规则报告，数据库中同日期的 Codex 人工报告优先于规则降级。
+
+页面右上角的“AI分析模型”也支持智谱、Kimi、DeepSeek 和 OpenAI 的个人密钥模式。个人密钥仅放在浏览器 `sessionStorage`，随分析请求发送给同源服务端，不写入数据库或构建产物，浏览器会话结束后清除；服务端仅允许调用代码内列明的官方 API 域名。
 - 本地模型：在 Agent 的“模型设置”中切换至本地 Ollama，默认接口为 `http://127.0.0.1:11434/api/chat`，默认模型为 `qwen3:8b`。Ollama 需要已启动、已下载对应模型，并允许生产站点跨域访问。
 - 未配置云端模型时：云端接口明确返回“尚未配置”，用户仍可切换到本地模型；系统不会静默伪造回复。
 - 数据上下文：构建前由 `scripts/build_agent_context.mjs` 从最新公开快照生成轻量上下文，按当前工作区只发送相关摘要，避免把数十MB原始数据传给模型。

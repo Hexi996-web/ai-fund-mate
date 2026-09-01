@@ -62,7 +62,7 @@ const output = {
         horizons: attention.modelCalibration.horizons.map(({ label, status, evaluable, hitRatePercent, inclusiveHitRatePercent }) => ({ label, status, evaluable, hitRatePercent, inclusiveHitRatePercent })),
       } : null,
     },
-    '市场分析': {
+    '公募基金简报': {
       productTotal: products.productTotal,
       shareTotal: products.shareTotal,
       comparableProductCount: comparableCount,
@@ -70,16 +70,13 @@ const output = {
       comparableBaselineScaleYi: round(baselineScaleYi),
       scaleNetIncreaseYi: round(currentScaleYi - baselineScaleYi),
       leadingTypes: [...typeMap.values()].sort((a, b) => b.currentScaleYi - a.currentScaleYi).slice(0, 8).map((row) => ({ ...row, currentScaleYi: round(row.currentScaleYi) })),
-    },
-    '发行洞察': {
-      dataDate: issuance.dataDate,
-      summary: issuance.summary,
-      sourceStatus: issuance.sourceStatus,
+      issuance: { dataDate: issuance.dataDate, summary: issuance.summary, sourceStatus: issuance.sourceStatus },
     },
     '行情预测': {
       snapshotDate: status.snapshotDate,
       productsUpdateTime: status.productsUpdateTime,
-      note: '行情判断使用同口径基金收益、回撤、规模变化与发行数据；回答时须说明具体比较区间。',
+      researchCoreDirections: research.slice(0, 10),
+      note: '行情判断联合使用同口径基金收益、回撤、规模变化、发行数据与预研产品池核心方向；回答时须说明具体比较区间。',
     },
   },
 }

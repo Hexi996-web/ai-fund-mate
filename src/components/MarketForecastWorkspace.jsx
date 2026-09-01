@@ -2,9 +2,25 @@ import { useEffect, useMemo, useState } from 'react'
 import { buildMarketForecast } from '../data/marketForecast.js'
 import { DATA_STATUS_POLL_MS, fetchDataStatus } from '../data/dataStatus.js'
 import { ReportScope } from './ReportScope.jsx'
+import { useDynamicAnalysis } from '../data/dynamicAnalysis.js'
+import { DynamicAnalysisPanel } from './DynamicAnalysisPanel.jsx'
 
 const pct = (value) => Number.isFinite(value) ? `${value >= 0 ? '+' : ''}${value.toFixed(2)}%` : '—'
 const scale = (value) => Number.isFinite(value) ? `${value >= 0 ? '+' : ''}${value.toFixed(1)} 亿元` : '—'
+
+function ForecastModelAnalysis({ forecast, researchSnapshot }) {
+  const researchPool = useMemo(() => {
+    const itemMap = new Map((researchSnapshot?.items || []).map((item) => [item.id, item]))
+    return (researchSnapshot?.recommendedIds || []).slice(0, 10).map((id, index) => {
+      const item = itemMap.get(id) || {}
+      return { rank: index + 1, id, attentionScore: item.attention?.score, lifecycle: item.lifecycle?.state, scaleNetIncreaseYi: item.validation?.scaleNetIncreaseYi, scaleGrowthPercent: item.validation?.scaleGrowthPercent, launched12Months: item.validation?.launched12Months }
+    })
+  }, [researchSnapshot])
+  const facts = useMemo(() => ({ marketFundStructure: { baseline: forecast.baseline, leaders: forecast.leaders, categories: forecast.rows.map(({ id, name, judgement, navMedian, scaleNetIncrease, drawdownMedian }) => ({ id, name, judgement, navMedian, scaleNetIncrease, drawdownMedian })) }, researchPool: { generatedAt: researchSnapshot?.generatedAt, ranking: researchPool }, analysisRequirement: '联合判断公募资金、收益回撤与预研产品池方向变化；只依据所给事实，不补造宏观数据。' }), [forecast, researchPool, researchSnapshot?.generatedAt])
+  const fallback = useMemo(() => ({ headline: `${forecast.baseline.regime}：公募资金与预研方向需要联合验证`, overallJudgment: `${forecast.baseline.interpretation}${researchPool.length ? ` 当前预研池已有${researchPool.length}个核心方向可用于交叉验证，但产品立项仍需检查资金承接与供给拥挤。` : ' 当前预研池数据暂未载入，先以公募基金结构信号为准。'}`, changeAttribution: [`收益领先方向为${forecast.leaders.return?.name || '待补充'}。`, `资金净流入领先方向为${forecast.leaders.inflow?.name || '待补充'}。`, researchPool.length ? `预研池Top 10中${researchPool.filter((item)=>item.lifecycle==='拥挤观察').length}个方向处于拥挤观察。` : '预研方向排名等待数据载入。'], risks: ['高收益方向可能伴随更深阶段性回撤。', '规模披露时滞可能影响短期资金方向判断。', '预研注意力与公募资金可能存在时间错位，不能把热度直接等同产品需求。'], nextActions: [forecast.baseline.action, forecast.baseline.invalidation, '验证预研池领先方向是否同步获得基金规模净增和更广的正增长覆盖。'] }), [forecast, researchPool])
+  const analysis = useDynamicAnalysis({ analysisKey: 'market-forecast', dataDate: forecast.dataDate, facts, fallback })
+  return <DynamicAnalysisPanel analysis={analysis} title="整体策略与行情动态研判" />
+}
 
 export function MarketForecastWorkspace({ onOpenFundLibrary, agentCommand, onContextChange }) {
   const [forecast, setForecast] = useState(null)
@@ -13,19 +29,19 @@ export function MarketForecastWorkspace({ onOpenFundLibrary, agentCommand, onCon
   const [selectedId, setSelectedId] = useState('tech')
   const [sort, setSort] = useState('nav')
   const [loadedUpdateTime, setLoadedUpdateTime] = useState('')
+  const [researchSnapshot, setResearchSnapshot] = useState(null)
 
   useEffect(() => {
     const controller = new AbortController()
     const timeout = window.setTimeout(() => controller.abort(), 20_000)
     setLoadError('')
-    fetch('/fund_products.json', { signal: controller.signal, cache: 'no-store' })
-      .then((response) => {
-        if (!response.ok) throw new Error(`行情预测数据请求失败（${response.status}）`)
-        return response.json()
-      })
-      .then((payload) => {
+    Promise.all([
+      fetch('/fund_products.json', { signal: controller.signal, cache: 'no-store' }).then((response) => { if (!response.ok) throw new Error(`行情预测数据请求失败（${response.status}）`); return response.json() }),
+      fetch('/attention_pool_evidence.json', { signal: controller.signal, cache: 'no-store' }).then((response) => response.ok ? response.json() : null).catch(() => null),
+    ]).then(([payload, attentionPayload]) => {
         if (!Array.isArray(payload?.products) || payload.products.length === 0) throw new Error('行情预测数据为空')
         setForecast(buildMarketForecast(payload))
+        setResearchSnapshot(attentionPayload)
         setLoadedUpdateTime(payload.updateTime ?? '')
       })
       .catch((error) => {
@@ -92,6 +108,7 @@ export function MarketForecastWorkspace({ onOpenFundLibrary, agentCommand, onCon
       { term: '观测区间', description: `收益与回撤仅比较年初至${forecast.dataDate}的同区间样本；新基金不进入跨类型收益排名` },
       { term: '信号性质', description: `基于${forecast.dataDate}收盘后可得数据每日重算，用于判断当前市场状态，不代表下一交易日收益预测` },
     ]} />
+    <ForecastModelAnalysis forecast={forecast} researchSnapshot={researchSnapshot} />
 
     <section className="forecast-conclusion" aria-label="核心结论">
       <h2>核心结论</h2>
@@ -121,15 +138,8 @@ export function MarketForecastWorkspace({ onOpenFundLibrary, agentCommand, onCon
       </button>)}
     </section>
 
-    <section className="forecast-calibration">
-      <h2>宏观与行业校准</h2>
-      <div><article><h3>经济</h3><strong>上半年 GDP 同比 +4.7%</strong><p>一季度 +5.0%、二季度 +4.3%，总量保持增长但动能有所放缓。</p><a href="https://www.stats.gov.cn/sj/xwfbh/fbhwd/202607/t20260715_1964121.html" target="_blank" rel="noreferrer">国家统计局</a></article><article><h3>物价</h3><strong>PPI 环境改善</strong><p>工业品价格改善有利于周期盈利，同时约束长久期债券单边行情。</p><a href="https://www.stats.gov.cn/sj/zxfbhjd/202607/t20260715_1964134.html" target="_blank" rel="noreferrer">国家统计局</a></article><article><h3>公募资金</h3><strong>低风险资产仍占主导</strong><p>债券与货币基金体量仍高，市场呈现权益进攻与固收防守并存。</p><a href="https://www.amac.org.cn/sjtj/datastatistics/fundindustrydata/" target="_blank" rel="noreferrer">基金业协会</a></article></div>
-    </section>
-
-    <section className="forecast-watch"><div><h2>主要风险</h2><ul><li>高收益方向可能伴随更深阶段性回撤。</li><li>主题交易拥挤会放大净值波动与赎回压力。</li><li>黄金、资源及海外资产不能按历史收益线性外推。</li></ul></div><div><h2>需要持续验证的指标</h2><ul><li>领先板块的规模净增额是否继续为正。</li><li>收益上涨是否伴随回撤中位数持续恶化。</li><li>货币与债券基金资金是否向宽基和权益产品迁移。</li></ul></div></section>
-
     {selected ? <section className="forecast-detail">
-      <div className="workspace-heading"><div><h2>{selected.name}·构成产品</h2><p>{selected.funds.length.toLocaleString('zh-CN')} 只产品；表格展示排序前 30。</p></div><div className="forecast-actions"><select aria-label="预测构成基金排序" value={sort} onChange={(event) => setSort(event.target.value)}><option value="nav">年内收益</option><option value="scale">规模净增额</option><option value="drawdown">最大回撤</option></select><button type="button" onClick={() => onOpenFundLibrary({ query: selected.name.split('/')[0], contextLabel: selected.name })}>进入市场分析</button></div></div>
+      <div className="workspace-heading"><div><h2>{selected.name}·构成产品</h2><p>{selected.funds.length.toLocaleString('zh-CN')} 只产品；表格展示排序前 30。</p></div><div className="forecast-actions"><select aria-label="预测构成基金排序" value={sort} onChange={(event) => setSort(event.target.value)}><option value="nav">年内收益</option><option value="scale">规模净增额</option><option value="drawdown">最大回撤</option></select><button type="button" onClick={() => onOpenFundLibrary({ query: selected.name.split('/')[0], contextLabel: selected.name })}>进入公募基金简报</button></div></div>
       <div className="forecast-funds"><div><span>基金产品</span><span>代码</span><span>类型</span><span>年内收益</span><span>规模净增额</span><span>最大回撤</span></div>{funds.map((fund) => <button type="button" key={fund.productId} onClick={() => onOpenFundLibrary({ query: fund.representativeCode, contextLabel: fund.productName })}><strong>{fund.productName}</strong><span>{fund.representativeCode}</span><span>{fund.type}</span><span>{pct(fund.navGrowthPercent)}</span><span>{scale(fund.scaleNetIncreaseYi)}</span><span>{pct(fund.maxDrawdownPercent)}</span></button>)}</div>
     </section> : null}
   </main>

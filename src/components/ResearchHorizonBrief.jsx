@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react'
 import { ATTENTION_POOL } from '../data/attentionPool.js'
+import { useDynamicAnalysis } from '../data/dynamicAnalysis.js'
+import { DynamicAnalysisPanel } from './DynamicAnalysisPanel.jsx'
 
 const HORIZONS = {
   quarter: { label:'未来3个月', tone:'短期验证', stance:'保持预研、暂不扩大立项', conclusion:'产品与资金验证仍强，但公众注意力只在少数方向形成持续扩散。未来三个月更适合验证存量方向，而非追逐新增热点。', action:'仅在资金连续性与注意力持续性同时满足时升级立项。' },
@@ -97,6 +99,13 @@ function RankMove({delta}) {
   return <span className={`rank-move rank-move--${direction}`} title={delta?`较上一有效快照综合排名${delta>0?'上升':'下降'}，幅度与归因见方向详情`:'较上一有效快照综合排名持平'} aria-label={delta?`综合排名${delta>0?'上升':'下降'}`:'综合排名持平'}><svg viewBox="0 0 16 16" aria-hidden="true">{direction==='up'?<path d="M8 13V3m0 0L4.5 6.5M8 3l3.5 3.5"/>:direction==='down'?<path d="M8 3v10m0 0 3.5-3.5M8 13 4.5 9.5"/>:<path d="M3 8h10"/>}</svg></span>
 }
 
+function ResearchModelAnalysis({ brief, directions }) {
+  const facts=useMemo(()=>({horizon:brief.label,rankingCount:brief.rankingCount,positiveScaleDirections:brief.positiveScale,attentionReadyDirections:brief.attentionReady,crowdedDirections:brief.crowded,scaleLeaders:brief.scaleLeaders.map(({name,proof})=>({name,scaleNetIncreaseYi:proof.validation.scaleNetIncreaseYi})),entered:brief.entered.map(({name})=>name),exited:brief.exited.map(({name})=>name),topDirections:directions.map(({name,rankDelta,evidence})=>({name,rankDelta,evidence}))}),[brief,directions])
+  const fallback=useMemo(()=>({headline:brief.stance,overallJudgment:brief.conclusion,changeAttribution:[`规模增量主要集中于${brief.scaleLeaderText}。`,`Top 10 本期新进${brief.entered.map(({name})=>name).join('、')||'无'}，退出${brief.exited.map(({name})=>name).join('、')||'无'}。`],risks:[`${brief.crowded}个方向进入拥挤观察，新增同质化供给需提高门槛。`,'主题间可能包含重叠产品，规模变化不等同净申购。'],nextActions:[brief.action,'持续验证资金连续性、公众注意力和企业兑现是否同向。']}),[brief])
+  const analysis=useDynamicAnalysis({analysisKey:'research-pool',dataDate:brief.dataDate,facts,fallback})
+  return <DynamicAnalysisPanel analysis={analysis} title={`${brief.label}整体策略动态研判`}/>
+}
+
 export function ResearchHorizonBrief({ snapshot,onOpen,onOpenNewFunds,evidenceItems=[],externalItems=[] }) {
   const [horizon,setHorizon]=useState('quarter')
   const [detail,setDetail]=useState('')
@@ -127,6 +136,7 @@ export function ResearchHorizonBrief({ snapshot,onOpen,onOpenNewFunds,evidenceIt
       <article className="horizon-analysis horizon-memo">
         <div className="horizon-memo__heading"><div><strong>{brief.label} · 产品池整体判断</strong><span>数据截至 {brief.dataDate}</span></div><em>排行历史 {brief.rankingCount} 期</em></div>
         <section className="horizon-memo__stance"><div><small>整体策略</small><strong>{brief.stance}</strong></div><p>{brief.conclusion}</p></section>
+        <ResearchModelAnalysis brief={brief} directions={directions}/>
         <div className="horizon-memo__change"><small>排行变化</small><strong>较 {brief.previousDate||'上一期'}</strong><span>新进：{brief.entered.map(({name})=>name).join('、')||'无'}；退出：{brief.exited.map(({name})=>name).join('、')||'无'}。升降幅与归因见方向详情证据链。</span></div>
         <div className="horizon-metrics">{brief.metrics.map((item)=><button type="button" className={detail===item.id?'active':''} aria-pressed={detail===item.id} onClick={()=>setDetail(detail===item.id?'':item.id)} key={item.id}><span>{item.label}</span>{item.items?<div className="horizon-metric-list">{item.items.map((row,index)=><small key={row.name}><i>{index+1}</i><b>{row.name}</b><em className={row.id?'is-link':''} role={row.id?'button':undefined} tabIndex={row.id?0:undefined} onClick={row.id?(event)=>{event.stopPropagation();onOpenNewFunds?.(row.id)}:undefined} onKeyDown={row.id?(event)=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();onOpenNewFunds?.(row.id)}}:undefined}>{row.value}</em></small>)}</div>:<small>新进：{item.entered.map(({name})=>name).join('、')||'无'}<br/>退出：{item.exited.map(({name})=>name).join('、')||'无'}</small>}<Chevron/></button>)}</div>
         {selectedMetric?<div className="horizon-detail" role="status"><strong>{selectedMetric.label} · 数据说明</strong><p>{selectedMetric.detail}</p><button type="button" onClick={()=>setDetail('')}>收起</button></div>:null}

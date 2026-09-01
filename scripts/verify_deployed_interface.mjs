@@ -14,21 +14,22 @@ try {
 
   await page.getByRole('heading', { name: '核心预研产品池' }).waitFor()
   await page.locator('.research-data-date').getByText(expectedDate).waitFor()
-  const brief = page.getByRole('region', { name: '前瞻产品方向简报' })
+  const brief = page.getByRole('region', { name: '产品池期限决策简报' })
   await brief.waitFor()
   await page.getByRole('button', { name: '未来3个月' }).click()
-  await brief.getByText('短期催化').first().waitFor()
+  await brief.getByText('未来3个月 · 产品池整体判断').first().waitFor()
   await page.getByRole('button', { name: '未来半年' }).click()
-  await brief.getByText('产业兑现').first().waitFor()
+  await brief.getByText('未来半年 · 产品池整体判断').first().waitFor()
   await page.getByRole('button', { name: '未来1年' }).click()
-  await brief.getByText('赛道形成').first().waitFor()
+  await brief.getByText('未来1年 · 产品池整体判断').first().waitFor()
   await page.getByText('母池36个方向全部展示').waitFor()
   if (await page.locator('.attention-dot').count() !== 36) throw new Error('attention heatmap did not render all 36 verified themes')
   if (await page.locator('.attention-dot.is-core').count() !== 10) throw new Error('attention heatmap did not render exactly 10 core themes')
   await page.getByRole('heading', { name: '产品方向可行性' }).waitFor()
   await page.getByRole('heading', { name: '产品空位判断' }).waitFor()
 
-  await page.getByRole('button', { name: '市场分析' }).click()
+  await page.getByRole('button', { name: '公募基金简报' }).click()
+  await page.getByRole('heading', { name: '公募基金简报' }).waitFor()
   await page.getByRole('heading', { name: '全市场公募基金摘要' }).waitFor()
   await page.getByText(`统计截止：${expectedDate}`).waitFor()
   await page.getByText(`数据日期：${expectedDate}`).waitFor()
@@ -38,12 +39,12 @@ try {
   await page.getByText(`数据日期 ${expectedDate}`).waitFor()
   await page.getByLabel('基准判断动态信号').waitFor()
 
-  await page.getByRole('button', { name: '发行洞察' }).click()
-  await page.getByRole('heading', { name: '发行洞察' }).waitFor()
+  await page.getByRole('button', { name: '公募基金简报' }).click()
+  await page.getByRole('tab', { name: /近三个月以来发行/ }).click()
   await page.getByRole('tabpanel').getByText(`数据日期：${expectedDate}`).waitFor()
 
   if (errors.length) throw new Error(`browser errors: ${errors.join(' | ')}`)
-  console.log(`Production UI verified for all four workspaces at ${expectedDate}`)
+  console.log(`Production UI verified for all three workspaces at ${expectedDate}`)
 } finally {
   await browser.close()
 }

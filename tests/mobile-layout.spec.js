@@ -4,6 +4,10 @@ import path from 'node:path'
 
 test.beforeEach(async ({ page }) => {
   await page.route('**/fund_products.json', (route) => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ productTotal: 0, shareTotal: 0, products: [] }) }))
+  await page.route('**/api/analysis/report', async (route) => {
+    const request = route.request().postDataJSON()
+    await route.fulfill({ json: { report: request.fallback, source: 'rule-fallback', dataDate: request.dataDate } })
+  })
 })
 
 const completeFund = (code, name, type, overrides = {}) => ({
@@ -37,7 +41,7 @@ const activeFunds = [
 ]
 
 const openFundLibrary = async (page) => {
-  await page.getByRole('button', { name: '市场分析', exact: true }).click()
+  await page.getByRole('button', { name: '公募基金简报', exact: true }).click()
   await page.locator('.result-count').waitFor({ state: 'visible' })
 }
 
