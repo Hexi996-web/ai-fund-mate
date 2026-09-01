@@ -17,13 +17,19 @@ $databaseUrl = ConvertFrom-SecureValue $databaseSecure
 
 try {
   $uri = [Uri]$databaseUrl
-  if ($uri.Scheme -notin @('postgres', 'postgresql') -or -not $uri.Host.EndsWith('.pooler.supabase.com') -or $uri.Port -ne 5432) {
-    throw 'Database URI must be the Supabase IPv4 Session pooler on port 5432.'
+  $expectedPoolerUser = 'postgres.rxltxbnsvoognoykmkop'
+  if ($uri.Scheme -notin @('postgres', 'postgresql') -or
+      -not $uri.Host.EndsWith('.pooler.supabase.com') -or
+      $uri.Port -ne 5432 -or
+      $uri.UserInfo.Split(':')[0] -ne $expectedPoolerUser) {
+    throw "Database URI must be the Supabase IPv4 Session pooler on port 5432 with user $expectedPoolerUser."
   }
   if (-not (Test-Path -LiteralPath $SshKey)) { throw "SSH key not found: $SshKey" }
 
-  $databaseUrl | gh secret set SUPABASE_DB_URL
+  $databaseUrl | gh secret set SUPABASE_DB_URL --repo Hexi996-web/ai-fund-mate
+  if ($LASTEXITCODE -ne 0) { throw 'Failed to update GitHub secret SUPABASE_DB_URL.' }
   "$zhipuKey`n$databaseUrl" | ssh -T -i $SshKey "$ServerUser@$ServerHost" '/home/admin/configure-ai-fund-mate-secrets.sh'
+  if ($LASTEXITCODE -ne 0) { throw 'Failed to update production server secrets.' }
   Write-Host 'Production secrets updated in GitHub Actions and on the server.'
 } finally {
   $zhipuKey = $null
