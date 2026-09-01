@@ -28,19 +28,19 @@ try {
   if (await page.locator('.attention-dot.is-core').count() !== 10) throw new Error('attention heatmap did not render exactly 10 core themes')
   await page.getByRole('heading', { name: '产品经理前瞻简报' }).waitFor()
 
-  await page.getByRole('button', { name: '公募基金简报' }).click()
+  await page.getByRole('button', { name: '公募基金简报', exact: true }).click()
   await page.getByRole('heading', { name: '公募基金简报' }).waitFor()
   await page.getByRole('heading', { name: '全市场公募基金摘要' }).waitFor()
   await page.getByText(`统计截止：${expectedDate}`).waitFor()
   await page.getByText(`数据日期：${expectedDate}`).waitFor()
   await page.getByText(`更新时间：${expectedUpdateTime}`).waitFor()
 
-  await page.getByRole('button', { name: '行情预测' }).click()
+  await page.getByRole('button', { name: '行情预测', exact: true }).click()
   await page.getByRole('heading', { name: '行情预测' }).waitFor()
   await page.getByText(`数据日期 ${expectedDate}`).waitFor()
   await page.getByLabel('基准判断动态信号').waitFor()
 
-  await page.getByRole('button', { name: '公募基金简报' }).click()
+  await page.getByRole('button', { name: '公募基金简报', exact: true }).click()
   await page.getByRole('tab', { name: /近三个月以来发行/ }).click()
   await page.getByRole('tabpanel').getByText(`数据日期：${expectedDate}`).waitFor()
 
