@@ -67,6 +67,7 @@ jobs:
           python scripts/update_attention_pool.py
           python -m scripts.update_theme_external_signals
           python scripts/update_three_layer_evidence.py
+          node scripts/update_horizon_rankings.mjs
           python scripts/publish_data_status.py
           node scripts/build_agent_context.mjs
       - name: Read expected snapshot date

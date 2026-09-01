@@ -2,66 +2,15 @@ import { useMemo, useState } from 'react'
 import { ATTENTION_POOL } from '../data/attentionPool.js'
 import { useDynamicAnalysis } from '../data/dynamicAnalysis.js'
 import { DynamicAnalysisPanel } from './DynamicAnalysisPanel.jsx'
+import { buildRankedDirections } from '../data/horizonRanking.js'
 
 const HORIZONS = {
   quarter: { label:'未来3个月', tone:'短期验证', stance:'保持预研、暂不扩大立项', conclusion:'产品与资金验证仍强，但公众注意力只在少数方向形成持续扩散。未来三个月更适合验证存量方向，而非追逐新增热点。', action:'仅在资金连续性与注意力持续性同时满足时升级立项。' },
   halfYear: { label:'未来半年', tone:'兑现跟踪', stance:'聚焦兑现、收缩纯叙事方向', conclusion:'半年窗口应把企业收入、订单与同类产品资金流放在同一证据链中，优先保留能够连续兑现的方向。', action:'把连续两个报告期的经营改善作为扩池前置条件。' },
   year: { label:'未来1年', tone:'结构布局', stance:'保留结构机会、等待产品空位', conclusion:'一年窗口更关注资产容量、长期认知与产品供给空位，避免把短期热度直接外推为长期产品机会。', action:'优先研究资产承载充分且同类供给尚未拥挤的方向。' },
 }
-const clamp = (value) => Math.min(100,Math.max(0,Number(value)||0))
-const average = (rows) => rows.length ? rows.reduce((sum,row)=>sum+(Number(row.views)||0),0)/rows.length : 0
 const signedYi = (value) => Number.isFinite(value) ? `${value>=0?'+':''}${value.toFixed(1)}亿元` : '—'
 const signedPct = (value) => Number.isFinite(value) ? `${value>=0?'+':''}${value.toFixed(1)}%` : '—'
-
-function wikiScore(signal) {
-  const rows=signal?.wikimedia?.daily||[]
-  if(rows.length<90)return 50
-  const change30=average(rows.slice(-30))/Math.max(1,average(rows.slice(-60,-30)))-1
-  const change90=average(rows.slice(-45))/Math.max(1,average(rows.slice(-90,-45)))-1
-  return clamp(50+25*Math.tanh(change30/.35)+25*Math.tanh(change90/.45))
-}
-function enterpriseScore(row) {
-  const enterprise=row?.enterprise
-  if(!enterprise || enterprise.status!=='真实公开数据')return 50
-  return clamp(clamp(50+(enterprise.revenueGrowthMedian||0)*1.2)*.30+clamp(50+(enterprise.profitGrowthMedian||0))*.20+(enterprise.positiveRevenueShare||0)*.25+(enterprise.positiveProfitShare||0)*.25)
-}
-function structureScore(row) {
-  const history=row?.structure?.history||[]
-  if(history.length<2)return 50
-  const first=Number(history[0].value??history[0].index??0),last=Number(history.at(-1).value??history.at(-1).index??0)
-  return first ? clamp(50+(last/first-1)*100) : 50
-}
-function gapScore(proof) {
-  const parts=proof.validation.scoreComponents||{}
-  return clamp((100-(parts.newLaunches||0))*.45+(100-(parts.effectiveProducts||0))*.35+(parts.concentrationBalance||50)*.20)
-}
-
-function buildRankedDirections(snapshot,horizon,evidenceItems,externalItems) {
-  const metadata=new Map(ATTENTION_POOL.map((item)=>[item.id,item]))
-  const evidence=new Map(evidenceItems.map((item)=>[item.id,item]))
-  const external=new Map(externalItems.map((item)=>[item.id,item]))
-  const history=snapshot.rankingHistory||[],latest=history.at(-1),previous=history.at(-2)
-  const latestRanks=new Map((latest?.rankedIds||[]).map((id,index)=>[id,index+1]))
-  const previousRanks=new Map((previous?.rankedIds||[]).map((id,index)=>[id,index+1]))
-  return (snapshot.items||[]).filter((proof)=>proof.verified&&metadata.has(proof.id)).map((proof)=>{
-    const item=metadata.get(proof.id),parts=proof.validation.scoreComponents||{}
-    const wiki=wikiScore(external.get(proof.id)),enterprise=enterpriseScore(evidence.get(proof.id)),structure=structureScore(evidence.get(proof.id)),gap=gapScore(proof)
-    const liveAttention=proof.attention.score,flow=parts.estimatedNetFlow||0,breadth=parts.growthBreadth||0,growth=parts.scaleGrowthRate||0
-    let score,evidenceText
-    if(horizon==='quarter'){
-      score=liveAttention*.10+wiki*.20+flow*.35+breadth*.20+(parts.newLaunches||0)*.15
-      evidenceText=`注意力${liveAttention.toFixed(0)} · 资金流${flow.toFixed(0)} · 广度${breadth.toFixed(0)}`
-    }else if(horizon==='halfYear'){
-      score=enterprise*.40+structure*.15+growth*.20+breadth*.15+flow*.10
-      evidenceText=`企业兑现${enterprise.toFixed(0)} · 增速${growth.toFixed(0)} · 广度${breadth.toFixed(0)}`
-    }else{
-      score=proof.capacity.score*.30+enterprise*.25+wiki*.15+gap*.20+structure*.10
-      evidenceText=`容量${proof.capacity.score.toFixed(0)} · 企业兑现${enterprise.toFixed(0)} · 空位${gap.toFixed(0)}`
-    }
-    const latestRank=latestRanks.get(item.id),previousRank=previousRanks.get(item.id)
-    return {...item,proof,score,evidence:evidenceText,rankDelta:latestRank&&previousRank?previousRank-latestRank:0}
-  }).sort((a,b)=>b.score-a.score)
-}
 
 function median(values) {
   const sorted=values.filter(Number.isFinite).toSorted((a,b)=>a-b)
@@ -80,11 +29,12 @@ function buildPoolBrief(ranked,horizon,rankingHistory=[]) {
   const scaleLeaderText=scaleLeaders.map(({name,proof})=>`${name}（${signedYi(Number(proof.validation.scaleNetIncreaseYi))}）`).join('、')
   const crowdedDirections=top.filter(({proof})=>proof.lifecycle?.state==='拥挤观察')
   const latestHistory=rankingHistory.at(-1),previousHistory=rankingHistory.at(-2)
-  const latestTop=(latestHistory?.rankedIds||[]).slice(0,10),previousTop=(previousHistory?.rankedIds||[]).slice(0,10)
-  const entered=latestTop.filter((id)=>!previousTop.includes(id)).map((id)=>ATTENTION_POOL.find((item)=>item.id===id)).filter(Boolean)
-  const exited=previousTop.filter((id)=>!latestTop.includes(id)).map((id)=>ATTENTION_POOL.find((item)=>item.id===id)).filter(Boolean)
+  const latestTop=(latestHistory?.horizonRankedIds?.[horizon]||[]).slice(0,10),previousTop=(previousHistory?.horizonRankedIds?.[horizon]||[]).slice(0,10)
+  const comparisonReady=latestTop.length>0&&previousTop.length>0
+  const entered=(comparisonReady?latestTop.filter((id)=>!previousTop.includes(id)):[]).map((id)=>ATTENTION_POOL.find((item)=>item.id===id)).filter(Boolean)
+  const exited=(comparisonReady?previousTop.filter((id)=>!latestTop.includes(id)):[]).map((id)=>ATTENTION_POOL.find((item)=>item.id===id)).filter(Boolean)
   const dataDate=top[0]?.proof?.capacity?.asOf||String(top[0]?.proof?.validation?.asOf||'—').slice(0,10)
-  return {...definition,dataDate,total:top.length,positiveScale,crowded,attentionReady,growthMedian,scaleLeaderText,scaleLeaders,crowdedDirections,entered,exited,previousDate:previousHistory?.date,rankingCount:rankingHistory.length,metrics:[
+  return {...definition,dataDate,total:top.length,positiveScale,crowded,attentionReady,growthMedian,scaleLeaderText,scaleLeaders,crowdedDirections,entered,exited,previousDate:comparisonReady?previousHistory?.date:null,rankingCount:rankingHistory.filter((row)=>row.horizonRankedIds?.[horizon]?.length).length,metrics:[
     {id:'scale',label:'规模净增最快',items:scaleLeaders.map(({name,proof})=>({name,value:signedYi(Number(proof.validation.scaleNetIncreaseYi))})),detail:`按各方向同类产品当前规模减去2025年末同口径规模排序。当前前三为：${scaleLeaderText}。主题之间可能包含重叠产品，规模变化不等同净申购。`},
     {id:'crowding',label:'拥挤观察方向',items:crowdedDirections.map(({id,name,proof})=>({id,name,value:`近12月新发 ${proof.validation.launched12Months||0}只`})),detail:`当前期限 Top 10 中共有 ${crowded} 个拥挤观察方向：${crowdedDirections.map(({name})=>name).join('、')}。判断同时考虑同类产品数量、近12个月新发和当前规模。点击新发数量可查看具体基金。`},
     {id:'turnover',label:'Top 10 本期变化',entered,exited,detail:`与${previousHistory?.date||'上一有效快照'}的综合模型 Top 10 比较：新进入 ${entered.map(({name})=>name).join('、')||'无'}；退出 ${exited.map(({name})=>name).join('、')||'无'}。升降幅与归因可在方向详情的判断与证据链中查看。`},
@@ -96,7 +46,7 @@ function Chevron() {
 }
 function RankMove({delta}) {
   const direction=delta>0?'up':delta<0?'down':'flat'
-  return <span className={`rank-move rank-move--${direction}`} title={delta?`较上一有效快照综合排名${delta>0?'上升':'下降'}，幅度与归因见方向详情`:'较上一有效快照综合排名持平'} aria-label={delta?`综合排名${delta>0?'上升':'下降'}`:'综合排名持平'}><svg viewBox="0 0 16 16" aria-hidden="true">{direction==='up'?<path d="M8 13V3m0 0L4.5 6.5M8 3l3.5 3.5"/>:direction==='down'?<path d="M8 3v10m0 0 3.5-3.5M8 13 4.5 9.5"/>:<path d="M3 8h10"/>}</svg></span>
+  return <span className={`rank-move rank-move--${direction}`} title={delta?`较上一有效快照本期限排名${delta>0?'上升':'下降'}${Math.abs(delta)}位`:'较上一有效快照本期限排名持平'} aria-label={delta?`本期限排名${delta>0?'上升':'下降'}${Math.abs(delta)}位`:'本期限排名持平'}><svg viewBox="0 0 16 16" aria-hidden="true">{direction==='up'?<path d="M8 13V3m0 0L4.5 6.5M8 3l3.5 3.5"/>:direction==='down'?<path d="M8 3v10m0 0 3.5-3.5M8 13 4.5 9.5"/>:<path d="M3 8h10"/>}</svg>{delta?<small>{Math.abs(delta)}</small>:null}</span>
 }
 
 function ResearchModelAnalysis({ brief, directions }) {
