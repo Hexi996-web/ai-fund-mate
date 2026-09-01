@@ -1,7 +1,7 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "updateTime": "2026-09-01T02:57:21.543366+00:00",
-  "methodologyVersion": "three-layer-36-v1",
+  "methodologyVersion": "multi-signal-demand-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
   "enterpriseDataCount": 36,
@@ -29,7 +29,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "模型调用与软件商业化",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "软件业务收入",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "云计算使用量",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "AI招投标数量",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -1984,7 +2012,51 @@
         "historyPoints": 36,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "机器人产量与真实部署",
+          "score": 54.4,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "工业机器人产量",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "机器人密度",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "批量订单",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [
+            {
+              "name": "工业机器人月产量",
+              "role": "辅助供给代理",
+              "latestDate": "2026-07",
+              "latestValue": 98677.0,
+              "unit": "套",
+              "yoyPercent": 54.8,
+              "baseWeightPercent": 15,
+              "effectiveWeightPercent": 9.0,
+              "signalScore": 98.8,
+              "contributionPoints": 4.4,
+              "source": "国家统计局口径／中商产业数据库公开页",
+              "sourceUrl": "https://s.askci.com/data/industry/a020922/",
+              "interpretation": "仅反映供给活动，不能单独确认整个方向的终端需求。"
+            }
+          ],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -3795,7 +3867,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "空间基础设施建设",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "年度发射次数",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "在轨卫星数量",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "卫星应用收入",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -5638,7 +5738,35 @@
             "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225273742.PDF"
           }
         ],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "电网投资与负荷增长",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "电网投资完成额",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "全社会用电量",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "跨区输电能力",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -6092,7 +6220,51 @@
         "historyPoints": 36,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "关键设备国产化",
+          "score": 53.7,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "集成电路产量",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "半导体设备收入",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "设备进口依赖度",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [
+            {
+              "name": "集成电路月产量",
+              "role": "辅助供给代理",
+              "latestDate": "2026-07",
+              "latestValue": 529.8,
+              "unit": "亿块",
+              "yoyPercent": 28.4,
+              "baseWeightPercent": 15,
+              "effectiveWeightPercent": 9.0,
+              "signalScore": 90.7,
+              "contributionPoints": 3.7,
+              "source": "国家统计局口径／中商产业数据库公开页",
+              "sourceUrl": "https://s.askci.com/data/industry/a02092q/",
+              "interpretation": "仅反映供给活动，不能单独确认整个方向的终端需求。"
+            }
+          ],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -8005,7 +8177,35 @@
             "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-18/1225478966.PDF"
           }
         ],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "创新药研发与商业授权",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "IND/NDA数量",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "License-out金额",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "创新药销售收入",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -9816,7 +10016,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "老龄人口与服务供给",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "65岁以上人口",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "养老床位",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "长期护理险覆盖",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -11627,7 +11855,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "服务与体验消费迁移",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "旅游人次",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "文娱支出",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "服务零售额",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -12508,7 +12764,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "关键矿产供需约束",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "主要矿产产量",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "进口依赖度",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "库存消费比",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -14319,7 +14603,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "未来技术工程化",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "研发投入",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "示范项目数量",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "技术合同额",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -16130,7 +16442,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "制造业软件化",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "工业软件收入",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "数字化研发工具普及率",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "智能工厂数量",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -17941,7 +18281,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "AI应用商业渗透",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "AI软件收入",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "企业采用率",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "付费客户数量",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -19752,7 +20120,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "安全支出刚性",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "网络安全收入",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "安全采购金额",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "数据合规投入",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -21563,7 +21959,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "AI医疗临床采用",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "获批AI医疗器械",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "医院采购金额",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "覆盖医疗机构",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -23396,7 +23820,35 @@
             "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225506876.PDF"
           }
         ],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "生物制造规模化",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "示范产线",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "单位制造成本",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "生物制造收入",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -25351,7 +25803,51 @@
         "historyPoints": 36,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "先进核能工程周期",
+          "score": 51.2,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "核准机组",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "在建装机",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "设备投资额",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [
+            {
+              "name": "核能月发电量",
+              "role": "辅助供给代理",
+              "latestDate": "2026-07",
+              "latestValue": 458.4,
+              "unit": "亿千瓦时",
+              "yoyPercent": 6.6,
+              "baseWeightPercent": 15,
+              "effectiveWeightPercent": 9.0,
+              "signalScore": 62.9,
+              "contributionPoints": 1.2,
+              "source": "国家统计局口径／中商产业数据库公开页",
+              "sourceUrl": "https://s.askci.com/data/energy/a03010j/",
+              "interpretation": "仅反映供给活动，不能单独确认整个方向的终端需求。"
+            }
+          ],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -27162,7 +27658,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "水安全资本开支",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "水利投资完成额",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "再生水利用率",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "供水管网更新",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -28973,7 +29497,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "低空商业运营",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "商业航线数量",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "飞行小时",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "付费运营收入",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -30840,7 +31392,51 @@
         "historyPoints": 14,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "驾驶自动化渗透",
+          "score": 53.8,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "高阶智驾渗透率",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "测试里程",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "用户付费率",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [
+            {
+              "name": "新能源汽车月产量",
+              "role": "辅助供给代理",
+              "latestDate": "2026-07",
+              "latestValue": 155.0,
+              "unit": "万辆",
+              "yoyPercent": 31.8,
+              "baseWeightPercent": 15,
+              "effectiveWeightPercent": 9.0,
+              "signalScore": 92.7,
+              "contributionPoints": 3.8,
+              "source": "国家统计局口径／中商产业数据库公开页",
+              "sourceUrl": "https://s.askci.com/data/industry/a0209202605a/",
+              "interpretation": "仅反映供给活动，不能单独确认整个方向的终端需求。"
+            }
+          ],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -32651,7 +33247,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "体重管理治疗渗透",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "获批适应症",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "处方量",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "支付覆盖",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -34462,7 +35086,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "气候韧性投入",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "防灾减灾投资",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "极端天气损失",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "韧性城市项目",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -36273,7 +36925,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "医疗服务居家化",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "互联网诊疗量",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "远程医疗覆盖",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "支付方覆盖",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -38084,7 +38764,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "精神健康需求释放",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "诊疗人次",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "精神卫生床位",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "心理服务支出",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -39895,7 +40603,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "陪伴消费持续化",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "宠物数量",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "宠物医疗渗透率",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "食品零售额",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -41706,7 +42442,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "运动参与和消费",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "经常锻炼人数",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "体育用品零售额",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "户外活动人次",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -43517,7 +44281,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "入境消费恢复",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "入境人次",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "国际航班量",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "入境游客消费",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -45328,7 +46120,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "功能营养渗透",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "新品注册数量",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "功能食品零售额",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "复购率",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 9,
@@ -47131,7 +47951,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "资源循环利用",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "再生资源回收量",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "再生材料产量",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "产能利用率",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -49086,7 +49934,51 @@
         "historyPoints": 36,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "系统调节需求",
+          "score": 52.5,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "新型储能装机",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "平均利用小时",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "独立储能收益",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [
+            {
+              "name": "锂离子电池月产量",
+              "role": "辅助供给代理",
+              "latestDate": "2024-12",
+              "latestValue": 284440.5,
+              "unit": "万只",
+              "yoyPercent": 15.6,
+              "baseWeightPercent": 15,
+              "effectiveWeightPercent": 9.0,
+              "signalScore": 77.7,
+              "contributionPoints": 2.5,
+              "source": "国家统计局口径／中商产业数据库公开页",
+              "sourceUrl": "https://s.askci.com/data/industry/a02092d/",
+              "interpretation": "仅反映供给活动，不能单独确认整个方向的终端需求。"
+            }
+          ],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -50897,7 +51789,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "无人装备结构升级",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "相关采购公告",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "研发投入",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "军民收入边界",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -52852,7 +53772,51 @@
         "historyPoints": 36,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "农业效率与安全",
+          "score": 54.4,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "粮食单产",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "高标准农田",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "农业机械化率",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [
+            {
+              "name": "大型拖拉机月产量",
+              "role": "辅助供给代理",
+              "latestDate": "2026-07",
+              "latestValue": 8884.0,
+              "unit": "台",
+              "yoyPercent": 56.2,
+              "baseWeightPercent": 15,
+              "effectiveWeightPercent": 9.0,
+              "signalScore": 98.9,
+              "contributionPoints": 4.4,
+              "source": "国家统计局口径／中商产业数据库公开页",
+              "sourceUrl": "https://s.askci.com/data/industry/a02091y/",
+              "interpretation": "仅反映供给活动，不能单独确认整个方向的终端需求。"
+            }
+          ],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -54663,7 +55627,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "养老支付制度化",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "个人养老金开户",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "养老金融规模",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "领取覆盖率",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 5,
@@ -56434,7 +57426,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "职业技能迁移",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "职业培训人次",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "企业培训支出",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "培训后就业率",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -58245,7 +59265,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "内容商业化重构",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "数字内容收入",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "创作者分成",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "付费用户数",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -60056,7 +61104,35 @@
         "historyPoints": 0,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "海洋开发工程化",
+          "score": 50,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "海洋生产总值",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "海工装备订单",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "深海项目数量",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,
@@ -62011,7 +63087,51 @@
         "historyPoints": 36,
         "note": "只使用产业产量、使用量或渗透率序列；不以股价替代真实需求。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "demandAssessment": {
+          "version": "multi-signal-demand-v1",
+          "title": "家庭服务机器人采用",
+          "score": 52.2,
+          "label": "需求待验证",
+          "coreIndicators": [
+            {
+              "name": "服务机器人产量",
+              "role": "核心需求结果",
+              "baseWeightPercent": 45,
+              "status": "待接入"
+            },
+            {
+              "name": "家庭保有量",
+              "role": "渗透与采用",
+              "baseWeightPercent": 35,
+              "status": "待接入"
+            },
+            {
+              "name": "复购与活跃率",
+              "role": "供需与约束",
+              "baseWeightPercent": 20,
+              "status": "待接入"
+            }
+          ],
+          "observations": [
+            {
+              "name": "服务机器人月产量",
+              "role": "辅助供给代理",
+              "latestDate": "2026-07",
+              "latestValue": 1685797.0,
+              "unit": "套",
+              "yoyPercent": 13.2,
+              "baseWeightPercent": 15,
+              "effectiveWeightPercent": 9.0,
+              "signalScore": 74.1,
+              "contributionPoints": 2.2,
+              "source": "国家统计局口径／中商产业数据库公开页",
+              "sourceUrl": "https://s.askci.com/data/industry/a02092u/",
+              "interpretation": "仅反映供给活动，不能单独确认整个方向的终端需求。"
+            }
+          ],
+          "method": "以50为中性基准；指标按基础权重、来源、新鲜度与连续性折算有效权重，缺失指标不重新分配权重。"
+        }
       },
       "enterprise": {
         "sampleCompanies": 10,

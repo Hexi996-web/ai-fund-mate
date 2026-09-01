@@ -62,7 +62,7 @@ test('shows public-data evidence and drills into product supply', async ({ page 
   await expect(cockpit.getByText(/词条篮子：/)).toBeVisible()
   await expect(cockpit.getByText(/ETF真实需求/)).toHaveCount(0)
   const evidence = themePage
-  await expect(evidence.getByText('产业需求是否成立', { exact: true })).toBeVisible()
+  await expect(evidence.getByText('产业核心需求', { exact: true })).toBeVisible()
   await expect(evidence.getByText('龙头企业是否兑现', { exact: true })).toBeVisible()
   await expect(evidence.getByText('资产池能否支撑产品', { exact: true })).toBeVisible()
   await themePage.getByRole('button', { name: /龙头企业是否兑现/ }).click()

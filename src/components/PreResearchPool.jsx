@@ -16,6 +16,10 @@ const signedYi = (value) =>
     ? `${value >= 0 ? "+" : ""}${value.toFixed(1)}亿元`
     : "—";
 const num = (value) => (value == null ? Number.NaN : Number(value));
+const displayDateTime = (value) => {
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? value || "—" : parsed.toLocaleString("zh-CN", { timeZone: "Asia/Shanghai", hour12: false });
+};
 const fundGrowth = (fund) =>
   Number.isFinite(num(fund.scaleGrowthPercent))
     ? num(fund.scaleGrowthPercent)
@@ -212,7 +216,7 @@ function MetricButton({ label, value, onClick }) {
 }
 
 const evidenceMeta = {
-  structure: { title: "产业需求是否成立" },
+  structure: { title: "产业核心需求" },
   enterprise: { title: "龙头企业是否兑现" },
   assets: { title: "资产池能否支撑产品" },
 };
@@ -268,6 +272,50 @@ function yearOverYear(rows, field = "value") {
   return Number.isFinite(current) && Number.isFinite(previous) && previous
     ? (current / previous - 1) * 100
     : Number.NaN;
+}
+
+function demandAssessment(structure) {
+  return structure?.demandAssessment || {
+    score: 50,
+    label: "需求待验证",
+    coreIndicators: (structure?.metrics || []).map((name, index) => ({
+      name,
+      role: ["核心需求结果", "渗透与采用", "供需与约束"][index] || "辅助验证",
+      baseWeightPercent: [45, 35, 20][index] || 0,
+      status: "待接入",
+    })),
+    observations: [],
+    method: "以50为中性基准；缺失指标不重新分配权重。",
+  };
+}
+
+function DemandEvidence({ structure, rows, yoy, access, catalysts }) {
+  const assessment = demandAssessment(structure);
+  return <>
+    <div className="evidence-answer demand-answer">
+      <b>当前判断</b>
+      <strong>{assessment.label}</strong>
+      <span>产业需求指数 {Number(assessment.score).toFixed(1)} · 单一供给指标不能确认整个方向需求</span>
+    </div>
+    <section className="demand-contract">
+      <header><strong>{assessment.title || structure.signal} · 核心需求指标</strong><small>基础权重</small></header>
+      <div>{(assessment.coreIndicators || []).map((indicator) => <article key={indicator.name}>
+        <span><small>{indicator.role}</small><strong>{indicator.name}</strong></span>
+        <b>{indicator.baseWeightPercent}%</b><em>{indicator.status || "待接入"}</em>
+      </article>)}</div>
+      <p>{assessment.method}</p>
+    </section>
+    {(assessment.observations || []).length ? <section className="demand-observations">
+      <header><strong>当前已接入证据</strong><small>按有效权重贡献，不替代核心需求指标</small></header>
+      {(assessment.observations || []).map((observation) => <article key={observation.name}>
+        <div><span>{observation.role}</span><strong>{observation.name}</strong><small>数据日期 {observation.latestDate}</small></div>
+        <dl><div><dt>同比</dt><dd>{signedPct(observation.yoyPercent)}</dd></div><div><dt>有效权重</dt><dd>{pct(observation.effectiveWeightPercent)}</dd></div><div><dt>指数贡献</dt><dd>{signedPoints(observation.contributionPoints)}</dd></div></dl>
+        <p>{observation.interpretation}</p>
+      </article>)}
+      {rows.length >= 2 ? <><MiniTrend rows={rows} field="value" unit={structure.unit} /><p className="evidence-principle">{structure.metric}最新同比{signedPct(yoy)}；该序列仅作为辅助供给证据。</p></> : null}
+    </section> : <div className="evidence-empty"><b>{access}</b><h3>核心指标正在接入</h3><p>当前没有足以代表整个方向需求的连续数据，综合指数保持中性，不使用股价或单一新闻替代真实需求。</p></div>}
+    {catalysts.length ? <section className="catalyst-list">{catalysts.map((event, index) => <article className={`catalyst-${event.impact}`} key={`${event.date}-${event.title}-${index}`}><div><time>{event.date || "日期未知"}</time><span>{event.type}</span><b>{event.impact === "negative" ? "削弱判断" : "加强判断"}</b></div><strong>{event.company ? `${event.company}｜` : ""}{event.title}</strong><p>验证：{event.validates}</p>{event.sourceUrl ? <a href={event.sourceUrl} target="_blank" rel="noreferrer">查看原公告 →</a> : null}</article>)}</section> : null}
+  </>;
 }
 
 function EvidenceDrawer({ layer, item, updateTime, onClose }) {
@@ -485,91 +533,7 @@ function EvidenceDrawer({ layer, item, updateTime, onClose }) {
           />
         </section>
       </>
-    ) : structureRows.length >= 4 ? (
-      <>
-        <div className="evidence-answer">
-          <b>真实产业指标判断</b>
-          <strong>
-            {structure.metric}最新同比{signedPct(structureYoy)}，
-            {structureYoy > 10
-              ? "需求与生产活动明显扩张"
-              : structureYoy > 0
-                ? "产业活动温和增长"
-                : "产业活动尚未扩张"}
-            。
-          </strong>
-        </div>
-        <section className="asset-history">
-          <header>
-            <strong>{structure.metric}</strong>
-          </header>
-          <div className="trend-result">
-            <span>
-              最新值{" "}
-              <b>
-                {structureRows.at(-1)?.value?.toFixed(1)}
-                {structure.unit}
-              </b>
-            </span>
-            <span>
-              较上年同月 <b>{signedPct(structureYoy)}</b>
-            </span>
-          </div>
-          <MiniTrend rows={structureRows} field="value" unit={structure.unit} />
-        </section>
-      </>
-    ) : (
-      <div className="evidence-empty">
-        <b>{structureAccess}</b>
-        <h3>关键验证动态</h3>
-        <p>
-          只保留会改变产品预研判断的订单、准入、投产、项目执行与证伪事件，不展示一般新闻和泛化财务旁证。
-        </p>
-        <div className="catalyst-head">
-          <strong>
-            {catalysts.length
-              ? `近${structure.catalystWindowDays || 120}日发现 ${catalysts.length} 条有效事件`
-              : `近${structure.catalystWindowDays || 120}日暂无有效验证事件`}
-          </strong>
-          <span>
-            {structure.catalystSource || "公开公告"} · {structure.catalystStatus || "待更新"}
-          </span>
-        </div>
-        {catalysts.length ? (
-          <section className="catalyst-list">
-            {catalysts.map((event, index) => (
-              <article
-                className={`catalyst-${event.impact}`}
-                key={`${event.date}-${event.title}-${index}`}
-              >
-                <div>
-                  <time>{event.date || "日期未知"}</time>
-                  <span>{event.type}</span>
-                  <b>{event.impact === "negative" ? "削弱判断" : "加强判断"}</b>
-                </div>
-                <strong>
-                  {event.company ? `${event.company}｜` : ""}
-                  {event.title}
-                </strong>
-                <p>验证：{event.validates}</p>
-                {event.sourceUrl ? (
-                  <a href={event.sourceUrl} target="_blank" rel="noreferrer">
-                    查看原公告 →
-                  </a>
-                ) : null}
-              </article>
-            ))}
-          </section>
-        ) : (
-          <div className="catalyst-none">
-            <strong>这不是“零分”</strong>
-            <span>
-              表示当前公开公告中尚未出现符合严格事件口径的验证信号，产业需求暂不能被确认，也不因缺失数据而强行打分。
-            </span>
-          </div>
-        )}
-      </div>
-    );
+    ) : <DemandEvidence structure={structure} rows={structureRows} yoy={structureYoy} access={structureAccess} catalysts={catalysts}/>;
   return (
     <>
       <button
@@ -581,7 +545,7 @@ function EvidenceDrawer({ layer, item, updateTime, onClose }) {
         <header>
           <div>
             <h2>{meta.title}</h2>
-            <p>数据快照 {updateTime}</p>
+            <p>更新于 {displayDateTime(updateTime)}；各指标数据日期见明细</p>
           </div>
           <button type="button" onClick={onClose}>
             关闭
@@ -604,10 +568,10 @@ function ThemeResearchPage({ item, coreRank, proof, evidence, evidenceSummary, a
     <section className="theme-page-body">
       {evidence ? <ThemeDecisionCockpit item={item} proof={proof} evidence={evidence} attentionHistory={attentionHistory} rankingHistory={rankingHistory} externalSignals={externalSignals} /> : null}
       {evidence ? <section className="theme-page-section"><header><h2>产品方向可行性</h2><p>分别验证产业需求、企业兑现与资产承载。</p></header><div className="evidence-four evidence-three theme-page-evidence">
-        <button type="button" onClick={() => onEvidence("structure")}><small>产业需求是否成立</small><strong>{evidence.structure.signal}</strong><span>{evidence.structure.history?.length >= 4 ? `${evidence.structure.metric} · ${evidence.structure.history.length}期真实数据` : evidence.structure.accessStatus || "公开证据持续积累"}</span><em>查看产业趋势 →</em></button>
+        <button type="button" onClick={() => onEvidence("structure")}><small>产业核心需求</small><strong>{demandAssessment(evidence.structure).label} · {Number(demandAssessment(evidence.structure).score).toFixed(1)}</strong><span>{evidence.structure.signal} · {(demandAssessment(evidence.structure).observations || []).length}项已接入证据</span><em>查看需求构成 →</em></button>
         <button type="button" onClick={() => onEvidence("enterprise")}><small>龙头企业是否兑现</small><strong>收入{pct(evidence.enterprise.revenueGrowthMedian)} · 利润{pct(evidence.enterprise.profitGrowthMedian)}</strong><span>前十大公司财报 · {evidence.enterprise.history?.length || 0}个报告期</span><em>查看财报结论 →</em></button>
         <button type="button" onClick={() => onEvidence("assets")}><small>资产池能否支撑产品</small><strong>{evidence.assets.constituentCount}只 · {yi(evidence.assets.floatMarketCapYi)}</strong><span>日成交{yi(evidence.assets.dailyTurnoverYi)} · 前十{pct(evidence.assets.top10SharePercent)}</span><em>查看容量和公司名单 →</em></button>
-      </div><p className="evidence-source">真实产业趋势 {evidenceSummary.structureDataCount || 0}/36 · 企业财报历史 {evidenceSummary.enterpriseDataCount || 0}/36 · 当前资产池 {evidenceSummary.assetDataCount || 0}/36</p></section> : null}
+      </div><p className="evidence-source">连续需求证据已接入 {evidenceSummary.structureDataCount || 0}/36 · 企业财报历史 {evidenceSummary.enterpriseDataCount || 0}/36 · 当前资产池 {evidenceSummary.assetDataCount || 0}/36</p></section> : null}
       <section className="theme-page-section"><header><h2>产品空位判断</h2><p>所有规模均使用同口径可比产品，不把新基金全部规模误算为增长。</p></header><div className="decision-metrics theme-page-metrics">
         <MetricButton label="同类基金" value={`${item.market.count}只`} onClick={() => onMetric("all")} />
         <MetricButton label="近12个月新发" value={`${item.market.launched12.length}只 · ${item.market.supplyState}`} onClick={() => onMetric("12m")} />
