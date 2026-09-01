@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import json
 import time
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from urllib.parse import quote
 
@@ -76,19 +76,49 @@ def wiki_pageviews(theme_id: str, start: date, end: date) -> dict:
     return {"status": "真实公开数据" if daily else "相关词条均无数据", "titles": matched, "candidateTitles": candidates, "daily": daily, "source": "Wikimedia Analytics API（主题词条篮子）"}
 
 
+def merge_daily_rows(previous: list[dict], incoming: list[dict], cutoff: date) -> list[dict]:
+    merged = {row.get("date"): row for row in previous if row.get("date") and row["date"] >= cutoff.isoformat()}
+    merged.update({row.get("date"): row for row in incoming if row.get("date")})
+    return [merged[key] for key in sorted(merged) if key >= cutoff.isoformat()]
+
+
+def incremental_start(previous_rows: list[dict], cutoff: date) -> date:
+    dates = [row.get("date") for row in previous_rows if row.get("date")]
+    if not dates:
+        return cutoff
+    try:
+        return max(cutoff, date.fromisoformat(max(dates)) + timedelta(days=1))
+    except ValueError:
+        return cutoff
+
+
 def build_payload(today: date | None = None) -> dict:
     today = today or date.today()
-    start = today - timedelta(days=365)
+    cutoff = today - timedelta(days=365)
+    # Wikimedia daily pageviews settle after UTC day-end; requesting the current
+    # partial day causes slow retries and produces a non-comparable observation.
+    target_end = today - timedelta(days=1)
     previous = {item["id"]: item for item in load_previous().get("items", [])}
     items = []
     for theme_id, query, _ in THEMES:
         old = previous.get(theme_id, {})
+        old_wiki = old.get("wikimedia") or {}
+        old_rows = old_wiki.get("daily") or []
+        start = incremental_start(old_rows, cutoff)
+        # A renamed or deleted article can otherwise cause the same multi-month
+        # empty range to be retried forever. Weekly runs repair up to 14 days.
+        start = max(start, target_end - timedelta(days=13))
         try:
-            wiki = wiki_pageviews(theme_id, start, today)
+            fetched = wiki_pageviews(theme_id, start, target_end) if start <= target_end else {"daily": []}
+            wiki = {**old_wiki, **fetched, "daily": merge_daily_rows(old_rows, fetched.get("daily") or [], cutoff)}
+            if wiki["daily"] and not fetched.get("daily"):
+                wiki["status"] = old_wiki.get("status") or "真实公开数据"
         except Exception as exc:
-            wiki = old.get("wikimedia") or {"status": f"获取失败：{type(exc).__name__}", "daily": []}
+            wiki = old_wiki or {"status": f"获取失败：{type(exc).__name__}", "daily": []}
         items.append({"id": theme_id, "wikimedia": wiki})
-    return {"schemaVersion": 2, "generatedAt": today.isoformat(), "universeCount": len(THEMES), "wikimediaBackfillDays": 365, "method": "每个主题使用最多3个预先审定的相关词条汇总，所有主题使用同一口径。", "items": items}
+    return {"schemaVersion": 3, "generatedAt": datetime.now().astimezone().isoformat(), "universeCount": len(THEMES),
+            "wikimediaBackfillDays": 365, "updatePolicy": "weekly-incremental",
+            "method": "每个主题使用最多3个预先审定的相关词条汇总；首次回填365天，之后只请求缺失日期。", "items": items}
 
 
 def main() -> None:
