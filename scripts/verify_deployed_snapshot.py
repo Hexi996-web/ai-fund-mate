@@ -55,6 +55,8 @@ def wait_for_deployment(
     attention_max_age_hours: float = 4,
     expected_update_time: str | None = None,
     expected_issuance_date: str | None = None,
+    expected_attention_generated_at: str | None = None,
+    expected_opportunity_model_version: str | None = None,
 ) -> None:
     deadline = time.monotonic() + timeout_seconds
     last_observed: dict[str, str | None] = {}
@@ -71,6 +73,7 @@ def wait_for_deployment(
                 "data_status_data_date": _date(status.get("dataDate") or status.get("snapshotDate")),
                 "data_status_update_time": status.get("productsUpdateTime"),
                 "attention_generated_at": attention.get("generatedAt"),
+                "opportunity_model_version": attention.get("opportunityModelVersion"),
             }
             attention_complete = attention.get("verifiedCount") == 36 and len(attention.get("recommendedIds") or []) == 10
             daily_snapshots_match = (
@@ -83,7 +86,12 @@ def wait_for_deployment(
                 and (expected_issuance_date is None or last_observed["issuance_insights"] == expected_issuance_date)
             )
             attention_fresh = _attention_is_fresh(attention.get("generatedAt"), attention_max_age_hours)
-            if daily_snapshots_match and attention_complete and attention_fresh:
+            attention_matches = (
+                (expected_attention_generated_at is None or attention.get("generatedAt") == expected_attention_generated_at)
+                and (expected_opportunity_model_version is None
+                     or attention.get("opportunityModelVersion") == expected_opportunity_model_version)
+            )
+            if daily_snapshots_match and attention_complete and attention_fresh and attention_matches:
                 print(f"Production snapshots are current: {last_observed}")
                 return
         except (OSError, ValueError, json.JSONDecodeError) as error:
@@ -98,6 +106,8 @@ def main() -> int:
     parser.add_argument("--expected-date", required=True)
     parser.add_argument("--expected-update-time")
     parser.add_argument("--expected-issuance-date")
+    parser.add_argument("--expected-attention-generated-at")
+    parser.add_argument("--expected-opportunity-model-version")
     parser.add_argument("--timeout-seconds", type=int, default=600)
     parser.add_argument("--attention-max-age-hours", type=float, default=4)
     args = parser.parse_args()
@@ -108,6 +118,8 @@ def main() -> int:
         args.attention_max_age_hours,
         args.expected_update_time,
         args.expected_issuance_date,
+        args.expected_attention_generated_at,
+        args.expected_opportunity_model_version,
     )
     return 0
 

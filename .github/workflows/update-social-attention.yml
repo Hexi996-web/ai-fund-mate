@@ -79,7 +79,8 @@ jobs:
           fi
           git commit -m "data: sample social attention"
           for attempt in 1 2 3; do
-            git pull --rebase origin "$GITHUB_REF_NAME" && git push && exit 0
+            git pull --rebase -X theirs origin "$GITHUB_REF_NAME" && git push && exit 0
+            git rebase --abort 2>/dev/null || true
             test "$attempt" -eq 3 && exit 1
             sleep $((attempt * 5))
           done

@@ -24,10 +24,28 @@ jobs:
       - uses: actions/checkout@v7
         with:
           ref: main
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
       - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
+      - name: Read expected snapshot identity
+        id: snapshot
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          products = json.load(open('public/fund_products.json', encoding='utf-8'))
+          issuance = json.load(open('public/issuance_insights.json', encoding='utf-8'))
+          attention = json.load(open('public/attention_pool_evidence.json', encoding='utf-8'))
+          print(f"date={products['dataDate']}")
+          print(f"update_time={products['updateTime']}")
+          print(f"issuance_date={issuance['dataDate']}")
+          print(f"attention_generated_at={attention['generatedAt']}")
+          print(f"opportunity_model_version={attention['opportunityModelVersion']}")
+          PY
       - name: Build and test
         run: |
           npm ci
@@ -53,3 +71,28 @@ jobs:
           ssh -i ~/.ssh/ai-fund-mate "$ECS_USER@$ECS_HOST" "GITHUB_SHA=$GITHUB_SHA bash -s" < scripts/deploy_ecs.sh
       - name: Verify public domain
         run: curl --fail --retry 6 --retry-delay 5 https://chanpin.becoming.fund/healthz
+      - name: Verify deployed snapshot identity
+        env:
+          EXPECTED_DATE: ${{ steps.snapshot.outputs.date }}
+          EXPECTED_UPDATE_TIME: ${{ steps.snapshot.outputs.update_time }}
+          EXPECTED_ISSUANCE_DATE: ${{ steps.snapshot.outputs.issuance_date }}
+          EXPECTED_ATTENTION_GENERATED_AT: ${{ steps.snapshot.outputs.attention_generated_at }}
+          EXPECTED_OPPORTUNITY_MODEL_VERSION: ${{ steps.snapshot.outputs.opportunity_model_version }}
+        run: |
+          python scripts/verify_deployed_snapshot.py \
+            --base-url https://chanpin.becoming.fund \
+            --expected-date "$EXPECTED_DATE" \
+            --expected-update-time "$EXPECTED_UPDATE_TIME" \
+            --expected-issuance-date "$EXPECTED_ISSUANCE_DATE" \
+            --expected-attention-generated-at "$EXPECTED_ATTENTION_GENERATED_AT" \
+            --expected-opportunity-model-version "$EXPECTED_OPPORTUNITY_MODEL_VERSION" \
+            --timeout-seconds 180 \
+            --attention-max-age-hours 6
+      - name: Verify all three production interfaces
+        env:
+          PRODUCTION_URL: https://chanpin.becoming.fund
+          EXPECTED_DATE: ${{ steps.snapshot.outputs.date }}
+          EXPECTED_UPDATE_TIME: ${{ steps.snapshot.outputs.update_time }}
+        run: |
+          npx playwright install --with-deps chromium
+          node scripts/verify_deployed_interface.mjs

@@ -30,7 +30,8 @@ def test_daily_snapshot_accepts_independently_fresh_attention(monkeypatch) -> No
         if "issuance_insights" in url:
             return {"dataDate": "2026-08-31"}
         if "attention_pool" in url:
-            return {"generatedAt": generated_at, "verifiedCount": 36, "recommendedIds": list(range(10))}
+            return {"generatedAt": generated_at, "verifiedCount": 36, "recommendedIds": list(range(10)),
+                    "opportunityModelVersion": "opportunity-demand-attention-v2"}
         return {"dataDate": "2026-08-30", "productsUpdateTime": "2026-08-31 08:00:00"}
 
     monkeypatch.setattr(verifier, "_json", fake_json)
@@ -38,4 +39,6 @@ def test_daily_snapshot_accepts_independently_fresh_attention(monkeypatch) -> No
         "https://example.test", "2026-08-30", 1, 4,
         expected_update_time="2026-08-31 08:00:00",
         expected_issuance_date="2026-08-31",
+        expected_attention_generated_at=generated_at,
+        expected_opportunity_model_version="opportunity-demand-attention-v2",
     )
