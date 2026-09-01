@@ -27,7 +27,18 @@ sudo systemctl enable --now ai-fund-mate.service
 sudo systemctl restart ai-fund-mate.service
 sudo nginx -t
 sudo systemctl reload nginx
-curl --fail --silent --show-error http://127.0.0.1:8800/healthz
+healthy=false
+for attempt in {1..15}; do
+  if curl --fail --silent --show-error http://127.0.0.1:8800/healthz; then
+    healthy=true
+    break
+  fi
+  sleep 2
+done
+if [[ "$healthy" != true ]]; then
+  sudo systemctl status ai-fund-mate.service --no-pager >&2 || true
+  exit 1
+fi
 
 find "$APP_ROOT/releases" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' \
   | sort -nr | tail -n +6 | cut -d' ' -f2- | xargs -r rm -rf
