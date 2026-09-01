@@ -47,6 +47,7 @@ jobs:
           GDELT_ENABLED: "0"
         run: |
           python scripts/update_attention_pool.py
+          python scripts/rescore_research_opportunities.py
           node scripts/update_horizon_rankings.mjs
           python scripts/publish_data_status.py
           node scripts/build_agent_context.mjs

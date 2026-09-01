@@ -370,7 +370,9 @@ def social_attention(theme_id: str, history: dict, media_agenda: dict | None = N
     resonance = min(1, current["resonance"] / max(1, len(recent)))
     rank_strength = max(0, 51 - (current["bestRank"] or 51)) / 50
     acceleration_factor = (clamp(acceleration, -100, 200) + 100) / 300
-    agenda_factor = 0
+    # Missing GDELT is neutral, not zero. The two-hour sampler deliberately
+    # disables this slower source and must not mechanically depress every score.
+    agenda_factor = .5
     if media_agenda:
         agenda_factor = (clamp(media_agenda["accelerationPercent"], -100, 200) + 100) / 300
     score = 25 * resonance + 20 * persistence7 + 15 * persistence30 + 15 * rank_strength + 15 * acceleration_factor + 10 * agenda_factor

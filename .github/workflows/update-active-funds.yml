@@ -67,6 +67,7 @@ jobs:
           python scripts/update_attention_pool.py
           python scripts/update_industry_demand_sources.py
           python scripts/update_three_layer_evidence.py
+          python scripts/rescore_research_opportunities.py
           node scripts/update_horizon_rankings.mjs
           python scripts/publish_data_status.py
           node scripts/build_agent_context.mjs
@@ -88,6 +89,7 @@ jobs:
           python -m pytest scripts/test_fund_product_model.py scripts/test_update_active_funds.py -q
           python -m pytest scripts/test_update_attention_pool.py -q
           python -m pytest scripts/test_three_layer_evidence.py -q
+          python -m pytest scripts/test_rescore_research_opportunities.py -q
           python -m pytest scripts/test_update_industry_demand_sources.py -q
           python -m pytest scripts/test_update_issuance_insights.py -q
           python -m pytest scripts/test_validate_published_freshness.py -q

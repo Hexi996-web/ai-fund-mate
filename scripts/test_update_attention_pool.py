@@ -57,7 +57,7 @@ def test_cross_platform_resonance_scores_above_no_breakout():
     assert resonance["recent30Appearances"] == 6
     assert resonance["score"] > quiet["score"]
     assert quiet["statusLabel"] == "未破圈"
-    assert quiet["score"] == 0
+    assert quiet["score"] == 5
 
 
 def test_product_validation_score_rewards_absolute_demand_and_breadth():

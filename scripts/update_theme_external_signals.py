@@ -110,8 +110,12 @@ def build_payload(today: date | None = None) -> dict:
         start = max(start, target_end - timedelta(days=13))
         try:
             fetched = wiki_pageviews(theme_id, start, target_end) if start <= target_end else {"daily": []}
-            wiki = {**old_wiki, **fetched, "daily": merge_daily_rows(old_rows, fetched.get("daily") or [], cutoff)}
-            if wiki["daily"] and not fetched.get("daily"):
+            incoming = fetched.get("daily") or []
+            # An empty incremental interval must not erase the previously
+            # validated title basket or turn a healthy source into unavailable.
+            wiki = {**old_wiki, **(fetched if incoming or not old_wiki else {}),
+                    "daily": merge_daily_rows(old_rows, incoming, cutoff)}
+            if wiki["daily"] and not incoming:
                 wiki["status"] = old_wiki.get("status") or "真实公开数据"
         except Exception as exc:
             wiki = old_wiki or {"status": f"获取失败：{type(exc).__name__}", "daily": []}

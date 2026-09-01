@@ -5,12 +5,12 @@ test('shows public-data evidence and drills into product supply', async ({ page 
   await page.getByRole('button', { name: '预研产品池', exact: true }).click()
   await expect(page.getByRole('heading', { name: '核心预研产品池' })).toBeVisible()
   await expect(page.locator('.attention-proof').first()).toContainText('百度热搜 × 头条热榜')
-  await expect(page.locator('.attention-detail').getByText('综合社会注意力', { exact: true })).toBeVisible()
-  await expect(page.locator('.attention-head')).toContainText('Wikimedia长期认知20%')
-  await expect(page.locator('.attention-wiki-score')).toContainText('短中期注意力 · 80%')
-  await expect(page.locator('.attention-wiki-score')).toContainText('长期公众认知 · 20%')
+  await expect(page.locator('.attention-detail').getByText('综合关注与认知', { exact: true })).toBeVisible()
+  await expect(page.locator('.attention-head')).toContainText('产业核心需求40%')
+  await expect(page.locator('.attention-wiki-score')).toContainText('国内短中期基础信号')
+  await expect(page.locator('.attention-wiki-score')).toContainText('长期公众认知信号')
   await expect(page.locator('.attention-legend > span')).toHaveCount(5)
-  for (const label of ['注意力领先区','需求—注意力共振区','潜在方向观察区','提前预研区','未破圈观察带']) {
+  for (const label of ['关注领先区','机会—关注共振区','潜在方向观察区','提前预研区','未破圈观察带']) {
     await expect(page.getByText(label,{exact:false}).first()).toBeVisible()
   }
   await page.getByLabel('显示名称',{exact:true}).check()
