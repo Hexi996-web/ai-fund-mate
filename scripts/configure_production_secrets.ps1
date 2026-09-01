@@ -17,8 +17,12 @@ $databaseUrl = ConvertFrom-SecureValue $databaseSecure
 
 try {
   $uri = [Uri]$databaseUrl
-  if ($uri.Scheme -notin @('postgres', 'postgresql') -or -not $uri.Host.EndsWith('.pooler.supabase.com') -or $uri.Port -ne 5432) {
-    throw 'Database URI must be the Supabase IPv4 Session pooler on port 5432.'
+  $expectedPoolerUser = 'postgres.rxltxbnsvoognoykmkop'
+  if ($uri.Scheme -notin @('postgres', 'postgresql') -or
+      -not $uri.Host.EndsWith('.pooler.supabase.com') -or
+      $uri.Port -ne 5432 -or
+      $uri.UserInfo.Split(':')[0] -ne $expectedPoolerUser) {
+    throw "Database URI must be the Supabase IPv4 Session pooler on port 5432 with user $expectedPoolerUser."
   }
   if (-not (Test-Path -LiteralPath $SshKey)) { throw "SSH key not found: $SshKey" }
 
