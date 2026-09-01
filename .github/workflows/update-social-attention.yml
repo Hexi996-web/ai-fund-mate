@@ -54,6 +54,7 @@ jobs:
           python -m pytest scripts/test_update_attention_pool.py -q
           python -m pytest scripts/test_agent_context_workflows.py -q
           python scripts/validate_published_freshness.py public/attention_pool_evidence.json --field generatedAt --max-age-hours 4 --min-items items=36
+          python -c "import json; d=json.load(open('public/attention_pool_evidence.json',encoding='utf-8')); expected={'industryDemand':.2,'productMarket':.2,'enterpriseDelivery':.1,'attentionCognition':.25,'assetCapacity':.2,'riskResilience':.05}; assert d.get('opportunityModelVersion')=='opportunity-demand-attention-v2'; assert len(d.get('items',[]))==36 and all(x.get('opportunityModel',{}).get('rankingWeights')==expected for x in d['items'])"
           python scripts/validate_published_freshness.py public/data_status.json --field generatedAt --max-age-hours 4
           python scripts/validate_published_freshness.py public/agent_context.json --field generatedAt --max-age-hours 4
       - name: Persist full history and compact the public fallback
