@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test'
 
 test('shows public-data evidence and drills into product supply', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 })
   await page.goto('/')
   await page.getByRole('button', { name: '预研产品池', exact: true }).click()
   await expect(page.getByRole('heading', { name: '核心预研产品池' })).toBeVisible()
@@ -10,6 +11,12 @@ test('shows public-data evidence and drills into product supply', async ({ page 
   await expect(page.locator('.attention-wiki-score')).toContainText('国内短中期基础信号')
   await expect(page.locator('.attention-wiki-score')).toContainText('长期公众认知信号')
   await expect(page.locator('.attention-legend > span')).toHaveCount(5)
+  const quadrantSize = await page.locator('.attention-canvas').evaluate((canvas) => {
+    const bounds = canvas.getBoundingClientRect()
+    return { width: bounds.width, height: bounds.height }
+  })
+  expect(quadrantSize.width).toBeGreaterThanOrEqual(900)
+  expect(quadrantSize.height).toBeGreaterThanOrEqual(600)
   for (const label of ['关注领先区','机会—关注共振区','潜在方向观察区','提前预研区','未破圈观察带']) {
     await expect(page.getByText(label,{exact:false}).first()).toBeVisible()
   }
