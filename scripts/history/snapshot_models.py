@@ -40,7 +40,8 @@ def integer_or_none(value):
 
 
 def infer_snapshot_date(name, payload):
-    for value in (payload.get("dataDate"), payload.get("snapshotDate"), payload.get("generatedAt"), payload.get("updateTime")):
+    for value in (payload.get("dataDate"), payload.get("snapshotDate"), payload.get("generatedAt"),
+                  payload.get("updateTime"), payload.get("updatedAt")):
         parsed = parse_date(value)
         if parsed:
             return parsed
@@ -50,7 +51,8 @@ def infer_snapshot_date(name, payload):
 def dataset_row_count(name, payload):
     keys = {"fund_products": "products", "funds_active": "funds", "attention_pool_evidence": "items",
             "pre_research_evidence": "items", "social_attention_history": "snapshots",
-            "theme_external_signals": "items", "issuance_insights": "suspensions"}
+            "theme_external_signals": "items", "issuance_insights": "suspensions",
+            "industry_demand_sources": "sources"}
     value = payload.get(keys.get(name, ""))
     return len(value) if isinstance(value, list) else None
 
@@ -153,4 +155,20 @@ def historical_theme_signal_rows(payload):
             rows.append((theme_id, day, str(snapshot.get("modelVersion") or "v1"), *values,
                          sum(available) / len(available) if available else None, ranks.get(theme_id),
                          state.get("state") or state.get("label"), state))
+    return rows
+
+
+def industry_demand_observation_rows(payload, snapshot_id):
+    rows = []
+    for source in payload.get("sources", []):
+        for observation in source.get("observations", []):
+            period = str(observation.get("dataDate") or "").strip()
+            if not source.get("id") or not period:
+                continue
+            rows.append((source["id"], source.get("themeId"), source.get("metricName"), source.get("role"),
+                         period, source.get("cadence"), decimal_or_none(observation.get("value")),
+                         observation.get("unit"), decimal_or_none(observation.get("yoyPercent")),
+                         source.get("baseWeightPercent"), source.get("sourceName"), source.get("sourceUrl"),
+                         parse_timestamp(observation.get("publishedAt")),
+                         parse_timestamp(observation.get("collectedAt") or source.get("lastCheckedAt")), snapshot_id))
     return rows

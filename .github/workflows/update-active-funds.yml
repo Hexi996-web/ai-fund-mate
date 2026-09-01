@@ -66,6 +66,7 @@ jobs:
           python scripts/update_issuance_insights.py || echo "::warning::发行接口本次不可用，保留上一版快照并交由新鲜度校验"
           python scripts/update_attention_pool.py
           python -m scripts.update_theme_external_signals
+          python scripts/update_industry_demand_sources.py
           python scripts/update_three_layer_evidence.py
           node scripts/update_horizon_rankings.mjs
           python scripts/publish_data_status.py
@@ -88,6 +89,7 @@ jobs:
           python -m pytest scripts/test_fund_product_model.py scripts/test_update_active_funds.py -q
           python -m pytest scripts/test_update_attention_pool.py -q
           python -m pytest scripts/test_three_layer_evidence.py -q
+          python -m pytest scripts/test_update_industry_demand_sources.py -q
           python -m pytest scripts/test_update_issuance_insights.py -q
           python -m pytest scripts/test_validate_published_freshness.py -q
           python -m pytest scripts/test_agent_context_workflows.py -q
@@ -132,7 +134,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/funds_active.json public/funds_excluded.json public/fund_products.json public/funds_grouping_review.json public/issuance_insights.json public/attention_pool_evidence.json public/social_attention_history.json public/theme_external_signals.json public/pre_research_evidence.json public/data_status.json public/agent_context.json
+          git add public/funds_active.json public/funds_excluded.json public/fund_products.json public/funds_grouping_review.json public/issuance_insights.json public/attention_pool_evidence.json public/social_attention_history.json public/theme_external_signals.json public/industry_demand_sources.json public/pre_research_evidence.json public/data_status.json public/agent_context.json
           git diff --cached --quiet || git commit -m "data: update active funds"
           for attempt in 1 2 3; do
             # During a rebase Git labels the replayed data commit as "theirs".

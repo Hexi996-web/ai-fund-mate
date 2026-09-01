@@ -27,6 +27,7 @@ except ModuleNotFoundError:  # Direct execution: python scripts/update_three_lay
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "public" / "pre_research_evidence.json"
 ATTENTION = ROOT / "public" / "attention_pool_evidence.json"
+DEMAND_SOURCES = ROOT / "public" / "industry_demand_sources.json"
 
 STRUCTURE_CONTRACTS = {
     "ai-agent": ("模型调用与软件商业化", ["软件业务收入", "云计算使用量", "AI招投标数量"], "工信部／政府采购公开数据"),
@@ -54,7 +55,7 @@ STRUCTURE_CONTRACTS = {
     "mental-health": ("精神健康需求释放", ["诊疗人次", "精神卫生床位", "心理服务支出"], "卫健委／国家统计局"),
     "pet-economy": ("陪伴消费持续化", ["宠物数量", "宠物医疗渗透率", "食品零售额"], "农业农村部／上市公司公告"),
     "sports-outdoor": ("运动参与和消费", ["经常锻炼人数", "体育用品零售额", "户外活动人次"], "体育总局／国家统计局"),
-    "inbound-consumption": ("入境消费恢复", ["入境人次", "国际航班量", "入境游客消费"], "文旅部／民航局"),
+    "inbound-consumption": ("入境消费恢复", ["入境游客消费", "入境人次", "国际航班量"], "文旅部／民航局"),
     "new-food": ("功能营养渗透", ["新品注册数量", "功能食品零售额", "复购率"], "市场监管总局／上市公司公告"),
     "recycling": ("资源循环利用", ["再生资源回收量", "再生材料产量", "产能利用率"], "商务部／国家统计局"),
     "grid-storage": ("系统调节需求", ["新型储能装机", "平均利用小时", "独立储能收益"], "国家能源局"),
@@ -90,13 +91,36 @@ def same_month_yoy(rows: list[dict]) -> float | None:
     return (current_value / base_value - 1) * 100 if base_value else None
 
 
-def demand_assessment(contract: tuple, structure: dict) -> dict:
+def demand_assessment(contract: tuple, structure: dict, connected_sources: list[dict] | None = None) -> dict:
     """Keep missing demand evidence neutral and cap any single supply proxy."""
     core_indicators = [
         {"name": metric, "role": role, "baseWeightPercent": weight, "status": "待接入"}
         for metric, role, weight in zip(contract[1], ("核心需求结果", "渗透与采用", "供需与约束"), CORE_DEMAND_WEIGHTS)
     ]
     observations = []
+    for source in connected_sources or []:
+        source_rows = source.get("observations") or []
+        latest = source_rows[-1] if source_rows else {}
+        yoy = latest.get("yoyPercent")
+        if source.get("status") != "active" or yoy is None:
+            continue
+        required = 13 if source.get("cadence") == "monthly" else 2
+        continuity = min(1, len(source_rows) / required)
+        effective_weight = float(source.get("baseWeightPercent") or 0) * continuity
+        signal_score = 50 + 50 * math.tanh(float(yoy) / 25)
+        contribution = effective_weight / 100 * (signal_score - 50)
+        observations.append({
+            "name": source.get("metricName"), "role": source.get("role"), "latestDate": latest.get("dataDate"),
+            "latestValue": latest.get("value"), "unit": latest.get("unit"), "yoyPercent": round(float(yoy), 1),
+            "baseWeightPercent": source.get("baseWeightPercent"), "effectiveWeightPercent": round(effective_weight, 1),
+            "signalScore": round(signal_score, 1), "contributionPoints": round(contribution, 1),
+            "source": source.get("sourceName"), "sourceUrl": source.get("sourceUrl"),
+            "cadence": source.get("cadence"), "nextCheckAt": source.get("nextCheckAt"),
+            "interpretation": "该指标属于核心需求合同，按自身发布周期更新。",
+        })
+        for indicator in core_indicators:
+            if indicator["name"] == source.get("metricName"):
+                indicator.update({"status": "已接入", "latestDate": latest.get("dataDate")})
     rows = structure.get("history") or []
     yoy = same_month_yoy(rows)
     if len(rows) >= 4 and yoy is not None:
@@ -282,7 +306,7 @@ def number(value) -> float:
         return 0.0
 
 
-def build_item(theme_id: str, query: str, board: str, capacity: dict) -> dict:
+def build_item(theme_id: str, query: str, board: str, capacity: dict, demand_sources: list[dict] | None = None) -> dict:
     rows = constituents(board)
     total_float = sum(number(row.get("f21")) for row in rows)
     total_market = sum(number(row.get("f20")) for row in rows)
@@ -339,7 +363,7 @@ def build_item(theme_id: str, query: str, board: str, capacity: dict) -> dict:
     return {
         "id": theme_id,
         "structure": {"signal": contract[0], "metrics": contract[1], "source": contract[2],
-                      **structure_series, "demandAssessment": demand_assessment(contract, structure_series),
+                      **structure_series, "demandAssessment": demand_assessment(contract, structure_series, demand_sources),
                       "historyPoints": len(structure_series.get("history") or []),
                       "note": "核心需求使用多指标合同；单一产量或供给指标只作为低权重辅助证据。"},
         "enterprise": {"sampleCompanies": len(top), "reportedCompanies": len(reports),
@@ -375,11 +399,15 @@ def main() -> None:
     capacities = {item["id"]: item.get("capacity") or {} for item in attention.get("items", [])}
     previous = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
     previous_map = {item["id"]: item for item in previous.get("items", [])}
+    demand_payload = json.loads(DEMAND_SOURCES.read_text(encoding="utf-8")) if DEMAND_SOURCES.exists() else {"sources": []}
+    demand_by_theme = {}
+    for source in demand_payload.get("sources", []):
+        demand_by_theme.setdefault(source.get("themeId"), []).append(source)
     items = []
     for theme_id, query, board in THEMES:
         print(f"fetching {theme_id} ({len(items) + 1}/36)...", flush=True)
         try:
-            items.append(build_item(theme_id, query, board, capacities.get(theme_id, {})))
+            items.append(build_item(theme_id, query, board, capacities.get(theme_id, {}), demand_by_theme.get(theme_id, [])))
         except Exception as exc:
             fallback = previous_map.get(theme_id, {"id": theme_id})
             fallback["error"] = type(exc).__name__
@@ -419,7 +447,7 @@ def main() -> None:
                 structure.update({key: old_structure.get(key) for key in ("metric", "unit", "source", "sourceUrl", "status") if old_structure.get(key)})
         structure["historyPoints"] = len(structure.get("history") or [])
         contract = STRUCTURE_CONTRACTS[item["id"]]
-        structure["demandAssessment"] = demand_assessment(contract, structure)
+        structure["demandAssessment"] = demand_assessment(contract, structure, demand_by_theme.get(item["id"], []))
     output = {"schemaVersion": 3, "updateTime": now, "methodologyVersion": "multi-signal-demand-36-v1",
               "universeCount": 36, "coveredCount": sum(not item.get("error") for item in items),
               "enterpriseDataCount": sum(len((item.get("enterprise") or {}).get("history") or []) >= 4 for item in items),

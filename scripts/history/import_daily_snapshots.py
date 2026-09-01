@@ -5,11 +5,12 @@ from pathlib import Path
 from scripts.history.snapshot_models import (
     attention_daily_rows, attention_raw_rows, dataset_row_count, historical_theme_signal_rows,
     infer_snapshot_date, product_metric_rows, product_rows, share_observation_rows, share_rows,
-    theme_rows, theme_signal_rows,
+    theme_rows, theme_signal_rows, industry_demand_observation_rows,
 )
 
 DATASETS = ("fund_products", "funds_active", "attention_pool_evidence", "pre_research_evidence",
-            "social_attention_history", "theme_external_signals", "issuance_insights")
+            "social_attention_history", "theme_external_signals", "issuance_insights",
+            "industry_demand_sources")
 
 
 def load(path):
@@ -126,6 +127,16 @@ def import_themes(cursor, payloads, refs):
       evidence=theme_daily_signals.evidence,
       ingested_at=now()""",
       historical_theme_signal_rows(attention), {9})
+
+    demand = payloads["industry_demand_sources"]; _, demand_snapshot = refs["industry_demand_sources"]
+    insert_batches(cursor, """insert into industry_demand_observations
+      (source_id,theme_id,metric_name,metric_role,data_period,cadence,value,unit,yoy_percent,base_weight_percent,
+       source_name,source_url,published_at,collected_at,snapshot_id)
+      values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+      on conflict (source_id,data_period) do update set value=excluded.value,unit=excluded.unit,
+      yoy_percent=excluded.yoy_percent,source_name=excluded.source_name,source_url=excluded.source_url,
+      published_at=excluded.published_at,collected_at=excluded.collected_at,snapshot_id=excluded.snapshot_id,
+      ingested_at=now()""", industry_demand_observation_rows(demand, demand_snapshot))
 
 
 def main():
