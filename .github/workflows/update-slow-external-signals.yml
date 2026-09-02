@@ -44,7 +44,14 @@ jobs:
           git diff --cached --quiet && exit 0
           git commit -m "data: update slow external signals"
           for attempt in 1 2 3; do
-            git pull --rebase -X theirs origin "$GITHUB_REF_NAME" && git push && exit 0
+            if git pull --rebase -X theirs origin "$GITHUB_REF_NAME"; then
+              python scripts/publish_data_status.py
+              node scripts/build_agent_context.mjs
+              python -c "import json; p=json.load(open('public/fund_products.json',encoding='utf-8')); s=json.load(open('public/data_status.json',encoding='utf-8')); assert (s['dataDate'],s['productsUpdateTime'])==(p['dataDate'],p['updateTime'])"
+              git add public/data_status.json public/agent_context.json
+              git commit --amend --no-edit
+              git push && exit 0
+            fi
             git rebase --abort 2>/dev/null || true
             test "$attempt" -eq 3 && exit 1
             sleep $((attempt * 5))

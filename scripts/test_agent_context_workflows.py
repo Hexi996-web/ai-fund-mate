@@ -24,3 +24,12 @@ def test_every_data_writer_rebuilds_and_commits_agent_context():
         assert "node scripts/build_agent_context.mjs" in workflow
         assert "public/agent_context.json" in workflow
         assert "validate_published_freshness.py public/agent_context.json" in workflow
+
+
+def test_every_data_writer_rebuilds_derived_files_after_rebase():
+    for name in ("update-active-funds.yml", "update-social-attention.yml", "update-slow-external-signals.yml"):
+        workflow = (ROOT / ".github/workflows" / name).read_text(encoding="utf-8")
+        rebase = workflow.index('git pull --rebase -X theirs origin "$GITHUB_REF_NAME"')
+        assert workflow.index("python scripts/publish_data_status.py", rebase) > rebase
+        assert workflow.index("node scripts/build_agent_context.mjs", rebase) > rebase
+        assert "s['productsUpdateTime'])==(p['dataDate'],p['updateTime'])" in workflow
