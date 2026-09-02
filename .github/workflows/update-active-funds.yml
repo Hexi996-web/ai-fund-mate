@@ -142,8 +142,14 @@ jobs:
             # During a rebase Git labels the replayed data commit as "theirs".
             # The full refresh is newer than partial samplers, so keep its
             # generated public snapshots if a same-file conflict occurs.
-            git pull --rebase -X theirs origin "$GITHUB_REF_NAME"
-            git push && break
+            if git pull --rebase -X theirs origin "$GITHUB_REF_NAME"; then
+              python scripts/publish_data_status.py
+              node scripts/build_agent_context.mjs
+              python -c "import json; p=json.load(open('public/fund_products.json',encoding='utf-8')); s=json.load(open('public/data_status.json',encoding='utf-8')); assert (s['dataDate'],s['productsUpdateTime'])==(p['dataDate'],p['updateTime'])"
+              git add public/data_status.json public/agent_context.json
+              git commit --amend --no-edit
+              git push && break
+            fi
             git rebase --abort 2>/dev/null || true
             test "$attempt" -eq 3 && exit 1
             sleep $((attempt * 5))
