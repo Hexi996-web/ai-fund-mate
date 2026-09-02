@@ -71,12 +71,20 @@ const pageKnowledge = {
 const research = attention.recommendedIds.map((id, index) => {
   const evidence = attention.items.find((item) => item.id === id) || {}
   const theme = byId.get(id) || {}
+  const opportunity = evidence.opportunityModel || {}
   return {
     rank: index + 1,
     id,
     name: theme.name || evidence.query || id,
     attention: round(evidence.attention?.score ?? evidence.attention?.compositeScore),
     productValidation: round(evidence.validation?.score),
+    opportunityScore: round(opportunity.opportunityScore),
+    opportunityComponents: opportunity.components ? {
+      industryDemand: round(opportunity.components.industryDemand),
+      productMarket: round(opportunity.components.productMarket),
+      enterpriseDelivery: round(opportunity.components.enterpriseDelivery),
+    } : null,
+    coreRankingScore: round(opportunity.totalScore),
     assetCapacity: round(evidence.capacity?.score),
     lifecycleState: evidence.lifecycle?.state || null,
     lifecycleReason: evidence.lifecycle?.reason || null,
