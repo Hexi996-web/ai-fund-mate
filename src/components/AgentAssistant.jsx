@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { loadAgentBootstrap, sendAgentMessage } from '../data/agentClient.js'
 import { AnalysisModelSettings } from './AnalysisModelSettings.jsx'
 
-const STARTERS = ['解释当前产品窗口', '哪些方向值得继续预研？', '检查今天的数据是否完整']
-const INITIAL = [{ role: 'assistant', content: '我是简报助手。可以结合公募基金简报、预研产品池与行情研判，解释结论、比较证据并定位数据。' }]
+const STARTERS = ['四象限怎么看？', '不同榜单的权重规则是什么？', '检查今天的数据是否完整']
+const INITIAL = [{ role: 'assistant', content: '我是简报助手。可以回答本页面的结果、四象限、榜单权重、箭头变化、数据来源与处理口径，并结合当前快照解释结论。' }]
 const WORKSPACE_SOURCES = {
   '预研产品池': [{ label: '注意力母池', href: '/attention_pool_evidence.json' }, { label: '三层验证', href: '/pre_research_evidence.json' }],
   '公募基金简报': [{ label: '基金产品快照', href: '/fund_products.json' }],
@@ -51,7 +51,7 @@ export function AgentAssistant({ workspace, pageContext, onAction }) {
     try {
       const result = await sendAgentMessage({
         messages: next,
-        context: { workspace, dataStatus, workspaceData: agentContext?.workspaces?.[workspace] || null, crossWorkspaceData: agentContext?.workspaces || null, pageContext, sources: WORKSPACE_SOURCES[workspace] || [], purpose: '公募基金产品经理预研与产品规划' },
+        context: { workspace, dataStatus, pageKnowledge: agentContext?.pageKnowledge || null, workspaceData: agentContext?.workspaces?.[workspace] || null, crossWorkspaceData: agentContext?.workspaces || null, pageContext, sources: WORKSPACE_SOURCES[workspace] || [], purpose: '公募基金产品经理预研与产品规划' },
         signal: controller.signal,
       })
       const executed = (result.actions || []).filter((action) => onAction?.(action))

@@ -9,6 +9,15 @@ def test_agent_context_matches_published_status_and_core_pool():
     status = json.loads((ROOT / "public/data_status.json").read_text(encoding="utf-8"))
     context = json.loads((ROOT / "public/agent_context.json").read_text(encoding="utf-8"))
     assert context["snapshotDate"] == status["snapshotDate"]
+    knowledge = context["pageKnowledge"]
+    assert "产业核心需求40%" in knowledge["quadrant"]["horizontalAxis"]
+    assert "估算资金流35%" in knowledge["rankingRules"]["quarter"]
+    assert "龙头企业兑现40%" in knowledge["rankingRules"]["halfYear"]
+    assert "资产承载30%" in knowledge["rankingRules"]["year"]
+    assert "上一期名次－当前名次" in knowledge["rankingRules"]["arrows"]
+    rankings = context["workspaces"]["预研产品池"]["horizonRankings"]
+    assert set(rankings) == {"quarter", "halfYear", "year"}
+    assert all(len(row["top10"]) == 10 for row in rankings.values())
     assert context["generatedAt"] == status["generatedAt"]
     research = context["workspaces"]["预研产品池"]
     assert context["schemaVersion"] == 2
