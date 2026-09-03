@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "updateTime": "2026-09-03T09:52:44.424904+00:00",
+  "updateTime": "2026-09-03T10:58:29.858779+00:00",
   "methodologyVersion": "multi-signal-demand-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
@@ -23,7 +23,7 @@
         "status": "无稳定统一免费序列",
         "accessStatus": "无稳定统一免费序列",
         "catalysts": [],
-        "catalystStatus": "本次采集失败",
+        "catalystStatus": "已更新",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -190,8 +190,8 @@
         "constituentCount": 736,
         "liquidConstituentCount": 425,
         "dailyTurnoverYi": 2781.6,
-        "totalMarketCapYi": 145916.8,
-        "floatMarketCapYi": 129299.8,
+        "totalMarketCapYi": 145916.5,
+        "floatMarketCapYi": 129299.9,
         "top10SharePercent": 34.2,
         "hhi": 198.8,
         "topConstituents": [
@@ -1856,7 +1856,7 @@
           {
             "date": "2026-09-03",
             "constituentCount": 736,
-            "floatMarketCapYi": 129299.8,
+            "floatMarketCapYi": 129299.9,
             "dailyTurnoverYi": 2781.6,
             "top10SharePercent": 34.2,
             "hhi": 198.8
@@ -8763,8 +8763,59 @@
         "history": [],
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
-        "catalysts": [],
-        "catalystStatus": "本次采集失败",
+        "catalysts": [
+          {
+            "date": "2026-08-21",
+            "type": "准入与审批",
+            "impact": "positive",
+            "validates": "商业化准入是否打开",
+            "company": "一品红",
+            "title": "关于全资子公司创新药APH03867片获得临床试验批准通知书的公告",
+            "source": "巨潮资讯上市公司公告",
+            "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-21/1225488085.PDF"
+          },
+          {
+            "date": "2026-08-18",
+            "type": "准入与审批",
+            "impact": "positive",
+            "validates": "商业化准入是否打开",
+            "company": "上海谊众",
+            "title": "上海谊众药业股份有限公司关于在研创新药YXC-002获得药物临床试验批准通知书的自愿性披露公告",
+            "source": "巨潮资讯上市公司公告",
+            "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-19/1225480758.PDF"
+          },
+          {
+            "date": "2026-08-18",
+            "type": "准入与审批",
+            "impact": "positive",
+            "validates": "商业化准入是否打开",
+            "company": "海思科",
+            "title": "关于获得创新药HSK47388片（I）新适应症《药物临床试验批准通知书》的公告",
+            "source": "巨潮资讯上市公司公告",
+            "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-19/1225480088.PDF"
+          },
+          {
+            "date": "2026-08-18",
+            "type": "准入与审批",
+            "impact": "positive",
+            "validates": "商业化准入是否打开",
+            "company": "海思科",
+            "title": "关于获得创新药HSK51155片《药物临床试验批准通知书》的公告",
+            "source": "巨潮资讯上市公司公告",
+            "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-19/1225480087.PDF"
+          },
+          {
+            "date": "2026-08-18",
+            "type": "准入与审批",
+            "impact": "positive",
+            "validates": "商业化准入是否打开",
+            "company": "恩华药业",
+            "title": "关于收到1类创新药NH130片《药物临床试验批准通知书》的公告",
+            "source": "巨潮资讯上市公司公告",
+            "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-18/1225478966.PDF"
+          }
+        ],
+        "catalystStatus": "已更新",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -12525,7 +12576,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "本次采集失败",
+        "catalystStatus": "已更新",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -17180,7 +17231,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "本次采集失败",
+        "catalystStatus": "已更新",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -17347,8 +17398,8 @@
         "constituentCount": 234,
         "liquidConstituentCount": 118,
         "dailyTurnoverYi": 638.8,
-        "totalMarketCapYi": 28291.5,
-        "floatMarketCapYi": 25168.5,
+        "totalMarketCapYi": 28291.2,
+        "floatMarketCapYi": 25168.7,
         "top10SharePercent": 37.3,
         "hhi": 231.4,
         "topConstituents": [
@@ -19013,7 +19064,7 @@
           {
             "date": "2026-09-03",
             "constituentCount": 234,
-            "floatMarketCapYi": 25168.5,
+            "floatMarketCapYi": 25168.7,
             "dailyTurnoverYi": 638.8,
             "top10SharePercent": 37.3,
             "hhi": 231.4
@@ -19035,7 +19086,7 @@
         "status": "无稳定统一免费序列",
         "accessStatus": "无稳定统一免费序列",
         "catalysts": [],
-        "catalystStatus": "本次采集失败",
+        "catalystStatus": "已更新",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -20890,7 +20941,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "本次采集失败",
+        "catalystStatus": "已更新",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -24599,8 +24650,19 @@
         "history": [],
         "status": "无稳定统一免费序列",
         "accessStatus": "无稳定统一免费序列",
-        "catalysts": [],
-        "catalystStatus": "本次采集失败",
+        "catalysts": [
+          {
+            "date": "2026-08-25",
+            "type": "准入与审批",
+            "impact": "positive",
+            "validates": "商业化准入是否打开",
+            "company": "申联生物",
+            "title": "关于获批猪口蹄疫O型、南非1型二价合成肽疫苗的兽药产品批准文号批件的自愿性披露公告",
+            "source": "巨潮资讯上市公司公告",
+            "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225506876.PDF"
+          }
+        ],
+        "catalystStatus": "已更新",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -30503,7 +30565,7 @@
         "constituentCount": 306,
         "liquidConstituentCount": 176,
         "dailyTurnoverYi": 742.7,
-        "totalMarketCapYi": 41510.2,
+        "totalMarketCapYi": 41510.1,
         "floatMarketCapYi": 36216.0,
         "top10SharePercent": 25.0,
         "hhi": 111.0,
@@ -39683,7 +39745,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -43393,7 +43455,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "本次采集失败",
+        "catalystStatus": "已更新",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -47122,7 +47184,7 @@
         "status": "无稳定统一免费序列",
         "accessStatus": "无稳定统一免费序列",
         "catalysts": [],
-        "catalystStatus": "本次采集失败",
+        "catalystStatus": "已更新",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -52839,7 +52901,7 @@
         "status": "无稳定统一免费序列",
         "accessStatus": "无稳定统一免费序列",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -53006,8 +53068,8 @@
         "constituentCount": 428,
         "liquidConstituentCount": 261,
         "dailyTurnoverYi": 1371.4,
-        "totalMarketCapYi": 58584.8,
-        "floatMarketCapYi": 51201.1,
+        "totalMarketCapYi": 58585.4,
+        "floatMarketCapYi": 51201.8,
         "top10SharePercent": 20.0,
         "hhi": 85.8,
         "topConstituents": [
@@ -54672,7 +54734,7 @@
           {
             "date": "2026-09-03",
             "constituentCount": 428,
-            "floatMarketCapYi": 51201.1,
+            "floatMarketCapYi": 51201.8,
             "dailyTurnoverYi": 1371.4,
             "top10SharePercent": 20.0,
             "hhi": 85.8
@@ -60379,7 +60441,7 @@
         "status": "无稳定统一免费序列",
         "accessStatus": "无稳定统一免费序列",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -62234,7 +62296,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -64416,8 +64478,8 @@
         "constituentCount": 757,
         "liquidConstituentCount": 395,
         "dailyTurnoverYi": 2447.8,
-        "totalMarketCapYi": 140318.9,
-        "floatMarketCapYi": 118193.5,
+        "totalMarketCapYi": 140319.5,
+        "floatMarketCapYi": 118194.1,
         "top10SharePercent": 28.0,
         "hhi": 173.1,
         "topConstituents": [
@@ -66082,7 +66144,7 @@
           {
             "date": "2026-09-03",
             "constituentCount": 757,
-            "floatMarketCapYi": 118193.5,
+            "floatMarketCapYi": 118194.1,
             "dailyTurnoverYi": 2447.8,
             "top10SharePercent": 28.0,
             "hhi": 173.1
