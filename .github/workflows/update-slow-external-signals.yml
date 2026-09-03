@@ -33,6 +33,7 @@ jobs:
         run: |
           python -m scripts.update_theme_external_signals
           python scripts/publish_data_status.py
+          node scripts/build_market_forecast_snapshot.mjs
           node scripts/build_agent_context.mjs
           python -m pytest scripts/test_update_theme_external_signals.py -q
           python scripts/validate_published_freshness.py public/theme_external_signals.json --field generatedAt --max-age-hours 2 --min-items items=36
@@ -40,15 +41,16 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/theme_external_signals.json public/data_status.json public/agent_context.json
+          git add public/theme_external_signals.json public/data_status.json public/agent_context.json public/market_forecast.json
           git diff --cached --quiet && exit 0
           git commit -m "data: update slow external signals"
           for attempt in 1 2 3; do
             if git pull --rebase -X theirs origin "$GITHUB_REF_NAME"; then
               python scripts/publish_data_status.py
+              node scripts/build_market_forecast_snapshot.mjs
               node scripts/build_agent_context.mjs
               python -c "import json; p=json.load(open('public/fund_products.json',encoding='utf-8')); s=json.load(open('public/data_status.json',encoding='utf-8')); assert (s['dataDate'],s['productsUpdateTime'])==(p['dataDate'],p['updateTime'])"
-              git add public/data_status.json public/agent_context.json
+              git add public/data_status.json public/agent_context.json public/market_forecast.json
               git commit --amend --no-edit
               git push && exit 0
             fi

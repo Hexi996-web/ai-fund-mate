@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { buildMarketForecast } from '../data/marketForecast.js'
+import { compactMarketForecastFacts, hydrateMarketForecastSnapshot } from '../data/marketForecast.js'
 import { DATA_STATUS_POLL_MS, fetchDataStatus } from '../data/dataStatus.js'
 import { ReportScope } from './ReportScope.jsx'
 import { useDynamicAnalysis } from '../data/dynamicAnalysis.js'
@@ -16,7 +16,7 @@ function ForecastModelAnalysis({ forecast, researchSnapshot }) {
       return { rank: index + 1, id, attentionScore: item.attention?.score, lifecycle: item.lifecycle?.state, scaleNetIncreaseYi: item.validation?.scaleNetIncreaseYi, scaleGrowthPercent: item.validation?.scaleGrowthPercent, launched12Months: item.validation?.launched12Months }
     })
   }, [researchSnapshot])
-  const facts = useMemo(() => ({ marketFundStructure: { baseline: forecast.baseline, leaders: forecast.leaders, categories: forecast.rows.map(({ id, name, judgement, navMedian, scaleNetIncrease, drawdownMedian }) => ({ id, name, judgement, navMedian, scaleNetIncrease, drawdownMedian })) }, researchPool: { generatedAt: researchSnapshot?.generatedAt, ranking: researchPool }, analysisRequirement: '联合判断公募资金、收益回撤与预研产品池方向变化；只依据所给事实，不补造宏观数据。' }), [forecast, researchPool, researchSnapshot?.generatedAt])
+  const facts = useMemo(() => ({ marketFundStructure: compactMarketForecastFacts(forecast), researchPool: { generatedAt: researchSnapshot?.generatedAt, ranking: researchPool }, analysisRequirement: '联合判断公募资金、收益回撤与预研产品池方向变化；只依据所给事实，不补造宏观数据。' }), [forecast, researchPool, researchSnapshot?.generatedAt])
   const fallback = useMemo(() => ({ headline: `${forecast.baseline.regime}：公募资金与预研方向需要联合验证`, overallJudgment: `${forecast.baseline.interpretation}${researchPool.length ? ` 当前预研池已有${researchPool.length}个核心方向可用于交叉验证，但产品立项仍需检查资金承接与供给拥挤。` : ' 当前预研池数据暂未载入，先以公募基金结构信号为准。'}`, changeAttribution: [`收益领先方向为${forecast.leaders.return?.name || '待补充'}。`, `资金净流入领先方向为${forecast.leaders.inflow?.name || '待补充'}。`, researchPool.length ? `预研池Top 10中${researchPool.filter((item)=>item.lifecycle==='拥挤观察').length}个方向处于拥挤观察。` : '预研方向排名等待数据载入。'], risks: ['高收益方向可能伴随更深阶段性回撤。', '规模披露时滞可能影响短期资金方向判断。', '预研注意力与公募资金可能存在时间错位，不能把热度直接等同产品需求。'], nextActions: [forecast.baseline.action, forecast.baseline.invalidation, '验证预研池领先方向是否同步获得基金规模净增和更广的正增长覆盖。'] }), [forecast, researchPool])
   const analysis = useDynamicAnalysis({ analysisKey: 'market-forecast', dataDate: forecast.dataDate, facts, fallback })
   return <DynamicAnalysisPanel analysis={analysis} title="整体策略与行情动态研判" />
@@ -33,14 +33,13 @@ export function MarketForecastWorkspace({ onOpenFundLibrary, agentCommand, onCon
 
   useEffect(() => {
     const controller = new AbortController()
-    const timeout = window.setTimeout(() => controller.abort(), 20_000)
+    const timeout = window.setTimeout(() => controller.abort(), 30_000)
     setLoadError('')
     Promise.all([
-      fetch('/fund_products.json', { signal: controller.signal, cache: 'no-store' }).then((response) => { if (!response.ok) throw new Error(`行情预测数据请求失败（${response.status}）`); return response.json() }),
+      fetch('/market_forecast.json', { signal: controller.signal, cache: 'no-store' }).then((response) => { if (!response.ok) throw new Error(`行情预测数据请求失败（${response.status}）`); return response.json() }),
       fetch('/attention_pool_evidence.json', { signal: controller.signal, cache: 'no-store' }).then((response) => response.ok ? response.json() : null).catch(() => null),
     ]).then(([payload, attentionPayload]) => {
-        if (!Array.isArray(payload?.products) || payload.products.length === 0) throw new Error('行情预测数据为空')
-        setForecast(buildMarketForecast(payload))
+        setForecast(hydrateMarketForecastSnapshot(payload))
         setResearchSnapshot(attentionPayload)
         setLoadedUpdateTime(payload.updateTime ?? '')
       })

@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { buildMarketForecast } from './marketForecast.js'
+import { buildMarketForecast, compactMarketForecastFacts, createMarketForecastSnapshot, hydrateMarketForecastSnapshot } from './marketForecast.js'
 
 test('builds forecast metrics from the daily product payload', () => {
   const product = (name, type, nav, drawdown, scale, daily = 1) => ({
@@ -31,4 +31,30 @@ test('excludes money funds and partial-period products from return comparison', 
   ] })
   assert.equal(forecast.rows.find((row) => row.id === 'money').navMedian, null)
   assert.equal(forecast.rows.find((row) => row.id === 'tech').navMedian, 12)
+})
+
+test('creates and hydrates a compact forecast snapshot', () => {
+  const payload = { dataDate: '2026-09-02', updateTime: '2026-09-03T01:00:00Z', products: [{
+    productId: 'p1', productName: '科技ETF', representativeCode: '000001', type: '指数型-股票',
+    navGrowthPercent: 12, maxDrawdownPercent: -8, scaleNetIncreaseYi: 3,
+    metricsCoverageStart: '2026-01-02', representativeShare: { dailyChangePercent: 1 },
+    unusedLargeField: 'x'.repeat(1000),
+  }] }
+  const snapshot = createMarketForecastSnapshot(payload)
+  const forecast = hydrateMarketForecastSnapshot(snapshot)
+  assert.equal(snapshot.schemaVersion, 1)
+  assert.equal(snapshot.updateTime, payload.updateTime)
+  assert.equal(forecast.leaders.return.id, snapshot.leaderIds.return)
+  assert.equal(forecast.rows.find((row) => row.id === 'tech').funds[0].unusedLargeField, undefined)
+})
+
+test('model facts exclude product arrays and remain within the API fact limit', () => {
+  const products = Array.from({ length: 5000 }, (_, index) => ({
+    productId: `p${index}`, productName: `科技基金${index}`, representativeCode: String(index), type: '混合型',
+    navGrowthPercent: 10, maxDrawdownPercent: -5, scaleNetIncreaseYi: 1, metricsCoverageStart: '2026-01-02',
+  }))
+  const facts = compactMarketForecastFacts(buildMarketForecast({ dataDate: '2026-09-02', products }))
+  const serialized = JSON.stringify(facts)
+  assert.equal(serialized.includes('"funds"'), false)
+  assert.ok(Buffer.byteLength(serialized) < 48_000)
 })

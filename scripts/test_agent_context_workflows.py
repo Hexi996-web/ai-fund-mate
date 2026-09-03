@@ -43,4 +43,6 @@ def test_every_data_writer_rebuilds_derived_files_after_rebase():
         rebase = workflow.index('git pull --rebase -X theirs origin "$GITHUB_REF_NAME"')
         assert workflow.index("python scripts/publish_data_status.py", rebase) > rebase
         assert workflow.index("node scripts/build_agent_context.mjs", rebase) > rebase
+        assert workflow.index("node scripts/build_market_forecast_snapshot.mjs", rebase) > rebase
+        assert "public/market_forecast.json" in workflow
         assert "s['productsUpdateTime'])==(p['dataDate'],p['updateTime'])" in workflow

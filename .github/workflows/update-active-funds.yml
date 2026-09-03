@@ -70,6 +70,7 @@ jobs:
           python scripts/rescore_research_opportunities.py
           node scripts/update_horizon_rankings.mjs
           python scripts/publish_data_status.py
+          node scripts/build_market_forecast_snapshot.mjs
           node scripts/build_agent_context.mjs
       - name: Read expected snapshot date
         id: snapshot
@@ -130,13 +131,14 @@ jobs:
           python -m scripts.history.import_daily_snapshots --source-dir public
           python -m scripts.history.compact_public_history
           python scripts/publish_data_status.py
+          node scripts/build_market_forecast_snapshot.mjs
           node scripts/build_agent_context.mjs
       - name: Commit updated data
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.verify_only != true }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/funds_active.json public/funds_excluded.json public/fund_products.json public/funds_grouping_review.json public/issuance_insights.json public/attention_pool_evidence.json public/social_attention_history.json public/theme_external_signals.json public/industry_demand_sources.json public/pre_research_evidence.json public/data_status.json public/agent_context.json
+          git add public/funds_active.json public/funds_excluded.json public/fund_products.json public/funds_grouping_review.json public/issuance_insights.json public/attention_pool_evidence.json public/social_attention_history.json public/theme_external_signals.json public/industry_demand_sources.json public/pre_research_evidence.json public/data_status.json public/agent_context.json public/market_forecast.json
           git diff --cached --quiet || git commit -m "data: update active funds"
           for attempt in 1 2 3; do
             # During a rebase Git labels the replayed data commit as "theirs".
@@ -144,9 +146,10 @@ jobs:
             # generated public snapshots if a same-file conflict occurs.
             if git pull --rebase -X theirs origin "$GITHUB_REF_NAME"; then
               python scripts/publish_data_status.py
+              node scripts/build_market_forecast_snapshot.mjs
               node scripts/build_agent_context.mjs
               python -c "import json; p=json.load(open('public/fund_products.json',encoding='utf-8')); s=json.load(open('public/data_status.json',encoding='utf-8')); assert (s['dataDate'],s['productsUpdateTime'])==(p['dataDate'],p['updateTime'])"
-              git add public/data_status.json public/agent_context.json
+              git add public/data_status.json public/agent_context.json public/market_forecast.json
               git commit --amend --no-edit
               git push && break
             fi
