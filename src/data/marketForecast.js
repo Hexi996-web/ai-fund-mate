@@ -94,3 +94,46 @@ export function buildMarketForecast(payload) {
     },
   }
 }
+
+export function createMarketForecastSnapshot(payload) {
+  const forecast = buildMarketForecast(payload)
+  const rows = forecast.rows.map(({ test: _test, funds, ...row }) => ({
+    ...row,
+    funds: funds.map(({ productId, productName, representativeCode, type, navGrowthPercent, scaleNetIncreaseYi, maxDrawdownPercent }) => ({
+      productId, productName, representativeCode, type, navGrowthPercent, scaleNetIncreaseYi, maxDrawdownPercent,
+    })),
+  }))
+  return {
+    schemaVersion: 1,
+    dataDate: forecast.dataDate,
+    updateTime: payload?.updateTime ?? '',
+    rows,
+    leaderIds: Object.fromEntries(Object.entries(forecast.leaders).map(([key, row]) => [key, row?.id ?? null])),
+    baseline: forecast.baseline,
+  }
+}
+
+export function hydrateMarketForecastSnapshot(payload) {
+  if (payload?.schemaVersion !== 1 || !Array.isArray(payload.rows) || payload.rows.length === 0) {
+    throw new Error('行情预测快照格式无效')
+  }
+  const rows = payload.rows
+  const rowMap = new Map(rows.map((row) => [row.id, row]))
+  return {
+    dataDate: payload.dataDate ?? '--',
+    rows,
+    leaders: Object.fromEntries(Object.entries(payload.leaderIds ?? {}).map(([key, id]) => [key, rowMap.get(id)])),
+    baseline: payload.baseline,
+  }
+}
+
+export function compactMarketForecastFacts(forecast) {
+  const leaderFields = ({ id, name, judgement, navMedian, scaleNetIncrease, drawdownMedian, returnSampleCount } = {}) => (
+    id ? { id, name, judgement, navMedian, scaleNetIncrease, drawdownMedian, returnSampleCount } : null
+  )
+  return {
+    baseline: forecast.baseline,
+    leaders: Object.fromEntries(Object.entries(forecast.leaders).map(([key, row]) => [key, leaderFields(row)])),
+    categories: forecast.rows.map(({ id, name, judgement, navMedian, scaleNetIncrease, drawdownMedian }) => ({ id, name, judgement, navMedian, scaleNetIncrease, drawdownMedian })),
+  }
+}

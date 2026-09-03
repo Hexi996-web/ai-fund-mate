@@ -17,3 +17,16 @@ test('merges signals and themes and preserves the fund query across workspace sw
   await page.getByRole('button', { name: '公募基金简报', exact: true }).click()
   await expect(search).toHaveValue('000001')
 })
+
+test('loads the compact forecast and sends only summarized model facts', async ({ page }) => {
+  let requestBytes = 0
+  await page.route('**/api/analysis/report', async (route) => {
+    requestBytes = Buffer.byteLength(route.request().postData() || '')
+    await route.fulfill({ status: 503, contentType: 'application/json', body: '{"error":"test fallback"}' })
+  })
+  await page.goto('/')
+  await page.getByRole('button', { name: '行情预测', exact: true }).click()
+  await expect(page.getByLabel('基准判断动态信号')).toBeVisible({ timeout: 30_000 })
+  await expect.poll(() => requestBytes).toBeGreaterThan(0)
+  expect(requestBytes).toBeLessThan(48_000)
+})

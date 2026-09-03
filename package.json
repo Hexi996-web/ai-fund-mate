@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/build_agent_context.mjs",
+    "prebuild": "node scripts/build_market_forecast_snapshot.mjs && node scripts/build_agent_context.mjs",
     "build": "vite build",
     "start": "node server/server.mjs",
     "preview": "vite preview",

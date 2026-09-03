@@ -14,7 +14,7 @@ try {
   await page.goto(`${baseURL}?verify=${Date.now()}`, { waitUntil: 'networkidle', timeout: 60_000 })
 
   await page.getByRole('heading', { name: '核心预研产品池' }).waitFor()
-  await page.locator('.research-data-date').getByText(expectedDate).waitFor()
+  await page.locator('.research-data-date').getByText(expectedDate, { exact: true }).waitFor()
   const brief = page.getByRole('region', { name: '产品池期限决策简报' })
   await brief.waitFor()
   await page.getByRole('button', { name: '未来3个月' }).click()
