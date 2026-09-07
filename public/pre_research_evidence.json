@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "updateTime": "2026-09-07T12:53:59.057092+00:00",
+  "updateTime": "2026-09-07T23:22:44.633002+00:00",
   "methodologyVersion": "multi-signal-demand-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
@@ -191,7 +191,7 @@
         "liquidConstituentCount": 432,
         "dailyTurnoverYi": 3303.4,
         "totalMarketCapYi": 147301.1,
-        "floatMarketCapYi": 130516.6,
+        "floatMarketCapYi": 130516.9,
         "top10SharePercent": 34.3,
         "hhi": 204.0,
         "topConstituents": [
@@ -277,11 +277,6 @@
           }
         ],
         "marketHistory": [
-          {
-            "date": "2025-06-17",
-            "close": 1584.79,
-            "turnoverYi": 2198.58
-          },
           {
             "date": "2025-06-18",
             "close": 1580.49,
@@ -1776,6 +1771,11 @@
             "date": "2026-09-04",
             "close": 1788.75,
             "turnoverYi": 3731.76
+          },
+          {
+            "date": "2026-09-07",
+            "close": 1799.09,
+            "turnoverYi": 3303.44
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -1888,7 +1888,7 @@
           {
             "date": "2026-09-07",
             "constituentCount": 743,
-            "floatMarketCapYi": 130516.6,
+            "floatMarketCapYi": 130516.9,
             "dailyTurnoverYi": 3303.4,
             "top10SharePercent": 34.3,
             "hhi": 204.0
@@ -2237,8 +2237,8 @@
         "constituentCount": 299,
         "liquidConstituentCount": 202,
         "dailyTurnoverYi": 1513.2,
-        "totalMarketCapYi": 68157.1,
-        "floatMarketCapYi": 54107.9,
+        "totalMarketCapYi": 68157.2,
+        "floatMarketCapYi": 54108.4,
         "top10SharePercent": 34.5,
         "hhi": 225.4,
         "topConstituents": [
@@ -3935,7 +3935,7 @@
           {
             "date": "2026-09-07",
             "constituentCount": 299,
-            "floatMarketCapYi": 54107.9,
+            "floatMarketCapYi": 54108.4,
             "dailyTurnoverYi": 1513.2,
             "top10SharePercent": 34.5,
             "hhi": 225.4
@@ -3957,7 +3957,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "本次采集失败",
+        "catalystStatus": "已更新",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -5844,7 +5844,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -7070,7 +7070,7 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 10,
-        "coveragePercent": 25.5,
+        "coveragePercent": 25.4,
         "reportDate": "2026-06-30",
         "revenueGrowthMedian": 50.7,
         "positiveRevenueShare": 90.0,
@@ -7088,7 +7088,7 @@
             "profitGrowthMedian": 108.4,
             "positiveProfitShare": 90.0,
             "cashToRevenueMedian": 0.3,
-            "coveragePercent": 25.5
+            "coveragePercent": 25.4
           },
           {
             "reportDate": "2026-03-31",
@@ -7199,9 +7199,9 @@
         "liquidConstituentCount": 416,
         "dailyTurnoverYi": 4308.9,
         "totalMarketCapYi": 221914.9,
-        "floatMarketCapYi": 139892.8,
-        "top10SharePercent": 25.5,
-        "hhi": 108.6,
+        "floatMarketCapYi": 140089.6,
+        "top10SharePercent": 25.4,
+        "hhi": 108.4,
         "topConstituents": [
           {
             "rank": 1,
@@ -7209,7 +7209,7 @@
             "name": "寒武纪",
             "floatMarketCapYi": 6869.5,
             "dailyTurnoverYi": 110.26,
-            "weightPercent": 4.91
+            "weightPercent": 4.9
           },
           {
             "rank": 2,
@@ -7233,7 +7233,7 @@
             "name": "中微公司",
             "floatMarketCapYi": 3241.2,
             "dailyTurnoverYi": 54.17,
-            "weightPercent": 2.32
+            "weightPercent": 2.31
           },
           {
             "rank": 5,
@@ -7241,7 +7241,7 @@
             "name": "比亚迪",
             "floatMarketCapYi": 3016.7,
             "dailyTurnoverYi": 18.97,
-            "weightPercent": 2.16
+            "weightPercent": 2.15
           },
           {
             "rank": 6,
@@ -7263,9 +7263,9 @@
             "rank": 8,
             "code": "688981",
             "name": "中芯国际",
-            "floatMarketCapYi": 2483.1,
+            "floatMarketCapYi": 2481.9,
             "dailyTurnoverYi": 38.74,
-            "weightPercent": 1.78
+            "weightPercent": 1.77
           },
           {
             "rank": 9,
@@ -7281,7 +7281,7 @@
             "name": "源杰科技",
             "floatMarketCapYi": 2091.6,
             "dailyTurnoverYi": 90.05,
-            "weightPercent": 1.5
+            "weightPercent": 1.49
           }
         ],
         "marketHistory": [
@@ -8896,10 +8896,10 @@
           {
             "date": "2026-09-07",
             "constituentCount": 536,
-            "floatMarketCapYi": 139892.8,
+            "floatMarketCapYi": 140089.6,
             "dailyTurnoverYi": 4308.9,
-            "top10SharePercent": 25.5,
-            "hhi": 108.6
+            "top10SharePercent": 25.4,
+            "hhi": 108.4
           }
         ]
       }
@@ -8917,59 +8917,8 @@
         "history": [],
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
-        "catalysts": [
-          {
-            "date": "2026-08-21",
-            "type": "准入与审批",
-            "impact": "positive",
-            "validates": "商业化准入是否打开",
-            "company": "一品红",
-            "title": "关于全资子公司创新药APH03867片获得临床试验批准通知书的公告",
-            "source": "巨潮资讯上市公司公告",
-            "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-21/1225488085.PDF"
-          },
-          {
-            "date": "2026-08-18",
-            "type": "准入与审批",
-            "impact": "positive",
-            "validates": "商业化准入是否打开",
-            "company": "上海谊众",
-            "title": "上海谊众药业股份有限公司关于在研创新药YXC-002获得药物临床试验批准通知书的自愿性披露公告",
-            "source": "巨潮资讯上市公司公告",
-            "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-19/1225480758.PDF"
-          },
-          {
-            "date": "2026-08-18",
-            "type": "准入与审批",
-            "impact": "positive",
-            "validates": "商业化准入是否打开",
-            "company": "海思科",
-            "title": "关于获得创新药HSK47388片（I）新适应症《药物临床试验批准通知书》的公告",
-            "source": "巨潮资讯上市公司公告",
-            "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-19/1225480088.PDF"
-          },
-          {
-            "date": "2026-08-18",
-            "type": "准入与审批",
-            "impact": "positive",
-            "validates": "商业化准入是否打开",
-            "company": "海思科",
-            "title": "关于获得创新药HSK51155片《药物临床试验批准通知书》的公告",
-            "source": "巨潮资讯上市公司公告",
-            "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-19/1225480087.PDF"
-          },
-          {
-            "date": "2026-08-18",
-            "type": "准入与审批",
-            "impact": "positive",
-            "validates": "商业化准入是否打开",
-            "company": "恩华药业",
-            "title": "关于收到1类创新药NH130片《药物临床试验批准通知书》的公告",
-            "source": "巨潮资讯上市公司公告",
-            "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-18/1225478966.PDF"
-          }
-        ],
-        "catalystStatus": "已更新",
+        "catalysts": [],
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -9187,7 +9136,7 @@
         "constituentCount": 204,
         "liquidConstituentCount": 117,
         "dailyTurnoverYi": 466.0,
-        "totalMarketCapYi": 38946.7,
+        "totalMarketCapYi": 38954.6,
         "floatMarketCapYi": 30370.3,
         "top10SharePercent": 37.5,
         "hhi": 317.8,
@@ -10907,7 +10856,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -13781,7 +13730,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -13949,7 +13898,7 @@
         "liquidConstituentCount": 230,
         "dailyTurnoverYi": 1750.6,
         "totalMarketCapYi": 69902.0,
-        "floatMarketCapYi": 62692.7,
+        "floatMarketCapYi": 62692.8,
         "top10SharePercent": 23.4,
         "hhi": 100.9,
         "topConstituents": [
@@ -15646,7 +15595,7 @@
           {
             "date": "2026-09-07",
             "constituentCount": 397,
-            "floatMarketCapYi": 62692.7,
+            "floatMarketCapYi": 62692.8,
             "dailyTurnoverYi": 1750.6,
             "top10SharePercent": 23.4,
             "hhi": 100.9
@@ -17555,7 +17504,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -19442,7 +19391,7 @@
         "status": "无稳定统一免费序列",
         "accessStatus": "无稳定统一免费序列",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -23383,7 +23332,7 @@
         "constituentCount": 54,
         "liquidConstituentCount": 36,
         "dailyTurnoverYi": 177.1,
-        "totalMarketCapYi": 11518.6,
+        "totalMarketCapYi": 11526.4,
         "floatMarketCapYi": 9369.1,
         "top10SharePercent": 72.5,
         "hhi": 1810.3,
@@ -31114,7 +31063,7 @@
         "liquidConstituentCount": 179,
         "dailyTurnoverYi": 822.1,
         "totalMarketCapYi": 42181.0,
-        "floatMarketCapYi": 36808.1,
+        "floatMarketCapYi": 36808.4,
         "top10SharePercent": 24.6,
         "hhi": 107.3,
         "topConstituents": [
@@ -32811,7 +32760,7 @@
           {
             "date": "2026-09-07",
             "constituentCount": 315,
-            "floatMarketCapYi": 36808.1,
+            "floatMarketCapYi": 36808.4,
             "dailyTurnoverYi": 822.1,
             "top10SharePercent": 24.6,
             "hhi": 107.3
@@ -34792,7 +34741,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -38733,7 +38682,7 @@
         "constituentCount": 54,
         "liquidConstituentCount": 36,
         "dailyTurnoverYi": 177.1,
-        "totalMarketCapYi": 11518.6,
+        "totalMarketCapYi": 11526.4,
         "floatMarketCapYi": 9369.1,
         "top10SharePercent": 72.5,
         "hhi": 1810.3,
@@ -40620,7 +40569,7 @@
         "constituentCount": 54,
         "liquidConstituentCount": 36,
         "dailyTurnoverYi": 177.1,
-        "totalMarketCapYi": 11518.6,
+        "totalMarketCapYi": 11526.4,
         "floatMarketCapYi": 9369.1,
         "top10SharePercent": 72.5,
         "hhi": 1810.3,
@@ -42340,7 +42289,7 @@
         "status": "无稳定统一免费序列",
         "accessStatus": "无稳定统一免费序列",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -44227,7 +44176,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -46114,7 +46063,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -48020,7 +47969,7 @@
         "status": "无稳定统一免费序列",
         "accessStatus": "无稳定统一免费序列",
         "catalysts": [],
-        "catalystStatus": "本次采集失败",
+        "catalystStatus": "已更新",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -53833,7 +53782,7 @@
         "status": "无稳定统一免费序列",
         "accessStatus": "无稳定统一免费序列",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -57767,7 +57716,7 @@
         "status": "无稳定统一免费序列",
         "accessStatus": "无稳定统一免费序列",
         "catalysts": [],
-        "catalystStatus": "本次采集失败",
+        "catalystStatus": "已更新",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -65602,8 +65551,8 @@
         "constituentCount": 766,
         "liquidConstituentCount": 411,
         "dailyTurnoverYi": 2776.2,
-        "totalMarketCapYi": 141699.4,
-        "floatMarketCapYi": 119507.0,
+        "totalMarketCapYi": 141699.6,
+        "floatMarketCapYi": 119507.5,
         "top10SharePercent": 28.2,
         "hhi": 181.4,
         "topConstituents": [
@@ -67300,7 +67249,7 @@
           {
             "date": "2026-09-07",
             "constituentCount": 766,
-            "floatMarketCapYi": 119507.0,
+            "floatMarketCapYi": 119507.5,
             "dailyTurnoverYi": 2776.2,
             "top10SharePercent": 28.2,
             "hhi": 181.4
