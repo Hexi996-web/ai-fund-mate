@@ -4,10 +4,12 @@ set -euo pipefail
 APP_ROOT=/opt/ai-fund-mate
 RELEASE_ID="${GITHUB_SHA:-$(date -u +%Y%m%d%H%M%S)}"
 RELEASE_DIR="$APP_ROOT/releases/$RELEASE_ID"
+RELEASE_ARCHIVE="${RELEASE_ARCHIVE:-/tmp/ai-fund-mate-release.tar.gz}"
 
 sudo install -d -o admin -g admin "$APP_ROOT/releases" "$APP_ROOT/shared"
 install -d "$RELEASE_DIR"
-tar -xzf /tmp/ai-fund-mate-release.tar.gz -C "$RELEASE_DIR"
+test -s "$RELEASE_ARCHIVE"
+tar -xzf "$RELEASE_ARCHIVE" -C "$RELEASE_DIR"
 cd "$RELEASE_DIR"
 npm ci --omit=dev
 

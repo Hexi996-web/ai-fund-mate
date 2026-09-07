@@ -62,13 +62,39 @@ jobs:
           printf '%s\n' "$ECS_SSH_PRIVATE_KEY" > ~/.ssh/ai-fund-mate
           chmod 600 ~/.ssh/ai-fund-mate
           printf '%s\n' "$ECS_HOST_KEY" > ~/.ssh/known_hosts
-      - name: Upload and activate release
+      - name: Upload release with retry and SSH keepalive
         env:
           ECS_HOST: ${{ vars.ECS_HOST }}
           ECS_USER: ${{ vars.ECS_USER }}
+        shell: bash
         run: |
-          scp -i ~/.ssh/ai-fund-mate /tmp/ai-fund-mate-release.tar.gz "$ECS_USER@$ECS_HOST:/tmp/ai-fund-mate-release.tar.gz"
-          ssh -i ~/.ssh/ai-fund-mate "$ECS_USER@$ECS_HOST" "GITHUB_SHA=$GITHUB_SHA bash -s" < scripts/deploy_ecs.sh
+          SSH_OPTIONS=(-i ~/.ssh/ai-fund-mate -o ConnectTimeout=20 -o ServerAliveInterval=30 -o ServerAliveCountMax=3 -o TCPKeepAlive=yes)
+          remote_archive="/tmp/ai-fund-mate-release-$GITHUB_SHA.tar.gz"
+          for attempt in 1 2 3; do
+            if scp "${SSH_OPTIONS[@]}" /tmp/ai-fund-mate-release.tar.gz "$ECS_USER@$ECS_HOST:$remote_archive"; then
+              exit 0
+            fi
+            test "$attempt" -eq 3 && exit 1
+            echo "::warning::Release upload failed on attempt $attempt; retrying"
+            sleep $((attempt * 10))
+          done
+      - name: Activate release with retry and deployment lock
+        env:
+          ECS_HOST: ${{ vars.ECS_HOST }}
+          ECS_USER: ${{ vars.ECS_USER }}
+        shell: bash
+        run: |
+          SSH_OPTIONS=(-i ~/.ssh/ai-fund-mate -o ConnectTimeout=20 -o ServerAliveInterval=30 -o ServerAliveCountMax=3 -o TCPKeepAlive=yes)
+          remote_archive="/tmp/ai-fund-mate-release-$GITHUB_SHA.tar.gz"
+          for attempt in 1 2 3; do
+            if ssh "${SSH_OPTIONS[@]}" "$ECS_USER@$ECS_HOST" "GITHUB_SHA=$GITHUB_SHA RELEASE_ARCHIVE=$remote_archive flock -w 600 /tmp/ai-fund-mate-deploy.lock bash -s" < scripts/deploy_ecs.sh; then
+              ssh "${SSH_OPTIONS[@]}" "$ECS_USER@$ECS_HOST" "rm -f '$remote_archive'" || true
+              exit 0
+            fi
+            test "$attempt" -eq 3 && exit 1
+            echo "::warning::Release activation failed on attempt $attempt; retrying"
+            sleep $((attempt * 10))
+          done
       - name: Verify public domain
         run: curl --fail --retry 6 --retry-delay 5 https://chanpin.becoming.fund/healthz
       - name: Verify deployed snapshot identity
