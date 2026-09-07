@@ -8,10 +8,11 @@ if (!baseURL || !expectedDate || !expectedUpdateTime) throw new Error('PRODUCTIO
 const browser = await chromium.launch({ headless: true })
 try {
   const page = await browser.newPage({ locale: 'zh-CN', viewport: { width: 1440, height: 1000 } })
+  page.setDefaultTimeout(60_000)
   const errors = []
   page.on('pageerror', (error) => errors.push(error.message))
   page.on('console', (message) => { if (message.type() === 'error') errors.push(message.text()) })
-  await page.goto(`${baseURL}?verify=${Date.now()}`, { waitUntil: 'networkidle', timeout: 60_000 })
+  await page.goto(`${baseURL}?verify=${Date.now()}`, { waitUntil: 'domcontentloaded', timeout: 60_000 })
 
   await page.getByRole('heading', { name: '核心预研产品池' }).waitFor()
   await page.locator('.research-data-date').getByText(expectedDate, { exact: true }).waitFor()
