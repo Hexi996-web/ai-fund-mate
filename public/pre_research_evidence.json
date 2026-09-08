@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "updateTime": "2026-09-08T09:26:27.448360+00:00",
+  "updateTime": "2026-09-08T14:05:44.758997+00:00",
   "methodologyVersion": "multi-signal-demand-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
@@ -23,7 +23,7 @@
         "status": "无稳定统一免费序列",
         "accessStatus": "无稳定统一免费序列",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -2246,7 +2246,7 @@
         "liquidConstituentCount": 191,
         "dailyTurnoverYi": 1430.2,
         "totalMarketCapYi": 67515.5,
-        "floatMarketCapYi": 53685.3,
+        "floatMarketCapYi": 53685.4,
         "top10SharePercent": 34.2,
         "hhi": 223.4,
         "topConstituents": [
@@ -2254,7 +2254,7 @@
             "rank": 1,
             "code": "000333",
             "name": "美的集团",
-            "floatMarketCapYi": 5862.7,
+            "floatMarketCapYi": 5862.8,
             "dailyTurnoverYi": 19.56,
             "weightPercent": 10.92
           },
@@ -3951,7 +3951,7 @@
           {
             "date": "2026-09-08",
             "constituentCount": 299,
-            "floatMarketCapYi": 53685.3,
+            "floatMarketCapYi": 53685.4,
             "dailyTurnoverYi": 1430.2,
             "top10SharePercent": 34.2,
             "hhi": 223.4
@@ -3973,7 +3973,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -5868,7 +5868,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -7230,7 +7230,7 @@
         "constituentCount": 537,
         "liquidConstituentCount": 421,
         "dailyTurnoverYi": 4189.3,
-        "totalMarketCapYi": 220208.6,
+        "totalMarketCapYi": 220208.5,
         "floatMarketCapYi": 138911.0,
         "top10SharePercent": 25.2,
         "hhi": 106.6,
@@ -8957,39 +8957,8 @@
         "history": [],
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
-        "catalysts": [
-          {
-            "date": "2026-08-21",
-            "type": "准入与审批",
-            "impact": "positive",
-            "validates": "商业化准入是否打开",
-            "company": "一品红",
-            "title": "关于全资子公司创新药APH03867片获得临床试验批准通知书的公告",
-            "source": "巨潮资讯上市公司公告",
-            "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-21/1225488085.PDF"
-          },
-          {
-            "date": "2026-08-18",
-            "type": "准入与审批",
-            "impact": "positive",
-            "validates": "商业化准入是否打开",
-            "company": "上海谊众",
-            "title": "上海谊众药业股份有限公司关于在研创新药YXC-002获得药物临床试验批准通知书的自愿性披露公告",
-            "source": "巨潮资讯上市公司公告",
-            "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-19/1225480758.PDF"
-          },
-          {
-            "date": "2026-08-18",
-            "type": "准入与审批",
-            "impact": "positive",
-            "validates": "商业化准入是否打开",
-            "company": "海思科",
-            "title": "关于获得创新药HSK47388片（I）新适应症《药物临床试验批准通知书》的公告",
-            "source": "巨潮资讯上市公司公告",
-            "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-08-19/1225480088.PDF"
-          }
-        ],
-        "catalystStatus": "已更新",
+        "catalysts": [],
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -9207,10 +9176,10 @@
         "constituentCount": 204,
         "liquidConstituentCount": 132,
         "dailyTurnoverYi": 643.8,
-        "totalMarketCapYi": 39148.0,
-        "floatMarketCapYi": 30601.0,
+        "totalMarketCapYi": 39166.0,
+        "floatMarketCapYi": 30614.4,
         "top10SharePercent": 37.3,
-        "hhi": 317.0,
+        "hhi": 316.8,
         "topConstituents": [
           {
             "rank": 1,
@@ -9218,7 +9187,7 @@
             "name": "药明康德",
             "floatMarketCapYi": 3867.0,
             "dailyTurnoverYi": 56.32,
-            "weightPercent": 12.64
+            "weightPercent": 12.63
           },
           {
             "rank": 2,
@@ -9226,7 +9195,7 @@
             "name": "恒瑞医药",
             "floatMarketCapYi": 2915.8,
             "dailyTurnoverYi": 26.95,
-            "weightPercent": 9.53
+            "weightPercent": 9.52
           },
           {
             "rank": 3,
@@ -10913,10 +10882,10 @@
           {
             "date": "2026-09-08",
             "constituentCount": 204,
-            "floatMarketCapYi": 30601.0,
+            "floatMarketCapYi": 30614.4,
             "dailyTurnoverYi": 643.8,
             "top10SharePercent": 37.3,
-            "hhi": 317.0
+            "hhi": 316.8
           }
         ]
       }
@@ -10935,7 +10904,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -12830,7 +12799,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -13825,7 +13794,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -17615,7 +17584,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -19510,7 +19479,7 @@
         "status": "无稳定统一免费序列",
         "accessStatus": "无稳定统一免费序列",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -21405,7 +21374,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -23300,7 +23269,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -29156,7 +29125,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -31051,7 +31020,7 @@
         "status": "无稳定统一免费序列",
         "accessStatus": "无稳定统一免费序列",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -36808,7 +36777,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -38703,7 +38672,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -40598,7 +40567,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -42493,7 +42462,7 @@
         "status": "无稳定统一免费序列",
         "accessStatus": "无稳定统一免费序列",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -44388,7 +44357,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -46283,7 +46252,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -48197,7 +48166,7 @@
         "status": "无稳定统一免费序列",
         "accessStatus": "无稳定统一免费序列",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -57984,7 +57953,7 @@
         "status": "无稳定统一免费序列",
         "accessStatus": "无稳定统一免费序列",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -59839,7 +59808,7 @@
         "status": "无稳定统一免费序列",
         "accessStatus": "无稳定统一免费序列",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
@@ -63629,7 +63598,7 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [],
-        "catalystStatus": "已更新",
+        "catalystStatus": "本次采集失败",
         "catalystWindowDays": 120,
         "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
