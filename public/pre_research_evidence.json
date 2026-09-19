@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "updateTime": "2026-09-19T06:54:12.748831+00:00",
+  "updateTime": "2026-09-19T11:50:52.240268+00:00",
   "methodologyVersion": "multi-signal-demand-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
@@ -2002,8 +2002,6 @@
           "批量订单"
         ],
         "source": "国家统计局口径／中商产业数据库公开页",
-        "metric": "工业机器人月产量",
-        "unit": "套",
         "history": [
           {
             "date": "2022-12",
@@ -2150,9 +2148,11 @@
             "value": 98677.0
           }
         ],
-        "sourceUrl": "https://s.askci.com/data/industry/a020922/",
         "status": "真实连续数据",
-        "accessStatus": "已自动接入",
+        "catalysts": [],
+        "catalystStatus": "已更新",
+        "catalystWindowDays": 120,
+        "catalystSource": "巨潮资讯上市公司公告",
         "demandAssessment": {
           "version": "multi-signal-demand-v1",
           "title": "机器人产量与真实部署",
@@ -2200,7 +2200,10 @@
         "historyPoints": 36,
         "note": "核心需求使用多指标合同；单一产量或供给指标只作为低权重辅助证据。",
         "catalystHistory": [],
-        "catalystHistoryDays": 1095
+        "catalystHistoryDays": 1095,
+        "metric": "工业机器人月产量",
+        "unit": "套",
+        "sourceUrl": "https://s.askci.com/data/industry/a020922/"
       },
       "enterprise": {
         "sampleCompanies": 10,
