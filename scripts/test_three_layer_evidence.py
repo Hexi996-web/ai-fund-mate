@@ -1,6 +1,6 @@
 from scripts.update_attention_pool import THEMES
 from scripts import update_three_layer_evidence as evidence
-from scripts.update_three_layer_evidence import STRUCTURE_CONTRACTS, demand_assessment, merge_catalyst_history, number
+from scripts.update_three_layer_evidence import STRUCTURE_CONTRACTS, demand_assessment, merge_catalyst_history, number, usable_evidence
 
 
 def test_every_mother_pool_theme_has_a_structure_contract():
@@ -52,3 +52,15 @@ def test_single_supply_proxy_cannot_confirm_broad_demand():
     assert result["score"] < 58
     assert result["label"] == "需求待验证"
     assert result["observations"][0]["role"] == "辅助供给代理"
+
+
+def test_retained_previous_snapshot_remains_covered_during_source_outage():
+    retained = {
+        "id": "agri-tech",
+        "refreshStatus": "retained-previous",
+        "refreshError": "HTTPError",
+        "enterprise": {"history": [{"reportDate": str(index)} for index in range(4)]},
+        "assets": {"constituentCount": 10, "topConstituents": [{"code": "1"}]},
+    }
+    assert usable_evidence(retained) is True
+    assert usable_evidence({"id": "agri-tech"}) is False
