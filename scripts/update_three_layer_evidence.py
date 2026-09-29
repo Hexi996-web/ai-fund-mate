@@ -12,6 +12,7 @@ import math
 import re
 import sys
 import time
+from copy import deepcopy
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date, datetime, timedelta
 from pathlib import Path
@@ -306,6 +307,18 @@ def number(value) -> float:
         return 0.0
 
 
+def usable_evidence(item: dict) -> bool:
+    """A retained prior snapshot is still covered even when today's refresh failed."""
+    enterprise = item.get("enterprise") or {}
+    assets = item.get("assets") or {}
+    return bool(
+        item.get("id")
+        and len(enterprise.get("history") or []) >= 4
+        and assets.get("constituentCount")
+        and assets.get("topConstituents")
+    )
+
+
 def build_item(theme_id: str, query: str, board: str, capacity: dict, demand_sources: list[dict] | None = None) -> dict:
     rows = constituents(board)
     total_float = sum(number(row.get("f21")) for row in rows)
@@ -409,8 +422,9 @@ def main() -> None:
         try:
             items.append(build_item(theme_id, query, board, capacities.get(theme_id, {}), demand_by_theme.get(theme_id, [])))
         except Exception as exc:
-            fallback = previous_map.get(theme_id, {"id": theme_id})
-            fallback["error"] = type(exc).__name__
+            fallback = deepcopy(previous_map.get(theme_id, {"id": theme_id}))
+            fallback["refreshStatus"] = "retained-previous" if usable_evidence(fallback) else "unavailable"
+            fallback["refreshError"] = type(exc).__name__
             items.append(fallback)
         time.sleep(.5)
     now = datetime.now().astimezone().isoformat()
@@ -448,8 +462,11 @@ def main() -> None:
         structure["historyPoints"] = len(structure.get("history") or [])
         contract = STRUCTURE_CONTRACTS[item["id"]]
         structure["demandAssessment"] = demand_assessment(contract, structure, demand_by_theme.get(item["id"], []))
+    failed_theme_ids = [item["id"] for item in items if item.get("refreshStatus") in {"retained-previous", "unavailable"}]
     output = {"schemaVersion": 3, "updateTime": now, "methodologyVersion": "multi-signal-demand-36-v1",
-              "universeCount": 36, "coveredCount": sum(not item.get("error") for item in items),
+              "universeCount": 36, "coveredCount": sum(usable_evidence(item) for item in items),
+              "refreshStatus": "degraded" if failed_theme_ids else "complete",
+              "failedThemeIds": failed_theme_ids,
               "enterpriseDataCount": sum(len((item.get("enterprise") or {}).get("history") or []) >= 4 for item in items),
               "assetDataCount": sum(len((item.get("assets") or {}).get("topConstituents") or []) == min(10, (item.get("assets") or {}).get("constituentCount") or 0) for item in items),
               "assetMarketHistoryCount": sum(len((item.get("assets") or {}).get("marketHistory") or []) >= 200 for item in items),

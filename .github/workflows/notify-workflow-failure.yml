@@ -1,0 +1,50 @@
+name: Notify blocking workflow failure
+
+on:
+  workflow_run:
+    workflows:
+      - Update active fund data
+      - Update social attention history
+      - Update slow external signals
+      - Deploy production to Aliyun ECS
+      - Guard published data freshness
+    types: [completed]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  notify:
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create or update GitHub failure alert
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const run = context.payload.workflow_run
+            const title = `[自动告警] ${run.name} 运行失败`
+            const body = [
+              `关键工作流 **${run.name}** 运行失败，项目更新或发布已被阻断。`,
+              '',
+              `- 失败时间：${run.updated_at}`,
+              `- 分支：${run.head_branch}`,
+              `- 提交：${run.head_sha}`,
+              `- [查看失败日志](${run.html_url})`,
+              '',
+              '请检查并修复后重新运行。此 Issue 由 GitHub Actions 自动创建；关注/参与该仓库并启用 Issues 邮件通知后，GitHub 会发送邮件。',
+            ].join('\n')
+            const { owner, repo } = context.repo
+            const issues = await github.paginate(github.rest.issues.listForRepo, {
+              owner, repo, state: 'all', per_page: 100,
+            })
+            const existing = issues.find(issue => !issue.pull_request && issue.title === title)
+            if (existing) {
+              if (existing.state === 'closed') {
+                await github.rest.issues.update({ owner, repo, issue_number: existing.number, state: 'open' })
+              }
+              await github.rest.issues.createComment({ owner, repo, issue_number: existing.number, body })
+            } else {
+              await github.rest.issues.create({ owner, repo, title, body, assignees: [owner] })
+            }
