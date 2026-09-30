@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "updateTime": "2026-09-30T06:54:46.433944+00:00",
+  "updateTime": "2026-09-30T13:15:31.991375+00:00",
   "methodologyVersion": "multi-signal-demand-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
@@ -9,25 +9,37 @@
     "embodied-ai",
     "space",
     "power",
+    "hard-tech",
+    "biotech",
     "longevity",
     "experience",
     "resources",
+    "future-tech",
     "industrial-software",
     "ai-application",
     "cybersecurity",
     "smart-healthcare",
+    "synthetic-biology",
     "nuclear-energy",
     "water-security",
     "low-altitude",
     "autonomous-driving",
+    "obesity-care",
+    "climate-adaptation",
     "digital-health",
     "mental-health",
     "pet-economy",
+    "sports-outdoor",
+    "inbound-consumption",
     "new-food",
     "recycling",
+    "grid-storage",
     "defense-tech",
     "agri-tech",
     "wealth-longevity",
+    "human-upskilling",
+    "creator-economy",
+    "ocean-economy",
     "service-robot"
   ],
   "enterpriseDataCount": 36,
@@ -88,7 +100,7 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 10,
-        "coveragePercent": 33.5,
+        "coveragePercent": 33.6,
         "reportDate": "2026-06-30",
         "revenueGrowthMedian": 53.9,
         "positiveRevenueShare": 90.0,
@@ -106,7 +118,7 @@
             "profitGrowthMedian": 67.0,
             "positiveProfitShare": 90.0,
             "cashToRevenueMedian": 0.2,
-            "coveragePercent": 33.5
+            "coveragePercent": 33.6
           },
           {
             "reportDate": "2026-03-31",
@@ -214,92 +226,92 @@
         "boardCode": "BK0800",
         "boardName": "人工智能",
         "constituentCount": 750,
-        "liquidConstituentCount": 357,
-        "dailyTurnoverYi": 2095.8,
-        "totalMarketCapYi": 139975.3,
-        "floatMarketCapYi": 124223.1,
-        "top10SharePercent": 33.5,
-        "hhi": 186.5,
+        "liquidConstituentCount": 377,
+        "dailyTurnoverYi": 2290.7,
+        "totalMarketCapYi": 139944.6,
+        "floatMarketCapYi": 124198.2,
+        "top10SharePercent": 33.6,
+        "hhi": 187.1,
         "topConstituents": [
           {
             "rank": 1,
             "code": "601138",
             "name": "工业富联",
-            "floatMarketCapYi": 11529.4,
-            "dailyTurnoverYi": 28.07,
-            "weightPercent": 9.28
+            "floatMarketCapYi": 11549.3,
+            "dailyTurnoverYi": 30.35,
+            "weightPercent": 9.3
           },
           {
             "rank": 2,
             "code": "688256",
             "name": "寒武纪",
-            "floatMarketCapYi": 6320.0,
-            "dailyTurnoverYi": 80.97,
-            "weightPercent": 5.09
+            "floatMarketCapYi": 6345.2,
+            "dailyTurnoverYi": 86.92,
+            "weightPercent": 5.11
           },
           {
             "rank": 3,
             "code": "688041",
             "name": "海光信息",
-            "floatMarketCapYi": 5266.7,
-            "dailyTurnoverYi": 37.7,
+            "floatMarketCapYi": 5271.6,
+            "dailyTurnoverYi": 40.57,
             "weightPercent": 4.24
           },
           {
             "rank": 4,
             "code": "601728",
             "name": "中国电信",
-            "floatMarketCapYi": 4882.9,
-            "dailyTurnoverYi": 2.67,
+            "floatMarketCapYi": 4875.1,
+            "dailyTurnoverYi": 2.97,
             "weightPercent": 3.93
           },
           {
             "rank": 5,
             "code": "002415",
             "name": "海康威视",
-            "floatMarketCapYi": 2939.1,
-            "dailyTurnoverYi": 9.34,
-            "weightPercent": 2.37
+            "floatMarketCapYi": 2936.4,
+            "dailyTurnoverYi": 10.0,
+            "weightPercent": 2.36
           },
           {
             "rank": 6,
             "code": "300059",
             "name": "东方财富",
-            "floatMarketCapYi": 2381.2,
-            "dailyTurnoverYi": 16.24,
+            "floatMarketCapYi": 2382.5,
+            "dailyTurnoverYi": 18.42,
             "weightPercent": 1.92
           },
           {
             "rank": 7,
             "code": "603986",
             "name": "兆易创新",
-            "floatMarketCapYi": 2374.3,
-            "dailyTurnoverYi": 79.67,
+            "floatMarketCapYi": 2373.7,
+            "dailyTurnoverYi": 86.47,
             "weightPercent": 1.91
           },
           {
             "rank": 8,
             "code": "688008",
             "name": "澜起科技",
-            "floatMarketCapYi": 2313.5,
-            "dailyTurnoverYi": 49.9,
+            "floatMarketCapYi": 2316.0,
+            "dailyTurnoverYi": 54.34,
             "weightPercent": 1.86
           },
           {
             "rank": 9,
             "code": "000725",
             "name": "京东方Ａ",
-            "floatMarketCapYi": 2019.5,
-            "dailyTurnoverYi": 47.97,
+            "floatMarketCapYi": 2023.0,
+            "dailyTurnoverYi": 52.27,
             "weightPercent": 1.63
           },
           {
             "rank": 10,
             "code": "601872",
             "name": "招商轮船",
-            "floatMarketCapYi": 1634.3,
-            "dailyTurnoverYi": 13.74,
-            "weightPercent": 1.32
+            "floatMarketCapYi": 1627.0,
+            "dailyTurnoverYi": 15.24,
+            "weightPercent": 1.31
           }
         ],
         "marketHistory": [
@@ -2050,10 +2062,10 @@
           {
             "date": "2026-09-30",
             "constituentCount": 750,
-            "floatMarketCapYi": 124223.1,
-            "dailyTurnoverYi": 2095.8,
-            "top10SharePercent": 33.5,
-            "hhi": 186.5
+            "floatMarketCapYi": 124198.2,
+            "dailyTurnoverYi": 2290.7,
+            "top10SharePercent": 33.6,
+            "hhi": 187.1
           }
         ]
       }
@@ -9699,7 +9711,9 @@
             "hhi": 104.2
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "biotech",
@@ -11794,7 +11808,9 @@
             "hhi": 311.7
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "longevity",
@@ -19077,7 +19093,9 @@
             "hhi": 792.4
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "industrial-software",
@@ -29222,7 +29240,9 @@
             "hhi": 258.8
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "nuclear-energy",
@@ -39577,7 +39597,9 @@
             "hhi": 1399.6
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "climate-adaptation",
@@ -41600,7 +41622,9 @@
             "hhi": 551.4
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "digital-health",
@@ -49698,7 +49722,9 @@
             "hhi": 612.6
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "inbound-consumption",
@@ -51740,7 +51766,9 @@
             "hhi": 1586.2
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "new-food",
@@ -57965,7 +57993,9 @@
             "hhi": 2088.2
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "defense-tech",
@@ -66183,7 +66213,9 @@
             "hhi": 798.4
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "creator-economy",
@@ -68206,7 +68238,9 @@
             "hhi": 193.1
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "ocean-economy",
@@ -70229,7 +70263,9 @@
             "hhi": 5144.3
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "service-robot",
