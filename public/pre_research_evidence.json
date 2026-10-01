@@ -1,11 +1,12 @@
 {
   "schemaVersion": 3,
-  "updateTime": "2026-10-01T02:13:43.233306+00:00",
+  "updateTime": "2026-10-01T07:59:45.469097+00:00",
   "methodologyVersion": "multi-signal-demand-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
   "refreshStatus": "degraded",
   "failedThemeIds": [
+    "ai-agent",
     "embodied-ai",
     "space",
     "power",
@@ -27,7 +28,6 @@
     "obesity-care",
     "climate-adaptation",
     "digital-health",
-    "mental-health",
     "pet-economy",
     "sports-outdoor",
     "inbound-consumption",
@@ -2076,7 +2076,9 @@
             "hhi": 187.1
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "embodied-ai",
@@ -43880,7 +43882,7 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 10,
-        "coveragePercent": 71.6,
+        "coveragePercent": 71.7,
         "reportDate": "2026-06-30",
         "revenueGrowthMedian": 13.6,
         "positiveRevenueShare": 90.0,
@@ -43898,7 +43900,7 @@
             "profitGrowthMedian": 15.2,
             "positiveProfitShare": 70.0,
             "cashToRevenueMedian": 0.2,
-            "coveragePercent": 71.6
+            "coveragePercent": 71.7
           },
           {
             "reportDate": "2026-03-31",
@@ -44006,100 +44008,95 @@
         "boardCode": "BK0727",
         "boardName": "医疗服务",
         "constituentCount": 54,
-        "liquidConstituentCount": 42,
-        "dailyTurnoverYi": 238.3,
-        "totalMarketCapYi": 12248.5,
-        "floatMarketCapYi": 9948.9,
-        "top10SharePercent": 71.6,
-        "hhi": 1766.5,
+        "liquidConstituentCount": 46,
+        "dailyTurnoverYi": 374.5,
+        "totalMarketCapYi": 12717.7,
+        "floatMarketCapYi": 10329.1,
+        "top10SharePercent": 71.7,
+        "hhi": 1772.2,
         "topConstituents": [
           {
             "rank": 1,
             "code": "603259",
             "name": "药明康德",
-            "floatMarketCapYi": 3980.0,
-            "dailyTurnoverYi": 41.02,
-            "weightPercent": 40.0
+            "floatMarketCapYi": 4138.8,
+            "dailyTurnoverYi": 74.42,
+            "weightPercent": 40.07
           },
           {
             "rank": 2,
-            "code": "300015",
-            "name": "爱尔眼科",
-            "floatMarketCapYi": 626.3,
-            "dailyTurnoverYi": 1.67,
-            "weightPercent": 6.3
+            "code": "300759",
+            "name": "康龙化成",
+            "floatMarketCapYi": 638.6,
+            "dailyTurnoverYi": 27.94,
+            "weightPercent": 6.18
           },
           {
             "rank": 3,
-            "code": "300759",
-            "name": "康龙化成",
-            "floatMarketCapYi": 607.2,
-            "dailyTurnoverYi": 13.66,
-            "weightPercent": 6.1
+            "code": "300015",
+            "name": "爱尔眼科",
+            "floatMarketCapYi": 635.0,
+            "dailyTurnoverYi": 3.84,
+            "weightPercent": 6.15
           },
           {
             "rank": 4,
             "code": "002821",
             "name": "凯莱英",
-            "floatMarketCapYi": 568.2,
-            "dailyTurnoverYi": 11.57,
-            "weightPercent": 5.71
+            "floatMarketCapYi": 597.7,
+            "dailyTurnoverYi": 19.63,
+            "weightPercent": 5.79
           },
           {
             "rank": 5,
             "code": "300347",
             "name": "泰格医药",
-            "floatMarketCapYi": 321.0,
-            "dailyTurnoverYi": 4.52,
-            "weightPercent": 3.23
+            "floatMarketCapYi": 330.7,
+            "dailyTurnoverYi": 8.32,
+            "weightPercent": 3.2
           },
           {
             "rank": 6,
             "code": "603127",
             "name": "昭衍新药",
-            "floatMarketCapYi": 281.6,
-            "dailyTurnoverYi": 12.23,
-            "weightPercent": 2.83
+            "floatMarketCapYi": 309.5,
+            "dailyTurnoverYi": 26.47,
+            "weightPercent": 3.0
           },
           {
             "rank": 7,
             "code": "688131",
             "name": "皓元医药",
-            "floatMarketCapYi": 207.4,
-            "dailyTurnoverYi": 4.83,
-            "weightPercent": 2.08
+            "floatMarketCapYi": 212.1,
+            "dailyTurnoverYi": 5.61,
+            "weightPercent": 2.05
           },
           {
             "rank": 8,
             "code": "300676",
             "name": "华大基因",
-            "floatMarketCapYi": 182.1,
-            "dailyTurnoverYi": 4.91,
-            "weightPercent": 1.83
+            "floatMarketCapYi": 190.8,
+            "dailyTurnoverYi": 7.71,
+            "weightPercent": 1.85
           },
           {
             "rank": 9,
             "code": "688222",
             "name": "成都先导",
-            "floatMarketCapYi": 173.9,
-            "dailyTurnoverYi": 7.07,
-            "weightPercent": 1.75
+            "floatMarketCapYi": 179.3,
+            "dailyTurnoverYi": 12.56,
+            "weightPercent": 1.74
           },
           {
             "rank": 10,
             "code": "002044",
             "name": "美年健康",
-            "floatMarketCapYi": 172.4,
-            "dailyTurnoverYi": 1.39,
-            "weightPercent": 1.73
+            "floatMarketCapYi": 175.9,
+            "dailyTurnoverYi": 2.13,
+            "weightPercent": 1.7
           }
         ],
         "marketHistory": [
-          {
-            "date": "2025-07-09",
-            "close": 1131.18,
-            "turnoverYi": 153.09
-          },
           {
             "date": "2025-07-10",
             "close": 1136.67,
@@ -45592,8 +45589,13 @@
           },
           {
             "date": "2026-09-29",
-            "close": 1516.92,
-            "turnoverYi": 238.35
+            "close": 1518.45,
+            "turnoverYi": 286.84
+          },
+          {
+            "date": "2026-09-30",
+            "close": 1565.33,
+            "turnoverYi": 374.55
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -45850,15 +45852,13 @@
           {
             "date": "2026-10-01",
             "constituentCount": 54,
-            "floatMarketCapYi": 9948.9,
-            "dailyTurnoverYi": 238.3,
-            "top10SharePercent": 71.6,
-            "hhi": 1766.5
+            "floatMarketCapYi": 10329.1,
+            "dailyTurnoverYi": 374.5,
+            "top10SharePercent": 71.7,
+            "hhi": 1772.2
           }
         ]
-      },
-      "refreshStatus": "retained-previous",
-      "refreshError": "HTTPError"
+      }
     },
     {
       "id": "pet-economy",
