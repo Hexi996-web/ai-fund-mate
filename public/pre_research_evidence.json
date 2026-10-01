@@ -1,12 +1,11 @@
 {
   "schemaVersion": 3,
-  "updateTime": "2026-10-01T01:45:16.413306+00:00",
+  "updateTime": "2026-10-01T02:13:43.233306+00:00",
   "methodologyVersion": "multi-signal-demand-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
   "refreshStatus": "degraded",
   "failedThemeIds": [
-    "ai-agent",
     "embodied-ai",
     "space",
     "power",
@@ -1813,8 +1812,8 @@
           },
           {
             "date": "2026-09-30",
-            "close": 1756.97,
-            "turnoverYi": 2097.72
+            "close": 1755.49,
+            "turnoverYi": 2290.68
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -2077,9 +2076,7 @@
             "hhi": 187.1
           }
         ]
-      },
-      "refreshStatus": "retained-previous",
-      "refreshError": "HTTPError"
+      }
     },
     {
       "id": "embodied-ai",
