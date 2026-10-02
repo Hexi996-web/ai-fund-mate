@@ -1,11 +1,12 @@
 {
   "schemaVersion": 3,
-  "updateTime": "2026-10-02T01:23:12.047595+00:00",
+  "updateTime": "2026-10-02T02:22:36.894026+00:00",
   "methodologyVersion": "multi-signal-demand-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
   "refreshStatus": "degraded",
   "failedThemeIds": [
+    "ai-agent",
     "embodied-ai",
     "space",
     "power",
@@ -2084,7 +2085,9 @@
             "hhi": 187.1
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "embodied-ai",
@@ -11906,7 +11909,7 @@
         ]
       },
       "refreshStatus": "retained-previous",
-      "refreshError": "ReadTimeout"
+      "refreshError": "HTTPError"
     },
     {
       "id": "longevity",
