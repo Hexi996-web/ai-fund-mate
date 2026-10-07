@@ -1,11 +1,12 @@
 {
   "schemaVersion": 3,
-  "updateTime": "2026-10-07T02:29:50.466221+00:00",
+  "updateTime": "2026-10-07T07:32:04.322340+00:00",
   "methodologyVersion": "multi-signal-demand-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
   "refreshStatus": "degraded",
   "failedThemeIds": [
+    "ai-agent",
     "embodied-ai",
     "space",
     "power",
@@ -2124,7 +2125,9 @@
             "hhi": 187.1
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "embodied-ai",
