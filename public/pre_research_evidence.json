@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "updateTime": "2026-10-11T15:51:20.741173+00:00",
+  "updateTime": "2026-10-11T23:55:55.772945+00:00",
   "methodologyVersion": "multi-signal-demand-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
@@ -20,6 +20,7 @@
     "ai-application",
     "cybersecurity",
     "smart-healthcare",
+    "synthetic-biology",
     "nuclear-energy",
     "water-security",
     "low-altitude",
@@ -30602,7 +30603,9 @@
             "hhi": 251.7
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "nuclear-energy",
