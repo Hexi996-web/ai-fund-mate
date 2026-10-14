@@ -1,13 +1,11 @@
 {
   "schemaVersion": 3,
-  "updateTime": "2026-10-13T09:36:23.908086+00:00",
+  "updateTime": "2026-10-14T00:06:52.244923+00:00",
   "methodologyVersion": "multi-signal-demand-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
-  "refreshStatus": "degraded",
-  "failedThemeIds": [
-    "space"
-  ],
+  "refreshStatus": "complete",
+  "failedThemeIds": [],
   "enterpriseDataCount": 36,
   "assetDataCount": 36,
   "assetMarketHistoryCount": 34,
@@ -194,7 +192,7 @@
         "constituentCount": 751,
         "liquidConstituentCount": 454,
         "dailyTurnoverYi": 2783.3,
-        "totalMarketCapYi": 135720.5,
+        "totalMarketCapYi": 135756.3,
         "floatMarketCapYi": 120473.0,
         "top10SharePercent": 33.0,
         "hhi": 175.8,
@@ -2136,6 +2134,14 @@
             "dailyTurnoverYi": 2783.3,
             "top10SharePercent": 33.0,
             "hhi": 175.8
+          },
+          {
+            "date": "2026-10-14",
+            "constituentCount": 751,
+            "floatMarketCapYi": 120473.0,
+            "dailyTurnoverYi": 2783.3,
+            "top10SharePercent": 33.0,
+            "hhi": 175.8
           }
         ]
       }
@@ -2481,8 +2487,8 @@
         "constituentCount": 304,
         "liquidConstituentCount": 201,
         "dailyTurnoverYi": 1071.6,
-        "totalMarketCapYi": 61703.8,
-        "floatMarketCapYi": 48908.9,
+        "totalMarketCapYi": 61719.3,
+        "floatMarketCapYi": 48909.2,
         "top10SharePercent": 33.6,
         "hhi": 229.4,
         "topConstituents": [
@@ -4423,6 +4429,14 @@
             "dailyTurnoverYi": 1071.6,
             "top10SharePercent": 33.6,
             "hhi": 229.4
+          },
+          {
+            "date": "2026-10-14",
+            "constituentCount": 304,
+            "floatMarketCapYi": 48909.2,
+            "dailyTurnoverYi": 1071.6,
+            "top10SharePercent": 33.6,
+            "hhi": 229.4
           }
         ]
       }
@@ -4480,10 +4494,10 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 10,
-        "coveragePercent": 20.4,
+        "coveragePercent": 20.3,
         "reportDate": "2026-06-30",
         "revenueGrowthMedian": 3.8,
-        "positiveRevenueShare": 70.0,
+        "positiveRevenueShare": 80.0,
         "profitGrowthMedian": -1.6,
         "positiveProfitShare": 50.0,
         "cashToRevenueMedian": 0.1,
@@ -4494,18 +4508,18 @@
             "reportDate": "2026-06-30",
             "sampleCompanies": 10,
             "revenueGrowthMedian": 3.8,
-            "positiveRevenueShare": 70.0,
+            "positiveRevenueShare": 80.0,
             "profitGrowthMedian": -1.6,
             "positiveProfitShare": 50.0,
             "cashToRevenueMedian": 0.1,
-            "coveragePercent": 20.4
+            "coveragePercent": 20.3
           },
           {
             "reportDate": "2026-03-31",
             "sampleCompanies": 10,
             "revenueGrowthMedian": 8.6,
-            "positiveRevenueShare": 70.0,
-            "profitGrowthMedian": -19.8,
+            "positiveRevenueShare": 80.0,
+            "profitGrowthMedian": -26.7,
             "positiveProfitShare": 30.0,
             "cashToRevenueMedian": -0.1
           },
@@ -4513,7 +4527,7 @@
             "reportDate": "2025-12-31",
             "sampleCompanies": 10,
             "revenueGrowthMedian": 8.9,
-            "positiveRevenueShare": 70.0,
+            "positiveRevenueShare": 80.0,
             "profitGrowthMedian": 4.3,
             "positiveProfitShare": 60.0,
             "cashToRevenueMedian": 0.2
@@ -4522,7 +4536,7 @@
             "reportDate": "2025-09-30",
             "sampleCompanies": 10,
             "revenueGrowthMedian": 15.2,
-            "positiveRevenueShare": 70.0,
+            "positiveRevenueShare": 80.0,
             "profitGrowthMedian": 12.4,
             "positiveProfitShare": 60.0,
             "cashToRevenueMedian": 0.1
@@ -4530,8 +4544,8 @@
           {
             "reportDate": "2025-06-30",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 17.6,
-            "positiveRevenueShare": 70.0,
+            "revenueGrowthMedian": 21.3,
+            "positiveRevenueShare": 80.0,
             "profitGrowthMedian": 15.8,
             "positiveProfitShare": 50.0,
             "cashToRevenueMedian": 0.1
@@ -4539,8 +4553,8 @@
           {
             "reportDate": "2025-03-31",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 11.5,
-            "positiveRevenueShare": 60.0,
+            "revenueGrowthMedian": 16.7,
+            "positiveRevenueShare": 70.0,
             "profitGrowthMedian": 0.2,
             "positiveProfitShare": 50.0,
             "cashToRevenueMedian": -0.0
@@ -4548,10 +4562,10 @@
           {
             "reportDate": "2024-12-31",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 5.7,
-            "positiveRevenueShare": 60.0,
+            "revenueGrowthMedian": 6.3,
+            "positiveRevenueShare": 70.0,
             "profitGrowthMedian": 12.5,
-            "positiveProfitShare": 60.0,
+            "positiveProfitShare": 70.0,
             "cashToRevenueMedian": 0.1
           },
           {
@@ -4570,32 +4584,32 @@
             "positiveRevenueShare": 60.0,
             "profitGrowthMedian": 3.8,
             "positiveProfitShare": 50.0,
-            "cashToRevenueMedian": 0.0
+            "cashToRevenueMedian": 0.1
           },
           {
             "reportDate": "2024-03-31",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 0.4,
-            "positiveRevenueShare": 70.0,
+            "revenueGrowthMedian": 0.2,
+            "positiveRevenueShare": 60.0,
             "profitGrowthMedian": 14.4,
-            "positiveProfitShare": 70.0,
+            "positiveProfitShare": 60.0,
             "cashToRevenueMedian": 0.0
           },
           {
             "reportDate": "2023-12-31",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 3.1,
+            "revenueGrowthMedian": 3.7,
             "positiveRevenueShare": 70.0,
-            "profitGrowthMedian": 4.5,
-            "positiveProfitShare": 50.0,
+            "profitGrowthMedian": 17.0,
+            "positiveProfitShare": 60.0,
             "cashToRevenueMedian": 0.2
           },
           {
             "reportDate": "2023-09-30",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 1.2,
+            "revenueGrowthMedian": 2.1,
             "positiveRevenueShare": 70.0,
-            "profitGrowthMedian": 3.4,
+            "profitGrowthMedian": 8.0,
             "positiveProfitShare": 60.0,
             "cashToRevenueMedian": 0.1
           }
@@ -4606,92 +4620,92 @@
         "boardCode": "BK0963",
         "boardName": "商业航天",
         "constituentCount": 322,
-        "liquidConstituentCount": 157,
-        "dailyTurnoverYi": 725.4,
-        "totalMarketCapYi": 54645.4,
-        "floatMarketCapYi": 47481.8,
-        "top10SharePercent": 20.4,
+        "liquidConstituentCount": 219,
+        "dailyTurnoverYi": 1262.0,
+        "totalMarketCapYi": 55396.1,
+        "floatMarketCapYi": 48119.5,
+        "top10SharePercent": 20.3,
         "hhi": 91.0,
         "topConstituents": [
           {
             "rank": 1,
             "code": "002938",
             "name": "鹏鼎控股",
-            "floatMarketCapYi": 1820.9,
-            "dailyTurnoverYi": 15.87,
-            "weightPercent": 3.84
+            "floatMarketCapYi": 1860.9,
+            "dailyTurnoverYi": 31.74,
+            "weightPercent": 3.87
           },
           {
             "rank": 2,
             "code": "300433",
             "name": "蓝思科技",
-            "floatMarketCapYi": 1284.5,
-            "dailyTurnoverYi": 15.97,
+            "floatMarketCapYi": 1303.8,
+            "dailyTurnoverYi": 27.44,
             "weightPercent": 2.71
           },
           {
             "rank": 3,
             "code": "603228",
             "name": "景旺电子",
-            "floatMarketCapYi": 981.6,
-            "dailyTurnoverYi": 26.68,
-            "weightPercent": 2.07
+            "floatMarketCapYi": 967.4,
+            "dailyTurnoverYi": 41.27,
+            "weightPercent": 2.01
           },
           {
             "rank": 4,
             "code": "601698",
             "name": "中国卫通",
-            "floatMarketCapYi": 927.3,
-            "dailyTurnoverYi": 1.7,
-            "weightPercent": 1.95
+            "floatMarketCapYi": 942.0,
+            "dailyTurnoverYi": 3.55,
+            "weightPercent": 1.96
           },
           {
             "rank": 5,
             "code": "002080",
             "name": "中材科技",
-            "floatMarketCapYi": 876.1,
-            "dailyTurnoverYi": 11.5,
-            "weightPercent": 1.85
+            "floatMarketCapYi": 866.6,
+            "dailyTurnoverYi": 21.13,
+            "weightPercent": 1.8
           },
           {
             "rank": 6,
             "code": "000988",
             "name": "华工科技",
-            "floatMarketCapYi": 829.8,
-            "dailyTurnoverYi": 15.03,
+            "floatMarketCapYi": 840.3,
+            "dailyTurnoverYi": 25.78,
             "weightPercent": 1.75
           },
           {
             "rank": 7,
             "code": "300757",
             "name": "罗博特科",
-            "floatMarketCapYi": 777.1,
-            "dailyTurnoverYi": 17.67,
-            "weightPercent": 1.64
+            "floatMarketCapYi": 801.8,
+            "dailyTurnoverYi": 32.19,
+            "weightPercent": 1.67
           },
           {
             "rank": 8,
             "code": "688002",
             "name": "睿创微纳",
-            "floatMarketCapYi": 744.8,
-            "dailyTurnoverYi": 11.73,
-            "weightPercent": 1.57
+            "floatMarketCapYi": 778.8,
+            "dailyTurnoverYi": 23.23,
+            "weightPercent": 1.62
           },
           {
             "rank": 9,
             "code": "601800",
             "name": "中国交建",
-            "floatMarketCapYi": 718.6,
-            "dailyTurnoverYi": 1.4,
-            "weightPercent": 1.51
+            "floatMarketCapYi": 712.8,
+            "dailyTurnoverYi": 2.57,
+            "weightPercent": 1.48
           },
           {
             "rank": 10,
-            "code": "601186",
-            "name": "中国铁建",
-            "floatMarketCapYi": 709.8,
-            "dailyTurnoverYi": 1.92,
-            "weightPercent": 1.49
+            "code": "002179",
+            "name": "中航光电",
+            "floatMarketCapYi": 705.2,
+            "dailyTurnoverYi": 6.26,
+            "weightPercent": 1.47
           }
         ],
         "marketHistory": [
@@ -6192,8 +6206,8 @@
           },
           {
             "date": "2026-10-13",
-            "close": 2191.96,
-            "turnoverYi": 725.4
+            "close": 2222.15,
+            "turnoverYi": 1261.95
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -6550,11 +6564,17 @@
             "dailyTurnoverYi": 725.4,
             "top10SharePercent": 20.4,
             "hhi": 91.0
+          },
+          {
+            "date": "2026-10-14",
+            "constituentCount": 322,
+            "floatMarketCapYi": 48119.5,
+            "dailyTurnoverYi": 1262.0,
+            "top10SharePercent": 20.3,
+            "hhi": 91.0
           }
         ]
-      },
-      "refreshStatus": "retained-previous",
-      "refreshError": "ReadTimeout"
+      }
     },
     {
       "id": "power",
@@ -6778,7 +6798,7 @@
         "liquidConstituentCount": 122,
         "dailyTurnoverYi": 628.6,
         "totalMarketCapYi": 27602.3,
-        "floatMarketCapYi": 24863.4,
+        "floatMarketCapYi": 24863.5,
         "top10SharePercent": 33.5,
         "hhi": 178.1,
         "topConstituents": [
@@ -7924,6 +7944,14 @@
             "dailyTurnoverYi": 628.6,
             "top10SharePercent": 33.5,
             "hhi": 178.1
+          },
+          {
+            "date": "2026-10-14",
+            "constituentCount": 229,
+            "floatMarketCapYi": 24863.5,
+            "dailyTurnoverYi": 628.6,
+            "top10SharePercent": 33.5,
+            "hhi": 178.1
           }
         ]
       }
@@ -8269,8 +8297,8 @@
         "constituentCount": 542,
         "liquidConstituentCount": 414,
         "dailyTurnoverYi": 3526.7,
-        "totalMarketCapYi": 194378.2,
-        "floatMarketCapYi": 125036.6,
+        "totalMarketCapYi": 194413.9,
+        "floatMarketCapYi": 125036.4,
         "top10SharePercent": 25.1,
         "hhi": 106.7,
         "topConstituents": [
@@ -10208,6 +10236,14 @@
             "date": "2026-10-13",
             "constituentCount": 542,
             "floatMarketCapYi": 125036.6,
+            "dailyTurnoverYi": 3526.7,
+            "top10SharePercent": 25.1,
+            "hhi": 106.7
+          },
+          {
+            "date": "2026-10-14",
+            "constituentCount": 542,
+            "floatMarketCapYi": 125036.4,
             "dailyTurnoverYi": 3526.7,
             "top10SharePercent": 25.1,
             "hhi": 106.7
@@ -12430,6 +12466,14 @@
             "dailyTurnoverYi": 627.5,
             "top10SharePercent": 36.5,
             "hhi": 310.7
+          },
+          {
+            "date": "2026-10-14",
+            "constituentCount": 214,
+            "floatMarketCapYi": 30788.4,
+            "dailyTurnoverYi": 627.5,
+            "top10SharePercent": 36.5,
+            "hhi": 310.7
           }
         ]
       }
@@ -14557,6 +14601,14 @@
             "dailyTurnoverYi": 377.1,
             "top10SharePercent": 61.4,
             "hhi": 852.3
+          },
+          {
+            "date": "2026-10-14",
+            "constituentCount": 131,
+            "floatMarketCapYi": 22174.6,
+            "dailyTurnoverYi": 377.1,
+            "top10SharePercent": 61.4,
+            "hhi": 852.3
           }
         ]
       }
@@ -15889,6 +15941,14 @@
             "dailyTurnoverYi": 198.0,
             "top10SharePercent": 38.3,
             "hhi": 255.4
+          },
+          {
+            "date": "2026-10-14",
+            "constituentCount": 82,
+            "floatMarketCapYi": 6396.2,
+            "dailyTurnoverYi": 198.0,
+            "top10SharePercent": 38.3,
+            "hhi": 255.4
           }
         ]
       }
@@ -16074,8 +16134,8 @@
         "constituentCount": 400,
         "liquidConstituentCount": 242,
         "dailyTurnoverYi": 1540.9,
-        "totalMarketCapYi": 63785.5,
-        "floatMarketCapYi": 56799.4,
+        "totalMarketCapYi": 63785.6,
+        "floatMarketCapYi": 56799.5,
         "top10SharePercent": 22.6,
         "hhi": 95.6,
         "topConstituents": [
@@ -18013,6 +18073,14 @@
             "date": "2026-10-13",
             "constituentCount": 400,
             "floatMarketCapYi": 56799.4,
+            "dailyTurnoverYi": 1540.9,
+            "top10SharePercent": 22.6,
+            "hhi": 95.6
+          },
+          {
+            "date": "2026-10-14",
+            "constituentCount": 400,
+            "floatMarketCapYi": 56799.5,
             "dailyTurnoverYi": 1540.9,
             "top10SharePercent": 22.6,
             "hhi": 95.6
@@ -20138,6 +20206,14 @@
           },
           {
             "date": "2026-10-13",
+            "constituentCount": 84,
+            "floatMarketCapYi": 28122.7,
+            "dailyTurnoverYi": 496.7,
+            "top10SharePercent": 68.6,
+            "hhi": 814.5
+          },
+          {
+            "date": "2026-10-14",
             "constituentCount": 84,
             "floatMarketCapYi": 28122.7,
             "dailyTurnoverYi": 496.7,
@@ -22270,6 +22346,14 @@
             "dailyTurnoverYi": 593.4,
             "top10SharePercent": 35.9,
             "hhi": 222.1
+          },
+          {
+            "date": "2026-10-14",
+            "constituentCount": 234,
+            "floatMarketCapYi": 23702.0,
+            "dailyTurnoverYi": 593.4,
+            "top10SharePercent": 35.9,
+            "hhi": 222.1
           }
         ]
       }
@@ -24392,6 +24476,14 @@
           },
           {
             "date": "2026-10-13",
+            "constituentCount": 149,
+            "floatMarketCapYi": 42514.2,
+            "dailyTurnoverYi": 639.7,
+            "top10SharePercent": 64.0,
+            "hhi": 880.8
+          },
+          {
+            "date": "2026-10-14",
             "constituentCount": 149,
             "floatMarketCapYi": 42514.2,
             "dailyTurnoverYi": 639.7,
@@ -26524,6 +26616,14 @@
             "dailyTurnoverYi": 266.9,
             "top10SharePercent": 64.6,
             "hhi": 833.4
+          },
+          {
+            "date": "2026-10-14",
+            "constituentCount": 83,
+            "floatMarketCapYi": 9850.4,
+            "dailyTurnoverYi": 266.9,
+            "top10SharePercent": 64.6,
+            "hhi": 833.4
           }
         ]
       }
@@ -28646,6 +28746,14 @@
           },
           {
             "date": "2026-10-13",
+            "constituentCount": 54,
+            "floatMarketCapYi": 9722.6,
+            "dailyTurnoverYi": 271.2,
+            "top10SharePercent": 71.7,
+            "hhi": 1768.4
+          },
+          {
+            "date": "2026-10-14",
             "constituentCount": 54,
             "floatMarketCapYi": 9722.6,
             "dailyTurnoverYi": 271.2,
@@ -30800,6 +30908,14 @@
             "dailyTurnoverYi": 350.2,
             "top10SharePercent": 37.0,
             "hhi": 255.7
+          },
+          {
+            "date": "2026-10-14",
+            "constituentCount": 126,
+            "floatMarketCapYi": 12338.7,
+            "dailyTurnoverYi": 350.2,
+            "top10SharePercent": 37.0,
+            "hhi": 255.7
           }
         ]
       }
@@ -31145,7 +31261,7 @@
         "constituentCount": 213,
         "liquidConstituentCount": 120,
         "dailyTurnoverYi": 581.0,
-        "totalMarketCapYi": 48237.9,
+        "totalMarketCapYi": 48237.7,
         "floatMarketCapYi": 40182.7,
         "top10SharePercent": 42.8,
         "hhi": 430.0,
@@ -33082,6 +33198,14 @@
           },
           {
             "date": "2026-10-13",
+            "constituentCount": 213,
+            "floatMarketCapYi": 40182.7,
+            "dailyTurnoverYi": 581.0,
+            "top10SharePercent": 42.8,
+            "hhi": 430.0
+          },
+          {
+            "date": "2026-10-14",
             "constituentCount": 213,
             "floatMarketCapYi": 40182.7,
             "dailyTurnoverYi": 581.0,
@@ -35214,6 +35338,14 @@
             "dailyTurnoverYi": 330.7,
             "top10SharePercent": 72.5,
             "hhi": 1303.7
+          },
+          {
+            "date": "2026-10-14",
+            "constituentCount": 115,
+            "floatMarketCapYi": 25073.2,
+            "dailyTurnoverYi": 330.7,
+            "top10SharePercent": 72.5,
+            "hhi": 1303.7
           }
         ]
       }
@@ -37336,6 +37468,14 @@
           },
           {
             "date": "2026-10-13",
+            "constituentCount": 317,
+            "floatMarketCapYi": 34390.3,
+            "dailyTurnoverYi": 792.6,
+            "top10SharePercent": 24.7,
+            "hhi": 106.1
+          },
+          {
+            "date": "2026-10-14",
             "constituentCount": 317,
             "floatMarketCapYi": 34390.3,
             "dailyTurnoverYi": 792.6,
@@ -39544,6 +39684,14 @@
             "dailyTurnoverYi": 707.9,
             "top10SharePercent": 54.6,
             "hhi": 745.2
+          },
+          {
+            "date": "2026-10-14",
+            "constituentCount": 213,
+            "floatMarketCapYi": 43012.2,
+            "dailyTurnoverYi": 707.9,
+            "top10SharePercent": 54.6,
+            "hhi": 745.2
           }
         ]
       }
@@ -41666,6 +41814,14 @@
           },
           {
             "date": "2026-10-13",
+            "constituentCount": 43,
+            "floatMarketCapYi": 8289.2,
+            "dailyTurnoverYi": 156.8,
+            "top10SharePercent": 69.2,
+            "hhi": 1419.6
+          },
+          {
+            "date": "2026-10-14",
             "constituentCount": 43,
             "floatMarketCapYi": 8289.2,
             "dailyTurnoverYi": 156.8,
@@ -43798,6 +43954,14 @@
             "dailyTurnoverYi": 70.3,
             "top10SharePercent": 55.5,
             "hhi": 552.3
+          },
+          {
+            "date": "2026-10-14",
+            "constituentCount": 56,
+            "floatMarketCapYi": 3686.0,
+            "dailyTurnoverYi": 70.3,
+            "top10SharePercent": 55.5,
+            "hhi": 552.3
           }
         ]
       }
@@ -45920,6 +46084,14 @@
           },
           {
             "date": "2026-10-13",
+            "constituentCount": 54,
+            "floatMarketCapYi": 9722.6,
+            "dailyTurnoverYi": 271.2,
+            "top10SharePercent": 71.7,
+            "hhi": 1768.4
+          },
+          {
+            "date": "2026-10-14",
             "constituentCount": 54,
             "floatMarketCapYi": 9722.6,
             "dailyTurnoverYi": 271.2,
@@ -48052,6 +48224,14 @@
             "dailyTurnoverYi": 271.2,
             "top10SharePercent": 71.7,
             "hhi": 1768.4
+          },
+          {
+            "date": "2026-10-14",
+            "constituentCount": 54,
+            "floatMarketCapYi": 9722.6,
+            "dailyTurnoverYi": 271.2,
+            "top10SharePercent": 71.7,
+            "hhi": 1768.4
           }
         ]
       }
@@ -50179,6 +50359,14 @@
             "dailyTurnoverYi": 76.0,
             "top10SharePercent": 40.4,
             "hhi": 257.8
+          },
+          {
+            "date": "2026-10-14",
+            "constituentCount": 74,
+            "floatMarketCapYi": 3699.4,
+            "dailyTurnoverYi": 76.0,
+            "top10SharePercent": 40.4,
+            "hhi": 257.8
           }
         ]
       }
@@ -52301,6 +52489,14 @@
           },
           {
             "date": "2026-10-13",
+            "constituentCount": 77,
+            "floatMarketCapYi": 6473.0,
+            "dailyTurnoverYi": 153.0,
+            "top10SharePercent": 57.5,
+            "hhi": 616.3
+          },
+          {
+            "date": "2026-10-14",
             "constituentCount": 77,
             "floatMarketCapYi": 6473.0,
             "dailyTurnoverYi": 153.0,
@@ -54452,6 +54648,14 @@
             "dailyTurnoverYi": 51.3,
             "top10SharePercent": 68.2,
             "hhi": 1527.0
+          },
+          {
+            "date": "2026-10-14",
+            "constituentCount": 39,
+            "floatMarketCapYi": 2669.0,
+            "dailyTurnoverYi": 51.3,
+            "top10SharePercent": 68.2,
+            "hhi": 1527.0
           }
         ]
       }
@@ -56566,6 +56770,14 @@
           },
           {
             "date": "2026-10-13",
+            "constituentCount": 9,
+            "floatMarketCapYi": 368.1,
+            "dailyTurnoverYi": 3.6,
+            "top10SharePercent": 100.0,
+            "hhi": 1835.6
+          },
+          {
+            "date": "2026-10-14",
             "constituentCount": 9,
             "floatMarketCapYi": 368.1,
             "dailyTurnoverYi": 3.6,
@@ -58693,6 +58905,14 @@
           },
           {
             "date": "2026-10-13",
+            "constituentCount": 96,
+            "floatMarketCapYi": 7082.0,
+            "dailyTurnoverYi": 108.3,
+            "top10SharePercent": 36.0,
+            "hhi": 202.0
+          },
+          {
+            "date": "2026-10-14",
             "constituentCount": 96,
             "floatMarketCapYi": 7082.0,
             "dailyTurnoverYi": 108.3,
@@ -60994,6 +61214,14 @@
             "dailyTurnoverYi": 133.8,
             "top10SharePercent": 76.9,
             "hhi": 2155.3
+          },
+          {
+            "date": "2026-10-14",
+            "constituentCount": 42,
+            "floatMarketCapYi": 16169.2,
+            "dailyTurnoverYi": 133.8,
+            "top10SharePercent": 76.9,
+            "hhi": 2155.3
           }
         ]
       }
@@ -61179,7 +61407,7 @@
         "constituentCount": 431,
         "liquidConstituentCount": 253,
         "dailyTurnoverYi": 1193.2,
-        "totalMarketCapYi": 55515.0,
+        "totalMarketCapYi": 55514.8,
         "floatMarketCapYi": 48810.0,
         "top10SharePercent": 21.1,
         "hhi": 95.7,
@@ -63116,6 +63344,14 @@
           },
           {
             "date": "2026-10-13",
+            "constituentCount": 431,
+            "floatMarketCapYi": 48810.0,
+            "dailyTurnoverYi": 1193.2,
+            "top10SharePercent": 21.1,
+            "hhi": 95.7
+          },
+          {
+            "date": "2026-10-14",
             "constituentCount": 431,
             "floatMarketCapYi": 48810.0,
             "dailyTurnoverYi": 1193.2,
@@ -65408,6 +65644,14 @@
             "dailyTurnoverYi": 198.9,
             "top10SharePercent": 48.9,
             "hhi": 437.8
+          },
+          {
+            "date": "2026-10-14",
+            "constituentCount": 88,
+            "floatMarketCapYi": 6459.5,
+            "dailyTurnoverYi": 198.9,
+            "top10SharePercent": 48.9,
+            "hhi": 437.8
           }
         ]
       }
@@ -67490,6 +67734,14 @@
           },
           {
             "date": "2026-10-13",
+            "constituentCount": 5,
+            "floatMarketCapYi": 18785.2,
+            "dailyTurnoverYi": 100.0,
+            "top10SharePercent": 100.0,
+            "hhi": 2762.5
+          },
+          {
+            "date": "2026-10-14",
             "constituentCount": 5,
             "floatMarketCapYi": 18785.2,
             "dailyTurnoverYi": 100.0,
@@ -69622,6 +69874,14 @@
             "dailyTurnoverYi": 27.1,
             "top10SharePercent": 81.3,
             "hhi": 793.2
+          },
+          {
+            "date": "2026-10-14",
+            "constituentCount": 17,
+            "floatMarketCapYi": 822.9,
+            "dailyTurnoverYi": 27.1,
+            "top10SharePercent": 81.3,
+            "hhi": 793.2
           }
         ]
       }
@@ -71744,6 +72004,14 @@
           },
           {
             "date": "2026-10-13",
+            "constituentCount": 128,
+            "floatMarketCapYi": 13713.3,
+            "dailyTurnoverYi": 657.0,
+            "top10SharePercent": 32.5,
+            "hhi": 184.0
+          },
+          {
+            "date": "2026-10-14",
             "constituentCount": 128,
             "floatMarketCapYi": 13713.3,
             "dailyTurnoverYi": 657.0,
@@ -73876,6 +74144,14 @@
             "dailyTurnoverYi": 85.5,
             "top10SharePercent": 100.0,
             "hhi": 5186.3
+          },
+          {
+            "date": "2026-10-14",
+            "constituentCount": 10,
+            "floatMarketCapYi": 4166.9,
+            "dailyTurnoverYi": 85.5,
+            "top10SharePercent": 100.0,
+            "hhi": 5186.3
           }
         ]
       }
@@ -74221,8 +74497,8 @@
         "constituentCount": 777,
         "liquidConstituentCount": 406,
         "dailyTurnoverYi": 2203.0,
-        "totalMarketCapYi": 129246.5,
-        "floatMarketCapYi": 108629.7,
+        "totalMarketCapYi": 129297.5,
+        "floatMarketCapYi": 108629.9,
         "top10SharePercent": 26.3,
         "hhi": 149.2,
         "topConstituents": [
@@ -76160,6 +76436,14 @@
             "date": "2026-10-13",
             "constituentCount": 777,
             "floatMarketCapYi": 108629.7,
+            "dailyTurnoverYi": 2203.0,
+            "top10SharePercent": 26.3,
+            "hhi": 149.2
+          },
+          {
+            "date": "2026-10-14",
+            "constituentCount": 777,
+            "floatMarketCapYi": 108629.9,
             "dailyTurnoverYi": 2203.0,
             "top10SharePercent": 26.3,
             "hhi": 149.2
