@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "updateTime": "2026-10-14T06:27:01.375213+00:00",
+  "updateTime": "2026-10-14T12:04:30.258552+00:00",
   "methodologyVersion": "multi-signal-demand-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
@@ -13,18 +13,24 @@
     "hard-tech",
     "biotech",
     "longevity",
+    "experience",
     "resources",
+    "future-tech",
     "industrial-software",
+    "ai-application",
     "cybersecurity",
+    "smart-healthcare",
     "synthetic-biology",
     "nuclear-energy",
     "water-security",
     "low-altitude",
     "autonomous-driving",
+    "obesity-care",
     "climate-adaptation",
     "digital-health",
     "mental-health",
     "pet-economy",
+    "sports-outdoor",
     "inbound-consumption",
     "new-food",
     "recycling",
@@ -16001,7 +16007,9 @@
             "hhi": 256.0
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "resources",
@@ -20273,7 +20281,9 @@
             "hhi": 818.9
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "industrial-software",
@@ -24545,7 +24555,9 @@
             "hhi": 845.2
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "cybersecurity",
@@ -28817,7 +28829,9 @@
             "hhi": 1774.5
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "synthetic-biology",
@@ -37547,7 +37561,7 @@
         ]
       },
       "refreshStatus": "retained-previous",
-      "refreshError": "ReadTimeout"
+      "refreshError": "HTTPError"
     },
     {
       "id": "autonomous-driving",
@@ -41895,7 +41909,9 @@
             "hhi": 1437.5
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "climate-adaptation",
@@ -52578,7 +52594,9 @@
             "hhi": 632.6
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "inbound-consumption",
