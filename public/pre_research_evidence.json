@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "updateTime": "2026-10-18T22:52:01.479872+00:00",
+  "updateTime": "2026-10-18T23:58:44.182515+00:00",
   "methodologyVersion": "multi-signal-demand-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
@@ -15,6 +15,7 @@
     "longevity",
     "experience",
     "resources",
+    "future-tech",
     "industrial-software",
     "ai-application",
     "cybersecurity",
@@ -20634,7 +20635,9 @@
             "hhi": 840.7
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "industrial-software",
