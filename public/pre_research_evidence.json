@@ -1,11 +1,12 @@
 {
   "schemaVersion": 3,
-  "updateTime": "2026-10-20T23:42:39.457599+00:00",
+  "updateTime": "2026-10-20T23:58:04.659888+00:00",
   "methodologyVersion": "multi-signal-demand-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
   "refreshStatus": "degraded",
   "failedThemeIds": [
+    "ai-agent",
     "embodied-ai",
     "space",
     "power",
@@ -2237,7 +2238,9 @@
             "hhi": 169.3
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "embodied-ai",
@@ -67378,7 +67381,7 @@
         ]
       },
       "refreshStatus": "retained-previous",
-      "refreshError": "ReadTimeout"
+      "refreshError": "HTTPError"
     },
     {
       "id": "wealth-longevity",
@@ -71717,7 +71720,7 @@
         ]
       },
       "refreshStatus": "retained-previous",
-      "refreshError": "ReadTimeout"
+      "refreshError": "HTTPError"
     },
     {
       "id": "creator-economy",
@@ -73902,7 +73905,7 @@
         ]
       },
       "refreshStatus": "retained-previous",
-      "refreshError": "ReadTimeout"
+      "refreshError": "HTTPError"
     },
     {
       "id": "ocean-economy",
