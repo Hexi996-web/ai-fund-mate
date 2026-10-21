@@ -1,26 +1,11 @@
 {
   "schemaVersion": 3,
-  "updateTime": "2026-10-21T01:42:31.733538+00:00",
+  "updateTime": "2026-10-21T02:13:09.760052+00:00",
   "methodologyVersion": "multi-signal-demand-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
-  "refreshStatus": "degraded",
-  "failedThemeIds": [
-    "embodied-ai",
-    "hard-tech",
-    "biotech",
-    "longevity",
-    "future-tech",
-    "cybersecurity",
-    "nuclear-energy",
-    "water-security",
-    "autonomous-driving",
-    "obesity-care",
-    "pet-economy",
-    "sports-outdoor",
-    "defense-tech",
-    "agri-tech"
-  ],
+  "refreshStatus": "complete",
+  "failedThemeIds": [],
   "enterpriseDataCount": 36,
   "assetDataCount": 36,
   "assetMarketHistoryCount": 34,
@@ -79,7 +64,7 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 2,
-        "coveragePercent": 32.4,
+        "coveragePercent": 32.3,
         "reportDate": "2026-09-30",
         "revenueGrowthMedian": 35.1,
         "positiveRevenueShare": 100.0,
@@ -97,7 +82,7 @@
             "profitGrowthMedian": 41.8,
             "positiveProfitShare": 100.0,
             "cashToRevenueMedian": -0.0,
-            "coveragePercent": 32.4
+            "coveragePercent": 32.3
           },
           {
             "reportDate": "2026-06-30",
@@ -213,76 +198,76 @@
       "assets": {
         "boardCode": "BK0800",
         "boardName": "人工智能",
-        "constituentCount": 751,
-        "liquidConstituentCount": 84,
-        "dailyTurnoverYi": 331.5,
-        "totalMarketCapYi": 133479.3,
-        "floatMarketCapYi": 118056.1,
-        "top10SharePercent": 32.4,
-        "hhi": 170.7,
+        "constituentCount": 753,
+        "liquidConstituentCount": 210,
+        "dailyTurnoverYi": 1031.5,
+        "totalMarketCapYi": 133440.4,
+        "floatMarketCapYi": 118076.9,
+        "top10SharePercent": 32.3,
+        "hhi": 169.9,
         "topConstituents": [
           {
             "rank": 1,
             "code": "601138",
             "name": "工业富联",
-            "floatMarketCapYi": 9935.9,
-            "dailyTurnoverYi": 5.55,
-            "weightPercent": 8.42
+            "floatMarketCapYi": 9916.1,
+            "dailyTurnoverYi": 17.27,
+            "weightPercent": 8.4
           },
           {
             "rank": 2,
             "code": "688256",
             "name": "寒武纪",
-            "floatMarketCapYi": 5861.0,
-            "dailyTurnoverYi": 5.59,
-            "weightPercent": 4.96
+            "floatMarketCapYi": 5848.7,
+            "dailyTurnoverYi": 24.0,
+            "weightPercent": 4.95
           },
           {
             "rank": 3,
             "code": "601728",
             "name": "中国电信",
-            "floatMarketCapYi": 5263.3,
-            "dailyTurnoverYi": 0.63,
-            "weightPercent": 4.46
+            "floatMarketCapYi": 5224.5,
+            "dailyTurnoverYi": 2.26,
+            "weightPercent": 4.42
           },
           {
             "rank": 4,
             "code": "688041",
             "name": "海光信息",
-            "floatMarketCapYi": 4568.5,
-            "dailyTurnoverYi": 4.17,
+            "floatMarketCapYi": 4567.3,
+            "dailyTurnoverYi": 14.57,
             "weightPercent": 3.87
           },
           {
             "rank": 5,
             "code": "002415",
             "name": "海康威视",
-            "floatMarketCapYi": 2974.4,
-            "dailyTurnoverYi": 1.23,
-            "weightPercent": 2.52
+            "floatMarketCapYi": 2957.2,
+            "dailyTurnoverYi": 4.27,
+            "weightPercent": 2.5
           },
           {
             "rank": 6,
             "code": "300059",
             "name": "东方财富",
-            "floatMarketCapYi": 2421.3,
-            "dailyTurnoverYi": 2.03,
-            "weightPercent": 2.05
+            "floatMarketCapYi": 2410.6,
+            "dailyTurnoverYi": 7.38,
+            "weightPercent": 2.04
           },
           {
             "rank": 7,
             "code": "688008",
             "name": "澜起科技",
-            "floatMarketCapYi": 2022.3,
-            "dailyTurnoverYi": 8.8,
-            "weightPercent": 1.71
+            "floatMarketCapYi": 2045.5,
+            "dailyTurnoverYi": 26.41,
+            "weightPercent": 1.73
           },
           {
             "rank": 8,
             "code": "603986",
             "name": "兆易创新",
-            "floatMarketCapYi": 1933.2,
-            "dailyTurnoverYi": 11.76,
+            "floatMarketCapYi": 1933.9,
+            "dailyTurnoverYi": 29.81,
             "weightPercent": 1.64
           },
           {
@@ -290,16 +275,16 @@
             "code": "000725",
             "name": "京东方Ａ",
             "floatMarketCapYi": 1800.2,
-            "dailyTurnoverYi": 2.55,
+            "dailyTurnoverYi": 10.74,
             "weightPercent": 1.52
           },
           {
             "rank": 10,
             "code": "601872",
             "name": "招商轮船",
-            "floatMarketCapYi": 1451.0,
-            "dailyTurnoverYi": 1.42,
-            "weightPercent": 1.23
+            "floatMarketCapYi": 1464.7,
+            "dailyTurnoverYi": 5.11,
+            "weightPercent": 1.24
           }
         ],
         "marketHistory": [
@@ -1800,8 +1785,8 @@
           },
           {
             "date": "2026-10-21",
-            "close": 1725.12,
-            "turnoverYi": 337.84
+            "close": 1721.67,
+            "turnoverYi": 1033.28
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -2217,11 +2202,11 @@
           },
           {
             "date": "2026-10-21",
-            "constituentCount": 751,
-            "floatMarketCapYi": 118056.1,
-            "dailyTurnoverYi": 331.5,
-            "top10SharePercent": 32.4,
-            "hhi": 170.7
+            "constituentCount": 753,
+            "floatMarketCapYi": 118076.9,
+            "dailyTurnoverYi": 1031.5,
+            "top10SharePercent": 32.3,
+            "hhi": 169.9
           }
         ]
       }
@@ -2439,7 +2424,7 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 1,
-        "coveragePercent": 33.5,
+        "coveragePercent": 33.1,
         "reportDate": "2026-09-30",
         "revenueGrowthMedian": 7.1,
         "positiveRevenueShare": 100.0,
@@ -2457,12 +2442,12 @@
             "profitGrowthMedian": 132.8,
             "positiveProfitShare": 100.0,
             "cashToRevenueMedian": 0.0,
-            "coveragePercent": 33.5
+            "coveragePercent": 33.1
           },
           {
             "reportDate": "2026-06-30",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 18.5,
+            "revenueGrowthMedian": 24.5,
             "positiveRevenueShare": 90.0,
             "profitGrowthMedian": 8.2,
             "positiveProfitShare": 60.0,
@@ -2471,7 +2456,7 @@
           {
             "reportDate": "2026-03-31",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 13.1,
+            "revenueGrowthMedian": 20.1,
             "positiveRevenueShare": 90.0,
             "profitGrowthMedian": 7.1,
             "positiveProfitShare": 60.0,
@@ -2480,7 +2465,7 @@
           {
             "reportDate": "2025-12-31",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 19.0,
+            "revenueGrowthMedian": 22.1,
             "positiveRevenueShare": 100.0,
             "profitGrowthMedian": 39.9,
             "positiveProfitShare": 90.0,
@@ -2489,25 +2474,25 @@
           {
             "reportDate": "2025-09-30",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 20.1,
+            "revenueGrowthMedian": 22.2,
             "positiveRevenueShare": 100.0,
-            "profitGrowthMedian": 28.5,
+            "profitGrowthMedian": 33.9,
             "positiveProfitShare": 100.0,
             "cashToRevenueMedian": 0.1
           },
           {
             "reportDate": "2025-06-30",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 17.7,
+            "revenueGrowthMedian": 20.9,
             "positiveRevenueShare": 100.0,
-            "profitGrowthMedian": 34.3,
+            "profitGrowthMedian": 38.1,
             "positiveProfitShare": 100.0,
             "cashToRevenueMedian": 0.1
           },
           {
             "reportDate": "2025-03-31",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 18.2,
+            "revenueGrowthMedian": 19.4,
             "positiveRevenueShare": 100.0,
             "profitGrowthMedian": 38.4,
             "positiveProfitShare": 100.0,
@@ -2516,47 +2501,47 @@
           {
             "reportDate": "2024-12-31",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 24.7,
+            "revenueGrowthMedian": 28.0,
             "positiveRevenueShare": 100.0,
-            "profitGrowthMedian": 17.1,
-            "positiveProfitShare": 60.0,
+            "profitGrowthMedian": 46.0,
+            "positiveProfitShare": 70.0,
             "cashToRevenueMedian": 0.1
           },
           {
             "reportDate": "2024-09-30",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 27.1,
-            "positiveRevenueShare": 90.0,
-            "profitGrowthMedian": 25.1,
+            "revenueGrowthMedian": 28.2,
+            "positiveRevenueShare": 100.0,
+            "profitGrowthMedian": 37.1,
             "positiveProfitShare": 80.0,
             "cashToRevenueMedian": 0.1
           },
           {
             "reportDate": "2024-06-30",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 23.5,
-            "positiveRevenueShare": 90.0,
-            "profitGrowthMedian": 31.4,
+            "revenueGrowthMedian": 27.6,
+            "positiveRevenueShare": 100.0,
+            "profitGrowthMedian": 43.6,
             "positiveProfitShare": 80.0,
             "cashToRevenueMedian": 0.1
           },
           {
             "reportDate": "2024-03-31",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 31.0,
-            "positiveRevenueShare": 90.0,
-            "profitGrowthMedian": 24.2,
-            "positiveProfitShare": 70.0,
+            "revenueGrowthMedian": 35.9,
+            "positiveRevenueShare": 100.0,
+            "profitGrowthMedian": 43.5,
+            "positiveProfitShare": 80.0,
             "cashToRevenueMedian": 0.1
           },
           {
             "reportDate": "2023-12-31",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 2.5,
-            "positiveRevenueShare": 60.0,
-            "profitGrowthMedian": 15.6,
-            "positiveProfitShare": 70.0,
-            "cashToRevenueMedian": 0.1
+            "revenueGrowthMedian": 4.8,
+            "positiveRevenueShare": 70.0,
+            "profitGrowthMedian": 11.9,
+            "positiveProfitShare": 60.0,
+            "cashToRevenueMedian": 0.2
           },
           {
             "reportDate": "2023-09-30",
@@ -2573,111 +2558,96 @@
       "assets": {
         "boardCode": "BK1184",
         "boardName": "人形机器人",
-        "constituentCount": 305,
-        "liquidConstituentCount": 82,
-        "dailyTurnoverYi": 345.6,
-        "totalMarketCapYi": 61048.8,
-        "floatMarketCapYi": 48288.9,
-        "top10SharePercent": 33.5,
-        "hhi": 238.5,
+        "constituentCount": 308,
+        "liquidConstituentCount": 120,
+        "dailyTurnoverYi": 559.8,
+        "totalMarketCapYi": 62182.6,
+        "floatMarketCapYi": 49107.7,
+        "top10SharePercent": 33.1,
+        "hhi": 226.3,
         "topConstituents": [
           {
             "rank": 1,
             "code": "000333",
             "name": "美的集团",
-            "floatMarketCapYi": 5900.1,
-            "dailyTurnoverYi": 4.79,
-            "weightPercent": 12.22
+            "floatMarketCapYi": 5738.3,
+            "dailyTurnoverYi": 7.93,
+            "weightPercent": 11.69
           },
           {
             "rank": 2,
             "code": "603986",
             "name": "兆易创新",
-            "floatMarketCapYi": 1920.5,
-            "dailyTurnoverYi": 20.15,
-            "weightPercent": 3.98
+            "floatMarketCapYi": 1935.6,
+            "dailyTurnoverYi": 29.89,
+            "weightPercent": 3.94
           },
           {
             "rank": 3,
             "code": "300476",
             "name": "胜宏科技",
-            "floatMarketCapYi": 1630.8,
-            "dailyTurnoverYi": 14.87,
-            "weightPercent": 3.38
+            "floatMarketCapYi": 1649.7,
+            "dailyTurnoverYi": 21.55,
+            "weightPercent": 3.36
           },
           {
             "rank": 4,
             "code": "300433",
             "name": "蓝思科技",
-            "floatMarketCapYi": 1292.9,
-            "dailyTurnoverYi": 3.15,
-            "weightPercent": 2.68
+            "floatMarketCapYi": 1333.0,
+            "dailyTurnoverYi": 7.93,
+            "weightPercent": 2.71
           },
           {
             "rank": 5,
             "code": "300124",
             "name": "汇川技术",
-            "floatMarketCapYi": 1216.6,
-            "dailyTurnoverYi": 2.76,
-            "weightPercent": 2.52
+            "floatMarketCapYi": 1209.9,
+            "dailyTurnoverYi": 5.39,
+            "weightPercent": 2.46
           },
           {
             "rank": 6,
             "code": "300857",
             "name": "协创数据",
-            "floatMarketCapYi": 1024.9,
-            "dailyTurnoverYi": 19.31,
-            "weightPercent": 2.12
+            "floatMarketCapYi": 1052.7,
+            "dailyTurnoverYi": 27.87,
+            "weightPercent": 2.14
           },
           {
             "rank": 7,
             "code": "600673",
             "name": "东阳光",
-            "floatMarketCapYi": 841.9,
-            "dailyTurnoverYi": 0.8,
-            "weightPercent": 1.74
+            "floatMarketCapYi": 881.9,
+            "dailyTurnoverYi": 1.31,
+            "weightPercent": 1.8
           },
           {
             "rank": 8,
-            "code": "002230",
-            "name": "科大讯飞",
-            "floatMarketCapYi": 799.1,
-            "dailyTurnoverYi": 1.92,
-            "weightPercent": 1.65
+            "code": "603893",
+            "name": "瑞芯微",
+            "floatMarketCapYi": 829.0,
+            "dailyTurnoverYi": 18.37,
+            "weightPercent": 1.69
           },
           {
             "rank": 9,
-            "code": "601727",
-            "name": "上海电气",
-            "floatMarketCapYi": 773.3,
-            "dailyTurnoverYi": 0.42,
-            "weightPercent": 1.6
+            "code": "002230",
+            "name": "科大讯飞",
+            "floatMarketCapYi": 809.8,
+            "dailyTurnoverYi": 2.08,
+            "weightPercent": 1.65
           },
           {
             "rank": 10,
             "code": "002600",
             "name": "领益智造",
-            "floatMarketCapYi": 758.0,
-            "dailyTurnoverYi": 1.85,
-            "weightPercent": 1.57
+            "floatMarketCapYi": 796.4,
+            "dailyTurnoverYi": 4.1,
+            "weightPercent": 1.62
           }
         ],
         "marketHistory": [
-          {
-            "date": "2025-07-21",
-            "close": 1522.67,
-            "turnoverYi": 969.59
-          },
-          {
-            "date": "2025-07-22",
-            "close": 1512.12,
-            "turnoverYi": 962.52
-          },
-          {
-            "date": "2025-07-23",
-            "close": 1499.76,
-            "turnoverYi": 819.43
-          },
           {
             "date": "2025-07-24",
             "close": 1515.41,
@@ -4160,8 +4130,23 @@
           },
           {
             "date": "2026-10-16",
-            "close": 1507.46,
-            "turnoverYi": 668.2
+            "close": 1484.02,
+            "turnoverYi": 1085.36
+          },
+          {
+            "date": "2026-10-19",
+            "close": 1511.67,
+            "turnoverYi": 1153.6
+          },
+          {
+            "date": "2026-10-20",
+            "close": 1563.66,
+            "turnoverYi": 1472.53
+          },
+          {
+            "date": "2026-10-21",
+            "close": 1569.0,
+            "turnoverYi": 560.1
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -4577,16 +4562,14 @@
           },
           {
             "date": "2026-10-21",
-            "constituentCount": 305,
-            "floatMarketCapYi": 48288.9,
-            "dailyTurnoverYi": 345.6,
-            "top10SharePercent": 33.5,
-            "hhi": 238.5
+            "constituentCount": 308,
+            "floatMarketCapYi": 49107.7,
+            "dailyTurnoverYi": 559.8,
+            "top10SharePercent": 33.1,
+            "hhi": 226.3
           }
         ]
-      },
-      "refreshStatus": "retained-previous",
-      "refreshError": "HTTPError"
+      }
     },
     {
       "id": "space",
@@ -4641,7 +4624,7 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 10,
-        "coveragePercent": 19.7,
+        "coveragePercent": 19.8,
         "reportDate": "2026-06-30",
         "revenueGrowthMedian": 3.8,
         "positiveRevenueShare": 70.0,
@@ -4659,7 +4642,7 @@
             "profitGrowthMedian": -1.6,
             "positiveProfitShare": 50.0,
             "cashToRevenueMedian": 0.1,
-            "coveragePercent": 19.7
+            "coveragePercent": 19.8
           },
           {
             "reportDate": "2026-03-31",
@@ -4766,92 +4749,92 @@
       "assets": {
         "boardCode": "BK0963",
         "boardName": "商业航天",
-        "constituentCount": 323,
-        "liquidConstituentCount": 38,
-        "dailyTurnoverYi": 165.1,
-        "totalMarketCapYi": 54680.6,
-        "floatMarketCapYi": 47399.1,
-        "top10SharePercent": 19.7,
-        "hhi": 88.7,
+        "constituentCount": 322,
+        "liquidConstituentCount": 109,
+        "dailyTurnoverYi": 521.1,
+        "totalMarketCapYi": 54810.7,
+        "floatMarketCapYi": 47483.0,
+        "top10SharePercent": 19.8,
+        "hhi": 89.1,
         "topConstituents": [
           {
             "rank": 1,
             "code": "002938",
             "name": "鹏鼎控股",
-            "floatMarketCapYi": 1750.8,
-            "dailyTurnoverYi": 1.58,
-            "weightPercent": 3.69
+            "floatMarketCapYi": 1758.2,
+            "dailyTurnoverYi": 5.48,
+            "weightPercent": 3.7
           },
           {
             "rank": 2,
             "code": "300433",
             "name": "蓝思科技",
-            "floatMarketCapYi": 1327.6,
-            "dailyTurnoverYi": 2.56,
-            "weightPercent": 2.8
+            "floatMarketCapYi": 1332.5,
+            "dailyTurnoverYi": 7.93,
+            "weightPercent": 2.81
           },
           {
             "rank": 3,
             "code": "601698",
             "name": "中国卫通",
-            "floatMarketCapYi": 965.7,
-            "dailyTurnoverYi": 0.32,
-            "weightPercent": 2.04
+            "floatMarketCapYi": 963.2,
+            "dailyTurnoverYi": 1.25,
+            "weightPercent": 2.03
           },
           {
             "rank": 4,
             "code": "603228",
             "name": "景旺电子",
-            "floatMarketCapYi": 879.6,
-            "dailyTurnoverYi": 2.06,
-            "weightPercent": 1.86
+            "floatMarketCapYi": 912.4,
+            "dailyTurnoverYi": 12.51,
+            "weightPercent": 1.92
           },
           {
             "rank": 5,
             "code": "000988",
             "name": "华工科技",
-            "floatMarketCapYi": 776.2,
-            "dailyTurnoverYi": 1.72,
+            "floatMarketCapYi": 778.6,
+            "dailyTurnoverYi": 7.66,
             "weightPercent": 1.64
           },
           {
             "rank": 6,
             "code": "688002",
             "name": "睿创微纳",
-            "floatMarketCapYi": 770.2,
-            "dailyTurnoverYi": 1.26,
-            "weightPercent": 1.62
+            "floatMarketCapYi": 765.5,
+            "dailyTurnoverYi": 4.22,
+            "weightPercent": 1.61
           },
           {
             "rank": 7,
             "code": "300757",
             "name": "罗博特科",
-            "floatMarketCapYi": 727.0,
-            "dailyTurnoverYi": 2.94,
-            "weightPercent": 1.53
+            "floatMarketCapYi": 743.9,
+            "dailyTurnoverYi": 12.8,
+            "weightPercent": 1.57
           },
           {
             "rank": 8,
-            "code": "601800",
-            "name": "中国交建",
-            "floatMarketCapYi": 715.1,
-            "dailyTurnoverYi": 0.09,
-            "weightPercent": 1.51
+            "code": "002080",
+            "name": "中材科技",
+            "floatMarketCapYi": 724.3,
+            "dailyTurnoverYi": 8.13,
+            "weightPercent": 1.53
           },
           {
             "rank": 9,
-            "code": "002080",
-            "name": "中材科技",
-            "floatMarketCapYi": 707.3,
-            "dailyTurnoverYi": 1.17,
-            "weightPercent": 1.49
+            "code": "601800",
+            "name": "中国交建",
+            "floatMarketCapYi": 712.8,
+            "dailyTurnoverYi": 0.55,
+            "weightPercent": 1.5
           },
           {
             "rank": 10,
             "code": "601186",
             "name": "中国铁建",
-            "floatMarketCapYi": 702.8,
-            "dailyTurnoverYi": 0.11,
+            "floatMarketCapYi": 700.5,
+            "dailyTurnoverYi": 0.56,
             "weightPercent": 1.48
           }
         ],
@@ -6353,8 +6336,8 @@
           },
           {
             "date": "2026-10-21",
-            "close": 2206.16,
-            "turnoverYi": 166.89
+            "close": 2208.28,
+            "turnoverYi": 521.76
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -6770,11 +6753,11 @@
           },
           {
             "date": "2026-10-21",
-            "constituentCount": 323,
-            "floatMarketCapYi": 47399.1,
-            "dailyTurnoverYi": 165.1,
-            "top10SharePercent": 19.7,
-            "hhi": 88.7
+            "constituentCount": 322,
+            "floatMarketCapYi": 47483.0,
+            "dailyTurnoverYi": 521.1,
+            "top10SharePercent": 19.8,
+            "hhi": 89.1
           }
         ]
       }
@@ -6998,10 +6981,10 @@
         "boardCode": "BK1647",
         "boardName": "电网概念",
         "constituentCount": 229,
-        "liquidConstituentCount": 14,
-        "dailyTurnoverYi": 83.6,
-        "totalMarketCapYi": 27128.1,
-        "floatMarketCapYi": 24445.8,
+        "liquidConstituentCount": 45,
+        "dailyTurnoverYi": 246.3,
+        "totalMarketCapYi": 27202.0,
+        "floatMarketCapYi": 24516.3,
         "top10SharePercent": 33.8,
         "hhi": 183.7,
         "topConstituents": [
@@ -7009,81 +6992,81 @@
             "rank": 1,
             "code": "600406",
             "name": "国电南瑞",
-            "floatMarketCapYi": 1837.1,
-            "dailyTurnoverYi": 0.56,
-            "weightPercent": 7.51
+            "floatMarketCapYi": 1831.5,
+            "dailyTurnoverYi": 1.5,
+            "weightPercent": 7.47
           },
           {
             "rank": 2,
             "code": "600487",
             "name": "亨通光电",
-            "floatMarketCapYi": 1271.7,
-            "dailyTurnoverYi": 12.15,
-            "weightPercent": 5.2
+            "floatMarketCapYi": 1283.7,
+            "dailyTurnoverYi": 35.91,
+            "weightPercent": 5.24
           },
           {
             "rank": 3,
             "code": "600522",
             "name": "中天科技",
-            "floatMarketCapYi": 973.0,
-            "dailyTurnoverYi": 3.69,
-            "weightPercent": 3.98
+            "floatMarketCapYi": 981.6,
+            "dailyTurnoverYi": 14.05,
+            "weightPercent": 4.0
           },
           {
             "rank": 4,
             "code": "600089",
             "name": "特变电工",
-            "floatMarketCapYi": 867.0,
-            "dailyTurnoverYi": 0.37,
-            "weightPercent": 3.55
+            "floatMarketCapYi": 868.0,
+            "dailyTurnoverYi": 1.4,
+            "weightPercent": 3.54
           },
           {
             "rank": 5,
             "code": "002028",
             "name": "思源电气",
-            "floatMarketCapYi": 672.9,
-            "dailyTurnoverYi": 3.19,
-            "weightPercent": 2.75
+            "floatMarketCapYi": 685.0,
+            "dailyTurnoverYi": 9.32,
+            "weightPercent": 2.79
           },
           {
             "rank": 6,
             "code": "601669",
             "name": "中国电建",
             "floatMarketCapYi": 592.1,
-            "dailyTurnoverYi": 0.14,
+            "dailyTurnoverYi": 0.48,
             "weightPercent": 2.42
           },
           {
             "rank": 7,
             "code": "601179",
             "name": "中国西电",
-            "floatMarketCapYi": 572.6,
-            "dailyTurnoverYi": 0.29,
-            "weightPercent": 2.34
+            "floatMarketCapYi": 576.1,
+            "dailyTurnoverYi": 1.61,
+            "weightPercent": 2.35
           },
           {
             "rank": 8,
             "code": "601877",
             "name": "正泰电器",
-            "floatMarketCapYi": 538.1,
-            "dailyTurnoverYi": 0.29,
-            "weightPercent": 2.2
+            "floatMarketCapYi": 530.8,
+            "dailyTurnoverYi": 1.01,
+            "weightPercent": 2.17
           },
           {
             "rank": 9,
             "code": "002074",
             "name": "国轩高科",
-            "floatMarketCapYi": 476.5,
-            "dailyTurnoverYi": 1.38,
-            "weightPercent": 1.95
+            "floatMarketCapYi": 475.7,
+            "dailyTurnoverYi": 4.14,
+            "weightPercent": 1.94
           },
           {
             "rank": 10,
             "code": "000021",
             "name": "深科技",
-            "floatMarketCapYi": 458.3,
-            "dailyTurnoverYi": 1.11,
-            "weightPercent": 1.87
+            "floatMarketCapYi": 461.7,
+            "dailyTurnoverYi": 4.19,
+            "weightPercent": 1.88
           }
         ],
         "marketHistory": [
@@ -7819,8 +7802,8 @@
           },
           {
             "date": "2026-10-21",
-            "close": 759.3,
-            "turnoverYi": 84.02
+            "close": 760.58,
+            "turnoverYi": 246.29
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -8237,8 +8220,8 @@
           {
             "date": "2026-10-21",
             "constituentCount": 229,
-            "floatMarketCapYi": 24445.8,
-            "dailyTurnoverYi": 83.6,
+            "floatMarketCapYi": 24516.3,
+            "dailyTurnoverYi": 246.3,
             "top10SharePercent": 33.8,
             "hhi": 183.7
           }
@@ -8458,7 +8441,7 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 1,
-        "coveragePercent": 25.0,
+        "coveragePercent": 24.8,
         "reportDate": "2026-09-30",
         "revenueGrowthMedian": 57.6,
         "positiveRevenueShare": 100.0,
@@ -8476,7 +8459,7 @@
             "profitGrowthMedian": 45.1,
             "positiveProfitShare": 100.0,
             "cashToRevenueMedian": -0.2,
-            "coveragePercent": 25.0
+            "coveragePercent": 24.8
           },
           {
             "reportDate": "2026-06-30",
@@ -8592,111 +8575,96 @@
       "assets": {
         "boardCode": "BK0917",
         "boardName": "半导体概念",
-        "constituentCount": 542,
-        "liquidConstituentCount": 156,
-        "dailyTurnoverYi": 708.1,
-        "totalMarketCapYi": 181454.2,
-        "floatMarketCapYi": 117651.2,
-        "top10SharePercent": 25.0,
-        "hhi": 106.0,
+        "constituentCount": 543,
+        "liquidConstituentCount": 230,
+        "dailyTurnoverYi": 1203.8,
+        "totalMarketCapYi": 183226.4,
+        "floatMarketCapYi": 120006.0,
+        "top10SharePercent": 24.8,
+        "hhi": 104.8,
         "topConstituents": [
           {
             "rank": 1,
             "code": "688256",
             "name": "寒武纪",
-            "floatMarketCapYi": 5759.9,
-            "dailyTurnoverYi": 19.14,
-            "weightPercent": 4.9
+            "floatMarketCapYi": 5855.7,
+            "dailyTurnoverYi": 24.15,
+            "weightPercent": 4.88
           },
           {
             "rank": 2,
             "code": "688041",
             "name": "海光信息",
-            "floatMarketCapYi": 4406.5,
-            "dailyTurnoverYi": 6.64,
-            "weightPercent": 3.75
+            "floatMarketCapYi": 4569.6,
+            "dailyTurnoverYi": 14.67,
+            "weightPercent": 3.81
           },
           {
             "rank": 3,
             "code": "002371",
             "name": "北方华创",
-            "floatMarketCapYi": 4206.6,
-            "dailyTurnoverYi": 7.36,
-            "weightPercent": 3.58
+            "floatMarketCapYi": 4177.9,
+            "dailyTurnoverYi": 13.19,
+            "weightPercent": 3.48
           },
           {
             "rank": 4,
             "code": "002594",
             "name": "比亚迪",
-            "floatMarketCapYi": 2878.6,
-            "dailyTurnoverYi": 3.1,
-            "weightPercent": 2.45
+            "floatMarketCapYi": 2828.4,
+            "dailyTurnoverYi": 9.31,
+            "weightPercent": 2.36
           },
           {
             "rank": 5,
             "code": "688012",
             "name": "中微公司",
-            "floatMarketCapYi": 2600.4,
-            "dailyTurnoverYi": 11.41,
-            "weightPercent": 2.21
+            "floatMarketCapYi": 2627.8,
+            "dailyTurnoverYi": 11.75,
+            "weightPercent": 2.19
           },
           {
             "rank": 6,
-            "code": "688981",
-            "name": "中芯国际",
-            "floatMarketCapYi": 2005.4,
-            "dailyTurnoverYi": 5.38,
-            "weightPercent": 1.7
+            "code": "688008",
+            "name": "澜起科技",
+            "floatMarketCapYi": 2048.9,
+            "dailyTurnoverYi": 26.58,
+            "weightPercent": 1.71
           },
           {
             "rank": 7,
-            "code": "688008",
-            "name": "澜起科技",
-            "floatMarketCapYi": 1939.2,
-            "dailyTurnoverYi": 8.95,
-            "weightPercent": 1.65
+            "code": "688981",
+            "name": "中芯国际",
+            "floatMarketCapYi": 2028.6,
+            "dailyTurnoverYi": 8.61,
+            "weightPercent": 1.69
           },
           {
             "rank": 8,
             "code": "603986",
             "name": "兆易创新",
-            "floatMarketCapYi": 1917.2,
-            "dailyTurnoverYi": 20.74,
-            "weightPercent": 1.63
+            "floatMarketCapYi": 1937.6,
+            "dailyTurnoverYi": 30.11,
+            "weightPercent": 1.61
           },
           {
             "rank": 9,
             "code": "688825",
             "name": "长鑫科技",
-            "floatMarketCapYi": 1874.6,
-            "dailyTurnoverYi": 30.2,
-            "weightPercent": 1.59
+            "floatMarketCapYi": 1859.3,
+            "dailyTurnoverYi": 47.79,
+            "weightPercent": 1.55
           },
           {
             "rank": 10,
             "code": "600406",
             "name": "国电南瑞",
-            "floatMarketCapYi": 1826.7,
-            "dailyTurnoverYi": 1.56,
-            "weightPercent": 1.55
+            "floatMarketCapYi": 1832.3,
+            "dailyTurnoverYi": 1.5,
+            "weightPercent": 1.53
           }
         ],
         "marketHistory": [
-          {
-            "date": "2025-07-21",
-            "close": 1737.59,
-            "turnoverYi": 1302.7
-          },
-          {
-            "date": "2025-07-22",
-            "close": 1741.09,
-            "turnoverYi": 1464.58
-          },
-          {
-            "date": "2025-07-23",
-            "close": 1731.52,
-            "turnoverYi": 1461.38
-          },
           {
             "date": "2025-07-24",
             "close": 1756.52,
@@ -10179,8 +10147,23 @@
           },
           {
             "date": "2026-10-16",
-            "close": 2467.5,
-            "turnoverYi": 1955.5
+            "close": 2414.76,
+            "turnoverYi": 3096.06
+          },
+          {
+            "date": "2026-10-19",
+            "close": 2400.83,
+            "turnoverYi": 2986.7
+          },
+          {
+            "date": "2026-10-20",
+            "close": 2455.4,
+            "turnoverYi": 3117.81
+          },
+          {
+            "date": "2026-10-21",
+            "close": 2487.23,
+            "turnoverYi": 1205.19
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -10596,16 +10579,14 @@
           },
           {
             "date": "2026-10-21",
-            "constituentCount": 542,
-            "floatMarketCapYi": 117651.2,
-            "dailyTurnoverYi": 708.1,
-            "top10SharePercent": 25.0,
-            "hhi": 106.0
+            "constituentCount": 543,
+            "floatMarketCapYi": 120006.0,
+            "dailyTurnoverYi": 1203.8,
+            "top10SharePercent": 24.8,
+            "hhi": 104.8
           }
         ]
-      },
-      "refreshStatus": "retained-previous",
-      "refreshError": "HTTPError"
+      }
     },
     {
       "id": "biotech",
@@ -10621,6 +10602,16 @@
         "status": "公开数据可接入，尚未自动化",
         "accessStatus": "公开数据可接入，尚未自动化",
         "catalysts": [
+          {
+            "date": "2026-10-20",
+            "type": "准入与审批",
+            "impact": "positive",
+            "validates": "商业化准入是否打开",
+            "company": "以岭药业",
+            "title": "关于化药创新药LB220-D08缓释片药物临床试验申请获得批准的公告",
+            "source": "巨潮资讯上市公司公告",
+            "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-10-21/1225611704.PDF"
+          },
           {
             "date": "2026-10-08",
             "type": "准入与审批",
@@ -10676,6 +10667,16 @@
         "historyPoints": 0,
         "note": "核心需求使用多指标合同；单一产量或供给指标只作为低权重辅助证据。",
         "catalystHistory": [
+          {
+            "date": "2026-10-20",
+            "type": "准入与审批",
+            "impact": "positive",
+            "validates": "商业化准入是否打开",
+            "company": "以岭药业",
+            "title": "关于化药创新药LB220-D08缓释片药物临床试验申请获得批准的公告",
+            "source": "巨潮资讯上市公司公告",
+            "sourceUrl": "https://static.cninfo.com.cn/finalpage/2026-10-21/1225611704.PDF"
+          },
           {
             "date": "2026-10-08",
             "type": "准入与审批",
@@ -10752,7 +10753,7 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 10,
-        "coveragePercent": 36.8,
+        "coveragePercent": 36.2,
         "reportDate": "2026-06-30",
         "revenueGrowthMedian": 4.5,
         "positiveRevenueShare": 70.0,
@@ -10770,7 +10771,7 @@
             "profitGrowthMedian": 0.7,
             "positiveProfitShare": 60.0,
             "cashToRevenueMedian": 0.2,
-            "coveragePercent": 36.8
+            "coveragePercent": 36.2
           },
           {
             "reportDate": "2026-03-31",
@@ -10877,101 +10878,96 @@
       "assets": {
         "boardCode": "BK1106",
         "boardName": "创新药",
-        "constituentCount": 219,
-        "liquidConstituentCount": 123,
-        "dailyTurnoverYi": 536.3,
-        "totalMarketCapYi": 39941.3,
-        "floatMarketCapYi": 31509.3,
-        "top10SharePercent": 36.8,
-        "hhi": 293.2,
+        "constituentCount": 221,
+        "liquidConstituentCount": 53,
+        "dailyTurnoverYi": 253.3,
+        "totalMarketCapYi": 40849.5,
+        "floatMarketCapYi": 32112.2,
+        "top10SharePercent": 36.2,
+        "hhi": 285.7,
         "topConstituents": [
           {
             "rank": 1,
             "code": "603259",
             "name": "药明康德",
-            "floatMarketCapYi": 3647.3,
-            "dailyTurnoverYi": 41.68,
-            "weightPercent": 11.58
+            "floatMarketCapYi": 3663.9,
+            "dailyTurnoverYi": 14.92,
+            "weightPercent": 11.41
           },
           {
             "rank": 2,
             "code": "600276",
             "name": "恒瑞医药",
-            "floatMarketCapYi": 3014.7,
-            "dailyTurnoverYi": 29.46,
-            "weightPercent": 9.57
+            "floatMarketCapYi": 3026.2,
+            "dailyTurnoverYi": 7.97,
+            "weightPercent": 9.42
           },
           {
             "rank": 3,
             "code": "688506",
             "name": "百利天恒",
-            "floatMarketCapYi": 1056.3,
-            "dailyTurnoverYi": 5.13,
-            "weightPercent": 3.35
+            "floatMarketCapYi": 1050.4,
+            "dailyTurnoverYi": 1.4,
+            "weightPercent": 3.27
           },
           {
             "rank": 4,
             "code": "600436",
             "name": "片仔癀",
-            "floatMarketCapYi": 740.3,
-            "dailyTurnoverYi": 4.9,
-            "weightPercent": 2.35
+            "floatMarketCapYi": 739.4,
+            "dailyTurnoverYi": 1.1,
+            "weightPercent": 2.3
           },
           {
             "rank": 5,
             "code": "300765",
             "name": "石药创新",
-            "floatMarketCapYi": 662.5,
-            "dailyTurnoverYi": 10.45,
-            "weightPercent": 2.1
+            "floatMarketCapYi": 683.5,
+            "dailyTurnoverYi": 3.26,
+            "weightPercent": 2.13
           },
           {
             "rank": 6,
             "code": "002422",
             "name": "科伦药业",
-            "floatMarketCapYi": 560.8,
-            "dailyTurnoverYi": 9.69,
-            "weightPercent": 1.78
+            "floatMarketCapYi": 555.0,
+            "dailyTurnoverYi": 2.12,
+            "weightPercent": 1.73
           },
           {
             "rank": 7,
             "code": "600196",
             "name": "复星医药",
-            "floatMarketCapYi": 489.8,
-            "dailyTurnoverYi": 2.42,
-            "weightPercent": 1.55
+            "floatMarketCapYi": 491.3,
+            "dailyTurnoverYi": 0.89,
+            "weightPercent": 1.53
           },
           {
             "rank": 8,
             "code": "002821",
             "name": "凯莱英",
-            "floatMarketCapYi": 486.8,
-            "dailyTurnoverYi": 9.86,
-            "weightPercent": 1.55
+            "floatMarketCapYi": 490.2,
+            "dailyTurnoverYi": 3.69,
+            "weightPercent": 1.53
           },
           {
             "rank": 9,
             "code": "000963",
             "name": "华东医药",
-            "floatMarketCapYi": 467.2,
-            "dailyTurnoverYi": 2.35,
-            "weightPercent": 1.48
+            "floatMarketCapYi": 468.6,
+            "dailyTurnoverYi": 1.11,
+            "weightPercent": 1.46
           },
           {
             "rank": 10,
             "code": "601607",
             "name": "上海医药",
-            "floatMarketCapYi": 458.3,
-            "dailyTurnoverYi": 1.53,
-            "weightPercent": 1.45
+            "floatMarketCapYi": 458.8,
+            "dailyTurnoverYi": 0.4,
+            "weightPercent": 1.43
           }
         ],
         "marketHistory": [
-          {
-            "date": "2025-07-23",
-            "close": 1522.52,
-            "turnoverYi": 652.94
-          },
           {
             "date": "2025-07-24",
             "close": 1545.26,
@@ -12464,8 +12460,13 @@
           },
           {
             "date": "2026-10-20",
-            "close": 1371.17,
-            "turnoverYi": 536.59
+            "close": 1373.85,
+            "turnoverYi": 581.99
+          },
+          {
+            "date": "2026-10-21",
+            "close": 1388.33,
+            "turnoverYi": 253.38
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -12881,16 +12882,14 @@
           },
           {
             "date": "2026-10-21",
-            "constituentCount": 219,
-            "floatMarketCapYi": 31509.3,
-            "dailyTurnoverYi": 536.3,
-            "top10SharePercent": 36.8,
-            "hhi": 293.2
+            "constituentCount": 221,
+            "floatMarketCapYi": 32112.2,
+            "dailyTurnoverYi": 253.3,
+            "top10SharePercent": 36.2,
+            "hhi": 285.7
           }
         ]
-      },
-      "refreshStatus": "retained-previous",
-      "refreshError": "HTTPError"
+      }
     },
     {
       "id": "longevity",
@@ -12945,7 +12944,7 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 10,
-        "coveragePercent": 56.5,
+        "coveragePercent": 56.3,
         "reportDate": "2026-06-30",
         "revenueGrowthMedian": 4.1,
         "positiveRevenueShare": 90.0,
@@ -12963,7 +12962,7 @@
             "profitGrowthMedian": -14.0,
             "positiveProfitShare": 40.0,
             "cashToRevenueMedian": 0.2,
-            "coveragePercent": 56.5
+            "coveragePercent": 56.3
           },
           {
             "reportDate": "2026-03-31",
@@ -13071,100 +13070,95 @@
         "boardCode": "BK0653",
         "boardName": "养老概念",
         "constituentCount": 147,
-        "liquidConstituentCount": 66,
-        "dailyTurnoverYi": 324.1,
-        "totalMarketCapYi": 31305.0,
-        "floatMarketCapYi": 24783.3,
-        "top10SharePercent": 56.5,
-        "hhi": 681.6,
+        "liquidConstituentCount": 28,
+        "dailyTurnoverYi": 122.2,
+        "totalMarketCapYi": 31423.8,
+        "floatMarketCapYi": 24869.5,
+        "top10SharePercent": 56.3,
+        "hhi": 679.4,
         "topConstituents": [
           {
             "rank": 1,
             "code": "601318",
             "name": "中国平安",
-            "floatMarketCapYi": 5429.2,
-            "dailyTurnoverYi": 38.51,
-            "weightPercent": 21.91
+            "floatMarketCapYi": 5445.2,
+            "dailyTurnoverYi": 7.31,
+            "weightPercent": 21.89
           },
           {
             "rank": 2,
             "code": "601601",
             "name": "中国太保",
-            "floatMarketCapYi": 1967.9,
-            "dailyTurnoverYi": 16.02,
-            "weightPercent": 7.94
+            "floatMarketCapYi": 1985.7,
+            "dailyTurnoverYi": 2.39,
+            "weightPercent": 7.98
           },
           {
             "rank": 3,
             "code": "600887",
             "name": "伊利股份",
-            "floatMarketCapYi": 1761.7,
-            "dailyTurnoverYi": 10.62,
-            "weightPercent": 7.11
+            "floatMarketCapYi": 1734.0,
+            "dailyTurnoverYi": 4.53,
+            "weightPercent": 6.97
           },
           {
             "rank": 4,
             "code": "601336",
             "name": "新华保险",
-            "floatMarketCapYi": 1071.1,
-            "dailyTurnoverYi": 6.04,
-            "weightPercent": 4.32
+            "floatMarketCapYi": 1067.5,
+            "dailyTurnoverYi": 1.88,
+            "weightPercent": 4.29
           },
           {
             "rank": 5,
             "code": "000538",
             "name": "云南白药",
-            "floatMarketCapYi": 950.8,
-            "dailyTurnoverYi": 5.6,
-            "weightPercent": 3.84
+            "floatMarketCapYi": 944.7,
+            "dailyTurnoverYi": 2.34,
+            "weightPercent": 3.8
           },
           {
             "rank": 6,
             "code": "001979",
             "name": "招商蛇口",
-            "floatMarketCapYi": 662.6,
-            "dailyTurnoverYi": 3.99,
-            "weightPercent": 2.67
+            "floatMarketCapYi": 668.8,
+            "dailyTurnoverYi": 1.04,
+            "weightPercent": 2.69
           },
           {
             "rank": 7,
             "code": "600048",
             "name": "保利发展",
-            "floatMarketCapYi": 644.0,
-            "dailyTurnoverYi": 5.59,
-            "weightPercent": 2.6
+            "floatMarketCapYi": 648.8,
+            "dailyTurnoverYi": 1.48,
+            "weightPercent": 2.61
           },
           {
             "rank": 8,
             "code": "300015",
             "name": "爱尔眼科",
-            "floatMarketCapYi": 631.1,
-            "dailyTurnoverYi": 2.7,
-            "weightPercent": 2.55
+            "floatMarketCapYi": 629.6,
+            "dailyTurnoverYi": 1.12,
+            "weightPercent": 2.53
           },
           {
             "rank": 9,
             "code": "601607",
             "name": "上海医药",
-            "floatMarketCapYi": 458.5,
-            "dailyTurnoverYi": 1.53,
+            "floatMarketCapYi": 459.1,
+            "dailyTurnoverYi": 0.4,
             "weightPercent": 1.85
           },
           {
             "rank": 10,
             "code": "000999",
             "name": "华润三九",
-            "floatMarketCapYi": 429.9,
-            "dailyTurnoverYi": 3.51,
-            "weightPercent": 1.73
+            "floatMarketCapYi": 428.4,
+            "dailyTurnoverYi": 0.85,
+            "weightPercent": 1.72
           }
         ],
         "marketHistory": [
-          {
-            "date": "2025-07-23",
-            "close": 2749.58,
-            "turnoverYi": 409.93
-          },
           {
             "date": "2025-07-24",
             "close": 2788.98,
@@ -14657,8 +14651,13 @@
           },
           {
             "date": "2026-10-20",
-            "close": 2582.67,
-            "turnoverYi": 80.7
+            "close": 2590.23,
+            "turnoverYi": 353.94
+          },
+          {
+            "date": "2026-10-21",
+            "close": 2608.62,
+            "turnoverYi": 122.17
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -15075,15 +15074,13 @@
           {
             "date": "2026-10-21",
             "constituentCount": 147,
-            "floatMarketCapYi": 24783.3,
-            "dailyTurnoverYi": 324.1,
-            "top10SharePercent": 56.5,
-            "hhi": 681.6
+            "floatMarketCapYi": 24869.5,
+            "dailyTurnoverYi": 122.2,
+            "top10SharePercent": 56.3,
+            "hhi": 679.4
           }
         ]
-      },
-      "refreshStatus": "retained-previous",
-      "refreshError": "HTTPError"
+      }
     },
     {
       "id": "experience",
@@ -15138,7 +15135,7 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 10,
-        "coveragePercent": 39.3,
+        "coveragePercent": 39.2,
         "reportDate": "2026-06-30",
         "revenueGrowthMedian": -0.7,
         "positiveRevenueShare": 50.0,
@@ -15156,7 +15153,7 @@
             "profitGrowthMedian": 3.8,
             "positiveProfitShare": 70.0,
             "cashToRevenueMedian": 0.2,
-            "coveragePercent": 39.3
+            "coveragePercent": 39.2
           },
           {
             "reportDate": "2026-03-31",
@@ -15264,92 +15261,92 @@
         "boardCode": "BK1652",
         "boardName": "新消费",
         "constituentCount": 82,
-        "liquidConstituentCount": 4,
-        "dailyTurnoverYi": 26.0,
-        "totalMarketCapYi": 7186.5,
-        "floatMarketCapYi": 6290.9,
-        "top10SharePercent": 39.3,
-        "hhi": 261.4,
+        "liquidConstituentCount": 13,
+        "dailyTurnoverYi": 61.7,
+        "totalMarketCapYi": 7163.7,
+        "floatMarketCapYi": 6273.3,
+        "top10SharePercent": 39.2,
+        "hhi": 260.9,
         "topConstituents": [
           {
             "rank": 1,
             "code": "600196",
             "name": "复星医药",
-            "floatMarketCapYi": 493.2,
-            "dailyTurnoverYi": 0.37,
-            "weightPercent": 7.84
+            "floatMarketCapYi": 491.1,
+            "dailyTurnoverYi": 0.89,
+            "weightPercent": 7.83
           },
           {
             "rank": 2,
             "code": "000963",
             "name": "华东医药",
-            "floatMarketCapYi": 470.7,
-            "dailyTurnoverYi": 0.39,
-            "weightPercent": 7.48
+            "floatMarketCapYi": 468.4,
+            "dailyTurnoverYi": 1.11,
+            "weightPercent": 7.47
           },
           {
             "rank": 3,
             "code": "300896",
             "name": "爱美客",
-            "floatMarketCapYi": 216.9,
-            "dailyTurnoverYi": 0.4,
-            "weightPercent": 3.45
+            "floatMarketCapYi": 218.6,
+            "dailyTurnoverYi": 1.06,
+            "weightPercent": 3.48
           },
           {
             "rank": 4,
             "code": "300199",
             "name": "翰宇药业",
-            "floatMarketCapYi": 205.2,
-            "dailyTurnoverYi": 4.25,
-            "weightPercent": 3.26
+            "floatMarketCapYi": 202.0,
+            "dailyTurnoverYi": 8.81,
+            "weightPercent": 3.22
           },
           {
             "rank": 5,
             "code": "603899",
             "name": "晨光股份",
-            "floatMarketCapYi": 204.9,
-            "dailyTurnoverYi": 0.05,
-            "weightPercent": 3.26
+            "floatMarketCapYi": 202.0,
+            "dailyTurnoverYi": 0.17,
+            "weightPercent": 3.22
           },
           {
             "rank": 6,
             "code": "300255",
             "name": "常山药业",
-            "floatMarketCapYi": 188.3,
-            "dailyTurnoverYi": 0.65,
-            "weightPercent": 2.99
+            "floatMarketCapYi": 187.2,
+            "dailyTurnoverYi": 1.54,
+            "weightPercent": 2.98
           },
           {
             "rank": 7,
             "code": "300003",
             "name": "乐普医疗",
-            "floatMarketCapYi": 182.5,
-            "dailyTurnoverYi": 0.26,
-            "weightPercent": 2.9
+            "floatMarketCapYi": 180.9,
+            "dailyTurnoverYi": 0.63,
+            "weightPercent": 2.88
           },
           {
             "rank": 8,
             "code": "600655",
             "name": "豫园股份",
-            "floatMarketCapYi": 174.7,
-            "dailyTurnoverYi": 0.05,
+            "floatMarketCapYi": 174.3,
+            "dailyTurnoverYi": 0.11,
             "weightPercent": 2.78
           },
           {
             "rank": 9,
             "code": "688363",
             "name": "华熙生物",
-            "floatMarketCapYi": 168.2,
-            "dailyTurnoverYi": 0.16,
-            "weightPercent": 2.67
+            "floatMarketCapYi": 167.0,
+            "dailyTurnoverYi": 0.42,
+            "weightPercent": 2.66
           },
           {
             "rank": 10,
             "code": "300364",
             "name": "中文在线",
-            "floatMarketCapYi": 166.3,
-            "dailyTurnoverYi": 4.65,
-            "weightPercent": 2.64
+            "floatMarketCapYi": 165.9,
+            "dailyTurnoverYi": 9.16,
+            "weightPercent": 2.65
           }
         ],
         "marketHistory": [
@@ -16085,8 +16082,8 @@
           },
           {
             "date": "2026-10-21",
-            "close": 866.65,
-            "turnoverYi": 26.04
+            "close": 865.08,
+            "turnoverYi": 61.71
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -16503,10 +16500,10 @@
           {
             "date": "2026-10-21",
             "constituentCount": 82,
-            "floatMarketCapYi": 6290.9,
-            "dailyTurnoverYi": 26.0,
-            "top10SharePercent": 39.3,
-            "hhi": 261.4
+            "floatMarketCapYi": 6273.3,
+            "dailyTurnoverYi": 61.7,
+            "top10SharePercent": 39.2,
+            "hhi": 260.9
           }
         ]
       }
@@ -16589,17 +16586,17 @@
             "sampleCompanies": 10,
             "revenueGrowthMedian": 26.8,
             "positiveRevenueShare": 90.0,
-            "profitGrowthMedian": 54.2,
+            "profitGrowthMedian": 60.3,
             "positiveProfitShare": 70.0,
             "cashToRevenueMedian": 0.1
           },
           {
             "reportDate": "2026-03-31",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 21.7,
+            "revenueGrowthMedian": 25.4,
             "positiveRevenueShare": 80.0,
-            "profitGrowthMedian": 31.7,
-            "positiveProfitShare": 60.0,
+            "profitGrowthMedian": 43.5,
+            "positiveProfitShare": 70.0,
             "cashToRevenueMedian": 0.1
           },
           {
@@ -16607,7 +16604,7 @@
             "sampleCompanies": 10,
             "revenueGrowthMedian": 13.9,
             "positiveRevenueShare": 100.0,
-            "profitGrowthMedian": 13.1,
+            "profitGrowthMedian": 6.6,
             "positiveProfitShare": 70.0,
             "cashToRevenueMedian": 0.1
           },
@@ -16616,7 +16613,7 @@
             "sampleCompanies": 10,
             "revenueGrowthMedian": 17.7,
             "positiveRevenueShare": 90.0,
-            "profitGrowthMedian": 27.8,
+            "profitGrowthMedian": 21.5,
             "positiveProfitShare": 80.0,
             "cashToRevenueMedian": 0.1
           },
@@ -16624,64 +16621,64 @@
             "reportDate": "2025-06-30",
             "sampleCompanies": 10,
             "revenueGrowthMedian": 18.1,
-            "positiveRevenueShare": 90.0,
-            "profitGrowthMedian": 34.3,
+            "positiveRevenueShare": 80.0,
+            "profitGrowthMedian": 26.7,
             "positiveProfitShare": 80.0,
             "cashToRevenueMedian": 0.1
           },
           {
             "reportDate": "2025-03-31",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 18.3,
-            "positiveRevenueShare": 90.0,
-            "profitGrowthMedian": 44.5,
+            "revenueGrowthMedian": 17.8,
+            "positiveRevenueShare": 80.0,
+            "profitGrowthMedian": 31.1,
             "positiveProfitShare": 80.0,
-            "cashToRevenueMedian": 0.1
+            "cashToRevenueMedian": 0.0
           },
           {
             "reportDate": "2024-12-31",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 16.8,
-            "positiveRevenueShare": 90.0,
-            "profitGrowthMedian": 0.3,
+            "revenueGrowthMedian": 9.5,
+            "positiveRevenueShare": 80.0,
+            "profitGrowthMedian": -0.9,
             "positiveProfitShare": 50.0,
             "cashToRevenueMedian": 0.1
           },
           {
             "reportDate": "2024-09-30",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 16.8,
-            "positiveRevenueShare": 90.0,
-            "profitGrowthMedian": -1.1,
+            "revenueGrowthMedian": 10.4,
+            "positiveRevenueShare": 80.0,
+            "profitGrowthMedian": -5.9,
             "positiveProfitShare": 50.0,
             "cashToRevenueMedian": 0.1
           },
           {
             "reportDate": "2024-06-30",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 20.7,
+            "revenueGrowthMedian": 13.5,
             "positiveRevenueShare": 80.0,
-            "profitGrowthMedian": 10.2,
+            "profitGrowthMedian": 1.5,
             "positiveProfitShare": 50.0,
             "cashToRevenueMedian": 0.1
           },
           {
             "reportDate": "2024-03-31",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 13.4,
-            "positiveRevenueShare": 70.0,
-            "profitGrowthMedian": 12.8,
-            "positiveProfitShare": 60.0,
+            "revenueGrowthMedian": 7.7,
+            "positiveRevenueShare": 60.0,
+            "profitGrowthMedian": 0.1,
+            "positiveProfitShare": 50.0,
             "cashToRevenueMedian": 0.1
           },
           {
             "reportDate": "2023-12-31",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": -3.1,
-            "positiveRevenueShare": 40.0,
-            "profitGrowthMedian": -14.2,
-            "positiveProfitShare": 40.0,
-            "cashToRevenueMedian": 0.2
+            "revenueGrowthMedian": 2.4,
+            "positiveRevenueShare": 50.0,
+            "profitGrowthMedian": 0.3,
+            "positiveProfitShare": 50.0,
+            "cashToRevenueMedian": 0.1
           },
           {
             "reportDate": "2023-09-30",
@@ -16698,11 +16695,11 @@
       "assets": {
         "boardCode": "BK0523",
         "boardName": "新材料",
-        "constituentCount": 399,
-        "liquidConstituentCount": 32,
-        "dailyTurnoverYi": 144.9,
-        "totalMarketCapYi": 60762.8,
-        "floatMarketCapYi": 54159.4,
+        "constituentCount": 400,
+        "liquidConstituentCount": 106,
+        "dailyTurnoverYi": 454.1,
+        "totalMarketCapYi": 61257.6,
+        "floatMarketCapYi": 54600.6,
         "top10SharePercent": 22.7,
         "hhi": 95.7,
         "topConstituents": [
@@ -16710,89 +16707,84 @@
             "rank": 1,
             "code": "600309",
             "name": "万华化学",
-            "floatMarketCapYi": 2077.1,
-            "dailyTurnoverYi": 0.91,
-            "weightPercent": 3.84
+            "floatMarketCapYi": 2086.1,
+            "dailyTurnoverYi": 3.24,
+            "weightPercent": 3.82
           },
           {
             "rank": 2,
             "code": "300408",
             "name": "三环集团",
-            "floatMarketCapYi": 1775.2,
-            "dailyTurnoverYi": 5.47,
-            "weightPercent": 3.28
+            "floatMarketCapYi": 1801.9,
+            "dailyTurnoverYi": 14.37,
+            "weightPercent": 3.3
           },
           {
             "rank": 3,
             "code": "600176",
             "name": "中国巨石",
-            "floatMarketCapYi": 1379.7,
-            "dailyTurnoverYi": 5.58,
-            "weightPercent": 2.55
+            "floatMarketCapYi": 1404.4,
+            "dailyTurnoverYi": 20.84,
+            "weightPercent": 2.57
           },
           {
             "rank": 4,
             "code": "300433",
             "name": "蓝思科技",
-            "floatMarketCapYi": 1325.6,
-            "dailyTurnoverYi": 2.88,
-            "weightPercent": 2.45
+            "floatMarketCapYi": 1333.5,
+            "dailyTurnoverYi": 7.96,
+            "weightPercent": 2.44
           },
           {
             "rank": 5,
             "code": "600111",
             "name": "北方稀土",
-            "floatMarketCapYi": 1285.5,
-            "dailyTurnoverYi": 0.92,
-            "weightPercent": 2.37
+            "floatMarketCapYi": 1285.2,
+            "dailyTurnoverYi": 2.47,
+            "weightPercent": 2.35
           },
           {
             "rank": 6,
             "code": "600584",
             "name": "长电科技",
-            "floatMarketCapYi": 1028.6,
-            "dailyTurnoverYi": 2.91,
+            "floatMarketCapYi": 1037.7,
+            "dailyTurnoverYi": 9.55,
             "weightPercent": 1.9
           },
           {
             "rank": 7,
             "code": "600522",
             "name": "中天科技",
-            "floatMarketCapYi": 972.3,
-            "dailyTurnoverYi": 3.9,
+            "floatMarketCapYi": 982.2,
+            "dailyTurnoverYi": 14.1,
             "weightPercent": 1.8
           },
           {
             "rank": 8,
             "code": "600673",
             "name": "东阳光",
-            "floatMarketCapYi": 872.9,
-            "dailyTurnoverYi": 0.47,
-            "weightPercent": 1.61
+            "floatMarketCapYi": 883.1,
+            "dailyTurnoverYi": 1.37,
+            "weightPercent": 1.62
           },
           {
             "rank": 9,
-            "code": "002001",
-            "name": "新 和 成",
-            "floatMarketCapYi": 793.2,
-            "dailyTurnoverYi": 0.29,
-            "weightPercent": 1.46
+            "code": "600362",
+            "name": "江西铜业",
+            "floatMarketCapYi": 800.4,
+            "dailyTurnoverYi": 3.1,
+            "weightPercent": 1.47
           },
           {
             "rank": 10,
             "code": "002600",
             "name": "领益智造",
-            "floatMarketCapYi": 792.8,
-            "dailyTurnoverYi": 2.01,
+            "floatMarketCapYi": 797.1,
+            "dailyTurnoverYi": 4.13,
             "weightPercent": 1.46
           }
         ],
         "marketHistory": [
-          {
-            "date": "2025-07-23",
-            "close": 29524.22,
-            "turnoverYi": 1513.67
-          },
           {
             "date": "2025-07-24",
             "close": 30023.24,
@@ -18285,8 +18277,13 @@
           },
           {
             "date": "2026-10-20",
-            "close": 35632.45,
-            "turnoverYi": 1116.2
+            "close": 35709.76,
+            "turnoverYi": 1196.06
+          },
+          {
+            "date": "2026-10-21",
+            "close": 36066.78,
+            "turnoverYi": 454.38
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -18702,9 +18699,9 @@
           },
           {
             "date": "2026-10-21",
-            "constituentCount": 399,
-            "floatMarketCapYi": 54159.4,
-            "dailyTurnoverYi": 144.9,
+            "constituentCount": 400,
+            "floatMarketCapYi": 54600.6,
+            "dailyTurnoverYi": 454.1,
             "top10SharePercent": 22.7,
             "hhi": 95.7
           }
@@ -18764,7 +18761,7 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 2,
-        "coveragePercent": 69.0,
+        "coveragePercent": 68.6,
         "reportDate": "2026-09-30",
         "revenueGrowthMedian": 32.3,
         "positiveRevenueShare": 100.0,
@@ -18782,7 +18779,7 @@
             "profitGrowthMedian": 89.0,
             "positiveProfitShare": 100.0,
             "cashToRevenueMedian": -0.1,
-            "coveragePercent": 69.0
+            "coveragePercent": 68.6
           },
           {
             "reportDate": "2026-06-30",
@@ -18899,100 +18896,95 @@
         "boardCode": "BK0710",
         "boardName": "量子科技",
         "constituentCount": 84,
-        "liquidConstituentCount": 57,
-        "dailyTurnoverYi": 458.6,
-        "totalMarketCapYi": 30070.0,
-        "floatMarketCapYi": 27513.5,
-        "top10SharePercent": 69.0,
-        "hhi": 822.5,
+        "liquidConstituentCount": 34,
+        "dailyTurnoverYi": 217.8,
+        "totalMarketCapYi": 30298.9,
+        "floatMarketCapYi": 27758.8,
+        "top10SharePercent": 68.6,
+        "hhi": 808.0,
         "topConstituents": [
           {
             "rank": 1,
             "code": "601728",
             "name": "中国电信",
-            "floatMarketCapYi": 5340.9,
-            "dailyTurnoverYi": 5.67,
-            "weightPercent": 19.41
+            "floatMarketCapYi": 5216.7,
+            "dailyTurnoverYi": 2.31,
+            "weightPercent": 18.79
           },
           {
             "rank": 2,
             "code": "688041",
             "name": "海光信息",
-            "floatMarketCapYi": 4452.0,
-            "dailyTurnoverYi": 33.59,
-            "weightPercent": 16.18
+            "floatMarketCapYi": 4569.9,
+            "dailyTurnoverYi": 14.74,
+            "weightPercent": 16.46
           },
           {
             "rank": 3,
             "code": "600406",
             "name": "国电南瑞",
-            "floatMarketCapYi": 1838.7,
-            "dailyTurnoverYi": 8.2,
-            "weightPercent": 6.68
+            "floatMarketCapYi": 1831.5,
+            "dailyTurnoverYi": 1.51,
+            "weightPercent": 6.6
           },
           {
             "rank": 4,
             "code": "600050",
             "name": "中国联通",
-            "floatMarketCapYi": 1388.4,
-            "dailyTurnoverYi": 6.58,
-            "weightPercent": 5.05
+            "floatMarketCapYi": 1351.2,
+            "dailyTurnoverYi": 4.03,
+            "weightPercent": 4.87
           },
           {
             "rank": 5,
             "code": "600487",
             "name": "亨通光电",
-            "floatMarketCapYi": 1272.2,
-            "dailyTurnoverYi": 103.41,
-            "weightPercent": 4.62
+            "floatMarketCapYi": 1287.2,
+            "dailyTurnoverYi": 36.25,
+            "weightPercent": 4.64
           },
           {
             "rank": 6,
             "code": "000063",
             "name": "中兴通讯",
-            "floatMarketCapYi": 1108.4,
-            "dailyTurnoverYi": 10.3,
-            "weightPercent": 4.03
+            "floatMarketCapYi": 1120.9,
+            "dailyTurnoverYi": 4.12,
+            "weightPercent": 4.04
           },
           {
             "rank": 7,
             "code": "002281",
             "name": "光迅科技",
-            "floatMarketCapYi": 1052.5,
-            "dailyTurnoverYi": 25.91,
-            "weightPercent": 3.83
+            "floatMarketCapYi": 1084.0,
+            "dailyTurnoverYi": 14.87,
+            "weightPercent": 3.91
           },
           {
             "rank": 8,
             "code": "600522",
             "name": "中天科技",
-            "floatMarketCapYi": 961.4,
-            "dailyTurnoverYi": 37.94,
-            "weightPercent": 3.49
+            "floatMarketCapYi": 982.9,
+            "dailyTurnoverYi": 14.12,
+            "weightPercent": 3.54
           },
           {
             "rank": 9,
             "code": "002230",
             "name": "科大讯飞",
-            "floatMarketCapYi": 809.0,
-            "dailyTurnoverYi": 7.53,
-            "weightPercent": 2.94
+            "floatMarketCapYi": 809.4,
+            "dailyTurnoverYi": 2.11,
+            "weightPercent": 2.92
           },
           {
             "rank": 10,
             "code": "000988",
             "name": "华工科技",
-            "floatMarketCapYi": 763.4,
-            "dailyTurnoverYi": 17.14,
-            "weightPercent": 2.77
+            "floatMarketCapYi": 779.9,
+            "dailyTurnoverYi": 7.77,
+            "weightPercent": 2.81
           }
         ],
         "marketHistory": [
-          {
-            "date": "2025-07-23",
-            "close": 2525.76,
-            "turnoverYi": 308.18
-          },
           {
             "date": "2025-07-24",
             "close": 2548.03,
@@ -20485,8 +20477,13 @@
           },
           {
             "date": "2026-10-20",
-            "close": 3043.72,
-            "turnoverYi": 458.64
+            "close": 3051.92,
+            "turnoverYi": 494.75
+          },
+          {
+            "date": "2026-10-21",
+            "close": 3083.04,
+            "turnoverYi": 217.72
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -20903,15 +20900,13 @@
           {
             "date": "2026-10-21",
             "constituentCount": 84,
-            "floatMarketCapYi": 27513.5,
-            "dailyTurnoverYi": 458.6,
-            "top10SharePercent": 69.0,
-            "hhi": 822.5
+            "floatMarketCapYi": 27758.8,
+            "dailyTurnoverYi": 217.8,
+            "top10SharePercent": 68.6,
+            "hhi": 808.0
           }
         ]
-      },
-      "refreshStatus": "retained-previous",
-      "refreshError": "HTTPError"
+      }
     },
     {
       "id": "industrial-software",
@@ -20966,7 +20961,7 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 1,
-        "coveragePercent": 36.0,
+        "coveragePercent": 35.9,
         "reportDate": "2026-09-30",
         "revenueGrowthMedian": 7.1,
         "positiveRevenueShare": 100.0,
@@ -20984,7 +20979,7 @@
             "profitGrowthMedian": 132.8,
             "positiveProfitShare": 100.0,
             "cashToRevenueMedian": 0.0,
-            "coveragePercent": 36.0
+            "coveragePercent": 35.9
           },
           {
             "reportDate": "2026-06-30",
@@ -21101,91 +21096,91 @@
         "boardCode": "BK0696",
         "boardName": "国产软件",
         "constituentCount": 234,
-        "liquidConstituentCount": 21,
-        "dailyTurnoverYi": 85.3,
-        "totalMarketCapYi": 26494.8,
-        "floatMarketCapYi": 23543.1,
-        "top10SharePercent": 36.0,
-        "hhi": 223.4,
+        "liquidConstituentCount": 52,
+        "dailyTurnoverYi": 207.9,
+        "totalMarketCapYi": 26460.3,
+        "floatMarketCapYi": 23515.9,
+        "top10SharePercent": 35.9,
+        "hhi": 223.0,
         "topConstituents": [
           {
             "rank": 1,
             "code": "300059",
             "name": "东方财富",
-            "floatMarketCapYi": 2417.3,
-            "dailyTurnoverYi": 2.65,
-            "weightPercent": 10.27
+            "floatMarketCapYi": 2412.0,
+            "dailyTurnoverYi": 7.47,
+            "weightPercent": 10.26
           },
           {
             "rank": 2,
             "code": "688111",
             "name": "金山办公",
-            "floatMarketCapYi": 1090.4,
-            "dailyTurnoverYi": 1.16,
-            "weightPercent": 4.63
+            "floatMarketCapYi": 1080.0,
+            "dailyTurnoverYi": 2.97,
+            "weightPercent": 4.59
           },
           {
             "rank": 3,
             "code": "300033",
             "name": "同花顺",
-            "floatMarketCapYi": 871.2,
-            "dailyTurnoverYi": 1.54,
+            "floatMarketCapYi": 868.9,
+            "dailyTurnoverYi": 3.83,
             "weightPercent": 3.7
           },
           {
             "rank": 4,
             "code": "000977",
             "name": "浪潮信息",
-            "floatMarketCapYi": 858.4,
-            "dailyTurnoverYi": 3.74,
-            "weightPercent": 3.65
+            "floatMarketCapYi": 863.3,
+            "dailyTurnoverYi": 10.83,
+            "weightPercent": 3.67
           },
           {
             "rank": 5,
             "code": "002230",
             "name": "科大讯飞",
-            "floatMarketCapYi": 813.3,
-            "dailyTurnoverYi": 0.74,
-            "weightPercent": 3.45
+            "floatMarketCapYi": 809.6,
+            "dailyTurnoverYi": 2.11,
+            "weightPercent": 3.44
           },
           {
             "rank": 6,
-            "code": "601360",
-            "name": "三六零",
-            "floatMarketCapYi": 592.9,
-            "dailyTurnoverYi": 0.77,
+            "code": "688777",
+            "name": "中控技术",
+            "floatMarketCapYi": 591.7,
+            "dailyTurnoverYi": 4.79,
             "weightPercent": 2.52
           },
           {
             "rank": 7,
-            "code": "688777",
-            "name": "中控技术",
-            "floatMarketCapYi": 586.4,
-            "dailyTurnoverYi": 1.34,
-            "weightPercent": 2.49
+            "code": "601360",
+            "name": "三六零",
+            "floatMarketCapYi": 590.8,
+            "dailyTurnoverYi": 1.82,
+            "weightPercent": 2.51
           },
           {
             "rank": 8,
             "code": "300803",
             "name": "指南针",
-            "floatMarketCapYi": 465.9,
-            "dailyTurnoverYi": 0.69,
-            "weightPercent": 1.98
+            "floatMarketCapYi": 463.1,
+            "dailyTurnoverYi": 2.04,
+            "weightPercent": 1.97
           },
           {
             "rank": 9,
             "code": "688188",
             "name": "柏楚电子",
-            "floatMarketCapYi": 392.7,
-            "dailyTurnoverYi": 0.16,
+            "floatMarketCapYi": 392.0,
+            "dailyTurnoverYi": 0.53,
             "weightPercent": 1.67
           },
           {
             "rank": 10,
             "code": "600570",
             "name": "恒生电子",
-            "floatMarketCapYi": 380.5,
-            "dailyTurnoverYi": 0.25,
+            "floatMarketCapYi": 381.8,
+            "dailyTurnoverYi": 0.83,
             "weightPercent": 1.62
           }
         ],
@@ -22687,8 +22682,8 @@
           },
           {
             "date": "2026-10-21",
-            "close": 3170.39,
-            "turnoverYi": 86.07
+            "close": 3166.76,
+            "turnoverYi": 207.98
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -23105,10 +23100,10 @@
           {
             "date": "2026-10-21",
             "constituentCount": 234,
-            "floatMarketCapYi": 23543.1,
-            "dailyTurnoverYi": 85.3,
-            "top10SharePercent": 36.0,
-            "hhi": 223.4
+            "floatMarketCapYi": 23515.9,
+            "dailyTurnoverYi": 207.9,
+            "top10SharePercent": 35.9,
+            "hhi": 223.0
           }
         ]
       }
@@ -23166,7 +23161,7 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 2,
-        "coveragePercent": 63.9,
+        "coveragePercent": 63.8,
         "reportDate": "2026-09-30",
         "revenueGrowthMedian": 5.4,
         "positiveRevenueShare": 50.0,
@@ -23184,7 +23179,7 @@
             "profitGrowthMedian": 15.3,
             "positiveProfitShare": 50.0,
             "cashToRevenueMedian": 0.2,
-            "coveragePercent": 63.9
+            "coveragePercent": 63.8
           },
           {
             "reportDate": "2026-06-30",
@@ -23301,100 +23296,95 @@
         "boardCode": "BK0579",
         "boardName": "云计算",
         "constituentCount": 149,
-        "liquidConstituentCount": 28,
-        "dailyTurnoverYi": 121.2,
-        "totalMarketCapYi": 65876.0,
-        "floatMarketCapYi": 41589.2,
-        "top10SharePercent": 63.9,
-        "hhi": 863.1,
+        "liquidConstituentCount": 51,
+        "dailyTurnoverYi": 306.6,
+        "totalMarketCapYi": 65730.8,
+        "floatMarketCapYi": 41750.7,
+        "top10SharePercent": 63.8,
+        "hhi": 861.3,
         "topConstituents": [
           {
             "rank": 1,
             "code": "601138",
             "name": "工业富联",
-            "floatMarketCapYi": 9896.2,
-            "dailyTurnoverYi": 6.85,
-            "weightPercent": 23.8
+            "floatMarketCapYi": 9939.9,
+            "dailyTurnoverYi": 17.51,
+            "weightPercent": 23.81
           },
           {
             "rank": 2,
             "code": "601728",
             "name": "中国电信",
-            "floatMarketCapYi": 5247.8,
-            "dailyTurnoverYi": 0.84,
-            "weightPercent": 12.62
+            "floatMarketCapYi": 5224.5,
+            "dailyTurnoverYi": 2.31,
+            "weightPercent": 12.51
           },
           {
             "rank": 3,
             "code": "002415",
             "name": "海康威视",
-            "floatMarketCapYi": 2971.6,
-            "dailyTurnoverYi": 1.49,
-            "weightPercent": 7.15
+            "floatMarketCapYi": 2956.3,
+            "dailyTurnoverYi": 4.32,
+            "weightPercent": 7.08
           },
           {
             "rank": 4,
             "code": "688008",
             "name": "澜起科技",
-            "floatMarketCapYi": 2012.7,
-            "dailyTurnoverYi": 10.48,
-            "weightPercent": 4.84
+            "floatMarketCapYi": 2055.5,
+            "dailyTurnoverYi": 26.87,
+            "weightPercent": 4.92
           },
           {
             "rank": 5,
             "code": "002352",
             "name": "顺丰控股",
-            "floatMarketCapYi": 1442.3,
-            "dailyTurnoverYi": 0.82,
-            "weightPercent": 3.47
+            "floatMarketCapYi": 1440.9,
+            "dailyTurnoverYi": 2.46,
+            "weightPercent": 3.45
           },
           {
             "rank": 6,
             "code": "000063",
             "name": "中兴通讯",
-            "floatMarketCapYi": 1116.5,
-            "dailyTurnoverYi": 1.13,
+            "floatMarketCapYi": 1120.5,
+            "dailyTurnoverYi": 4.13,
             "weightPercent": 2.68
           },
           {
             "rank": 7,
             "code": "603019",
             "name": "中科曙光",
-            "floatMarketCapYi": 1095.1,
-            "dailyTurnoverYi": 2.62,
-            "weightPercent": 2.63
+            "floatMarketCapYi": 1109.6,
+            "dailyTurnoverYi": 7.04,
+            "weightPercent": 2.66
           },
           {
             "rank": 8,
             "code": "300857",
             "name": "协创数据",
-            "floatMarketCapYi": 1015.0,
-            "dailyTurnoverYi": 9.16,
-            "weightPercent": 2.44
+            "floatMarketCapYi": 1056.5,
+            "dailyTurnoverYi": 28.27,
+            "weightPercent": 2.53
           },
           {
             "rank": 9,
             "code": "600941",
             "name": "中国移动",
-            "floatMarketCapYi": 893.9,
-            "dailyTurnoverYi": 2.74,
-            "weightPercent": 2.15
+            "floatMarketCapYi": 880.5,
+            "dailyTurnoverYi": 9.18,
+            "weightPercent": 2.11
           },
           {
             "rank": 10,
             "code": "300033",
             "name": "同花顺",
-            "floatMarketCapYi": 870.5,
-            "dailyTurnoverYi": 1.57,
-            "weightPercent": 2.09
+            "floatMarketCapYi": 868.1,
+            "dailyTurnoverYi": 3.84,
+            "weightPercent": 2.08
           }
         ],
         "marketHistory": [
-          {
-            "date": "2025-07-23",
-            "close": 3275.53,
-            "turnoverYi": 1375.96
-          },
           {
             "date": "2025-07-24",
             "close": 3308.78,
@@ -24887,8 +24877,13 @@
           },
           {
             "date": "2026-10-20",
-            "close": 3035.54,
-            "turnoverYi": 149.68
+            "close": 3082.25,
+            "turnoverYi": 631.46
+          },
+          {
+            "date": "2026-10-21",
+            "close": 3133.71,
+            "turnoverYi": 306.6
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -25305,10 +25300,10 @@
           {
             "date": "2026-10-21",
             "constituentCount": 149,
-            "floatMarketCapYi": 41589.2,
-            "dailyTurnoverYi": 121.2,
-            "top10SharePercent": 63.9,
-            "hhi": 863.1
+            "floatMarketCapYi": 41750.7,
+            "dailyTurnoverYi": 306.6,
+            "top10SharePercent": 63.8,
+            "hhi": 861.3
           }
         ]
       }
@@ -25366,7 +25361,7 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 10,
-        "coveragePercent": 64.0,
+        "coveragePercent": 64.2,
         "reportDate": "2026-06-30",
         "revenueGrowthMedian": 14.7,
         "positiveRevenueShare": 70.0,
@@ -25384,7 +25379,7 @@
             "profitGrowthMedian": 58.0,
             "positiveProfitShare": 80.0,
             "cashToRevenueMedian": -0.1,
-            "coveragePercent": 64.0
+            "coveragePercent": 64.2
           },
           {
             "reportDate": "2026-03-31",
@@ -25492,100 +25487,95 @@
         "boardCode": "BK1047",
         "boardName": "数据安全",
         "constituentCount": 83,
-        "liquidConstituentCount": 47,
-        "dailyTurnoverYi": 222.1,
-        "totalMarketCapYi": 11452.3,
-        "floatMarketCapYi": 9529.5,
-        "top10SharePercent": 64.0,
-        "hhi": 800.5,
+        "liquidConstituentCount": 23,
+        "dailyTurnoverYi": 114.6,
+        "totalMarketCapYi": 11613.5,
+        "floatMarketCapYi": 9671.9,
+        "top10SharePercent": 64.2,
+        "hhi": 821.7,
         "topConstituents": [
           {
             "rank": 1,
             "code": "688008",
             "name": "澜起科技",
-            "floatMarketCapYi": 1933.5,
-            "dailyTurnoverYi": 38.2,
-            "weightPercent": 20.29
+            "floatMarketCapYi": 2055.3,
+            "dailyTurnoverYi": 26.89,
+            "weightPercent": 21.25
           },
           {
             "rank": 2,
             "code": "600050",
             "name": "中国联通",
-            "floatMarketCapYi": 1385.3,
-            "dailyTurnoverYi": 6.62,
-            "weightPercent": 14.54
+            "floatMarketCapYi": 1354.3,
+            "dailyTurnoverYi": 4.04,
+            "weightPercent": 14.0
           },
           {
             "rank": 3,
             "code": "002602",
             "name": "世纪华通",
-            "floatMarketCapYi": 823.8,
-            "dailyTurnoverYi": 7.5,
-            "weightPercent": 8.64
+            "floatMarketCapYi": 825.1,
+            "dailyTurnoverYi": 2.73,
+            "weightPercent": 8.53
           },
           {
             "rank": 4,
             "code": "601360",
             "name": "三六零",
-            "floatMarketCapYi": 588.0,
-            "dailyTurnoverYi": 5.84,
-            "weightPercent": 6.17
+            "floatMarketCapYi": 590.1,
+            "dailyTurnoverYi": 1.82,
+            "weightPercent": 6.1
           },
           {
             "rank": 5,
             "code": "000066",
             "name": "中国长城",
-            "floatMarketCapYi": 433.2,
-            "dailyTurnoverYi": 4.64,
-            "weightPercent": 4.55
+            "floatMarketCapYi": 436.4,
+            "dailyTurnoverYi": 1.75,
+            "weightPercent": 4.51
           },
           {
             "rank": 6,
             "code": "600536",
             "name": "中国软件",
-            "floatMarketCapYi": 263.2,
-            "dailyTurnoverYi": 2.83,
-            "weightPercent": 2.76
+            "floatMarketCapYi": 263.0,
+            "dailyTurnoverYi": 0.8,
+            "weightPercent": 2.72
           },
           {
             "rank": 7,
             "code": "000547",
             "name": "航天发展",
-            "floatMarketCapYi": 205.8,
-            "dailyTurnoverYi": 3.92,
-            "weightPercent": 2.16
+            "floatMarketCapYi": 213.3,
+            "dailyTurnoverYi": 5.56,
+            "weightPercent": 2.2
           },
           {
             "rank": 8,
             "code": "688561",
             "name": "奇安信-U",
-            "floatMarketCapYi": 194.1,
-            "dailyTurnoverYi": 2.76,
-            "weightPercent": 2.04
+            "floatMarketCapYi": 194.4,
+            "dailyTurnoverYi": 0.79,
+            "weightPercent": 2.01
           },
           {
             "rank": 9,
             "code": "300002",
             "name": "神州泰岳",
-            "floatMarketCapYi": 145.5,
-            "dailyTurnoverYi": 1.81,
+            "floatMarketCapYi": 147.5,
+            "dailyTurnoverYi": 0.7,
             "weightPercent": 1.53
           },
           {
             "rank": 10,
             "code": "002268",
             "name": "电科网安",
-            "floatMarketCapYi": 125.0,
-            "dailyTurnoverYi": 1.98,
-            "weightPercent": 1.31
+            "floatMarketCapYi": 125.9,
+            "dailyTurnoverYi": 0.63,
+            "weightPercent": 1.3
           }
         ],
         "marketHistory": [
-          {
-            "date": "2025-07-23",
-            "close": 1087.02,
-            "turnoverYi": 412.04
-          },
           {
             "date": "2025-07-24",
             "close": 1096.56,
@@ -27078,8 +27068,13 @@
           },
           {
             "date": "2026-10-20",
-            "close": 949.07,
-            "turnoverYi": 222.15
+            "close": 951.2,
+            "turnoverYi": 238.91
+          },
+          {
+            "date": "2026-10-21",
+            "close": 959.67,
+            "turnoverYi": 114.62
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -27496,15 +27491,13 @@
           {
             "date": "2026-10-21",
             "constituentCount": 83,
-            "floatMarketCapYi": 9529.5,
-            "dailyTurnoverYi": 222.1,
-            "top10SharePercent": 64.0,
-            "hhi": 800.5
+            "floatMarketCapYi": 9671.9,
+            "dailyTurnoverYi": 114.6,
+            "top10SharePercent": 64.2,
+            "hhi": 821.7
           }
         ]
-      },
-      "refreshStatus": "retained-previous",
-      "refreshError": "HTTPError"
+      }
     },
     {
       "id": "smart-healthcare",
@@ -27685,92 +27678,92 @@
         "boardCode": "BK0727",
         "boardName": "医疗服务",
         "constituentCount": 54,
-        "liquidConstituentCount": 14,
-        "dailyTurnoverYi": 49.8,
-        "totalMarketCapYi": 11345.5,
-        "floatMarketCapYi": 9303.8,
+        "liquidConstituentCount": 28,
+        "dailyTurnoverYi": 108.8,
+        "totalMarketCapYi": 11340.0,
+        "floatMarketCapYi": 9298.5,
         "top10SharePercent": 71.4,
-        "hhi": 1729.4,
+        "hhi": 1720.7,
         "topConstituents": [
           {
             "rank": 1,
             "code": "603259",
             "name": "药明康德",
-            "floatMarketCapYi": 3675.3,
-            "dailyTurnoverYi": 6.68,
-            "weightPercent": 39.5
+            "floatMarketCapYi": 3661.7,
+            "dailyTurnoverYi": 15.01,
+            "weightPercent": 39.38
           },
           {
             "rank": 2,
             "code": "300015",
             "name": "爱尔眼科",
-            "floatMarketCapYi": 631.2,
-            "dailyTurnoverYi": 0.4,
-            "weightPercent": 6.78
+            "floatMarketCapYi": 629.6,
+            "dailyTurnoverYi": 1.12,
+            "weightPercent": 6.77
           },
           {
             "rank": 3,
             "code": "300759",
             "name": "康龙化成",
-            "floatMarketCapYi": 549.6,
-            "dailyTurnoverYi": 1.72,
-            "weightPercent": 5.91
+            "floatMarketCapYi": 552.8,
+            "dailyTurnoverYi": 4.19,
+            "weightPercent": 5.95
           },
           {
             "rank": 4,
             "code": "002821",
             "name": "凯莱英",
-            "floatMarketCapYi": 487.5,
-            "dailyTurnoverYi": 1.71,
-            "weightPercent": 5.24
+            "floatMarketCapYi": 491.0,
+            "dailyTurnoverYi": 3.73,
+            "weightPercent": 5.28
           },
           {
             "rank": 5,
             "code": "603127",
             "name": "昭衍新药",
-            "floatMarketCapYi": 310.0,
-            "dailyTurnoverYi": 3.54,
-            "weightPercent": 3.33
+            "floatMarketCapYi": 313.5,
+            "dailyTurnoverYi": 7.82,
+            "weightPercent": 3.37
           },
           {
             "rank": 6,
             "code": "300347",
             "name": "泰格医药",
             "floatMarketCapYi": 292.5,
-            "dailyTurnoverYi": 0.45,
-            "weightPercent": 3.14
+            "dailyTurnoverYi": 1.1,
+            "weightPercent": 3.15
           },
           {
             "rank": 7,
             "code": "002044",
             "name": "美年健康",
             "floatMarketCapYi": 190.6,
-            "dailyTurnoverYi": 1.01,
+            "dailyTurnoverYi": 2.53,
             "weightPercent": 2.05
           },
           {
             "rank": 8,
             "code": "688131",
             "name": "皓元医药",
-            "floatMarketCapYi": 183.9,
-            "dailyTurnoverYi": 0.37,
+            "floatMarketCapYi": 184.1,
+            "dailyTurnoverYi": 0.86,
             "weightPercent": 1.98
           },
           {
             "rank": 9,
             "code": "300676",
             "name": "华大基因",
-            "floatMarketCapYi": 172.7,
-            "dailyTurnoverYi": 0.89,
-            "weightPercent": 1.86
+            "floatMarketCapYi": 171.4,
+            "dailyTurnoverYi": 1.74,
+            "weightPercent": 1.84
           },
           {
             "rank": 10,
             "code": "688222",
             "name": "成都先导",
-            "floatMarketCapYi": 150.0,
-            "dailyTurnoverYi": 1.8,
-            "weightPercent": 1.61
+            "floatMarketCapYi": 150.5,
+            "dailyTurnoverYi": 4.28,
+            "weightPercent": 1.62
           }
         ],
         "marketHistory": [
@@ -29271,8 +29264,8 @@
           },
           {
             "date": "2026-10-21",
-            "close": 1420.41,
-            "turnoverYi": 49.85
+            "close": 1420.74,
+            "turnoverYi": 108.79
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -29689,10 +29682,10 @@
           {
             "date": "2026-10-21",
             "constituentCount": 54,
-            "floatMarketCapYi": 9303.8,
-            "dailyTurnoverYi": 49.8,
+            "floatMarketCapYi": 9298.5,
+            "dailyTurnoverYi": 108.8,
             "top10SharePercent": 71.4,
-            "hhi": 1729.4
+            "hhi": 1720.7
           }
         ]
       }
@@ -29772,7 +29765,7 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 10,
-        "coveragePercent": 37.4,
+        "coveragePercent": 37.5,
         "reportDate": "2026-06-30",
         "revenueGrowthMedian": 10.5,
         "positiveRevenueShare": 70.0,
@@ -29790,7 +29783,7 @@
             "profitGrowthMedian": 4.5,
             "positiveProfitShare": 60.0,
             "cashToRevenueMedian": 0.1,
-            "coveragePercent": 37.4
+            "coveragePercent": 37.5
           },
           {
             "reportDate": "2026-03-31",
@@ -29898,92 +29891,92 @@
         "boardCode": "BK1174",
         "boardName": "合成生物",
         "constituentCount": 126,
-        "liquidConstituentCount": 14,
-        "dailyTurnoverYi": 57.2,
-        "totalMarketCapYi": 14331.2,
-        "floatMarketCapYi": 12073.1,
-        "top10SharePercent": 37.4,
-        "hhi": 265.1,
+        "liquidConstituentCount": 31,
+        "dailyTurnoverYi": 130.3,
+        "totalMarketCapYi": 14382.2,
+        "floatMarketCapYi": 12116.3,
+        "top10SharePercent": 37.5,
+        "hhi": 265.9,
         "topConstituents": [
           {
             "rank": 1,
             "code": "002714",
             "name": "牧原股份",
-            "floatMarketCapYi": 1359.1,
-            "dailyTurnoverYi": 2.18,
-            "weightPercent": 11.26
+            "floatMarketCapYi": 1367.7,
+            "dailyTurnoverYi": 6.1,
+            "weightPercent": 11.29
           },
           {
             "rank": 2,
             "code": "002422",
             "name": "科伦药业",
-            "floatMarketCapYi": 549.5,
-            "dailyTurnoverYi": 0.88,
-            "weightPercent": 4.55
+            "floatMarketCapYi": 554.9,
+            "dailyTurnoverYi": 2.13,
+            "weightPercent": 4.58
           },
           {
             "rank": 3,
             "code": "002821",
             "name": "凯莱英",
-            "floatMarketCapYi": 486.5,
-            "dailyTurnoverYi": 1.73,
-            "weightPercent": 4.03
+            "floatMarketCapYi": 491.0,
+            "dailyTurnoverYi": 3.73,
+            "weightPercent": 4.05
           },
           {
             "rank": 4,
             "code": "000963",
             "name": "华东医药",
-            "floatMarketCapYi": 468.9,
-            "dailyTurnoverYi": 0.48,
-            "weightPercent": 3.88
+            "floatMarketCapYi": 468.2,
+            "dailyTurnoverYi": 1.12,
+            "weightPercent": 3.86
           },
           {
             "rank": 5,
             "code": "600143",
             "name": "金发科技",
-            "floatMarketCapYi": 333.3,
-            "dailyTurnoverYi": 0.42,
+            "floatMarketCapYi": 334.1,
+            "dailyTurnoverYi": 0.97,
             "weightPercent": 2.76
           },
           {
             "rank": 6,
             "code": "600298",
             "name": "安琪酵母",
-            "floatMarketCapYi": 316.1,
-            "dailyTurnoverYi": 0.24,
-            "weightPercent": 2.62
+            "floatMarketCapYi": 319.7,
+            "dailyTurnoverYi": 0.79,
+            "weightPercent": 2.64
           },
           {
             "rank": 7,
             "code": "605589",
             "name": "圣泉集团",
-            "floatMarketCapYi": 270.6,
-            "dailyTurnoverYi": 0.42,
-            "weightPercent": 2.24
+            "floatMarketCapYi": 273.2,
+            "dailyTurnoverYi": 1.47,
+            "weightPercent": 2.25
           },
           {
             "rank": 8,
             "code": "688114",
             "name": "华大智造",
-            "floatMarketCapYi": 263.9,
-            "dailyTurnoverYi": 1.16,
-            "weightPercent": 2.19
+            "floatMarketCapYi": 263.8,
+            "dailyTurnoverYi": 2.49,
+            "weightPercent": 2.18
           },
           {
             "rank": 9,
             "code": "000739",
             "name": "普洛药业",
             "floatMarketCapYi": 252.1,
-            "dailyTurnoverYi": 0.28,
-            "weightPercent": 2.09
+            "dailyTurnoverYi": 0.7,
+            "weightPercent": 2.08
           },
           {
             "rank": 10,
             "code": "688065",
             "name": "凯赛生物",
-            "floatMarketCapYi": 216.1,
-            "dailyTurnoverYi": 0.07,
-            "weightPercent": 1.79
+            "floatMarketCapYi": 215.7,
+            "dailyTurnoverYi": 0.24,
+            "weightPercent": 1.78
           }
         ],
         "marketHistory": [
@@ -31484,8 +31477,8 @@
           },
           {
             "date": "2026-10-21",
-            "close": 1266.11,
-            "turnoverYi": 57.26
+            "close": 1270.13,
+            "turnoverYi": 130.28
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -31902,10 +31895,10 @@
           {
             "date": "2026-10-21",
             "constituentCount": 126,
-            "floatMarketCapYi": 12073.1,
-            "dailyTurnoverYi": 57.2,
-            "top10SharePercent": 37.4,
-            "hhi": 265.1
+            "floatMarketCapYi": 12116.3,
+            "dailyTurnoverYi": 130.3,
+            "top10SharePercent": 37.5,
+            "hhi": 265.9
           }
         ]
       }
@@ -32123,7 +32116,7 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 10,
-        "coveragePercent": 43.9,
+        "coveragePercent": 43.5,
         "reportDate": "2026-06-30",
         "revenueGrowthMedian": 0.8,
         "positiveRevenueShare": 50.0,
@@ -32141,7 +32134,7 @@
             "profitGrowthMedian": -8.0,
             "positiveProfitShare": 50.0,
             "cashToRevenueMedian": 0.2,
-            "coveragePercent": 43.9
+            "coveragePercent": 43.5
           },
           {
             "reportDate": "2026-03-31",
@@ -32249,100 +32242,95 @@
         "boardCode": "BK0577",
         "boardName": "核能核电",
         "constituentCount": 213,
-        "liquidConstituentCount": 28,
-        "dailyTurnoverYi": 121.7,
-        "totalMarketCapYi": 47266.8,
-        "floatMarketCapYi": 39447.8,
-        "top10SharePercent": 43.9,
-        "hhi": 451.2,
+        "liquidConstituentCount": 48,
+        "dailyTurnoverYi": 207.0,
+        "totalMarketCapYi": 47567.4,
+        "floatMarketCapYi": 39660.1,
+        "top10SharePercent": 43.5,
+        "hhi": 443.8,
         "topConstituents": [
           {
             "rank": 1,
             "code": "600900",
             "name": "长江电力",
-            "floatMarketCapYi": 7191.2,
-            "dailyTurnoverYi": 4.67,
-            "weightPercent": 18.23
+            "floatMarketCapYi": 7154.5,
+            "dailyTurnoverYi": 8.89,
+            "weightPercent": 18.04
           },
           {
             "rank": 2,
             "code": "600406",
             "name": "国电南瑞",
-            "floatMarketCapYi": 1827.5,
-            "dailyTurnoverYi": 1.67,
-            "weightPercent": 4.63
+            "floatMarketCapYi": 1838.7,
+            "dailyTurnoverYi": 1.63,
+            "weightPercent": 4.64
           },
           {
             "rank": 3,
-            "code": "003816",
-            "name": "中国广核",
-            "floatMarketCapYi": 1793.7,
-            "dailyTurnoverYi": 1.13,
-            "weightPercent": 4.55
+            "code": "601985",
+            "name": "中国核电",
+            "floatMarketCapYi": 1784.5,
+            "dailyTurnoverYi": 2.39,
+            "weightPercent": 4.5
           },
           {
             "rank": 4,
-            "code": "601985",
-            "name": "中国核电",
-            "floatMarketCapYi": 1792.0,
-            "dailyTurnoverYi": 2.0,
-            "weightPercent": 4.54
+            "code": "003816",
+            "name": "中国广核",
+            "floatMarketCapYi": 1781.9,
+            "dailyTurnoverYi": 1.48,
+            "weightPercent": 4.49
           },
           {
             "rank": 5,
             "code": "600089",
             "name": "特变电工",
-            "floatMarketCapYi": 865.5,
-            "dailyTurnoverYi": 1.41,
+            "floatMarketCapYi": 867.5,
+            "dailyTurnoverYi": 1.42,
             "weightPercent": 2.19
           },
           {
             "rank": 6,
-            "code": "600011",
-            "name": "华能国际",
-            "floatMarketCapYi": 827.0,
-            "dailyTurnoverYi": 1.36,
-            "weightPercent": 2.1
+            "code": "601868",
+            "name": "中国能建",
+            "floatMarketCapYi": 825.5,
+            "dailyTurnoverYi": 2.0,
+            "weightPercent": 2.08
           },
           {
             "rank": 7,
-            "code": "601868",
-            "name": "中国能建",
-            "floatMarketCapYi": 818.5,
-            "dailyTurnoverYi": 0.9,
+            "code": "600011",
+            "name": "华能国际",
+            "floatMarketCapYi": 819.3,
+            "dailyTurnoverYi": 1.96,
             "weightPercent": 2.07
           },
           {
             "rank": 8,
             "code": "601727",
             "name": "上海电气",
-            "floatMarketCapYi": 773.3,
-            "dailyTurnoverYi": 0.44,
+            "floatMarketCapYi": 777.1,
+            "dailyTurnoverYi": 0.47,
             "weightPercent": 1.96
           },
           {
             "rank": 9,
             "code": "600023",
             "name": "浙能电力",
-            "floatMarketCapYi": 718.7,
-            "dailyTurnoverYi": 0.27,
+            "floatMarketCapYi": 721.4,
+            "dailyTurnoverYi": 0.51,
             "weightPercent": 1.82
           },
           {
             "rank": 10,
             "code": "600482",
             "name": "中国动力",
-            "floatMarketCapYi": 702.5,
-            "dailyTurnoverYi": 0.82,
-            "weightPercent": 1.78
+            "floatMarketCapYi": 691.1,
+            "dailyTurnoverYi": 0.98,
+            "weightPercent": 1.74
           }
         ],
         "marketHistory": [
-          {
-            "date": "2025-07-23",
-            "close": 2489.04,
-            "turnoverYi": 1173.22
-          },
           {
             "date": "2025-07-24",
             "close": 2501.33,
@@ -33835,8 +33823,13 @@
           },
           {
             "date": "2026-10-20",
-            "close": 2560.82,
-            "turnoverYi": 121.85
+            "close": 2560.09,
+            "turnoverYi": 494.85
+          },
+          {
+            "date": "2026-10-21",
+            "close": 2584.13,
+            "turnoverYi": 207.15
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -34253,15 +34246,13 @@
           {
             "date": "2026-10-21",
             "constituentCount": 213,
-            "floatMarketCapYi": 39447.8,
-            "dailyTurnoverYi": 121.7,
-            "top10SharePercent": 43.9,
-            "hhi": 451.2
+            "floatMarketCapYi": 39660.1,
+            "dailyTurnoverYi": 207.0,
+            "top10SharePercent": 43.5,
+            "hhi": 443.8
           }
         ]
-      },
-      "refreshStatus": "retained-previous",
-      "refreshError": "HTTPError"
+      }
     },
     {
       "id": "water-security",
@@ -34451,60 +34442,60 @@
         "boardCode": "BK0597",
         "boardName": "水利建设",
         "constituentCount": 115,
-        "liquidConstituentCount": 10,
-        "dailyTurnoverYi": 72.3,
-        "totalMarketCapYi": 25979.7,
-        "floatMarketCapYi": 24400.0,
+        "liquidConstituentCount": 18,
+        "dailyTurnoverYi": 134.8,
+        "totalMarketCapYi": 26230.3,
+        "floatMarketCapYi": 24646.5,
         "top10SharePercent": 72.8,
-        "hhi": 1317.1,
+        "hhi": 1307.8,
         "topConstituents": [
           {
             "rank": 1,
             "code": "600900",
             "name": "长江电力",
-            "floatMarketCapYi": 7188.8,
-            "dailyTurnoverYi": 4.69,
-            "weightPercent": 29.46
+            "floatMarketCapYi": 7157.0,
+            "dailyTurnoverYi": 8.89,
+            "weightPercent": 29.04
           },
           {
             "rank": 2,
             "code": "688041",
             "name": "海光信息",
-            "floatMarketCapYi": 4409.3,
-            "dailyTurnoverYi": 7.03,
-            "weightPercent": 18.07
+            "floatMarketCapYi": 4565.0,
+            "dailyTurnoverYi": 14.86,
+            "weightPercent": 18.52
           },
           {
             "rank": 3,
             "code": "600025",
             "name": "华能水电",
-            "floatMarketCapYi": 1909.7,
-            "dailyTurnoverYi": 0.6,
-            "weightPercent": 7.83
+            "floatMarketCapYi": 1920.9,
+            "dailyTurnoverYi": 1.05,
+            "weightPercent": 7.79
           },
           {
             "rank": 4,
             "code": "601390",
             "name": "中国中铁",
-            "floatMarketCapYi": 869.9,
-            "dailyTurnoverYi": 0.74,
-            "weightPercent": 3.57
+            "floatMarketCapYi": 863.8,
+            "dailyTurnoverYi": 0.92,
+            "weightPercent": 3.5
           },
           {
             "rank": 5,
             "code": "601868",
             "name": "中国能建",
-            "floatMarketCapYi": 818.5,
-            "dailyTurnoverYi": 0.9,
-            "weightPercent": 3.35
+            "floatMarketCapYi": 822.0,
+            "dailyTurnoverYi": 2.0,
+            "weightPercent": 3.34
           },
           {
             "rank": 6,
             "code": "601800",
             "name": "中国交建",
-            "floatMarketCapYi": 713.9,
-            "dailyTurnoverYi": 0.32,
-            "weightPercent": 2.93
+            "floatMarketCapYi": 712.8,
+            "dailyTurnoverYi": 0.55,
+            "weightPercent": 2.89
           },
           {
             "rank": 7,
@@ -34512,39 +34503,34 @@
             "name": "中国电建",
             "floatMarketCapYi": 592.1,
             "dailyTurnoverYi": 0.5,
-            "weightPercent": 2.43
+            "weightPercent": 2.4
           },
           {
             "rank": 8,
             "code": "601179",
             "name": "中国西电",
-            "floatMarketCapYi": 569.0,
-            "dailyTurnoverYi": 0.91,
-            "weightPercent": 2.33
+            "floatMarketCapYi": 576.7,
+            "dailyTurnoverYi": 1.67,
+            "weightPercent": 2.34
           },
           {
             "rank": 9,
             "code": "600869",
             "name": "远东股份",
-            "floatMarketCapYi": 393.9,
-            "dailyTurnoverYi": 9.95,
+            "floatMarketCapYi": 396.4,
+            "dailyTurnoverYi": 14.88,
             "weightPercent": 1.61
           },
           {
             "rank": 10,
             "code": "603236",
             "name": "移远通信",
-            "floatMarketCapYi": 306.0,
-            "dailyTurnoverYi": 10.52,
-            "weightPercent": 1.25
+            "floatMarketCapYi": 333.7,
+            "dailyTurnoverYi": 26.31,
+            "weightPercent": 1.35
           }
         ],
         "marketHistory": [
-          {
-            "date": "2025-07-23",
-            "close": 1900.83,
-            "turnoverYi": 641.48
-          },
           {
             "date": "2025-07-24",
             "close": 1917.5,
@@ -36037,8 +36023,13 @@
           },
           {
             "date": "2026-10-20",
-            "close": 1845.71,
-            "turnoverYi": 72.29
+            "close": 1844.69,
+            "turnoverYi": 292.72
+          },
+          {
+            "date": "2026-10-21",
+            "close": 1864.93,
+            "turnoverYi": 134.84
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -36455,15 +36446,13 @@
           {
             "date": "2026-10-21",
             "constituentCount": 115,
-            "floatMarketCapYi": 24400.0,
-            "dailyTurnoverYi": 72.3,
+            "floatMarketCapYi": 24646.5,
+            "dailyTurnoverYi": 134.8,
             "top10SharePercent": 72.8,
-            "hhi": 1317.1
+            "hhi": 1307.8
           }
         ]
-      },
-      "refreshStatus": "retained-previous",
-      "refreshError": "HTTPError"
+      }
     },
     {
       "id": "low-altitude",
@@ -36644,91 +36633,91 @@
         "boardCode": "BK1166",
         "boardName": "低空经济",
         "constituentCount": 319,
-        "liquidConstituentCount": 33,
-        "dailyTurnoverYi": 141.6,
-        "totalMarketCapYi": 39399.2,
-        "floatMarketCapYi": 34245.6,
+        "liquidConstituentCount": 82,
+        "dailyTurnoverYi": 332.2,
+        "totalMarketCapYi": 39461.8,
+        "floatMarketCapYi": 34287.6,
         "top10SharePercent": 24.4,
-        "hhi": 104.9,
+        "hhi": 104.7,
         "topConstituents": [
           {
             "rank": 1,
             "code": "002352",
             "name": "顺丰控股",
-            "floatMarketCapYi": 1444.1,
-            "dailyTurnoverYi": 0.92,
-            "weightPercent": 4.22
+            "floatMarketCapYi": 1439.9,
+            "dailyTurnoverYi": 2.47,
+            "weightPercent": 4.2
           },
           {
             "rank": 2,
             "code": "000063",
             "name": "中兴通讯",
-            "floatMarketCapYi": 1116.5,
-            "dailyTurnoverYi": 1.26,
-            "weightPercent": 3.26
+            "floatMarketCapYi": 1120.5,
+            "dailyTurnoverYi": 4.15,
+            "weightPercent": 3.27
           },
           {
             "rank": 3,
             "code": "601698",
             "name": "中国卫通",
-            "floatMarketCapYi": 964.4,
-            "dailyTurnoverYi": 0.41,
-            "weightPercent": 2.82
+            "floatMarketCapYi": 962.7,
+            "dailyTurnoverYi": 1.27,
+            "weightPercent": 2.81
           },
           {
             "rank": 4,
             "code": "300014",
             "name": "亿纬锂能",
-            "floatMarketCapYi": 905.8,
-            "dailyTurnoverYi": 3.43,
-            "weightPercent": 2.65
+            "floatMarketCapYi": 905.2,
+            "dailyTurnoverYi": 7.08,
+            "weightPercent": 2.64
           },
           {
             "rank": 5,
             "code": "601390",
             "name": "中国中铁",
             "floatMarketCapYi": 865.8,
-            "dailyTurnoverYi": 0.34,
+            "dailyTurnoverYi": 0.92,
             "weightPercent": 2.53
           },
           {
             "rank": 6,
             "code": "002179",
             "name": "中航光电",
-            "floatMarketCapYi": 688.7,
-            "dailyTurnoverYi": 0.34,
+            "floatMarketCapYi": 688.0,
+            "dailyTurnoverYi": 0.83,
             "weightPercent": 2.01
           },
           {
             "rank": 7,
             "code": "000768",
             "name": "中航西飞",
-            "floatMarketCapYi": 652.7,
-            "dailyTurnoverYi": 0.36,
-            "weightPercent": 1.91
+            "floatMarketCapYi": 650.8,
+            "dailyTurnoverYi": 1.85,
+            "weightPercent": 1.9
           },
           {
             "rank": 8,
             "code": "600118",
             "name": "中国卫星",
-            "floatMarketCapYi": 624.4,
-            "dailyTurnoverYi": 1.17,
+            "floatMarketCapYi": 624.8,
+            "dailyTurnoverYi": 3.57,
             "weightPercent": 1.82
           },
           {
             "rank": 9,
-            "code": "600372",
-            "name": "中航机载",
-            "floatMarketCapYi": 554.1,
-            "dailyTurnoverYi": 0.31,
-            "weightPercent": 1.62
+            "code": "002436",
+            "name": "兴森科技",
+            "floatMarketCapYi": 564.8,
+            "dailyTurnoverYi": 17.45,
+            "weightPercent": 1.65
           },
           {
             "rank": 10,
-            "code": "002436",
-            "name": "兴森科技",
-            "floatMarketCapYi": 551.9,
-            "dailyTurnoverYi": 5.48,
+            "code": "600372",
+            "name": "中航机载",
+            "floatMarketCapYi": 552.6,
+            "dailyTurnoverYi": 0.68,
             "weightPercent": 1.61
           }
         ],
@@ -38230,8 +38219,8 @@
           },
           {
             "date": "2026-10-21",
-            "close": 1505.72,
-            "turnoverYi": 143.03
+            "close": 1507.1,
+            "turnoverYi": 332.43
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -38648,10 +38637,10 @@
           {
             "date": "2026-10-21",
             "constituentCount": 319,
-            "floatMarketCapYi": 34245.6,
-            "dailyTurnoverYi": 141.6,
+            "floatMarketCapYi": 34287.6,
+            "dailyTurnoverYi": 332.2,
             "top10SharePercent": 24.4,
-            "hhi": 104.9
+            "hhi": 104.7
           }
         ]
       }
@@ -38920,110 +38909,95 @@
         "boardCode": "BK0920",
         "boardName": "车联网(车路云)",
         "constituentCount": 213,
-        "liquidConstituentCount": 36,
-        "dailyTurnoverYi": 188.1,
-        "totalMarketCapYi": 49664.7,
-        "floatMarketCapYi": 41232.0,
+        "liquidConstituentCount": 56,
+        "dailyTurnoverYi": 325.0,
+        "totalMarketCapYi": 50439.6,
+        "floatMarketCapYi": 42010.1,
         "top10SharePercent": 54.1,
-        "hhi": 700.9,
+        "hhi": 720.9,
         "topConstituents": [
           {
             "rank": 1,
             "code": "601138",
             "name": "工业富联",
-            "floatMarketCapYi": 9495.4,
-            "dailyTurnoverYi": 6.68,
-            "weightPercent": 23.03
+            "floatMarketCapYi": 9918.1,
+            "dailyTurnoverYi": 17.7,
+            "weightPercent": 23.61
           },
           {
             "rank": 2,
             "code": "002415",
             "name": "海康威视",
-            "floatMarketCapYi": 2950.8,
-            "dailyTurnoverYi": 5.0,
-            "weightPercent": 7.16
+            "floatMarketCapYi": 2954.5,
+            "dailyTurnoverYi": 4.36,
+            "weightPercent": 7.03
           },
           {
             "rank": 3,
             "code": "002594",
             "name": "比亚迪",
-            "floatMarketCapYi": 2882.8,
-            "dailyTurnoverYi": 3.33,
-            "weightPercent": 6.99
+            "floatMarketCapYi": 2828.4,
+            "dailyTurnoverYi": 9.46,
+            "weightPercent": 6.73
           },
           {
             "rank": 4,
             "code": "002352",
             "name": "顺丰控股",
-            "floatMarketCapYi": 1460.8,
-            "dailyTurnoverYi": 1.38,
-            "weightPercent": 3.54
+            "floatMarketCapYi": 1439.0,
+            "dailyTurnoverYi": 2.47,
+            "weightPercent": 3.43
           },
           {
             "rank": 5,
             "code": "600104",
             "name": "上汽集团",
-            "floatMarketCapYi": 1239.2,
-            "dailyTurnoverYi": 0.71,
-            "weightPercent": 3.01
+            "floatMarketCapYi": 1228.8,
+            "dailyTurnoverYi": 0.83,
+            "weightPercent": 2.93
           },
           {
             "rank": 6,
             "code": "300857",
             "name": "协创数据",
-            "floatMarketCapYi": 1030.7,
-            "dailyTurnoverYi": 20.36,
+            "floatMarketCapYi": 1052.2,
+            "dailyTurnoverYi": 28.38,
             "weightPercent": 2.5
           },
           {
             "rank": 7,
             "code": "601633",
             "name": "长城汽车",
-            "floatMarketCapYi": 872.3,
-            "dailyTurnoverYi": 0.4,
-            "weightPercent": 2.12
+            "floatMarketCapYi": 867.4,
+            "dailyTurnoverYi": 0.78,
+            "weightPercent": 2.06
           },
           {
             "rank": 8,
             "code": "000977",
             "name": "浪潮信息",
-            "floatMarketCapYi": 835.1,
-            "dailyTurnoverYi": 5.44,
-            "weightPercent": 2.03
+            "floatMarketCapYi": 862.1,
+            "dailyTurnoverYi": 10.98,
+            "weightPercent": 2.05
           },
           {
             "rank": 9,
             "code": "002230",
             "name": "科大讯飞",
-            "floatMarketCapYi": 800.9,
-            "dailyTurnoverYi": 1.99,
-            "weightPercent": 1.94
+            "floatMarketCapYi": 808.3,
+            "dailyTurnoverYi": 2.13,
+            "weightPercent": 1.92
           },
           {
             "rank": 10,
             "code": "000938",
             "name": "紫光股份",
-            "floatMarketCapYi": 735.6,
-            "dailyTurnoverYi": 7.0,
+            "floatMarketCapYi": 748.8,
+            "dailyTurnoverYi": 10.26,
             "weightPercent": 1.78
           }
         ],
         "marketHistory": [
-          {
-            "date": "2025-07-21",
-            "close": 1500.07,
-            "turnoverYi": 904.43
-          },
-          {
-            "date": "2025-07-22",
-            "close": 1494.87,
-            "turnoverYi": 963.53
-          },
-          {
-            "date": "2025-07-23",
-            "close": 1487.15,
-            "turnoverYi": 916.75
-          },
           {
             "date": "2025-07-24",
             "close": 1504.67,
@@ -40506,8 +40480,23 @@
           },
           {
             "date": "2026-10-16",
-            "close": 1363.65,
-            "turnoverYi": 390.59
+            "close": 1342.29,
+            "turnoverYi": 638.01
+          },
+          {
+            "date": "2026-10-19",
+            "close": 1347.81,
+            "turnoverYi": 579.26
+          },
+          {
+            "date": "2026-10-20",
+            "close": 1379.92,
+            "turnoverYi": 710.22
+          },
+          {
+            "date": "2026-10-21",
+            "close": 1393.03,
+            "turnoverYi": 325.19
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -40924,15 +40913,13 @@
           {
             "date": "2026-10-21",
             "constituentCount": 213,
-            "floatMarketCapYi": 41232.0,
-            "dailyTurnoverYi": 188.1,
+            "floatMarketCapYi": 42010.1,
+            "dailyTurnoverYi": 325.0,
             "top10SharePercent": 54.1,
-            "hhi": 700.9
+            "hhi": 720.9
           }
         ]
-      },
-      "refreshStatus": "retained-previous",
-      "refreshError": "HTTPError"
+      }
     },
     {
       "id": "obesity-care",
@@ -40987,7 +40974,7 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 10,
-        "coveragePercent": 69.7,
+        "coveragePercent": 69.8,
         "reportDate": "2026-06-30",
         "revenueGrowthMedian": 4.7,
         "positiveRevenueShare": 60.0,
@@ -41005,7 +40992,7 @@
             "profitGrowthMedian": -2.5,
             "positiveProfitShare": 50.0,
             "cashToRevenueMedian": 0.2,
-            "coveragePercent": 69.7
+            "coveragePercent": 69.8
           },
           {
             "reportDate": "2026-03-31",
@@ -41113,100 +41100,95 @@
         "boardCode": "BK1146",
         "boardName": "减肥药",
         "constituentCount": 43,
-        "liquidConstituentCount": 10,
-        "dailyTurnoverYi": 41.2,
-        "totalMarketCapYi": 9056.8,
-        "floatMarketCapYi": 8150.1,
-        "top10SharePercent": 69.7,
-        "hhi": 1486.5,
+        "liquidConstituentCount": 16,
+        "dailyTurnoverYi": 69.9,
+        "totalMarketCapYi": 9259.5,
+        "floatMarketCapYi": 8332.7,
+        "top10SharePercent": 69.8,
+        "hhi": 1500.4,
         "topConstituents": [
           {
             "rank": 1,
             "code": "600276",
             "name": "恒瑞医药",
-            "floatMarketCapYi": 2940.7,
-            "dailyTurnoverYi": 4.1,
-            "weightPercent": 36.08
+            "floatMarketCapYi": 3024.9,
+            "dailyTurnoverYi": 8.21,
+            "weightPercent": 36.3
           },
           {
             "rank": 2,
             "code": "002821",
             "name": "凯莱英",
-            "floatMarketCapYi": 483.2,
-            "dailyTurnoverYi": 2.79,
-            "weightPercent": 5.93
+            "floatMarketCapYi": 491.2,
+            "dailyTurnoverYi": 3.74,
+            "weightPercent": 5.89
           },
           {
             "rank": 3,
             "code": "000963",
             "name": "华东医药",
-            "floatMarketCapYi": 464.9,
-            "dailyTurnoverYi": 0.55,
-            "weightPercent": 5.7
+            "floatMarketCapYi": 468.6,
+            "dailyTurnoverYi": 1.13,
+            "weightPercent": 5.62
           },
           {
             "rank": 4,
             "code": "603087",
             "name": "甘李药业",
-            "floatMarketCapYi": 388.5,
-            "dailyTurnoverYi": 1.13,
-            "weightPercent": 4.77
+            "floatMarketCapYi": 396.6,
+            "dailyTurnoverYi": 1.8,
+            "weightPercent": 4.76
           },
           {
             "rank": 5,
             "code": "002294",
             "name": "信立泰",
-            "floatMarketCapYi": 347.6,
-            "dailyTurnoverYi": 1.36,
-            "weightPercent": 4.27
+            "floatMarketCapYi": 351.1,
+            "dailyTurnoverYi": 1.39,
+            "weightPercent": 4.21
           },
           {
             "rank": 6,
             "code": "000739",
             "name": "普洛药业",
-            "floatMarketCapYi": 248.7,
-            "dailyTurnoverYi": 0.86,
-            "weightPercent": 3.05
+            "floatMarketCapYi": 251.7,
+            "dailyTurnoverYi": 0.7,
+            "weightPercent": 3.02
           },
           {
             "rank": 7,
-            "code": "002317",
-            "name": "众生药业",
-            "floatMarketCapYi": 212.4,
-            "dailyTurnoverYi": 1.74,
-            "weightPercent": 2.61
+            "code": "300896",
+            "name": "爱美客",
+            "floatMarketCapYi": 218.5,
+            "dailyTurnoverYi": 1.08,
+            "weightPercent": 2.62
           },
           {
             "rank": 8,
-            "code": "300896",
-            "name": "爱美客",
-            "floatMarketCapYi": 207.2,
-            "dailyTurnoverYi": 0.61,
+            "code": "002317",
+            "name": "众生药业",
+            "floatMarketCapYi": 211.3,
+            "dailyTurnoverYi": 3.47,
             "weightPercent": 2.54
           },
           {
             "rank": 9,
-            "code": "300487",
-            "name": "蓝晓科技",
-            "floatMarketCapYi": 196.8,
-            "dailyTurnoverYi": 0.29,
-            "weightPercent": 2.41
+            "code": "300199",
+            "name": "翰宇药业",
+            "floatMarketCapYi": 201.5,
+            "dailyTurnoverYi": 9.13,
+            "weightPercent": 2.42
           },
           {
             "rank": 10,
-            "code": "300199",
-            "name": "翰宇药业",
-            "floatMarketCapYi": 193.8,
-            "dailyTurnoverYi": 4.41,
-            "weightPercent": 2.38
+            "code": "300487",
+            "name": "蓝晓科技",
+            "floatMarketCapYi": 199.9,
+            "dailyTurnoverYi": 0.5,
+            "weightPercent": 2.4
           }
         ],
         "marketHistory": [
-          {
-            "date": "2025-07-23",
-            "close": 1264.29,
-            "turnoverYi": 200.85
-          },
           {
             "date": "2025-07-24",
             "close": 1293.56,
@@ -42699,8 +42681,13 @@
           },
           {
             "date": "2026-10-20",
-            "close": 1185.3,
-            "turnoverYi": 41.24
+            "close": 1198.8,
+            "turnoverYi": 159.59
+          },
+          {
+            "date": "2026-10-21",
+            "close": 1209.15,
+            "turnoverYi": 69.88
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -43117,15 +43104,13 @@
           {
             "date": "2026-10-21",
             "constituentCount": 43,
-            "floatMarketCapYi": 8150.1,
-            "dailyTurnoverYi": 41.2,
-            "top10SharePercent": 69.7,
-            "hhi": 1486.5
+            "floatMarketCapYi": 8332.7,
+            "dailyTurnoverYi": 69.9,
+            "top10SharePercent": 69.8,
+            "hhi": 1500.4
           }
         ]
-      },
-      "refreshStatus": "retained-previous",
-      "refreshError": "HTTPError"
+      }
     },
     {
       "id": "climate-adaptation",
@@ -43180,7 +43165,7 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 10,
-        "coveragePercent": 56.5,
+        "coveragePercent": 56.4,
         "reportDate": "2026-06-30",
         "revenueGrowthMedian": -3.1,
         "positiveRevenueShare": 40.0,
@@ -43198,7 +43183,7 @@
             "profitGrowthMedian": -1.6,
             "positiveProfitShare": 50.0,
             "cashToRevenueMedian": 0.1,
-            "coveragePercent": 56.5
+            "coveragePercent": 56.4
           },
           {
             "reportDate": "2026-03-31",
@@ -43307,91 +43292,91 @@
         "boardName": "地下管网",
         "constituentCount": 56,
         "liquidConstituentCount": 2,
-        "dailyTurnoverYi": 8.7,
-        "totalMarketCapYi": 3857.5,
-        "floatMarketCapYi": 3617.7,
-        "top10SharePercent": 56.5,
-        "hhi": 569.0,
+        "dailyTurnoverYi": 19.2,
+        "totalMarketCapYi": 3854.4,
+        "floatMarketCapYi": 3614.8,
+        "top10SharePercent": 56.4,
+        "hhi": 565.6,
         "topConstituents": [
           {
             "rank": 1,
             "code": "000708",
             "name": "中信特钢",
-            "floatMarketCapYi": 663.7,
-            "dailyTurnoverYi": 0.17,
-            "weightPercent": 18.35
+            "floatMarketCapYi": 659.7,
+            "dailyTurnoverYi": 0.52,
+            "weightPercent": 18.25
           },
           {
             "rank": 2,
             "code": "688425",
             "name": "铁建重工",
-            "floatMarketCapYi": 213.9,
-            "dailyTurnoverYi": 0.11,
-            "weightPercent": 5.91
+            "floatMarketCapYi": 214.4,
+            "dailyTurnoverYi": 0.26,
+            "weightPercent": 5.93
           },
           {
             "rank": 3,
             "code": "000598",
             "name": "兴蓉环境",
-            "floatMarketCapYi": 208.8,
-            "dailyTurnoverYi": 0.11,
-            "weightPercent": 5.77
+            "floatMarketCapYi": 207.9,
+            "dailyTurnoverYi": 0.29,
+            "weightPercent": 5.75
           },
           {
             "rank": 4,
             "code": "002271",
             "name": "东方雨虹",
-            "floatMarketCapYi": 208.3,
-            "dailyTurnoverYi": 0.26,
-            "weightPercent": 5.76
+            "floatMarketCapYi": 207.2,
+            "dailyTurnoverYi": 0.7,
+            "weightPercent": 5.73
           },
           {
             "rank": 5,
             "code": "600008",
             "name": "首创环保",
-            "floatMarketCapYi": 202.6,
-            "dailyTurnoverYi": 0.26,
-            "weightPercent": 5.6
+            "floatMarketCapYi": 203.3,
+            "dailyTurnoverYi": 0.48,
+            "weightPercent": 5.63
           },
           {
             "rank": 6,
             "code": "000778",
             "name": "新兴铸管",
             "floatMarketCapYi": 139.4,
-            "dailyTurnoverYi": 0.07,
-            "weightPercent": 3.85
+            "dailyTurnoverYi": 0.23,
+            "weightPercent": 3.86
           },
           {
             "rank": 7,
             "code": "002372",
             "name": "伟星新材",
-            "floatMarketCapYi": 124.4,
-            "dailyTurnoverYi": 0.06,
-            "weightPercent": 3.44
+            "floatMarketCapYi": 123.6,
+            "dailyTurnoverYi": 0.17,
+            "weightPercent": 3.42
           },
           {
             "rank": 8,
             "code": "002062",
             "name": "宏润建设",
-            "floatMarketCapYi": 98.3,
-            "dailyTurnoverYi": 0.21,
-            "weightPercent": 2.72
+            "floatMarketCapYi": 98.6,
+            "dailyTurnoverYi": 0.63,
+            "weightPercent": 2.73
           },
           {
             "rank": 9,
             "code": "600480",
             "name": "凌云股份",
-            "floatMarketCapYi": 95.1,
-            "dailyTurnoverYi": 0.09,
-            "weightPercent": 2.63
+            "floatMarketCapYi": 95.4,
+            "dailyTurnoverYi": 0.21,
+            "weightPercent": 2.64
           },
           {
             "rank": 10,
             "code": "300007",
             "name": "汉威科技",
-            "floatMarketCapYi": 89.6,
-            "dailyTurnoverYi": 1.9,
-            "weightPercent": 2.48
+            "floatMarketCapYi": 90.2,
+            "dailyTurnoverYi": 3.74,
+            "weightPercent": 2.5
           }
         ],
         "marketHistory": [
@@ -44892,8 +44877,8 @@
           },
           {
             "date": "2026-10-21",
-            "close": 1101.25,
-            "turnoverYi": 8.71
+            "close": 1102.35,
+            "turnoverYi": 19.23
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -45310,10 +45295,10 @@
           {
             "date": "2026-10-21",
             "constituentCount": 56,
-            "floatMarketCapYi": 3617.7,
-            "dailyTurnoverYi": 8.7,
-            "top10SharePercent": 56.5,
-            "hhi": 569.0
+            "floatMarketCapYi": 3614.8,
+            "dailyTurnoverYi": 19.2,
+            "top10SharePercent": 56.4,
+            "hhi": 565.6
           }
         ]
       }
@@ -45497,92 +45482,92 @@
         "boardCode": "BK0727",
         "boardName": "医疗服务",
         "constituentCount": 54,
-        "liquidConstituentCount": 14,
-        "dailyTurnoverYi": 55.4,
-        "totalMarketCapYi": 11339.4,
-        "floatMarketCapYi": 9297.0,
+        "liquidConstituentCount": 28,
+        "dailyTurnoverYi": 109.6,
+        "totalMarketCapYi": 11347.9,
+        "floatMarketCapYi": 9305.7,
         "top10SharePercent": 71.4,
-        "hhi": 1726.4,
+        "hhi": 1717.9,
         "topConstituents": [
           {
             "rank": 1,
             "code": "603259",
             "name": "药明康德",
-            "floatMarketCapYi": 3668.9,
-            "dailyTurnoverYi": 7.66,
-            "weightPercent": 39.46
+            "floatMarketCapYi": 3661.2,
+            "dailyTurnoverYi": 15.1,
+            "weightPercent": 39.34
           },
           {
             "rank": 2,
             "code": "300015",
             "name": "爱尔眼科",
-            "floatMarketCapYi": 631.2,
-            "dailyTurnoverYi": 0.45,
-            "weightPercent": 6.79
+            "floatMarketCapYi": 630.4,
+            "dailyTurnoverYi": 1.13,
+            "weightPercent": 6.77
           },
           {
             "rank": 3,
             "code": "300759",
             "name": "康龙化成",
-            "floatMarketCapYi": 549.3,
-            "dailyTurnoverYi": 1.96,
-            "weightPercent": 5.91
+            "floatMarketCapYi": 553.0,
+            "dailyTurnoverYi": 4.2,
+            "weightPercent": 5.94
           },
           {
             "rank": 4,
             "code": "002821",
             "name": "凯莱英",
-            "floatMarketCapYi": 487.6,
-            "dailyTurnoverYi": 1.85,
-            "weightPercent": 5.24
+            "floatMarketCapYi": 491.2,
+            "dailyTurnoverYi": 3.74,
+            "weightPercent": 5.28
           },
           {
             "rank": 5,
             "code": "603127",
             "name": "昭衍新药",
-            "floatMarketCapYi": 309.6,
-            "dailyTurnoverYi": 3.99,
-            "weightPercent": 3.33
+            "floatMarketCapYi": 313.6,
+            "dailyTurnoverYi": 7.86,
+            "weightPercent": 3.37
           },
           {
             "rank": 6,
             "code": "300347",
             "name": "泰格医药",
-            "floatMarketCapYi": 292.1,
-            "dailyTurnoverYi": 0.53,
+            "floatMarketCapYi": 292.6,
+            "dailyTurnoverYi": 1.11,
             "weightPercent": 3.14
           },
           {
             "rank": 7,
             "code": "002044",
             "name": "美年健康",
-            "floatMarketCapYi": 190.2,
-            "dailyTurnoverYi": 1.17,
+            "floatMarketCapYi": 191.0,
+            "dailyTurnoverYi": 2.53,
             "weightPercent": 2.05
           },
           {
             "rank": 8,
             "code": "688131",
             "name": "皓元医药",
-            "floatMarketCapYi": 184.1,
-            "dailyTurnoverYi": 0.4,
+            "floatMarketCapYi": 184.2,
+            "dailyTurnoverYi": 0.87,
             "weightPercent": 1.98
           },
           {
             "rank": 9,
             "code": "300676",
             "name": "华大基因",
-            "floatMarketCapYi": 172.9,
-            "dailyTurnoverYi": 0.97,
-            "weightPercent": 1.86
+            "floatMarketCapYi": 172.2,
+            "dailyTurnoverYi": 1.75,
+            "weightPercent": 1.85
           },
           {
             "rank": 10,
             "code": "688222",
             "name": "成都先导",
-            "floatMarketCapYi": 150.0,
-            "dailyTurnoverYi": 2.07,
-            "weightPercent": 1.61
+            "floatMarketCapYi": 150.8,
+            "dailyTurnoverYi": 4.34,
+            "weightPercent": 1.62
           }
         ],
         "marketHistory": [
@@ -47083,8 +47068,8 @@
           },
           {
             "date": "2026-10-21",
-            "close": 1420.48,
-            "turnoverYi": 55.38
+            "close": 1422.81,
+            "turnoverYi": 109.53
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -47501,10 +47486,10 @@
           {
             "date": "2026-10-21",
             "constituentCount": 54,
-            "floatMarketCapYi": 9297.0,
-            "dailyTurnoverYi": 55.4,
+            "floatMarketCapYi": 9305.7,
+            "dailyTurnoverYi": 109.6,
             "top10SharePercent": 71.4,
-            "hhi": 1726.4
+            "hhi": 1717.9
           }
         ]
       }
@@ -47688,92 +47673,92 @@
         "boardCode": "BK0727",
         "boardName": "医疗服务",
         "constituentCount": 54,
-        "liquidConstituentCount": 15,
-        "dailyTurnoverYi": 55.6,
-        "totalMarketCapYi": 11343.2,
-        "floatMarketCapYi": 9299.9,
+        "liquidConstituentCount": 28,
+        "dailyTurnoverYi": 109.7,
+        "totalMarketCapYi": 11351.8,
+        "floatMarketCapYi": 9308.1,
         "top10SharePercent": 71.4,
-        "hhi": 1727.1,
+        "hhi": 1717.6,
         "topConstituents": [
           {
             "rank": 1,
             "code": "603259",
             "name": "药明康德",
-            "floatMarketCapYi": 3670.8,
-            "dailyTurnoverYi": 7.68,
-            "weightPercent": 39.47
+            "floatMarketCapYi": 3661.7,
+            "dailyTurnoverYi": 15.11,
+            "weightPercent": 39.34
           },
           {
             "rank": 2,
             "code": "300015",
             "name": "爱尔眼科",
-            "floatMarketCapYi": 631.2,
-            "dailyTurnoverYi": 0.45,
-            "weightPercent": 6.79
+            "floatMarketCapYi": 630.4,
+            "dailyTurnoverYi": 1.13,
+            "weightPercent": 6.77
           },
           {
             "rank": 3,
             "code": "300759",
             "name": "康龙化成",
-            "floatMarketCapYi": 549.6,
-            "dailyTurnoverYi": 1.96,
-            "weightPercent": 5.91
+            "floatMarketCapYi": 553.5,
+            "dailyTurnoverYi": 4.2,
+            "weightPercent": 5.95
           },
           {
             "rank": 4,
             "code": "002821",
             "name": "凯莱英",
-            "floatMarketCapYi": 488.0,
-            "dailyTurnoverYi": 1.86,
-            "weightPercent": 5.25
+            "floatMarketCapYi": 491.4,
+            "dailyTurnoverYi": 3.75,
+            "weightPercent": 5.28
           },
           {
             "rank": 5,
             "code": "603127",
             "name": "昭衍新药",
-            "floatMarketCapYi": 309.0,
-            "dailyTurnoverYi": 4.03,
-            "weightPercent": 3.32
+            "floatMarketCapYi": 313.7,
+            "dailyTurnoverYi": 7.86,
+            "weightPercent": 3.37
           },
           {
             "rank": 6,
             "code": "300347",
             "name": "泰格医药",
-            "floatMarketCapYi": 292.8,
-            "dailyTurnoverYi": 0.53,
+            "floatMarketCapYi": 292.9,
+            "dailyTurnoverYi": 1.11,
             "weightPercent": 3.15
           },
           {
             "rank": 7,
             "code": "002044",
             "name": "美年健康",
-            "floatMarketCapYi": 190.2,
-            "dailyTurnoverYi": 1.18,
+            "floatMarketCapYi": 190.6,
+            "dailyTurnoverYi": 2.54,
             "weightPercent": 2.05
           },
           {
             "rank": 8,
             "code": "688131",
             "name": "皓元医药",
-            "floatMarketCapYi": 184.2,
-            "dailyTurnoverYi": 0.4,
+            "floatMarketCapYi": 184.3,
+            "dailyTurnoverYi": 0.87,
             "weightPercent": 1.98
           },
           {
             "rank": 9,
             "code": "300676",
             "name": "华大基因",
-            "floatMarketCapYi": 172.8,
-            "dailyTurnoverYi": 0.97,
-            "weightPercent": 1.86
+            "floatMarketCapYi": 172.2,
+            "dailyTurnoverYi": 1.76,
+            "weightPercent": 1.85
           },
           {
             "rank": 10,
             "code": "688222",
             "name": "成都先导",
-            "floatMarketCapYi": 149.9,
-            "dailyTurnoverYi": 2.08,
-            "weightPercent": 1.61
+            "floatMarketCapYi": 150.9,
+            "dailyTurnoverYi": 4.34,
+            "weightPercent": 1.62
           }
         ],
         "marketHistory": [
@@ -49274,8 +49259,8 @@
           },
           {
             "date": "2026-10-21",
-            "close": 1420.66,
-            "turnoverYi": 55.58
+            "close": 1423.78,
+            "turnoverYi": 109.72
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -49692,10 +49677,10 @@
           {
             "date": "2026-10-21",
             "constituentCount": 54,
-            "floatMarketCapYi": 9299.9,
-            "dailyTurnoverYi": 55.6,
+            "floatMarketCapYi": 9308.1,
+            "dailyTurnoverYi": 109.7,
             "top10SharePercent": 71.4,
-            "hhi": 1727.1
+            "hhi": 1717.6
           }
         ]
       }
@@ -49879,100 +49864,95 @@
         "boardCode": "BK0993",
         "boardName": "宠物经济",
         "constituentCount": 74,
-        "liquidConstituentCount": 15,
-        "dailyTurnoverYi": 69.3,
-        "totalMarketCapYi": 4067.4,
-        "floatMarketCapYi": 3603.0,
+        "liquidConstituentCount": 6,
+        "dailyTurnoverYi": 40.4,
+        "totalMarketCapYi": 4107.1,
+        "floatMarketCapYi": 3641.3,
         "top10SharePercent": 40.9,
-        "hhi": 257.3,
+        "hhi": 256.7,
         "topConstituents": [
           {
             "rank": 1,
             "code": "000739",
             "name": "普洛药业",
-            "floatMarketCapYi": 251.5,
-            "dailyTurnoverYi": 3.12,
-            "weightPercent": 6.98
+            "floatMarketCapYi": 252.1,
+            "dailyTurnoverYi": 0.7,
+            "weightPercent": 6.92
           },
           {
             "rank": 2,
             "code": "300012",
             "name": "华测检测",
-            "floatMarketCapYi": 222.1,
-            "dailyTurnoverYi": 5.41,
-            "weightPercent": 6.16
+            "floatMarketCapYi": 220.8,
+            "dailyTurnoverYi": 1.72,
+            "weightPercent": 6.06
           },
           {
             "rank": 3,
             "code": "600655",
             "name": "豫园股份",
-            "floatMarketCapYi": 173.5,
-            "dailyTurnoverYi": 0.46,
-            "weightPercent": 4.82
+            "floatMarketCapYi": 174.7,
+            "dailyTurnoverYi": 0.11,
+            "weightPercent": 4.8
           },
           {
             "rank": 4,
             "code": "600267",
             "name": "海正药业",
-            "floatMarketCapYi": 156.6,
-            "dailyTurnoverYi": 7.67,
-            "weightPercent": 4.35
+            "floatMarketCapYi": 164.5,
+            "dailyTurnoverYi": 12.61,
+            "weightPercent": 4.52
           },
           {
             "rank": 5,
             "code": "600201",
             "name": "生物股份",
-            "floatMarketCapYi": 138.7,
-            "dailyTurnoverYi": 1.84,
-            "weightPercent": 3.85
+            "floatMarketCapYi": 140.9,
+            "dailyTurnoverYi": 0.76,
+            "weightPercent": 3.87
           },
           {
             "rank": 6,
             "code": "300741",
             "name": "华宝股份",
-            "floatMarketCapYi": 125.9,
-            "dailyTurnoverYi": 1.14,
-            "weightPercent": 3.49
+            "floatMarketCapYi": 125.4,
+            "dailyTurnoverYi": 0.35,
+            "weightPercent": 3.44
           },
           {
             "rank": 7,
             "code": "605507",
             "name": "国邦医药",
-            "floatMarketCapYi": 121.4,
-            "dailyTurnoverYi": 0.52,
-            "weightPercent": 3.37
+            "floatMarketCapYi": 122.0,
+            "dailyTurnoverYi": 0.14,
+            "weightPercent": 3.35
           },
           {
             "rank": 8,
             "code": "002100",
             "name": "天康生物",
-            "floatMarketCapYi": 104.7,
-            "dailyTurnoverYi": 2.12,
-            "weightPercent": 2.91
+            "floatMarketCapYi": 109.6,
+            "dailyTurnoverYi": 1.27,
+            "weightPercent": 3.01
           },
           {
             "rank": 9,
             "code": "002705",
             "name": "新宝股份",
-            "floatMarketCapYi": 93.1,
-            "dailyTurnoverYi": 0.36,
-            "weightPercent": 2.58
+            "floatMarketCapYi": 92.5,
+            "dailyTurnoverYi": 0.13,
+            "weightPercent": 2.54
           },
           {
             "rank": 10,
             "code": "002891",
             "name": "中宠股份",
-            "floatMarketCapYi": 85.8,
-            "dailyTurnoverYi": 1.44,
-            "weightPercent": 2.38
+            "floatMarketCapYi": 86.1,
+            "dailyTurnoverYi": 0.41,
+            "weightPercent": 2.36
           }
         ],
         "marketHistory": [
-          {
-            "date": "2025-07-23",
-            "close": 969.12,
-            "turnoverYi": 121.57
-          },
           {
             "date": "2025-07-24",
             "close": 978.8,
@@ -51465,8 +51445,13 @@
           },
           {
             "date": "2026-10-20",
-            "close": 832.65,
-            "turnoverYi": 22.85
+            "close": 834.91,
+            "turnoverYi": 72.88
+          },
+          {
+            "date": "2026-10-21",
+            "close": 841.61,
+            "turnoverYi": 40.35
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -51883,15 +51868,13 @@
           {
             "date": "2026-10-21",
             "constituentCount": 74,
-            "floatMarketCapYi": 3603.0,
-            "dailyTurnoverYi": 69.3,
+            "floatMarketCapYi": 3641.3,
+            "dailyTurnoverYi": 40.4,
             "top10SharePercent": 40.9,
-            "hhi": 257.3
+            "hhi": 256.7
           }
         ]
-      },
-      "refreshStatus": "retained-previous",
-      "refreshError": "HTTPError"
+      }
     },
     {
       "id": "sports-outdoor",
@@ -51945,17 +51928,27 @@
       },
       "enterprise": {
         "sampleCompanies": 10,
-        "reportedCompanies": 10,
-        "coveragePercent": 57.7,
-        "reportDate": "2026-06-30",
-        "revenueGrowthMedian": 5.0,
-        "positiveRevenueShare": 70.0,
-        "profitGrowthMedian": 19.8,
-        "positiveProfitShare": 90.0,
-        "cashToRevenueMedian": 0.0,
+        "reportedCompanies": 1,
+        "coveragePercent": 57.6,
+        "reportDate": "2026-09-30",
+        "revenueGrowthMedian": 40.6,
+        "positiveRevenueShare": 100.0,
+        "profitGrowthMedian": 42.8,
+        "positiveProfitShare": 100.0,
+        "cashToRevenueMedian": 0.2,
         "source": "东方财富上市公司财务报告",
         "status": "真实公开数据",
         "history": [
+          {
+            "reportDate": "2026-09-30",
+            "sampleCompanies": 1,
+            "revenueGrowthMedian": 40.6,
+            "positiveRevenueShare": 100.0,
+            "profitGrowthMedian": 42.8,
+            "positiveProfitShare": 100.0,
+            "cashToRevenueMedian": 0.2,
+            "coveragePercent": 57.6
+          },
           {
             "reportDate": "2026-06-30",
             "sampleCompanies": 10,
@@ -51963,8 +51956,7 @@
             "positiveRevenueShare": 70.0,
             "profitGrowthMedian": 19.8,
             "positiveProfitShare": 90.0,
-            "cashToRevenueMedian": 0.0,
-            "coveragePercent": 57.7
+            "cashToRevenueMedian": 0.0
           },
           {
             "reportDate": "2026-03-31",
@@ -52072,110 +52064,95 @@
         "boardCode": "BK0708",
         "boardName": "体育产业",
         "constituentCount": 77,
-        "liquidConstituentCount": 7,
-        "dailyTurnoverYi": 34.0,
-        "totalMarketCapYi": 7928.9,
-        "floatMarketCapYi": 6286.4,
-        "top10SharePercent": 57.7,
-        "hhi": 625.1,
+        "liquidConstituentCount": 13,
+        "dailyTurnoverYi": 61.2,
+        "totalMarketCapYi": 8029.1,
+        "floatMarketCapYi": 6369.4,
+        "top10SharePercent": 57.6,
+        "hhi": 619.6,
         "topConstituents": [
           {
             "rank": 1,
             "code": "600018",
             "name": "上港集团",
-            "floatMarketCapYi": 1261.7,
-            "dailyTurnoverYi": 0.41,
-            "weightPercent": 20.07
+            "floatMarketCapYi": 1268.7,
+            "dailyTurnoverYi": 0.57,
+            "weightPercent": 19.92
           },
           {
             "rank": 2,
             "code": "603129",
             "name": "春风动力",
-            "floatMarketCapYi": 422.8,
-            "dailyTurnoverYi": 1.35,
-            "weightPercent": 6.73
+            "floatMarketCapYi": 435.9,
+            "dailyTurnoverYi": 5.12,
+            "weightPercent": 6.84
           },
           {
             "rank": 3,
             "code": "300979",
             "name": "华利集团",
-            "floatMarketCapYi": 402.7,
-            "dailyTurnoverYi": 0.15,
-            "weightPercent": 6.41
+            "floatMarketCapYi": 399.9,
+            "dailyTurnoverYi": 0.23,
+            "weightPercent": 6.28
           },
           {
             "rank": 4,
             "code": "600060",
             "name": "海信视像",
-            "floatMarketCapYi": 356.1,
-            "dailyTurnoverYi": 0.28,
-            "weightPercent": 5.67
+            "floatMarketCapYi": 349.5,
+            "dailyTurnoverYi": 0.39,
+            "weightPercent": 5.49
           },
           {
             "rank": 5,
             "code": "000811",
             "name": "冰轮环境",
-            "floatMarketCapYi": 294.2,
-            "dailyTurnoverYi": 1.92,
-            "weightPercent": 4.68
+            "floatMarketCapYi": 307.7,
+            "dailyTurnoverYi": 5.29,
+            "weightPercent": 4.83
           },
           {
             "rank": 6,
             "code": "600637",
             "name": "东方明珠",
-            "floatMarketCapYi": 277.4,
-            "dailyTurnoverYi": 0.35,
-            "weightPercent": 4.41
+            "floatMarketCapYi": 283.7,
+            "dailyTurnoverYi": 1.43,
+            "weightPercent": 4.45
           },
           {
             "rank": 7,
             "code": "603000",
             "name": "人民网",
-            "floatMarketCapYi": 185.6,
-            "dailyTurnoverYi": 1.06,
-            "weightPercent": 2.95
+            "floatMarketCapYi": 188.9,
+            "dailyTurnoverYi": 2.46,
+            "weightPercent": 2.96
           },
           {
             "rank": 8,
             "code": "300133",
             "name": "华策影视",
-            "floatMarketCapYi": 151.3,
-            "dailyTurnoverYi": 1.52,
-            "weightPercent": 2.41
+            "floatMarketCapYi": 155.8,
+            "dailyTurnoverYi": 3.06,
+            "weightPercent": 2.45
           },
           {
             "rank": 9,
             "code": "300999",
             "name": "金龙鱼",
-            "floatMarketCapYi": 138.2,
-            "dailyTurnoverYi": 0.59,
-            "weightPercent": 2.2
+            "floatMarketCapYi": 139.4,
+            "dailyTurnoverYi": 0.71,
+            "weightPercent": 2.19
           },
           {
             "rank": 10,
             "code": "002768",
             "name": "国恩股份",
-            "floatMarketCapYi": 136.1,
-            "dailyTurnoverYi": 1.39,
-            "weightPercent": 2.17
+            "floatMarketCapYi": 139.1,
+            "dailyTurnoverYi": 1.55,
+            "weightPercent": 2.18
           }
         ],
         "marketHistory": [
-          {
-            "date": "2025-07-21",
-            "close": 1399.72,
-            "turnoverYi": 165.51
-          },
-          {
-            "date": "2025-07-22",
-            "close": 1398.61,
-            "turnoverYi": 174.2
-          },
-          {
-            "date": "2025-07-23",
-            "close": 1386.83,
-            "turnoverYi": 151.31
-          },
           {
             "date": "2025-07-24",
             "close": 1409.04,
@@ -53658,8 +53635,23 @@
           },
           {
             "date": "2026-10-16",
-            "close": 1363.1,
-            "turnoverYi": 93.2
+            "close": 1337.18,
+            "turnoverYi": 145.53
+          },
+          {
+            "date": "2026-10-19",
+            "close": 1321.89,
+            "turnoverYi": 133.16
+          },
+          {
+            "date": "2026-10-20",
+            "close": 1333.51,
+            "turnoverYi": 111.33
+          },
+          {
+            "date": "2026-10-21",
+            "close": 1351.96,
+            "turnoverYi": 61.17
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -54076,15 +54068,13 @@
           {
             "date": "2026-10-21",
             "constituentCount": 77,
-            "floatMarketCapYi": 6286.4,
-            "dailyTurnoverYi": 34.0,
-            "top10SharePercent": 57.7,
-            "hhi": 625.1
+            "floatMarketCapYi": 6369.4,
+            "dailyTurnoverYi": 61.2,
+            "top10SharePercent": 57.6,
+            "hhi": 619.6
           }
         ]
-      },
-      "refreshStatus": "retained-previous",
-      "refreshError": "HTTPError"
+      }
     },
     {
       "id": "inbound-consumption",
@@ -54284,92 +54274,92 @@
         "boardCode": "BK0485",
         "boardName": "旅游酒店",
         "constituentCount": 39,
-        "liquidConstituentCount": 0,
-        "dailyTurnoverYi": 5.2,
-        "totalMarketCapYi": 2839.2,
-        "floatMarketCapYi": 2583.3,
+        "liquidConstituentCount": 4,
+        "dailyTurnoverYi": 13.3,
+        "totalMarketCapYi": 2841.0,
+        "floatMarketCapYi": 2585.4,
         "top10SharePercent": 68.5,
-        "hhi": 1564.5,
+        "hhi": 1561.1,
         "topConstituents": [
           {
             "rank": 1,
             "code": "601888",
             "name": "中国中免",
-            "floatMarketCapYi": 963.4,
-            "dailyTurnoverYi": 0.56,
-            "weightPercent": 37.29
+            "floatMarketCapYi": 963.0,
+            "dailyTurnoverYi": 1.44,
+            "weightPercent": 37.25
           },
           {
             "rank": 2,
             "code": "600754",
             "name": "锦江酒店",
-            "floatMarketCapYi": 162.2,
-            "dailyTurnoverYi": 0.08,
-            "weightPercent": 6.28
+            "floatMarketCapYi": 161.5,
+            "dailyTurnoverYi": 0.28,
+            "weightPercent": 6.24
           },
           {
             "rank": 3,
             "code": "300144",
             "name": "宋城演艺",
             "floatMarketCapYi": 143.4,
-            "dailyTurnoverYi": 0.31,
+            "dailyTurnoverYi": 0.52,
             "weightPercent": 5.55
           },
           {
             "rank": 4,
             "code": "600258",
             "name": "首旅酒店",
-            "floatMarketCapYi": 126.0,
-            "dailyTurnoverYi": 0.12,
-            "weightPercent": 4.88
+            "floatMarketCapYi": 125.5,
+            "dailyTurnoverYi": 0.31,
+            "weightPercent": 4.85
           },
           {
             "rank": 5,
             "code": "603099",
             "name": "长白山",
-            "floatMarketCapYi": 102.4,
-            "dailyTurnoverYi": 0.6,
-            "weightPercent": 3.96
+            "floatMarketCapYi": 104.9,
+            "dailyTurnoverYi": 2.15,
+            "weightPercent": 4.06
           },
           {
             "rank": 6,
             "code": "000524",
             "name": "岭南控股",
-            "floatMarketCapYi": 58.5,
-            "dailyTurnoverYi": 0.07,
+            "floatMarketCapYi": 58.4,
+            "dailyTurnoverYi": 0.13,
             "weightPercent": 2.26
           },
           {
             "rank": 7,
             "code": "300756",
             "name": "金马游乐",
-            "floatMarketCapYi": 58.2,
-            "dailyTurnoverYi": 0.6,
-            "weightPercent": 2.25
+            "floatMarketCapYi": 56.5,
+            "dailyTurnoverYi": 1.42,
+            "weightPercent": 2.19
           },
           {
             "rank": 8,
             "code": "600593",
             "name": "大连圣亚",
-            "floatMarketCapYi": 53.3,
-            "dailyTurnoverYi": 0.74,
-            "weightPercent": 2.06
+            "floatMarketCapYi": 55.1,
+            "dailyTurnoverYi": 2.43,
+            "weightPercent": 2.13
           },
           {
             "rank": 9,
             "code": "600054",
             "name": "黄山旅游",
             "floatMarketCapYi": 53.0,
-            "dailyTurnoverYi": 0.02,
+            "dailyTurnoverYi": 0.04,
             "weightPercent": 2.05
           },
           {
             "rank": 10,
             "code": "600138",
             "name": "中青旅",
-            "floatMarketCapYi": 49.6,
-            "dailyTurnoverYi": 0.07,
-            "weightPercent": 1.92
+            "floatMarketCapYi": 49.5,
+            "dailyTurnoverYi": 0.11,
+            "weightPercent": 1.91
           }
         ],
         "marketHistory": [
@@ -55870,8 +55860,8 @@
           },
           {
             "date": "2026-10-21",
-            "close": 13349.2,
-            "turnoverYi": 5.19
+            "close": 13368.05,
+            "turnoverYi": 13.34
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -56288,10 +56278,10 @@
           {
             "date": "2026-10-21",
             "constituentCount": 39,
-            "floatMarketCapYi": 2583.3,
-            "dailyTurnoverYi": 5.2,
+            "floatMarketCapYi": 2585.4,
+            "dailyTurnoverYi": 13.3,
             "top10SharePercent": 68.5,
-            "hhi": 1564.5
+            "hhi": 1561.1
           }
         ]
       }
@@ -56475,84 +56465,84 @@
         "boardCode": "BK1579",
         "boardName": "保健品",
         "constituentCount": 9,
-        "liquidConstituentCount": 0,
-        "dailyTurnoverYi": 1.9,
-        "totalMarketCapYi": 499.4,
-        "floatMarketCapYi": 386.1,
+        "liquidConstituentCount": 1,
+        "dailyTurnoverYi": 3.5,
+        "totalMarketCapYi": 503.7,
+        "floatMarketCapYi": 390.4,
         "top10SharePercent": 100.0,
-        "hhi": 1916.8,
+        "hhi": 1935.7,
         "topConstituents": [
           {
             "rank": 1,
             "code": "002626",
             "name": "金达威",
-            "floatMarketCapYi": 111.7,
-            "dailyTurnoverYi": 0.84,
-            "weightPercent": 28.94
+            "floatMarketCapYi": 115.4,
+            "dailyTurnoverYi": 2.0,
+            "weightPercent": 29.57
           },
           {
             "rank": 2,
             "code": "300146",
             "name": "汤臣倍健",
-            "floatMarketCapYi": 106.3,
-            "dailyTurnoverYi": 0.1,
-            "weightPercent": 27.52
+            "floatMarketCapYi": 106.5,
+            "dailyTurnoverYi": 0.2,
+            "weightPercent": 27.27
           },
           {
             "rank": 3,
             "code": "300791",
             "name": "仙乐健康",
-            "floatMarketCapYi": 46.4,
-            "dailyTurnoverYi": 0.08,
-            "weightPercent": 12.01
+            "floatMarketCapYi": 46.8,
+            "dailyTurnoverYi": 0.13,
+            "weightPercent": 11.98
           },
           {
             "rank": 4,
             "code": "600530",
             "name": "ST交昂",
-            "floatMarketCapYi": 28.0,
-            "dailyTurnoverYi": 0.0,
-            "weightPercent": 7.25
+            "floatMarketCapYi": 28.1,
+            "dailyTurnoverYi": 0.02,
+            "weightPercent": 7.19
           },
           {
             "rank": 5,
             "code": "600381",
             "name": "*ST春天",
-            "floatMarketCapYi": 24.7,
-            "dailyTurnoverYi": 0.01,
-            "weightPercent": 6.4
+            "floatMarketCapYi": 24.5,
+            "dailyTurnoverYi": 0.03,
+            "weightPercent": 6.29
           },
           {
             "rank": 6,
             "code": "603102",
             "name": "百合股份",
-            "floatMarketCapYi": 22.8,
-            "dailyTurnoverYi": 0.05,
-            "weightPercent": 5.91
+            "floatMarketCapYi": 22.9,
+            "dailyTurnoverYi": 0.1,
+            "weightPercent": 5.87
           },
           {
             "rank": 7,
             "code": "000639",
             "name": "ST西王",
             "floatMarketCapYi": 17.5,
-            "dailyTurnoverYi": 0.72,
-            "weightPercent": 4.53
+            "dailyTurnoverYi": 0.92,
+            "weightPercent": 4.48
           },
           {
             "rank": 8,
             "code": "603262",
             "name": "技源集团",
-            "floatMarketCapYi": 17.3,
-            "dailyTurnoverYi": 0.04,
-            "weightPercent": 4.47
+            "floatMarketCapYi": 17.2,
+            "dailyTurnoverYi": 0.09,
+            "weightPercent": 4.4
           },
           {
             "rank": 9,
             "code": "920429",
             "name": "康比特",
             "floatMarketCapYi": 11.5,
-            "dailyTurnoverYi": 0.02,
-            "weightPercent": 2.97
+            "dailyTurnoverYi": 0.05,
+            "weightPercent": 2.95
           }
         ],
         "marketHistory": [
@@ -58053,8 +58043,8 @@
           },
           {
             "date": "2026-10-21",
-            "close": 3447.74,
-            "turnoverYi": 1.86
+            "close": 3463.33,
+            "turnoverYi": 3.54
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -58471,10 +58461,10 @@
           {
             "date": "2026-10-21",
             "constituentCount": 9,
-            "floatMarketCapYi": 386.1,
-            "dailyTurnoverYi": 1.9,
+            "floatMarketCapYi": 390.4,
+            "dailyTurnoverYi": 3.5,
             "top10SharePercent": 100.0,
-            "hhi": 1916.8
+            "hhi": 1935.7
           }
         ]
       }
@@ -58667,10 +58657,10 @@
         "boardCode": "BK0873",
         "boardName": "垃圾分类",
         "constituentCount": 96,
-        "liquidConstituentCount": 1,
-        "dailyTurnoverYi": 12.5,
-        "totalMarketCapYi": 7536.6,
-        "floatMarketCapYi": 6887.8,
+        "liquidConstituentCount": 4,
+        "dailyTurnoverYi": 28.3,
+        "totalMarketCapYi": 7548.8,
+        "floatMarketCapYi": 6899.3,
         "top10SharePercent": 36.0,
         "hhi": 202.5,
         "topConstituents": [
@@ -58678,16 +58668,16 @@
             "rank": 1,
             "code": "600143",
             "name": "金发科技",
-            "floatMarketCapYi": 332.5,
-            "dailyTurnoverYi": 0.46,
-            "weightPercent": 4.83
+            "floatMarketCapYi": 334.1,
+            "dailyTurnoverYi": 0.98,
+            "weightPercent": 4.84
           },
           {
             "rank": 2,
             "code": "002340",
             "name": "格林美",
-            "floatMarketCapYi": 301.0,
-            "dailyTurnoverYi": 0.25,
+            "floatMarketCapYi": 301.5,
+            "dailyTurnoverYi": 0.54,
             "weightPercent": 4.37
           },
           {
@@ -58695,64 +58685,64 @@
             "code": "000027",
             "name": "深圳能源",
             "floatMarketCapYi": 294.5,
-            "dailyTurnoverYi": 0.11,
-            "weightPercent": 4.28
+            "dailyTurnoverYi": 0.22,
+            "weightPercent": 4.27
           },
           {
             "rank": 4,
             "code": "603568",
             "name": "伟明环保",
-            "floatMarketCapYi": 261.2,
-            "dailyTurnoverYi": 0.12,
+            "floatMarketCapYi": 261.4,
+            "dailyTurnoverYi": 0.23,
             "weightPercent": 3.79
           },
           {
             "rank": 5,
             "code": "600323",
             "name": "瀚蓝环境",
-            "floatMarketCapYi": 249.5,
-            "dailyTurnoverYi": 0.13,
-            "weightPercent": 3.62
+            "floatMarketCapYi": 248.5,
+            "dailyTurnoverYi": 0.27,
+            "weightPercent": 3.6
           },
           {
             "rank": 6,
             "code": "000967",
             "name": "盈峰环境",
-            "floatMarketCapYi": 234.4,
-            "dailyTurnoverYi": 0.33,
-            "weightPercent": 3.4
+            "floatMarketCapYi": 235.4,
+            "dailyTurnoverYi": 0.82,
+            "weightPercent": 3.41
           },
           {
             "rank": 7,
             "code": "000598",
             "name": "兴蓉环境",
-            "floatMarketCapYi": 208.5,
-            "dailyTurnoverYi": 0.11,
-            "weightPercent": 3.03
+            "floatMarketCapYi": 207.9,
+            "dailyTurnoverYi": 0.29,
+            "weightPercent": 3.01
           },
           {
             "rank": 8,
             "code": "600388",
             "name": "紫金龙净",
-            "floatMarketCapYi": 202.7,
-            "dailyTurnoverYi": 0.23,
-            "weightPercent": 2.94
+            "floatMarketCapYi": 203.2,
+            "dailyTurnoverYi": 0.42,
+            "weightPercent": 2.95
           },
           {
             "rank": 9,
             "code": "600008",
             "name": "首创环保",
             "floatMarketCapYi": 202.6,
-            "dailyTurnoverYi": 0.26,
+            "dailyTurnoverYi": 0.48,
             "weightPercent": 2.94
           },
           {
             "rank": 10,
             "code": "603588",
             "name": "高能环境",
-            "floatMarketCapYi": 195.0,
-            "dailyTurnoverYi": 0.33,
-            "weightPercent": 2.83
+            "floatMarketCapYi": 194.5,
+            "dailyTurnoverYi": 0.95,
+            "weightPercent": 2.82
           }
         ],
         "marketHistory": [
@@ -60253,8 +60243,8 @@
           },
           {
             "date": "2026-10-21",
-            "close": 1480.22,
-            "turnoverYi": 12.51
+            "close": 1483.28,
+            "turnoverYi": 28.29
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -60671,8 +60661,8 @@
           {
             "date": "2026-10-21",
             "constituentCount": 96,
-            "floatMarketCapYi": 6887.8,
-            "dailyTurnoverYi": 12.5,
+            "floatMarketCapYi": 6899.3,
+            "dailyTurnoverYi": 28.3,
             "top10SharePercent": 36.0,
             "hhi": 202.5
           }
@@ -60892,7 +60882,7 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 1,
-        "coveragePercent": 77.2,
+        "coveragePercent": 77.0,
         "reportDate": "2026-09-30",
         "revenueGrowthMedian": 17.5,
         "positiveRevenueShare": 100.0,
@@ -60910,7 +60900,7 @@
             "profitGrowthMedian": 12.0,
             "positiveProfitShare": 100.0,
             "cashToRevenueMedian": 0.0,
-            "coveragePercent": 77.2
+            "coveragePercent": 77.0
           },
           {
             "reportDate": "2026-06-30",
@@ -61027,92 +61017,92 @@
         "boardCode": "BK1003",
         "boardName": "抽水蓄能",
         "constituentCount": 42,
-        "liquidConstituentCount": 4,
-        "dailyTurnoverYi": 18.2,
-        "totalMarketCapYi": 17242.5,
-        "floatMarketCapYi": 16138.8,
-        "top10SharePercent": 77.2,
-        "hhi": 2204.4,
+        "liquidConstituentCount": 12,
+        "dailyTurnoverYi": 47.2,
+        "totalMarketCapYi": 17229.3,
+        "floatMarketCapYi": 16121.8,
+        "top10SharePercent": 77.0,
+        "hhi": 2184.4,
         "topConstituents": [
           {
             "rank": 1,
             "code": "600900",
             "name": "长江电力",
-            "floatMarketCapYi": 7203.4,
-            "dailyTurnoverYi": 3.15,
-            "weightPercent": 44.63
+            "floatMarketCapYi": 7157.0,
+            "dailyTurnoverYi": 9.05,
+            "weightPercent": 44.39
           },
           {
             "rank": 2,
             "code": "600406",
             "name": "国电南瑞",
-            "floatMarketCapYi": 1833.9,
-            "dailyTurnoverYi": 0.78,
-            "weightPercent": 11.36
+            "floatMarketCapYi": 1837.9,
+            "dailyTurnoverYi": 1.68,
+            "weightPercent": 11.4
           },
           {
             "rank": 3,
             "code": "601669",
             "name": "中国电建",
             "floatMarketCapYi": 590.8,
-            "dailyTurnoverYi": 0.19,
+            "dailyTurnoverYi": 0.52,
             "weightPercent": 3.66
           },
           {
             "rank": 4,
             "code": "002202",
             "name": "金风科技",
-            "floatMarketCapYi": 512.6,
-            "dailyTurnoverYi": 0.88,
-            "weightPercent": 3.18
+            "floatMarketCapYi": 515.6,
+            "dailyTurnoverYi": 2.68,
+            "weightPercent": 3.2
           },
           {
             "rank": 5,
             "code": "600875",
             "name": "东方电气",
-            "floatMarketCapYi": 502.7,
-            "dailyTurnoverYi": 0.4,
-            "weightPercent": 3.11
+            "floatMarketCapYi": 506.3,
+            "dailyTurnoverYi": 1.16,
+            "weightPercent": 3.14
           },
           {
             "rank": 6,
             "code": "600027",
             "name": "华电国际",
-            "floatMarketCapYi": 473.7,
-            "dailyTurnoverYi": 0.33,
-            "weightPercent": 2.94
+            "floatMarketCapYi": 475.5,
+            "dailyTurnoverYi": 0.98,
+            "weightPercent": 2.95
           },
           {
             "rank": 7,
             "code": "600642",
             "name": "申能股份",
-            "floatMarketCapYi": 443.9,
-            "dailyTurnoverYi": 0.12,
-            "weightPercent": 2.75
+            "floatMarketCapYi": 442.4,
+            "dailyTurnoverYi": 0.34,
+            "weightPercent": 2.74
           },
           {
             "rank": 8,
             "code": "600995",
             "name": "南网储能",
-            "floatMarketCapYi": 363.1,
-            "dailyTurnoverYi": 0.21,
+            "floatMarketCapYi": 362.7,
+            "dailyTurnoverYi": 0.43,
             "weightPercent": 2.25
           },
           {
             "rank": 9,
             "code": "000883",
             "name": "湖北能源",
-            "floatMarketCapYi": 280.6,
-            "dailyTurnoverYi": 0.13,
-            "weightPercent": 1.74
+            "floatMarketCapYi": 279.3,
+            "dailyTurnoverYi": 0.26,
+            "weightPercent": 1.73
           },
           {
             "rank": 10,
             "code": "688676",
             "name": "金盘科技",
-            "floatMarketCapYi": 247.5,
-            "dailyTurnoverYi": 0.67,
-            "weightPercent": 1.53
+            "floatMarketCapYi": 249.4,
+            "dailyTurnoverYi": 1.76,
+            "weightPercent": 1.55
           }
         ],
         "marketHistory": [
@@ -62613,8 +62603,8 @@
           },
           {
             "date": "2026-10-21",
-            "close": 1705.71,
-            "turnoverYi": 18.15
+            "close": 1712.1,
+            "turnoverYi": 47.2
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -63031,10 +63021,10 @@
           {
             "date": "2026-10-21",
             "constituentCount": 42,
-            "floatMarketCapYi": 16138.8,
-            "dailyTurnoverYi": 18.2,
-            "top10SharePercent": 77.2,
-            "hhi": 2204.4
+            "floatMarketCapYi": 16121.8,
+            "dailyTurnoverYi": 47.2,
+            "top10SharePercent": 77.0,
+            "hhi": 2184.4
           }
         ]
       }
@@ -63092,7 +63082,7 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 10,
-        "coveragePercent": 19.9,
+        "coveragePercent": 19.7,
         "reportDate": "2026-06-30",
         "revenueGrowthMedian": 11.6,
         "positiveRevenueShare": 70.0,
@@ -63110,7 +63100,7 @@
             "profitGrowthMedian": 31.8,
             "positiveProfitShare": 60.0,
             "cashToRevenueMedian": 0.1,
-            "coveragePercent": 19.9
+            "coveragePercent": 19.7
           },
           {
             "reportDate": "2026-03-31",
@@ -63218,110 +63208,95 @@
         "boardCode": "BK0490",
         "boardName": "军工",
         "constituentCount": 443,
-        "liquidConstituentCount": 87,
-        "dailyTurnoverYi": 350.1,
-        "totalMarketCapYi": 56444.8,
-        "floatMarketCapYi": 49331.9,
-        "top10SharePercent": 19.9,
-        "hhi": 86.8,
+        "liquidConstituentCount": 123,
+        "dailyTurnoverYi": 515.4,
+        "totalMarketCapYi": 57388.4,
+        "floatMarketCapYi": 50123.9,
+        "top10SharePercent": 19.7,
+        "hhi": 85.9,
         "topConstituents": [
           {
             "rank": 1,
             "code": "600150",
             "name": "中国船舶",
-            "floatMarketCapYi": 2660.3,
-            "dailyTurnoverYi": 6.79,
-            "weightPercent": 5.39
+            "floatMarketCapYi": 2648.3,
+            "dailyTurnoverYi": 5.89,
+            "weightPercent": 5.28
           },
           {
             "rank": 2,
             "code": "600760",
             "name": "中航沈飞",
-            "floatMarketCapYi": 1314.3,
-            "dailyTurnoverYi": 1.69,
-            "weightPercent": 2.66
+            "floatMarketCapYi": 1353.9,
+            "dailyTurnoverYi": 2.71,
+            "weightPercent": 2.7
           },
           {
             "rank": 3,
             "code": "600893",
             "name": "航发动力",
-            "floatMarketCapYi": 1051.4,
-            "dailyTurnoverYi": 2.65,
+            "floatMarketCapYi": 1069.2,
+            "dailyTurnoverYi": 3.05,
             "weightPercent": 2.13
           },
           {
             "rank": 4,
             "code": "688002",
             "name": "睿创微纳",
-            "floatMarketCapYi": 733.8,
-            "dailyTurnoverYi": 2.88,
-            "weightPercent": 1.49
+            "floatMarketCapYi": 764.1,
+            "dailyTurnoverYi": 4.35,
+            "weightPercent": 1.52
           },
           {
             "rank": 5,
             "code": "002080",
             "name": "中材科技",
-            "floatMarketCapYi": 713.4,
-            "dailyTurnoverYi": 4.36,
-            "weightPercent": 1.45
+            "floatMarketCapYi": 720.8,
+            "dailyTurnoverYi": 8.61,
+            "weightPercent": 1.44
           },
           {
             "rank": 6,
             "code": "600482",
             "name": "中国动力",
-            "floatMarketCapYi": 703.2,
-            "dailyTurnoverYi": 0.89,
-            "weightPercent": 1.43
+            "floatMarketCapYi": 691.8,
+            "dailyTurnoverYi": 1.0,
+            "weightPercent": 1.38
           },
           {
             "rank": 7,
             "code": "002179",
             "name": "中航光电",
-            "floatMarketCapYi": 687.4,
-            "dailyTurnoverYi": 0.69,
-            "weightPercent": 1.39
+            "floatMarketCapYi": 688.0,
+            "dailyTurnoverYi": 0.84,
+            "weightPercent": 1.37
           },
           {
             "rank": 8,
             "code": "000768",
             "name": "中航西飞",
-            "floatMarketCapYi": 650.2,
-            "dailyTurnoverYi": 1.61,
-            "weightPercent": 1.32
+            "floatMarketCapYi": 651.6,
+            "dailyTurnoverYi": 1.87,
+            "weightPercent": 1.3
           },
           {
             "rank": 9,
             "code": "600010",
             "name": "包钢股份",
-            "floatMarketCapYi": 648.3,
-            "dailyTurnoverYi": 0.93,
-            "weightPercent": 1.31
+            "floatMarketCapYi": 651.4,
+            "dailyTurnoverYi": 0.86,
+            "weightPercent": 1.3
           },
           {
             "rank": 10,
             "code": "000425",
             "name": "徐工机械",
-            "floatMarketCapYi": 644.3,
-            "dailyTurnoverYi": 1.33,
-            "weightPercent": 1.31
+            "floatMarketCapYi": 638.0,
+            "dailyTurnoverYi": 1.52,
+            "weightPercent": 1.27
           }
         ],
         "marketHistory": [
-          {
-            "date": "2025-07-21",
-            "close": 71934.0,
-            "turnoverYi": 2052.47
-          },
-          {
-            "date": "2025-07-22",
-            "close": 72371.22,
-            "turnoverYi": 2414.89
-          },
-          {
-            "date": "2025-07-23",
-            "close": 71321.68,
-            "turnoverYi": 2287.91
-          },
           {
             "date": "2025-07-24",
             "close": 72140.07,
@@ -64804,8 +64779,23 @@
           },
           {
             "date": "2026-10-16",
-            "close": 73120.56,
-            "turnoverYi": 844.15
+            "close": 71909.21,
+            "turnoverYi": 1319.54
+          },
+          {
+            "date": "2026-10-19",
+            "close": 72271.13,
+            "turnoverYi": 1221.04
+          },
+          {
+            "date": "2026-10-20",
+            "close": 73074.73,
+            "turnoverYi": 1188.56
+          },
+          {
+            "date": "2026-10-21",
+            "close": 73690.27,
+            "turnoverYi": 515.61
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -65222,15 +65212,13 @@
           {
             "date": "2026-10-21",
             "constituentCount": 443,
-            "floatMarketCapYi": 49331.9,
-            "dailyTurnoverYi": 350.1,
-            "top10SharePercent": 19.9,
-            "hhi": 86.8
+            "floatMarketCapYi": 50123.9,
+            "dailyTurnoverYi": 515.4,
+            "top10SharePercent": 19.7,
+            "hhi": 85.9
           }
         ]
-      },
-      "refreshStatus": "retained-previous",
-      "refreshError": "HTTPError"
+      }
     },
     {
       "id": "agri-tech",
@@ -65445,7 +65433,7 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 10,
-        "coveragePercent": 49.5,
+        "coveragePercent": 49.3,
         "reportDate": "2026-06-30",
         "revenueGrowthMedian": -4.0,
         "positiveRevenueShare": 50.0,
@@ -65463,7 +65451,7 @@
             "profitGrowthMedian": -0.8,
             "positiveProfitShare": 50.0,
             "cashToRevenueMedian": 0.1,
-            "coveragePercent": 49.5
+            "coveragePercent": 49.3
           },
           {
             "reportDate": "2026-03-31",
@@ -65571,100 +65559,95 @@
         "boardCode": "BK0888",
         "boardName": "农业种植",
         "constituentCount": 88,
-        "liquidConstituentCount": 24,
-        "dailyTurnoverYi": 98.3,
-        "totalMarketCapYi": 6833.4,
-        "floatMarketCapYi": 6118.0,
-        "top10SharePercent": 49.5,
-        "hhi": 465.4,
+        "liquidConstituentCount": 12,
+        "dailyTurnoverYi": 39.7,
+        "totalMarketCapYi": 6911.5,
+        "floatMarketCapYi": 6189.3,
+        "top10SharePercent": 49.3,
+        "hhi": 458.1,
         "topConstituents": [
           {
             "rank": 1,
             "code": "000568",
             "name": "泸州老窖",
-            "floatMarketCapYi": 1047.6,
-            "dailyTurnoverYi": 8.22,
-            "weightPercent": 17.12
+            "floatMarketCapYi": 1044.2,
+            "dailyTurnoverYi": 2.68,
+            "weightPercent": 16.87
           },
           {
             "rank": 2,
             "code": "600737",
             "name": "中粮糖业",
-            "floatMarketCapYi": 286.0,
-            "dailyTurnoverYi": 5.54,
-            "weightPercent": 4.67
+            "floatMarketCapYi": 296.7,
+            "dailyTurnoverYi": 2.67,
+            "weightPercent": 4.79
           },
           {
             "rank": 3,
             "code": "601118",
             "name": "海南橡胶",
-            "floatMarketCapYi": 274.3,
-            "dailyTurnoverYi": 7.7,
-            "weightPercent": 4.48
+            "floatMarketCapYi": 282.9,
+            "dailyTurnoverYi": 3.57,
+            "weightPercent": 4.57
           },
           {
             "rank": 4,
-            "code": "600704",
-            "name": "物产中大",
-            "floatMarketCapYi": 253.4,
-            "dailyTurnoverYi": 1.43,
-            "weightPercent": 4.14
+            "code": "300972",
+            "name": "万辰集团",
+            "floatMarketCapYi": 255.4,
+            "dailyTurnoverYi": 1.08,
+            "weightPercent": 4.13
           },
           {
             "rank": 5,
-            "code": "300972",
-            "name": "万辰集团",
-            "floatMarketCapYi": 252.3,
-            "dailyTurnoverYi": 4.0,
-            "weightPercent": 4.12
+            "code": "600704",
+            "name": "物产中大",
+            "floatMarketCapYi": 252.9,
+            "dailyTurnoverYi": 0.44,
+            "weightPercent": 4.09
           },
           {
             "rank": 6,
             "code": "600598",
             "name": "北大荒",
-            "floatMarketCapYi": 241.9,
-            "dailyTurnoverYi": 3.84,
+            "floatMarketCapYi": 244.8,
+            "dailyTurnoverYi": 0.9,
             "weightPercent": 3.95
           },
           {
             "rank": 7,
             "code": "000623",
             "name": "吉林敖东",
-            "floatMarketCapYi": 202.5,
-            "dailyTurnoverYi": 1.39,
-            "weightPercent": 3.31
+            "floatMarketCapYi": 204.0,
+            "dailyTurnoverYi": 0.28,
+            "weightPercent": 3.3
           },
           {
             "rank": 8,
             "code": "301035",
             "name": "润丰股份",
-            "floatMarketCapYi": 167.9,
-            "dailyTurnoverYi": 0.47,
-            "weightPercent": 2.74
+            "floatMarketCapYi": 164.9,
+            "dailyTurnoverYi": 0.17,
+            "weightPercent": 2.66
           },
           {
             "rank": 9,
             "code": "000902",
             "name": "新洋丰",
-            "floatMarketCapYi": 154.8,
-            "dailyTurnoverYi": 0.93,
-            "weightPercent": 2.53
+            "floatMarketCapYi": 158.3,
+            "dailyTurnoverYi": 0.34,
+            "weightPercent": 2.56
           },
           {
             "rank": 10,
             "code": "002312",
             "name": "川发龙蟒",
-            "floatMarketCapYi": 146.2,
-            "dailyTurnoverYi": 0.73,
-            "weightPercent": 2.39
+            "floatMarketCapYi": 146.8,
+            "dailyTurnoverYi": 0.22,
+            "weightPercent": 2.37
           }
         ],
         "marketHistory": [
-          {
-            "date": "2025-07-23",
-            "close": 2390.34,
-            "turnoverYi": 195.47
-          },
           {
             "date": "2025-07-24",
             "close": 2431.2,
@@ -67157,8 +67140,13 @@
           },
           {
             "date": "2026-10-20",
-            "close": 2236.91,
-            "turnoverYi": 98.29
+            "close": 2241.37,
+            "turnoverYi": 104.05
+          },
+          {
+            "date": "2026-10-21",
+            "close": 2268.67,
+            "turnoverYi": 39.65
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -67575,15 +67563,13 @@
           {
             "date": "2026-10-21",
             "constituentCount": 88,
-            "floatMarketCapYi": 6118.0,
-            "dailyTurnoverYi": 98.3,
-            "top10SharePercent": 49.5,
-            "hhi": 465.4
+            "floatMarketCapYi": 6189.3,
+            "dailyTurnoverYi": 39.7,
+            "top10SharePercent": 49.3,
+            "hhi": 458.1
           }
         ]
-      },
-      "refreshStatus": "retained-previous",
-      "refreshError": "HTTPError"
+      }
     },
     {
       "id": "wealth-longevity",
@@ -67764,52 +67750,52 @@
         "boardCode": "BK0474",
         "boardName": "保险Ⅱ",
         "constituentCount": 5,
-        "liquidConstituentCount": 3,
-        "dailyTurnoverYi": 6.9,
-        "totalMarketCapYi": 26457.5,
-        "floatMarketCapYi": 18162.0,
+        "liquidConstituentCount": 4,
+        "dailyTurnoverYi": 13.9,
+        "totalMarketCapYi": 26513.1,
+        "floatMarketCapYi": 18199.1,
         "top10SharePercent": 100.0,
-        "hhi": 2770.4,
+        "hhi": 2770.1,
         "topConstituents": [
           {
             "rank": 1,
             "code": "601628",
             "name": "中国人寿",
-            "floatMarketCapYi": 7067.5,
-            "dailyTurnoverYi": 0.54,
-            "weightPercent": 38.91
+            "floatMarketCapYi": 7080.0,
+            "dailyTurnoverYi": 1.07,
+            "weightPercent": 38.9
           },
           {
             "rank": 2,
             "code": "601318",
             "name": "中国平安",
-            "floatMarketCapYi": 5434.5,
-            "dailyTurnoverYi": 3.47,
-            "weightPercent": 29.92
+            "floatMarketCapYi": 5448.4,
+            "dailyTurnoverYi": 7.73,
+            "weightPercent": 29.94
           },
           {
             "rank": 3,
             "code": "601319",
             "name": "中国人保",
-            "floatMarketCapYi": 2616.2,
-            "dailyTurnoverYi": 0.31,
-            "weightPercent": 14.4
+            "floatMarketCapYi": 2619.7,
+            "dailyTurnoverYi": 0.76,
+            "weightPercent": 14.39
           },
           {
             "rank": 4,
             "code": "601601",
             "name": "中国太保",
-            "floatMarketCapYi": 1982.3,
-            "dailyTurnoverYi": 1.36,
-            "weightPercent": 10.91
+            "floatMarketCapYi": 1983.7,
+            "dailyTurnoverYi": 2.47,
+            "weightPercent": 10.9
           },
           {
             "rank": 5,
             "code": "601336",
             "name": "新华保险",
-            "floatMarketCapYi": 1061.5,
-            "dailyTurnoverYi": 1.19,
-            "weightPercent": 5.84
+            "floatMarketCapYi": 1067.3,
+            "dailyTurnoverYi": 1.9,
+            "weightPercent": 5.86
           }
         ],
         "marketHistory": [
@@ -69310,8 +69296,8 @@
           },
           {
             "date": "2026-10-21",
-            "close": 1249.05,
-            "turnoverYi": 6.87
+            "close": 1251.99,
+            "turnoverYi": 13.92
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -69728,10 +69714,10 @@
           {
             "date": "2026-10-21",
             "constituentCount": 5,
-            "floatMarketCapYi": 18162.0,
-            "dailyTurnoverYi": 6.9,
+            "floatMarketCapYi": 18199.1,
+            "dailyTurnoverYi": 13.9,
             "top10SharePercent": 100.0,
-            "hhi": 2770.4
+            "hhi": 2770.1
           }
         ]
       }
@@ -69924,92 +69910,92 @@
         "boardCode": "BK0740",
         "boardName": "教育",
         "constituentCount": 17,
-        "liquidConstituentCount": 1,
-        "dailyTurnoverYi": 6.4,
-        "totalMarketCapYi": 816.7,
-        "floatMarketCapYi": 774.8,
+        "liquidConstituentCount": 4,
+        "dailyTurnoverYi": 11.0,
+        "totalMarketCapYi": 819.2,
+        "floatMarketCapYi": 776.9,
         "top10SharePercent": 80.7,
-        "hhi": 780.2,
+        "hhi": 780.9,
         "topConstituents": [
           {
             "rank": 1,
             "code": "002607",
             "name": "中公教育",
             "floatMarketCapYi": 104.7,
-            "dailyTurnoverYi": 0.44,
-            "weightPercent": 13.51
+            "dailyTurnoverYi": 0.77,
+            "weightPercent": 13.47
           },
           {
             "rank": 2,
             "code": "300192",
             "name": "科德教育",
-            "floatMarketCapYi": 95.0,
-            "dailyTurnoverYi": 0.78,
-            "weightPercent": 12.26
+            "floatMarketCapYi": 96.2,
+            "dailyTurnoverYi": 1.45,
+            "weightPercent": 12.39
           },
           {
             "rank": 3,
             "code": "002093",
             "name": "国脉科技",
-            "floatMarketCapYi": 66.6,
-            "dailyTurnoverYi": 0.1,
-            "weightPercent": 8.6
+            "floatMarketCapYi": 66.7,
+            "dailyTurnoverYi": 0.2,
+            "weightPercent": 8.59
           },
           {
             "rank": 4,
             "code": "605098",
             "name": "行动教育",
-            "floatMarketCapYi": 64.4,
-            "dailyTurnoverYi": 0.06,
-            "weightPercent": 8.31
+            "floatMarketCapYi": 63.5,
+            "dailyTurnoverYi": 0.16,
+            "weightPercent": 8.18
           },
           {
             "rank": 5,
-            "code": "300492",
-            "name": "华图山鼎",
-            "floatMarketCapYi": 58.6,
-            "dailyTurnoverYi": 0.27,
-            "weightPercent": 7.57
+            "code": "300010",
+            "name": "ST豆神",
+            "floatMarketCapYi": 59.4,
+            "dailyTurnoverYi": 1.38,
+            "weightPercent": 7.65
           },
           {
             "rank": 6,
-            "code": "300010",
-            "name": "ST豆神",
-            "floatMarketCapYi": 58.3,
-            "dailyTurnoverYi": 0.81,
-            "weightPercent": 7.52
+            "code": "300492",
+            "name": "华图山鼎",
+            "floatMarketCapYi": 58.7,
+            "dailyTurnoverYi": 0.46,
+            "weightPercent": 7.56
           },
           {
             "rank": 7,
             "code": "300688",
             "name": "创业黑马",
-            "floatMarketCapYi": 47.2,
-            "dailyTurnoverYi": 0.22,
-            "weightPercent": 6.09
+            "floatMarketCapYi": 47.1,
+            "dailyTurnoverYi": 0.5,
+            "weightPercent": 6.06
           },
           {
             "rank": 8,
             "code": "600880",
             "name": "博瑞传播",
-            "floatMarketCapYi": 46.3,
-            "dailyTurnoverYi": 0.78,
-            "weightPercent": 5.98
+            "floatMarketCapYi": 46.1,
+            "dailyTurnoverYi": 1.26,
+            "weightPercent": 5.94
           },
           {
             "rank": 9,
-            "code": "000526",
-            "name": "学大教育",
-            "floatMarketCapYi": 42.2,
-            "dailyTurnoverYi": 0.13,
-            "weightPercent": 5.45
+            "code": "600730",
+            "name": "*ST高科",
+            "floatMarketCapYi": 42.3,
+            "dailyTurnoverYi": 0.12,
+            "weightPercent": 5.44
           },
           {
             "rank": 10,
-            "code": "600730",
-            "name": "*ST高科",
-            "floatMarketCapYi": 42.2,
-            "dailyTurnoverYi": 0.06,
-            "weightPercent": 5.45
+            "code": "000526",
+            "name": "学大教育",
+            "floatMarketCapYi": 42.1,
+            "dailyTurnoverYi": 0.27,
+            "weightPercent": 5.42
           }
         ],
         "marketHistory": [
@@ -71510,8 +71496,8 @@
           },
           {
             "date": "2026-10-21",
-            "close": 593.6,
-            "turnoverYi": 6.37
+            "close": 594.72,
+            "turnoverYi": 11.02
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -71928,10 +71914,10 @@
           {
             "date": "2026-10-21",
             "constituentCount": 17,
-            "floatMarketCapYi": 774.8,
-            "dailyTurnoverYi": 6.4,
+            "floatMarketCapYi": 776.9,
+            "dailyTurnoverYi": 11.0,
             "top10SharePercent": 80.7,
-            "hhi": 780.2
+            "hhi": 780.9
           }
         ]
       }
@@ -72115,92 +72101,92 @@
         "boardCode": "BK0486",
         "boardName": "传媒",
         "constituentCount": 128,
-        "liquidConstituentCount": 46,
-        "dailyTurnoverYi": 163.8,
-        "totalMarketCapYi": 14870.9,
-        "floatMarketCapYi": 13606.7,
+        "liquidConstituentCount": 75,
+        "dailyTurnoverYi": 269.9,
+        "totalMarketCapYi": 14855.3,
+        "floatMarketCapYi": 13594.8,
         "top10SharePercent": 31.8,
-        "hhi": 179.5,
+        "hhi": 179.4,
         "topConstituents": [
           {
             "rank": 1,
             "code": "002602",
             "name": "世纪华通",
             "floatMarketCapYi": 823.1,
-            "dailyTurnoverYi": 1.25,
+            "dailyTurnoverYi": 2.76,
             "weightPercent": 6.05
           },
           {
             "rank": 2,
             "code": "002027",
             "name": "分众传媒",
-            "floatMarketCapYi": 749.6,
-            "dailyTurnoverYi": 1.23,
-            "weightPercent": 5.51
+            "floatMarketCapYi": 746.7,
+            "dailyTurnoverYi": 2.55,
+            "weightPercent": 5.49
           },
           {
             "rank": 3,
             "code": "300418",
             "name": "昆仑万维",
-            "floatMarketCapYi": 472.8,
-            "dailyTurnoverYi": 4.03,
-            "weightPercent": 3.48
+            "floatMarketCapYi": 475.0,
+            "dailyTurnoverYi": 6.99,
+            "weightPercent": 3.49
           },
           {
             "rank": 4,
             "code": "300058",
             "name": "蓝色光标",
-            "floatMarketCapYi": 431.6,
-            "dailyTurnoverYi": 4.07,
+            "floatMarketCapYi": 430.9,
+            "dailyTurnoverYi": 6.75,
             "weightPercent": 3.17
           },
           {
             "rank": 5,
             "code": "002558",
             "name": "巨人网络",
-            "floatMarketCapYi": 404.8,
-            "dailyTurnoverYi": 1.02,
+            "floatMarketCapYi": 404.6,
+            "dailyTurnoverYi": 2.24,
             "weightPercent": 2.98
           },
           {
             "rank": 6,
             "code": "300251",
             "name": "光线传媒",
-            "floatMarketCapYi": 327.1,
-            "dailyTurnoverYi": 1.33,
-            "weightPercent": 2.4
+            "floatMarketCapYi": 324.0,
+            "dailyTurnoverYi": 2.3,
+            "weightPercent": 2.38
           },
           {
             "rank": 7,
             "code": "002517",
             "name": "恺英网络",
-            "floatMarketCapYi": 290.7,
-            "dailyTurnoverYi": 1.13,
-            "weightPercent": 2.14
+            "floatMarketCapYi": 289.8,
+            "dailyTurnoverYi": 1.71,
+            "weightPercent": 2.13
           },
           {
             "rank": 8,
             "code": "600637",
             "name": "东方明珠",
-            "floatMarketCapYi": 283.1,
-            "dailyTurnoverYi": 0.85,
-            "weightPercent": 2.08
+            "floatMarketCapYi": 283.7,
+            "dailyTurnoverYi": 1.44,
+            "weightPercent": 2.09
           },
           {
             "rank": 9,
             "code": "002555",
             "name": "三七互娱",
-            "floatMarketCapYi": 276.9,
-            "dailyTurnoverYi": 0.49,
-            "weightPercent": 2.04
+            "floatMarketCapYi": 276.6,
+            "dailyTurnoverYi": 0.92,
+            "weightPercent": 2.03
           },
           {
             "rank": 10,
             "code": "600977",
             "name": "中国电影",
-            "floatMarketCapYi": 269.6,
-            "dailyTurnoverYi": 0.75,
-            "weightPercent": 1.98
+            "floatMarketCapYi": 270.3,
+            "dailyTurnoverYi": 1.26,
+            "weightPercent": 1.99
           }
         ],
         "marketHistory": [
@@ -73701,8 +73687,8 @@
           },
           {
             "date": "2026-10-21",
-            "close": 10544.56,
-            "turnoverYi": 163.98
+            "close": 10539.64,
+            "turnoverYi": 269.92
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -74119,10 +74105,10 @@
           {
             "date": "2026-10-21",
             "constituentCount": 128,
-            "floatMarketCapYi": 13606.7,
-            "dailyTurnoverYi": 163.8,
+            "floatMarketCapYi": 13594.8,
+            "dailyTurnoverYi": 269.9,
             "top10SharePercent": 31.8,
-            "hhi": 179.5
+            "hhi": 179.4
           }
         ]
       }
@@ -74306,51 +74292,51 @@
         "boardCode": "BK1230",
         "boardName": "航海装备Ⅱ",
         "constituentCount": 10,
-        "liquidConstituentCount": 4,
-        "dailyTurnoverYi": 9.8,
-        "totalMarketCapYi": 5536.3,
-        "floatMarketCapYi": 3847.4,
+        "liquidConstituentCount": 6,
+        "dailyTurnoverYi": 19.9,
+        "totalMarketCapYi": 5523.2,
+        "floatMarketCapYi": 3841.2,
         "top10SharePercent": 100.0,
-        "hhi": 4954.3,
+        "hhi": 4960.5,
         "topConstituents": [
           {
             "rank": 1,
             "code": "600150",
             "name": "中国船舶",
-            "floatMarketCapYi": 2652.0,
-            "dailyTurnoverYi": 2.68,
-            "weightPercent": 68.93
+            "floatMarketCapYi": 2649.8,
+            "dailyTurnoverYi": 5.92,
+            "weightPercent": 68.98
           },
           {
             "rank": 2,
             "code": "603268",
             "name": "松发股份",
-            "floatMarketCapYi": 441.6,
-            "dailyTurnoverYi": 1.18,
-            "weightPercent": 11.48
+            "floatMarketCapYi": 439.8,
+            "dailyTurnoverYi": 3.41,
+            "weightPercent": 11.45
           },
           {
             "rank": 3,
             "code": "600685",
             "name": "中船防务",
-            "floatMarketCapYi": 234.4,
-            "dailyTurnoverYi": 1.17,
-            "weightPercent": 6.09
+            "floatMarketCapYi": 233.0,
+            "dailyTurnoverYi": 1.89,
+            "weightPercent": 6.07
           },
           {
             "rank": 4,
             "code": "600764",
             "name": "中国海防",
-            "floatMarketCapYi": 140.6,
-            "dailyTurnoverYi": 0.8,
-            "weightPercent": 3.66
+            "floatMarketCapYi": 139.8,
+            "dailyTurnoverYi": 1.24,
+            "weightPercent": 3.64
           },
           {
             "rank": 5,
             "code": "300008",
             "name": "天海防务",
             "floatMarketCapYi": 106.6,
-            "dailyTurnoverYi": 0.44,
+            "dailyTurnoverYi": 0.77,
             "weightPercent": 2.77
           },
           {
@@ -74358,39 +74344,39 @@
             "code": "300065",
             "name": "海兰信",
             "floatMarketCapYi": 94.4,
-            "dailyTurnoverYi": 0.9,
-            "weightPercent": 2.45
+            "dailyTurnoverYi": 1.73,
+            "weightPercent": 2.46
           },
           {
             "rank": 7,
             "code": "601890",
             "name": "亚星锚链",
-            "floatMarketCapYi": 87.4,
-            "dailyTurnoverYi": 0.43,
-            "weightPercent": 2.27
+            "floatMarketCapYi": 87.7,
+            "dailyTurnoverYi": 0.85,
+            "weightPercent": 2.28
           },
           {
             "rank": 8,
             "code": "300589",
             "name": "江龙船艇",
-            "floatMarketCapYi": 32.4,
-            "dailyTurnoverYi": 1.36,
-            "weightPercent": 0.84
+            "floatMarketCapYi": 32.5,
+            "dailyTurnoverYi": 2.69,
+            "weightPercent": 0.85
           },
           {
             "rank": 9,
             "code": "300600",
             "name": "国瑞科技",
-            "floatMarketCapYi": 29.4,
-            "dailyTurnoverYi": 0.27,
-            "weightPercent": 0.76
+            "floatMarketCapYi": 29.5,
+            "dailyTurnoverYi": 0.46,
+            "weightPercent": 0.77
           },
           {
             "rank": 10,
             "code": "300810",
             "name": "中科海讯",
-            "floatMarketCapYi": 28.6,
-            "dailyTurnoverYi": 0.58,
+            "floatMarketCapYi": 28.3,
+            "dailyTurnoverYi": 0.93,
             "weightPercent": 0.74
           }
         ],
@@ -75892,8 +75878,8 @@
           },
           {
             "date": "2026-10-21",
-            "close": 5105.6,
-            "turnoverYi": 9.81
+            "close": 5095.86,
+            "turnoverYi": 19.88
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -76310,10 +76296,10 @@
           {
             "date": "2026-10-21",
             "constituentCount": 10,
-            "floatMarketCapYi": 3847.4,
-            "dailyTurnoverYi": 9.8,
+            "floatMarketCapYi": 3841.2,
+            "dailyTurnoverYi": 19.9,
             "top10SharePercent": 100.0,
-            "hhi": 4954.3
+            "hhi": 4960.5
           }
         ]
       }
@@ -76531,7 +76517,7 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 1,
-        "coveragePercent": 26.1,
+        "coveragePercent": 26.0,
         "reportDate": "2026-09-30",
         "revenueGrowthMedian": 12.6,
         "positiveRevenueShare": 100.0,
@@ -76549,7 +76535,7 @@
             "profitGrowthMedian": 38.5,
             "positiveProfitShare": 100.0,
             "cashToRevenueMedian": 0.1,
-            "coveragePercent": 26.1
+            "coveragePercent": 26.0
           },
           {
             "reportDate": "2026-06-30",
@@ -76665,93 +76651,93 @@
       "assets": {
         "boardCode": "BK1090",
         "boardName": "机器人概念",
-        "constituentCount": 779,
-        "liquidConstituentCount": 108,
-        "dailyTurnoverYi": 491.2,
-        "totalMarketCapYi": 127801.7,
-        "floatMarketCapYi": 107146.5,
-        "top10SharePercent": 26.1,
-        "hhi": 143.4,
+        "constituentCount": 778,
+        "liquidConstituentCount": 189,
+        "dailyTurnoverYi": 1012.8,
+        "totalMarketCapYi": 128009.9,
+        "floatMarketCapYi": 107358.2,
+        "top10SharePercent": 26.0,
+        "hhi": 143.2,
         "topConstituents": [
           {
             "rank": 1,
             "code": "601138",
             "name": "工业富联",
-            "floatMarketCapYi": 9864.5,
-            "dailyTurnoverYi": 8.39,
-            "weightPercent": 9.21
+            "floatMarketCapYi": 9896.2,
+            "dailyTurnoverYi": 18.07,
+            "weightPercent": 9.22
           },
           {
             "rank": 2,
             "code": "002475",
             "name": "立讯精密",
-            "floatMarketCapYi": 3546.5,
-            "dailyTurnoverYi": 8.48,
-            "weightPercent": 3.31
+            "floatMarketCapYi": 3518.6,
+            "dailyTurnoverYi": 18.93,
+            "weightPercent": 3.28
           },
           {
             "rank": 3,
             "code": "002415",
             "name": "海康威视",
-            "floatMarketCapYi": 2958.1,
-            "dailyTurnoverYi": 1.8,
-            "weightPercent": 2.76
+            "floatMarketCapYi": 2951.7,
+            "dailyTurnoverYi": 4.47,
+            "weightPercent": 2.75
           },
           {
             "rank": 4,
             "code": "002594",
             "name": "比亚迪",
-            "floatMarketCapYi": 2845.4,
-            "dailyTurnoverYi": 2.63,
-            "weightPercent": 2.66
+            "floatMarketCapYi": 2828.0,
+            "dailyTurnoverYi": 9.6,
+            "weightPercent": 2.63
           },
           {
             "rank": 5,
             "code": "000651",
             "name": "格力电器",
-            "floatMarketCapYi": 2067.3,
-            "dailyTurnoverYi": 8.06,
-            "weightPercent": 1.93
+            "floatMarketCapYi": 2017.2,
+            "dailyTurnoverYi": 24.95,
+            "weightPercent": 1.88
           },
           {
             "rank": 6,
             "code": "300476",
             "name": "胜宏科技",
-            "floatMarketCapYi": 1626.9,
-            "dailyTurnoverYi": 10.71,
-            "weightPercent": 1.52
+            "floatMarketCapYi": 1644.3,
+            "dailyTurnoverYi": 22.17,
+            "weightPercent": 1.53
           },
           {
             "rank": 7,
             "code": "300433",
             "name": "蓝思科技",
-            "floatMarketCapYi": 1322.6,
-            "dailyTurnoverYi": 3.74,
-            "weightPercent": 1.23
+            "floatMarketCapYi": 1328.6,
+            "dailyTurnoverYi": 8.17,
+            "weightPercent": 1.24
           },
           {
             "rank": 8,
             "code": "600487",
             "name": "亨通光电",
-            "floatMarketCapYi": 1261.4,
-            "dailyTurnoverYi": 16.57,
-            "weightPercent": 1.18
+            "floatMarketCapYi": 1280.6,
+            "dailyTurnoverYi": 37.74,
+            "weightPercent": 1.19
           },
           {
             "rank": 9,
             "code": "002050",
             "name": "三花智控",
-            "floatMarketCapYi": 1216.2,
-            "dailyTurnoverYi": 2.57,
+            "floatMarketCapYi": 1220.6,
+            "dailyTurnoverYi": 5.48,
             "weightPercent": 1.14
           },
           {
             "rank": 10,
             "code": "300124",
             "name": "汇川技术",
-            "floatMarketCapYi": 1205.8,
-            "dailyTurnoverYi": 3.44,
-            "weightPercent": 1.13
+            "floatMarketCapYi": 1206.7,
+            "dailyTurnoverYi": 5.81,
+            "weightPercent": 1.12
           }
         ],
         "marketHistory": [
@@ -78252,8 +78238,8 @@
           },
           {
             "date": "2026-10-21",
-            "close": 1870.39,
-            "turnoverYi": 494.76
+            "close": 1874.52,
+            "turnoverYi": 1014.05
           }
         ],
         "source": "东方财富公开板块成分与行情",
@@ -78669,11 +78655,11 @@
           },
           {
             "date": "2026-10-21",
-            "constituentCount": 779,
-            "floatMarketCapYi": 107146.5,
-            "dailyTurnoverYi": 491.2,
-            "top10SharePercent": 26.1,
-            "hhi": 143.4
+            "constituentCount": 778,
+            "floatMarketCapYi": 107358.2,
+            "dailyTurnoverYi": 1012.8,
+            "top10SharePercent": 26.0,
+            "hhi": 143.2
           }
         ]
       }
