@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "updateTime": "2026-10-24T12:29:59.580720+00:00",
+  "updateTime": "2026-10-24T22:59:19.876141+00:00",
   "methodologyVersion": "multi-signal-demand-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
@@ -28,6 +28,7 @@
     "obesity-care",
     "climate-adaptation",
     "digital-health",
+    "mental-health",
     "pet-economy",
     "sports-outdoor",
     "inbound-consumption",
@@ -50406,7 +50407,9 @@
             "hhi": 1742.5
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "pet-economy",
