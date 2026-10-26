@@ -1,11 +1,12 @@
 {
   "schemaVersion": 3,
-  "updateTime": "2026-10-26T05:33:16.398452+00:00",
+  "updateTime": "2026-10-26T11:58:19.001013+00:00",
   "methodologyVersion": "multi-signal-demand-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
   "refreshStatus": "degraded",
   "failedThemeIds": [
+    "ai-agent",
     "embodied-ai",
     "space",
     "power",
@@ -28,6 +29,8 @@
     "climate-adaptation",
     "digital-health",
     "mental-health",
+    "pet-economy",
+    "sports-outdoor",
     "inbound-consumption",
     "new-food",
     "recycling",
@@ -35,6 +38,7 @@
     "defense-tech",
     "agri-tech",
     "wealth-longevity",
+    "human-upskilling",
     "creator-economy",
     "ocean-economy",
     "service-robot"
@@ -2282,7 +2286,9 @@
             "hhi": 165.2
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "embodied-ai",
@@ -53011,7 +53017,9 @@
             "hhi": 257.8
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "sports-outdoor",
@@ -55251,7 +55259,9 @@
             "hhi": 638.6
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "inbound-consumption",
@@ -73431,7 +73441,9 @@
             "hhi": 788.3
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "creator-economy",
