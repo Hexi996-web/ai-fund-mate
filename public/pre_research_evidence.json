@@ -1,21 +1,25 @@
 {
   "schemaVersion": 3,
-  "updateTime": "2026-10-27T07:07:24.725322+00:00",
+  "updateTime": "2026-10-27T13:32:37.262241+00:00",
   "methodologyVersion": "multi-signal-demand-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
   "refreshStatus": "degraded",
   "failedThemeIds": [
     "ai-agent",
+    "embodied-ai",
     "space",
     "power",
     "hard-tech",
+    "biotech",
     "longevity",
     "experience",
     "resources",
     "future-tech",
     "industrial-software",
     "ai-application",
+    "cybersecurity",
+    "smart-healthcare",
     "synthetic-biology",
     "nuclear-energy",
     "water-security",
@@ -27,10 +31,13 @@
     "mental-health",
     "pet-economy",
     "sports-outdoor",
+    "inbound-consumption",
     "new-food",
     "recycling",
+    "grid-storage",
     "defense-tech",
     "agri-tech",
+    "wealth-longevity",
     "human-upskilling",
     "creator-economy",
     "ocean-economy",
@@ -4697,7 +4704,9 @@
             "hhi": 224.2
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "space",
@@ -13253,7 +13262,9 @@
             "hhi": 290.5
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "longevity",
@@ -28247,7 +28258,9 @@
             "hhi": 810.6
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "smart-healthcare",
@@ -30495,7 +30508,9 @@
             "hhi": 1769.8
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "synthetic-biology",
@@ -57776,7 +57791,9 @@
             "hhi": 1659.8
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "new-food",
@@ -64676,7 +64693,9 @@
             "hhi": 2307.6
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "defense-tech",
@@ -71517,7 +71536,9 @@
             "hhi": 2797.3
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "human-upskilling",
