@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "updateTime": "2026-10-28T07:43:36.493692+00:00",
+  "updateTime": "2026-10-28T14:47:28.380403+00:00",
   "methodologyVersion": "multi-signal-demand-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
@@ -12,12 +12,14 @@
     "power",
     "hard-tech",
     "biotech",
+    "longevity",
     "experience",
     "resources",
     "future-tech",
     "industrial-software",
     "ai-application",
     "cybersecurity",
+    "smart-healthcare",
     "synthetic-biology",
     "nuclear-energy",
     "water-security",
@@ -15566,7 +15568,9 @@
             "hhi": 706.4
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "experience",
@@ -30647,7 +30651,9 @@
             "hhi": 1711.6
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "synthetic-biology",
