@@ -1,32 +1,42 @@
 {
   "schemaVersion": 3,
-  "updateTime": "2026-11-04T03:28:03.221415+00:00",
+  "updateTime": "2026-11-04T11:50:16.644270+00:00",
   "methodologyVersion": "multi-signal-demand-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
   "refreshStatus": "degraded",
   "failedThemeIds": [
     "ai-agent",
+    "embodied-ai",
     "space",
     "power",
     "hard-tech",
+    "biotech",
     "longevity",
     "experience",
     "resources",
+    "future-tech",
     "industrial-software",
     "ai-application",
+    "cybersecurity",
+    "smart-healthcare",
     "synthetic-biology",
     "nuclear-energy",
+    "water-security",
     "low-altitude",
     "autonomous-driving",
     "obesity-care",
+    "climate-adaptation",
     "digital-health",
     "mental-health",
+    "pet-economy",
     "sports-outdoor",
     "inbound-consumption",
+    "new-food",
     "recycling",
     "grid-storage",
     "defense-tech",
+    "agri-tech",
     "wealth-longevity",
     "human-upskilling",
     "creator-economy",
@@ -4822,7 +4832,9 @@
             "hhi": 226.3
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "space",
@@ -13734,7 +13746,9 @@
             "hhi": 290.6
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "longevity",
@@ -22273,7 +22287,9 @@
             "hhi": 914.7
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "industrial-software",
@@ -29213,7 +29229,9 @@
             "hhi": 827.0
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "smart-healthcare",
@@ -31547,7 +31565,9 @@
             "hhi": 1718.6
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "synthetic-biology",
@@ -38680,7 +38700,9 @@
             "hhi": 1373.9
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "low-altitude",
@@ -48036,7 +48058,9 @@
             "hhi": 593.1
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "digital-health",
@@ -54976,7 +55000,9 @@
             "hhi": 265.9
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "sports-outdoor",
@@ -61927,7 +61953,9 @@
             "hhi": 2007.5
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "recycling",
@@ -71501,7 +71529,9 @@
             "hhi": 542.2
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "wealth-longevity",
@@ -76089,7 +76119,7 @@
         ]
       },
       "refreshStatus": "retained-previous",
-      "refreshError": "HTTPError"
+      "refreshError": "ReadTimeout"
     },
     {
       "id": "creator-economy",
@@ -78403,7 +78433,7 @@
         ]
       },
       "refreshStatus": "retained-previous",
-      "refreshError": "HTTPError"
+      "refreshError": "ReadTimeout"
     },
     {
       "id": "ocean-economy",
@@ -80717,7 +80747,7 @@
         ]
       },
       "refreshStatus": "retained-previous",
-      "refreshError": "HTTPError"
+      "refreshError": "ReadTimeout"
     },
     {
       "id": "service-robot",
@@ -83191,7 +83221,7 @@
         ]
       },
       "refreshStatus": "retained-previous",
-      "refreshError": "HTTPError"
+      "refreshError": "ReadTimeout"
     }
   ]
 }
