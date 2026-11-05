@@ -1,11 +1,45 @@
 {
   "schemaVersion": 3,
-  "updateTime": "2026-11-05T00:33:45.271285+00:00",
+  "updateTime": "2026-11-05T01:17:12.769945+00:00",
   "methodologyVersion": "multi-signal-demand-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
-  "refreshStatus": "complete",
-  "failedThemeIds": [],
+  "refreshStatus": "degraded",
+  "failedThemeIds": [
+    "ai-agent",
+    "embodied-ai",
+    "space",
+    "power",
+    "hard-tech",
+    "biotech",
+    "longevity",
+    "experience",
+    "resources",
+    "future-tech",
+    "industrial-software",
+    "ai-application",
+    "smart-healthcare",
+    "synthetic-biology",
+    "nuclear-energy",
+    "water-security",
+    "low-altitude",
+    "autonomous-driving",
+    "obesity-care",
+    "climate-adaptation",
+    "digital-health",
+    "mental-health",
+    "pet-economy",
+    "sports-outdoor",
+    "inbound-consumption",
+    "new-food",
+    "recycling",
+    "grid-storage",
+    "wealth-longevity",
+    "human-upskilling",
+    "creator-economy",
+    "ocean-economy",
+    "service-robot"
+  ],
   "enterpriseDataCount": 36,
   "assetDataCount": 36,
   "assetMarketHistoryCount": 34,
@@ -2329,7 +2363,9 @@
             "hhi": 160.7
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "embodied-ai",
@@ -4809,7 +4845,9 @@
             "hhi": 216.6
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "space",
@@ -7129,7 +7167,9 @@
             "hhi": 82.8
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "power",
@@ -8815,7 +8855,9 @@
             "hhi": 190.0
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "hard-tech",
@@ -11295,7 +11337,9 @@
             "hhi": 106.1
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "biotech",
@@ -13777,7 +13821,9 @@
             "hhi": 290.5
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "longevity",
@@ -16097,7 +16143,9 @@
             "hhi": 721.6
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "experience",
@@ -17702,7 +17750,9 @@
             "hhi": 270.7
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "resources",
@@ -20022,7 +20072,9 @@
             "hhi": 96.8
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "future-tech",
@@ -22342,7 +22394,9 @@
             "hhi": 885.2
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "industrial-software",
@@ -24662,7 +24716,9 @@
             "hhi": 249.5
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "ai-application",
@@ -26982,7 +27038,9 @@
             "hhi": 834.1
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "cybersecurity",
@@ -27172,8 +27230,8 @@
         "boardCode": "BK1047",
         "boardName": "数据安全",
         "constituentCount": 83,
-        "liquidConstituentCount": 51,
-        "dailyTurnoverYi": 291.7,
+        "liquidConstituentCount": 0,
+        "dailyTurnoverYi": 0.0,
         "totalMarketCapYi": 11076.3,
         "floatMarketCapYi": 9213.9,
         "top10SharePercent": 65.4,
@@ -27184,7 +27242,7 @@
             "code": "688008",
             "name": "澜起科技",
             "floatMarketCapYi": 1921.1,
-            "dailyTurnoverYi": 72.93,
+            "dailyTurnoverYi": 0.0,
             "weightPercent": 20.85
           },
           {
@@ -27192,7 +27250,7 @@
             "code": "600050",
             "name": "中国联通",
             "floatMarketCapYi": 1385.3,
-            "dailyTurnoverYi": 9.78,
+            "dailyTurnoverYi": 0.0,
             "weightPercent": 15.03
           },
           {
@@ -27200,7 +27258,7 @@
             "code": "002602",
             "name": "世纪华通",
             "floatMarketCapYi": 874.8,
-            "dailyTurnoverYi": 17.53,
+            "dailyTurnoverYi": 0.0,
             "weightPercent": 9.49
           },
           {
@@ -27208,7 +27266,7 @@
             "code": "601360",
             "name": "三六零",
             "floatMarketCapYi": 572.6,
-            "dailyTurnoverYi": 6.59,
+            "dailyTurnoverYi": 0.0,
             "weightPercent": 6.21
           },
           {
@@ -27216,7 +27274,7 @@
             "code": "000066",
             "name": "中国长城",
             "floatMarketCapYi": 373.5,
-            "dailyTurnoverYi": 9.94,
+            "dailyTurnoverYi": 0.0,
             "weightPercent": 4.05
           },
           {
@@ -27224,7 +27282,7 @@
             "code": "600536",
             "name": "中国软件",
             "floatMarketCapYi": 255.3,
-            "dailyTurnoverYi": 3.08,
+            "dailyTurnoverYi": 0.0,
             "weightPercent": 2.77
           },
           {
@@ -27232,7 +27290,7 @@
             "code": "000547",
             "name": "航天发展",
             "floatMarketCapYi": 201.5,
-            "dailyTurnoverYi": 14.23,
+            "dailyTurnoverYi": 0.0,
             "weightPercent": 2.19
           },
           {
@@ -27240,7 +27298,7 @@
             "code": "688561",
             "name": "奇安信-U",
             "floatMarketCapYi": 170.3,
-            "dailyTurnoverYi": 2.53,
+            "dailyTurnoverYi": 0.0,
             "weightPercent": 1.85
           },
           {
@@ -27248,7 +27306,7 @@
             "code": "300002",
             "name": "神州泰岳",
             "floatMarketCapYi": 152.9,
-            "dailyTurnoverYi": 3.92,
+            "dailyTurnoverYi": 0.0,
             "weightPercent": 1.66
           },
           {
@@ -27256,7 +27314,7 @@
             "code": "002268",
             "name": "电科网安",
             "floatMarketCapYi": 115.2,
-            "dailyTurnoverYi": 1.71,
+            "dailyTurnoverYi": 0.0,
             "weightPercent": 1.25
           }
         ],
@@ -29297,7 +29355,7 @@
             "date": "2026-11-05",
             "constituentCount": 83,
             "floatMarketCapYi": 9213.9,
-            "dailyTurnoverYi": 291.7,
+            "dailyTurnoverYi": 0.0,
             "top10SharePercent": 65.4,
             "hhi": 848.6
           }
@@ -31644,7 +31702,9 @@
             "hhi": 1714.9
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "synthetic-biology",
@@ -33986,7 +34046,9 @@
             "hhi": 287.0
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "nuclear-energy",
@@ -36477,7 +36539,9 @@
             "hhi": 467.5
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "water-security",
@@ -38797,7 +38861,9 @@
             "hhi": 1355.7
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "low-altitude",
@@ -41139,7 +41205,9 @@
             "hhi": 112.6
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "autonomous-driving",
@@ -43539,7 +43607,9 @@
             "hhi": 679.8
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "obesity-care",
@@ -45859,7 +45929,9 @@
             "hhi": 1567.6
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "climate-adaptation",
@@ -48179,7 +48251,9 @@
             "hhi": 582.6
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "digital-health",
@@ -50499,7 +50573,9 @@
             "hhi": 1714.9
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "mental-health",
@@ -52819,7 +52895,9 @@
             "hhi": 1714.9
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "pet-economy",
@@ -55139,7 +55217,9 @@
             "hhi": 266.7
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "sports-outdoor",
@@ -57459,7 +57539,9 @@
             "hhi": 682.2
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "inbound-consumption",
@@ -59798,7 +59880,9 @@
             "hhi": 1678.5
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "new-food",
@@ -62110,7 +62194,9 @@
             "hhi": 1999.0
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "recycling",
@@ -64430,7 +64516,9 @@
             "hhi": 207.8
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "grid-storage",
@@ -66910,7 +66998,9 @@
             "hhi": 2253.2
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "defense-tech",
@@ -66965,7 +67055,7 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 10,
-        "coveragePercent": 20.6,
+        "coveragePercent": 20.5,
         "reportDate": "2026-09-30",
         "revenueGrowthMedian": 13.7,
         "positiveRevenueShare": 70.0,
@@ -66983,7 +67073,7 @@
             "profitGrowthMedian": 54.6,
             "positiveProfitShare": 70.0,
             "cashToRevenueMedian": 0.1,
-            "coveragePercent": 20.6
+            "coveragePercent": 20.5
           },
           {
             "reportDate": "2026-06-30",
@@ -67100,83 +67190,83 @@
         "boardCode": "BK0490",
         "boardName": "军工",
         "constituentCount": 448,
-        "liquidConstituentCount": 299,
-        "dailyTurnoverYi": 1591.3,
-        "totalMarketCapYi": 55166.2,
-        "floatMarketCapYi": 47986.5,
-        "top10SharePercent": 20.6,
-        "hhi": 89.7,
+        "liquidConstituentCount": 0,
+        "dailyTurnoverYi": 0.0,
+        "totalMarketCapYi": 55166.5,
+        "floatMarketCapYi": 48008.6,
+        "top10SharePercent": 20.5,
+        "hhi": 89.6,
         "topConstituents": [
           {
             "rank": 1,
             "code": "600150",
             "name": "中国船舶",
             "floatMarketCapYi": 2673.1,
-            "dailyTurnoverYi": 27.03,
+            "dailyTurnoverYi": 0.0,
             "weightPercent": 5.57
           },
           {
             "rank": 2,
             "code": "600760",
             "name": "中航沈飞",
-            "floatMarketCapYi": 1379.4,
-            "dailyTurnoverYi": 8.85,
-            "weightPercent": 2.87
+            "floatMarketCapYi": 1373.7,
+            "dailyTurnoverYi": 0.0,
+            "weightPercent": 2.86
           },
           {
             "rank": 3,
             "code": "600893",
             "name": "航发动力",
             "floatMarketCapYi": 1051.7,
-            "dailyTurnoverYi": 8.47,
+            "dailyTurnoverYi": 0.0,
             "weightPercent": 2.19
           },
           {
             "rank": 4,
             "code": "002179",
             "name": "中航光电",
-            "floatMarketCapYi": 731.4,
-            "dailyTurnoverYi": 10.26,
-            "weightPercent": 1.52
+            "floatMarketCapYi": 725.4,
+            "dailyTurnoverYi": 0.0,
+            "weightPercent": 1.51
           },
           {
             "rank": 5,
             "code": "600482",
             "name": "中国动力",
-            "floatMarketCapYi": 726.1,
-            "dailyTurnoverYi": 5.76,
-            "weightPercent": 1.51
+            "floatMarketCapYi": 718.4,
+            "dailyTurnoverYi": 0.0,
+            "weightPercent": 1.5
           },
           {
             "rank": 6,
             "code": "688002",
             "name": "睿创微纳",
             "floatMarketCapYi": 712.3,
-            "dailyTurnoverYi": 19.38,
+            "dailyTurnoverYi": 0.0,
             "weightPercent": 1.48
           },
           {
             "rank": 7,
             "code": "600118",
             "name": "中国卫星",
-            "floatMarketCapYi": 664.4,
-            "dailyTurnoverYi": 35.87,
+            "floatMarketCapYi": 664.3,
+            "dailyTurnoverYi": 0.0,
             "weightPercent": 1.38
           },
           {
             "rank": 8,
             "code": "000768",
             "name": "中航西飞",
-            "floatMarketCapYi": 652.2,
-            "dailyTurnoverYi": 5.57,
-            "weightPercent": 1.36
+            "floatMarketCapYi": 645.0,
+            "dailyTurnoverYi": 0.0,
+            "weightPercent": 1.34
           },
           {
             "rank": 9,
             "code": "000425",
             "name": "徐工机械",
-            "floatMarketCapYi": 642.5,
-            "dailyTurnoverYi": 6.66,
+            "floatMarketCapYi": 643.4,
+            "dailyTurnoverYi": 0.0,
             "weightPercent": 1.34
           },
           {
@@ -67184,7 +67274,7 @@
             "code": "600010",
             "name": "包钢股份",
             "floatMarketCapYi": 635.8,
-            "dailyTurnoverYi": 6.34,
+            "dailyTurnoverYi": 0.0,
             "weightPercent": 1.32
           }
         ],
@@ -69224,10 +69314,10 @@
           {
             "date": "2026-11-05",
             "constituentCount": 448,
-            "floatMarketCapYi": 47986.5,
-            "dailyTurnoverYi": 1591.3,
-            "top10SharePercent": 20.6,
-            "hhi": 89.7
+            "floatMarketCapYi": 48008.6,
+            "dailyTurnoverYi": 0.0,
+            "top10SharePercent": 20.5,
+            "hhi": 89.6
           }
         ]
       }
@@ -69445,12 +69535,12 @@
       "enterprise": {
         "sampleCompanies": 10,
         "reportedCompanies": 10,
-        "coveragePercent": 50.4,
+        "coveragePercent": 50.6,
         "reportDate": "2026-09-30",
-        "revenueGrowthMedian": -1.7,
-        "positiveRevenueShare": 50.0,
-        "profitGrowthMedian": 1.0,
-        "positiveProfitShare": 60.0,
+        "revenueGrowthMedian": -3.0,
+        "positiveRevenueShare": 40.0,
+        "profitGrowthMedian": -1.2,
+        "positiveProfitShare": 50.0,
         "cashToRevenueMedian": 0.1,
         "source": "东方财富上市公司财务报告",
         "status": "真实公开数据",
@@ -69458,29 +69548,29 @@
           {
             "reportDate": "2026-09-30",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": -1.7,
-            "positiveRevenueShare": 50.0,
-            "profitGrowthMedian": 1.0,
-            "positiveProfitShare": 60.0,
+            "revenueGrowthMedian": -3.0,
+            "positiveRevenueShare": 40.0,
+            "profitGrowthMedian": -1.2,
+            "positiveProfitShare": 50.0,
             "cashToRevenueMedian": 0.1,
-            "coveragePercent": 50.4
+            "coveragePercent": 50.6
           },
           {
             "reportDate": "2026-06-30",
             "sampleCompanies": 10,
             "revenueGrowthMedian": -4.0,
             "positiveRevenueShare": 50.0,
-            "profitGrowthMedian": 2.1,
-            "positiveProfitShare": 60.0,
+            "profitGrowthMedian": -0.8,
+            "positiveProfitShare": 50.0,
             "cashToRevenueMedian": 0.1
           },
           {
             "reportDate": "2026-03-31",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 1.4,
+            "revenueGrowthMedian": 5.2,
             "positiveRevenueShare": 60.0,
-            "profitGrowthMedian": 0.6,
-            "positiveProfitShare": 50.0,
+            "profitGrowthMedian": -2.2,
+            "positiveProfitShare": 40.0,
             "cashToRevenueMedian": 0.0
           },
           {
@@ -69495,55 +69585,55 @@
           {
             "reportDate": "2025-09-30",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 2.2,
+            "revenueGrowthMedian": 3.5,
             "positiveRevenueShare": 50.0,
-            "profitGrowthMedian": 35.6,
+            "profitGrowthMedian": 27.2,
             "positiveProfitShare": 80.0,
             "cashToRevenueMedian": 0.1
           },
           {
             "reportDate": "2025-06-30",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": -0.8,
+            "revenueGrowthMedian": 4.9,
             "positiveRevenueShare": 50.0,
-            "profitGrowthMedian": 31.1,
-            "positiveProfitShare": 80.0,
+            "profitGrowthMedian": 29.3,
+            "positiveProfitShare": 70.0,
             "cashToRevenueMedian": 0.1
           },
           {
             "reportDate": "2025-03-31",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 0.1,
-            "positiveRevenueShare": 50.0,
-            "profitGrowthMedian": 28.8,
-            "positiveProfitShare": 80.0,
+            "revenueGrowthMedian": 1.0,
+            "positiveRevenueShare": 60.0,
+            "profitGrowthMedian": 25.8,
+            "positiveProfitShare": 70.0,
             "cashToRevenueMedian": 0.1
           },
           {
             "reportDate": "2024-12-31",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 3.3,
-            "positiveRevenueShare": 70.0,
-            "profitGrowthMedian": -4.1,
-            "positiveProfitShare": 50.0,
-            "cashToRevenueMedian": 0.0
+            "revenueGrowthMedian": 4.6,
+            "positiveRevenueShare": 80.0,
+            "profitGrowthMedian": 2.0,
+            "positiveProfitShare": 60.0,
+            "cashToRevenueMedian": 0.1
           },
           {
             "reportDate": "2024-09-30",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 6.8,
-            "positiveRevenueShare": 70.0,
-            "profitGrowthMedian": 0.9,
-            "positiveProfitShare": 50.0,
-            "cashToRevenueMedian": 0.0
+            "revenueGrowthMedian": 10.1,
+            "positiveRevenueShare": 80.0,
+            "profitGrowthMedian": 6.9,
+            "positiveProfitShare": 60.0,
+            "cashToRevenueMedian": 0.1
           },
           {
             "reportDate": "2024-06-30",
             "sampleCompanies": 10,
-            "revenueGrowthMedian": 9.1,
-            "positiveRevenueShare": 80.0,
-            "profitGrowthMedian": -3.7,
-            "positiveProfitShare": 50.0,
+            "revenueGrowthMedian": 11.3,
+            "positiveRevenueShare": 90.0,
+            "profitGrowthMedian": 4.7,
+            "positiveProfitShare": 60.0,
             "cashToRevenueMedian": 0.0
           },
           {
@@ -69562,7 +69652,7 @@
             "positiveRevenueShare": 70.0,
             "profitGrowthMedian": -7.8,
             "positiveProfitShare": 40.0,
-            "cashToRevenueMedian": 0.0
+            "cashToRevenueMedian": 0.1
           },
           {
             "reportDate": "2023-09-30",
@@ -69580,92 +69670,92 @@
         "boardCode": "BK0888",
         "boardName": "农业种植",
         "constituentCount": 88,
-        "liquidConstituentCount": 36,
-        "dailyTurnoverYi": 155.3,
-        "totalMarketCapYi": 6719.2,
-        "floatMarketCapYi": 6094.9,
-        "top10SharePercent": 50.4,
-        "hhi": 528.5,
+        "liquidConstituentCount": 0,
+        "dailyTurnoverYi": 0.0,
+        "totalMarketCapYi": 6744.0,
+        "floatMarketCapYi": 6120.0,
+        "top10SharePercent": 50.6,
+        "hhi": 524.7,
         "topConstituents": [
           {
             "rank": 1,
             "code": "000568",
             "name": "泸州老窖",
-            "floatMarketCapYi": 1165.3,
-            "dailyTurnoverYi": 17.47,
-            "weightPercent": 19.12
+            "floatMarketCapYi": 1162.4,
+            "dailyTurnoverYi": 0.0,
+            "weightPercent": 18.99
           },
           {
             "rank": 2,
             "code": "600704",
             "name": "物产中大",
-            "floatMarketCapYi": 264.2,
-            "dailyTurnoverYi": 2.88,
-            "weightPercent": 4.34
+            "floatMarketCapYi": 264.8,
+            "dailyTurnoverYi": 0.0,
+            "weightPercent": 4.33
           },
           {
             "rank": 3,
             "code": "600737",
             "name": "中粮糖业",
             "floatMarketCapYi": 259.9,
-            "dailyTurnoverYi": 4.89,
-            "weightPercent": 4.26
+            "dailyTurnoverYi": 0.0,
+            "weightPercent": 4.25
           },
           {
             "rank": 4,
             "code": "600598",
             "name": "北大荒",
             "floatMarketCapYi": 247.1,
-            "dailyTurnoverYi": 3.03,
-            "weightPercent": 4.05
+            "dailyTurnoverYi": 0.0,
+            "weightPercent": 4.04
           },
           {
             "rank": 5,
             "code": "300972",
             "name": "万辰集团",
-            "floatMarketCapYi": 244.1,
-            "dailyTurnoverYi": 10.2,
-            "weightPercent": 4.01
+            "floatMarketCapYi": 240.1,
+            "dailyTurnoverYi": 0.0,
+            "weightPercent": 3.92
           },
           {
             "rank": 6,
             "code": "601118",
             "name": "海南橡胶",
             "floatMarketCapYi": 225.1,
-            "dailyTurnoverYi": 5.49,
-            "weightPercent": 3.69
+            "dailyTurnoverYi": 0.0,
+            "weightPercent": 3.68
           },
           {
             "rank": 7,
             "code": "000623",
             "name": "吉林敖东",
-            "floatMarketCapYi": 207.0,
-            "dailyTurnoverYi": 2.93,
-            "weightPercent": 3.4
+            "floatMarketCapYi": 206.6,
+            "dailyTurnoverYi": 0.0,
+            "weightPercent": 3.38
           },
           {
             "rank": 8,
-            "code": "000902",
-            "name": "新洋丰",
-            "floatMarketCapYi": 166.6,
-            "dailyTurnoverYi": 2.69,
-            "weightPercent": 2.73
+            "code": "301035",
+            "name": "润丰股份",
+            "floatMarketCapYi": 192.9,
+            "dailyTurnoverYi": 0.0,
+            "weightPercent": 3.15
           },
           {
             "rank": 9,
-            "code": "301035",
-            "name": "润丰股份",
-            "floatMarketCapYi": 160.7,
-            "dailyTurnoverYi": 1.42,
-            "weightPercent": 2.64
+            "code": "000902",
+            "name": "新洋丰",
+            "floatMarketCapYi": 165.7,
+            "dailyTurnoverYi": 0.0,
+            "weightPercent": 2.71
           },
           {
             "rank": 10,
-            "code": "600057",
-            "name": "厦门象屿",
-            "floatMarketCapYi": 130.2,
-            "dailyTurnoverYi": 1.71,
-            "weightPercent": 2.14
+            "code": "002312",
+            "name": "川发龙蟒",
+            "floatMarketCapYi": 130.0,
+            "dailyTurnoverYi": 0.0,
+            "weightPercent": 2.12
           }
         ],
         "marketHistory": [
@@ -71704,10 +71794,10 @@
           {
             "date": "2026-11-05",
             "constituentCount": 88,
-            "floatMarketCapYi": 6094.9,
-            "dailyTurnoverYi": 155.3,
-            "top10SharePercent": 50.4,
-            "hhi": 528.5
+            "floatMarketCapYi": 6120.0,
+            "dailyTurnoverYi": 0.0,
+            "top10SharePercent": 50.6,
+            "hhi": 524.7
           }
         ]
       }
@@ -73990,7 +74080,9 @@
             "hhi": 2783.3
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "human-upskilling",
@@ -76310,7 +76402,9 @@
             "hhi": 783.8
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "creator-economy",
@@ -78630,7 +78724,9 @@
             "hhi": 187.2
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "ocean-economy",
@@ -80950,7 +81046,9 @@
             "hhi": 5252.1
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "service-robot",
@@ -83430,7 +83528,9 @@
             "hhi": 122.7
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     }
   ]
 }
