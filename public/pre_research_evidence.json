@@ -1,11 +1,48 @@
 {
   "schemaVersion": 3,
-  "updateTime": "2026-11-07T00:32:13.024743+00:00",
+  "updateTime": "2026-11-07T01:32:31.989777+00:00",
   "methodologyVersion": "multi-signal-demand-36-v1",
   "universeCount": 36,
   "coveredCount": 36,
-  "refreshStatus": "complete",
-  "failedThemeIds": [],
+  "refreshStatus": "degraded",
+  "failedThemeIds": [
+    "ai-agent",
+    "embodied-ai",
+    "space",
+    "power",
+    "hard-tech",
+    "biotech",
+    "longevity",
+    "experience",
+    "resources",
+    "future-tech",
+    "industrial-software",
+    "ai-application",
+    "cybersecurity",
+    "smart-healthcare",
+    "synthetic-biology",
+    "nuclear-energy",
+    "water-security",
+    "low-altitude",
+    "autonomous-driving",
+    "obesity-care",
+    "climate-adaptation",
+    "digital-health",
+    "mental-health",
+    "pet-economy",
+    "sports-outdoor",
+    "inbound-consumption",
+    "new-food",
+    "recycling",
+    "grid-storage",
+    "defense-tech",
+    "agri-tech",
+    "wealth-longevity",
+    "human-upskilling",
+    "creator-economy",
+    "ocean-economy",
+    "service-robot"
+  ],
   "enterpriseDataCount": 36,
   "assetDataCount": 36,
   "assetMarketHistoryCount": 34,
@@ -2345,7 +2382,9 @@
             "hhi": 150.8
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "embodied-ai",
@@ -4841,7 +4880,9 @@
             "hhi": 220.5
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "space",
@@ -7177,7 +7218,9 @@
             "hhi": 80.9
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "power",
@@ -8889,7 +8932,9 @@
             "hhi": 187.4
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "hard-tech",
@@ -11385,7 +11430,9 @@
             "hhi": 105.8
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "biotech",
@@ -13893,7 +13940,9 @@
             "hhi": 290.6
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "longevity",
@@ -16229,7 +16278,9 @@
             "hhi": 725.8
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "experience",
@@ -17860,7 +17911,9 @@
             "hhi": 271.3
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "resources",
@@ -20196,7 +20249,9 @@
             "hhi": 96.2
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "future-tech",
@@ -22532,7 +22587,9 @@
             "hhi": 908.0
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "industrial-software",
@@ -24868,7 +24925,9 @@
             "hhi": 244.9
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "ai-application",
@@ -27204,7 +27263,9 @@
             "hhi": 772.4
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "cybersecurity",
@@ -29540,7 +29601,9 @@
             "hhi": 793.4
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "smart-healthcare",
@@ -31898,7 +31961,9 @@
             "hhi": 1695.0
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "synthetic-biology",
@@ -34256,7 +34321,9 @@
             "hhi": 293.6
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "nuclear-energy",
@@ -36763,7 +36830,9 @@
             "hhi": 470.9
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "water-security",
@@ -39099,7 +39168,9 @@
             "hhi": 1357.4
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "low-altitude",
@@ -41457,7 +41528,9 @@
             "hhi": 113.3
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "autonomous-driving",
@@ -43873,7 +43946,9 @@
             "hhi": 614.5
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "obesity-care",
@@ -46209,7 +46284,9 @@
             "hhi": 1606.6
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "climate-adaptation",
@@ -48545,7 +48622,9 @@
             "hhi": 583.2
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "digital-health",
@@ -50881,7 +50960,9 @@
             "hhi": 1695.0
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "mental-health",
@@ -53217,7 +53298,9 @@
             "hhi": 1695.0
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "pet-economy",
@@ -55553,7 +55636,9 @@
             "hhi": 264.7
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "sports-outdoor",
@@ -57889,7 +57974,9 @@
             "hhi": 679.3
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "inbound-consumption",
@@ -60244,7 +60331,9 @@
             "hhi": 1704.5
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "new-food",
@@ -62572,7 +62661,9 @@
             "hhi": 1974.1
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "recycling",
@@ -64908,7 +64999,9 @@
             "hhi": 207.1
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "grid-storage",
@@ -67404,7 +67497,9 @@
             "hhi": 2256.7
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "defense-tech",
@@ -69740,7 +69835,9 @@
             "hhi": 89.1
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "agri-tech",
@@ -72236,7 +72333,9 @@
             "hhi": 533.7
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "wealth-longevity",
@@ -74532,7 +74631,9 @@
             "hhi": 2782.4
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "human-upskilling",
@@ -76868,7 +76969,9 @@
             "hhi": 782.5
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "creator-economy",
@@ -79204,7 +79307,9 @@
             "hhi": 185.7
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "ocean-economy",
@@ -81540,7 +81645,9 @@
             "hhi": 5339.5
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     },
     {
       "id": "service-robot",
@@ -84036,7 +84143,9 @@
             "hhi": 113.2
           }
         ]
-      }
+      },
+      "refreshStatus": "retained-previous",
+      "refreshError": "HTTPError"
     }
   ]
 }
